@@ -1,0 +1,44 @@
+.dash-card {
+  width: 15vw;
+}
+
+div.dashboard-row {
+  display: flex;
+  flex-direction: row;
+}
+
+div.odd {
+  justify-content: space-around;
+  margin-bottom: 2vh;
+}
+
+div.even {
+  justify-content: space-around;
+  padding-left:15vw;
+  padding-right:15vw;
+}
+
+div.dashboard {
+
+}
+
+.card-content {
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.card-text {
+  max-width: 70%;
+}
+
+.card-icon {
+  max-width: 30%;
+  font-size:3em;
+}
+
+mat-icon {
+  width: 32px;
+  height:32px;
+  line-height:32px;
+}
