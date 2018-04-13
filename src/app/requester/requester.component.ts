@@ -28,6 +28,8 @@ export class RequesterComponent implements OnInit {
     }
   ];
 
+  persons: Person[] = [];
+
   filteredCompanies: Observable<any[]>;
 
   requesterForm: FormGroup;
@@ -56,7 +58,7 @@ export class RequesterComponent implements OnInit {
         updateOn: 'change'
       }),
       requesterNumOfEntries: new FormControl('', {
-        validators: [Validators.required]
+        validators: [Validators.required, this.intValidator]
       })
     })
 
@@ -75,7 +77,7 @@ export class RequesterComponent implements OnInit {
   }
 
   intValidator(control: FormControl) {
-    return isNaN(control.value) ? null : true;
+    return isNaN(control.value) ? { "error": "NaN" } : null;
   }
 
 }

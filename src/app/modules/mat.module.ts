@@ -6,7 +6,7 @@ import { MatButtonModule, MatFormFieldModule,
     MatSidenavModule, MatInputModule, MatToolbarModule,
     MatIconModule, MatCardModule, MatMenuModule,
     MatAutocompleteModule, MatDatepickerModule,
-    MatNativeDateModule} from '@angular/material';
+    MatNativeDateModule, MatDialogModule} from '@angular/material';
 
 @NgModule({
   exports: [MatButtonModule, MatFormFieldModule,
