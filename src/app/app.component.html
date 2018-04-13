@@ -28,8 +28,14 @@
     <button mat-raised-button
       color="primary"
       class="sidenav-btn"
+      [routerLink]="['/requester']">
+      Requester
+    </button>
+    <button mat-raised-button
+      color="primary"
+      class="sidenav-btn"
       routerLink="['/']"
-      *ngFor="let n of [0,1,2,3,4]; let i = index">Component {{i}}</button>
+      *ngFor="let n of [0,1,2,3]; let i = index">Component {{i}}</button>
   </mat-sidenav>
   <div class="content">
     <router-outlet></router-outlet>

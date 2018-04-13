@@ -1,0 +1,51 @@
+<form class="requester-form" [formGroup]="requesterForm">
+  <mat-form-field class="requester-field">
+    <input matInput
+      placeholder="Requester Name"
+      id="requesterName"
+      name="requesterName"
+      formControlName="requesterName"
+      required>
+  </mat-form-field>
+  <mat-form-field class="requester-field">
+    <textarea name="requesterDescription"
+      id="requesterDescription"
+      matInput placeholder="Description"
+      formControlName="requesterDescription"
+    ></textarea>
+  </mat-form-field>
+  <mat-form-field class="requester-field">
+    <input matInput
+      formControlName="requesterCompany"
+      [matAutocomplete]="companyAuto"
+      name="requesterCompany"
+      id="requesterCompany"
+      placeholder="Company" required>
+  </mat-form-field>
+  <mat-autocomplete #companyAuto="matAutocomplete">
+    <mat-option *ngFor="let company of companies" [value]="company.name">
+      {{ company.name }}
+    </mat-option>
+  </mat-autocomplete>
+  <mat-form-field>
+    <input matInput [matDatepicker]="fromPicker" placeholder="From date"
+    formControlName="requesterFromDate" required>
+    <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+    <mat-datepicker #fromPicker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [matDatepicker]="toPicker" placeholder="To date"
+    formControlName="requesterToDate" required>
+    <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+    <mat-datepicker #toPicker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field class="requester-field">
+    <input matInput
+      formControlName="requesterNumOfEntries"
+      type="number"
+      name="requesterNumOfEntries"
+      id="requesterNumOfEntries"
+      placeholder="Number of entries"
+      >
+  </mat-form-field>
+</form>

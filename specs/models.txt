@@ -1,0 +1,6 @@
+person:
+name - surname - image1 - image2
+vehicle:
+model - registration plate
+requester:
+requester name - desc - comp - from/to - no.entries - contact phone + person + vehicle
