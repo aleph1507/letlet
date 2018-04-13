@@ -4,12 +4,12 @@ import 'hammerjs';
 
 import { MatButtonModule, MatFormFieldModule,
     MatSidenavModule, MatInputModule, MatToolbarModule,
-    MatIconModule, MatCardModule  } from '@angular/material';
+    MatIconModule, MatCardModule, MatMenuModule  } from '@angular/material';
 
 @NgModule({
   exports: [MatButtonModule, MatFormFieldModule,
             MatSidenavModule, MatInputModule,
             MatToolbarModule, MatIconModule,
-            MatCardModule]
+            MatCardModule, MatMenuModule]
 })
 export class MatModule { }

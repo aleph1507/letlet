@@ -1,6 +1,7 @@
 <div class="dashboard">
   <div class="dashboard-row odd">
     <mat-card class="dash-card" *ngFor="let n of [3,3,3]; let i = index">
+      <a routerLink="['/']">
         <div class="card-content">
           <div class="card-text">
             <mat-card-title>Component {{i}}</mat-card-title>
@@ -10,10 +11,13 @@
             <mat-icon>airplanemode_inactive</mat-icon>
           </div>
         </div>
+      </a>
     </mat-card>
+
   </div>
   <div class="dashboard-row even">
     <mat-card class="dash-card" *ngFor="let n of [2,2]; let i = index">
+      <a routerLink="['/']">
         <div class="card-content">
           <div class="card-text">
             <mat-card-title>Component {{i}}</mat-card-title>
@@ -23,6 +27,7 @@
             <mat-icon>airplanemode_active</mat-icon>
           </div>
         </div>
+      </a>
     </mat-card>
   </div>
 </div>
