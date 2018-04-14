@@ -5,6 +5,9 @@ import { Requester } from '../models/Requester.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { startWith, map } from 'rxjs/operators';
+import { DialogPersonComponent } from './dialog-person/dialog-person.component';
+import { DialogVehicleComponent } from './dialog-vehicle/dialog-vehicle.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-requester',
@@ -29,37 +32,55 @@ export class RequesterComponent implements OnInit {
   ];
 
   persons: Person[] = [];
+  vehicles: Vehicle[] = [];
+
+  displayedPersonColumns = ['name', 'surname'];
+  displayedVehicleColumns = ['model', 'plate'];
 
   filteredCompanies: Observable<any[]>;
 
   requesterForm: FormGroup;
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit() {
     this.requesterForm = new FormGroup({
-      requesterName: new FormControl('', {
+      'requesterName': new FormControl('', {
         validators: Validators.required,
         updateOn: 'change'
       }),
-      requesterDescription: new FormControl('', {
+      'requesterDescription': new FormControl('', {
         updateOn: 'change'
       }),
-      requesterCompany: new FormControl('', {
+      'requesterCompany': new FormControl('', {
         validators: Validators.required,
         updateOn: 'change'
       }),
-      requesterFromDate: new FormControl('', {
+      'requesterFromDate': new FormControl('', {
         validators: Validators.required,
         updateOn: 'change'
       }),
-      requesterToDate: new FormControl('', {
+      'requesterToDate': new FormControl('', {
         validators: Validators.required,
         updateOn: 'change'
       }),
-      requesterNumOfEntries: new FormControl('', {
+      'requesterNumOfEntries': new FormControl('', {
         validators: [Validators.required, this.intValidator]
-      })
+      }),
+      // 'person': new FormGroup({
+      //   'name': new FormControl('', {
+      //     validators: Validators.required
+      //   }),
+      //   'surname': new FormControl('', {
+      //     validators: Validators.required
+      //   }),
+      //   'image1': new FormControl('', {
+      //     validators: Validators.required
+      //   }),
+      //   'image2': new FormControl('', {
+      //     validators: Validators.required
+      //   })
+      // })
     })
 
     this.filteredCompanies = this.requesterForm.controls['requesterCompany'].valueChanges
@@ -79,5 +100,35 @@ export class RequesterComponent implements OnInit {
   intValidator(control: FormControl) {
     return isNaN(control.value) ? { "error": "NaN" } : null;
   }
+
+  openPersonDialog() {
+    let personDialogRef = this.dialog.open(DialogPersonComponent, {
+      width: '45vw'
+    });
+
+    personDialogRef.afterClosed()
+      .subscribe(person => {
+        if(person !== "Cancel"){
+          this.persons.push(person);
+          console.log(this.persons);
+        }
+      });
+  }
+
+  openVehicleDialog() {
+    let vehicleDialogRef = this.dialog.open(DialogVehicleComponent, {
+      width: '45vw'
+    });
+
+    vehicleDialogRef.afterClosed()
+      .subscribe(vehicle => {
+        if(vehicle !== "Cancel"){
+          this.vehicles.push(vehicle);
+          console.log(this.vehicles);
+        }
+      });
+  }
+
+
 
 }

@@ -12,12 +12,16 @@ import { MatModule } from './modules/mat.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AppRoutingModule } from './modules/app-router.module';
 import { RequesterComponent } from './requester/requester.component';
+import { DialogPersonComponent } from './requester/dialog-person/dialog-person.component';
+import { DialogVehicleComponent } from './requester/dialog-vehicle/dialog-vehicle.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     RequesterComponent,
+    DialogPersonComponent,
+    DialogVehicleComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,6 +29,10 @@ import { RequesterComponent } from './requester/requester.component';
     MatModule,
     AppRoutingModule,
     ReactiveFormsModule
+  ],
+  entryComponents: [
+    DialogPersonComponent,
+    DialogVehicleComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

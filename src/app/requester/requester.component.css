@@ -5,3 +5,54 @@ h3, p {
 .requester-field{
   width:100%;
 }
+
+div.requester-container {
+  display:flex;
+  flex-direction: row;
+}
+
+div.requester-props-container {
+  display: flex;
+  flex-direction:column;
+  justify-content: space-between;
+}
+
+div.requester-prop {
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* align-content: space-between; */
+  margin:2%;
+  width: 40vw;
+  padding:2%;
+  max-height: 20vh;
+  overflow-y: auto;
+  border: 2px solid black;
+}
+
+h2.req-prop-title {
+  display: block;
+  width:90%;
+  margin-left:5%;
+}
+
+.requester-prop ul {
+  align-self: stretch;
+}
+
+#plusPerson {
+  margin-top: 70%;
+  margin-left: 89%;
+  align-self: flex-end;
+}
+
+#plusVehicle {
+  margin-top: 70%;
+  margin-left:89%;
+  align-self: flex-end;
+}
+
+img.p-preview {
+  max-width:150px;
+  max-height:150px;
+}

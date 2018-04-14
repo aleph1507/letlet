@@ -1,0 +1,32 @@
+<form class="requester-person-form" [formGroup]="personForm" (ngSubmit)="onSubmit()" novalidate>
+  <mat-form-field class="requester-person-field">
+    <input matInput name="personName"
+      id="personName" placeholder="Name"
+      formControlName="name" required>
+  </mat-form-field>
+  <mat-form-field class="requester-person-field">
+    <input matInput name="personSurname"
+      id="personsurName" placeholder="Surame"
+      formControlName="surname" required>
+  </mat-form-field>
+  <button type="button" mat-raised-button (click)="imgUpload1.click()">
+    <mat-icon>keyboard_arrow_up</mat-icon>
+    <input type="file" hidden #imgUpload1
+    (change)="previewImage($event)" name="image1" id="image1" formControlName="image1">
+  </button>
+  <img [src]="img1src" class="person-preview">
+  <div id="img2" *ngIf="img1src!==''">
+    <mat-divider class="sm-form-divider-margins"></mat-divider>
+    <button type="button" mat-raised-button (click)="imgUpload2.click()">
+      <mat-icon>keyboard_arrow_up</mat-icon>
+      <input type="file" hidden #imgUpload2
+      (change)="previewImage($event)" name="image1" id="image1" formControlName="image2">
+    </button>
+    <img [src]="img2src" class="person-preview">
+  </div>
+  <mat-divider class="sm-form-divider-margins"></mat-divider>
+  <mat-dialog-actions>
+    <button type="submit" [disabled]="!okAble()" mat-raised-button>OK</button>
+    <button type="button" mat-raised-button (click)="onCancel()">Cancel</button>
+  </mat-dialog-actions>
+</form>

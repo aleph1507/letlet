@@ -1,0 +1,17 @@
+<form class="requester-vehicle-form" [formGroup]="vehicleForm" (ngSubmit)="onSubmit()" novalidate>
+  <mat-form-field class="requester-vehicle-field">
+    <input matInput name="vehicleModel"
+    id="vehicleModel" placeholder="Model"
+    formControlName="model" required>
+  </mat-form-field>
+  <mat-form-field class="requester-vehicle-field">
+    <input matInput name="vehiclePlate"
+    id="vehiclePlate" placeholder="Plate"
+    formControlName="plate" required>
+  </mat-form-field>
+
+  <mat-dialog-actions>
+    <button type="submit" [disabled]="!vehicleForm.valid" mat-raised-button >OK</button>
+    <button type="button" mat-raised-button (click)="onCancel()">Cancel</button>
+  </mat-dialog-actions>
+</form>

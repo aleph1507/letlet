@@ -1,0 +1,13 @@
+.requester-person-field{
+  width:100%;
+}
+
+.person-preview {
+  max-width: 30%;
+  max-height: 30%;
+}
+
+.sm-form-divider-margins {
+  margin-top:2vh;
+  margin-bottom:2vh;
+}
