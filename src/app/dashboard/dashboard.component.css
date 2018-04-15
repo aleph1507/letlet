@@ -1,25 +1,30 @@
 .dash-card {
-  width: 15vw;
+  margin: 1vw;
+  width: 26vw;
 }
 
 div.dashboard-row {
-  display: flex;
-  flex-direction: row;
+   display: flex;
+   flex-wrap: wrap;
+  /* flex-direction: row;  */
 }
 
-div.odd {
-  justify-content: space-around;
-  margin-bottom: 2vh;
-}
+/* div.odd {
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  margin: 2vh;
+} */
 
-div.even {
-  justify-content: space-around;
-  padding-left:15vw;
-  padding-right:15vw;
-}
 
 div.dashboard {
+    display: flex;
+    flex-wrap: wrap;
+}
 
+.flex-container > .dash-card {
+  width: 20vw;
+  margin: 2vh;
 }
 
 .card-content {
@@ -28,7 +33,7 @@ div.dashboard {
   justify-content: space-between;
 }
 
-.card-text {
+/* .card-text {
   max-width: 70%;
 }
 
@@ -41,4 +46,4 @@ mat-icon {
   width: 32px;
   height:32px;
   line-height:32px;
-}
+} */

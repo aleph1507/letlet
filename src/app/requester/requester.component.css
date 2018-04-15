@@ -17,17 +17,47 @@ div.requester-props-container {
   justify-content: space-between;
 }
 
+div.controls {
+  display: inline-flex;
+  align-self: flex-end;
+  /* float:right; */
+}
+
+.btn-li-control {
+  position: relative;
+  top: -10px;
+}
+
 div.requester-prop {
   display:flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  /* justify-content: flex-end; */
+  /* align-items: flex-end; */
   /* align-content: space-between; */
   margin:2%;
-  width: 40vw;
+  /* margin-right: 10%; */
+  width: 30vw;
+  height: 30vh;
   padding:2%;
-  max-height: 20vh;
-  overflow-y: auto;
-  border: 2px solid black;
+  /* max-height: 20vh; */
+  /* overflow-y: auto; */
+  /* border: 2px solid black; */
+}
+
+mat-table {
+  overflow: auto;
+  max-height: 140px;
+  width:100%;
+}
+
+div.requester-prop mat-table {
+  align-self: center;
+}
+
+div.requester-prop-plus {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 h2.req-prop-title {
@@ -41,18 +71,47 @@ h2.req-prop-title {
 }
 
 #plusPerson {
-  margin-top: 70%;
+  /* margin-top: 70%;
   margin-left: 89%;
-  align-self: flex-end;
+  align-self: flex-end; */
+  /* position: relative;
+  top: 80%;
+  left: 80%; */
 }
 
 #plusVehicle {
-  margin-top: 70%;
+  /* margin-top: 70%;
   margin-left:89%;
-  align-self: flex-end;
+  align-self: flex-end; */
 }
 
 img.p-preview {
   max-width:150px;
   max-height:150px;
+}
+
+.req_li {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  text-align:center;
+  border-bottom: 1px solid grey;
+}
+
+
+.req_info{
+  text-align: center;
+  line-height:10px;
+}
+
+.req_list {
+  max-height: 27vh;
+  overflow: auto;
+}
+
+.main-send {
+  /* margin-top:5%; */
+  width:30%;
+  padding: 3%;
 }

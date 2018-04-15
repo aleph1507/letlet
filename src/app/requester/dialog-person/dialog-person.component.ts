@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Person } from '../../models/Person.model';
+import { RequesterService } from '../../services/requester.service';
 
 
 @Component({
@@ -22,16 +23,24 @@ export class DialogPersonComponent implements OnInit {
   };
 
   constructor(public thisDialogRef: MatDialogRef<DialogPersonComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: string,
+              @Inject(MAT_DIALOG_DATA) public data: {person, i},
+              private requesterService: RequesterService,
               private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
+
+    if(this.data !== null){
+      this.person = this.data.person;
+      this.img1src = this.data.person.image1;
+      this.img2src = this.data.person.image2;
+    }
+
     this.personForm = new FormGroup({
-      'name': new FormControl('', {
+      'name': new FormControl(this.person.name, {
         validators: [Validators.required],
         updateOn: 'change'
       }),
-      'surname': new FormControl('', {
+      'surname': new FormControl(this.person.surname, {
         validators: Validators.required,
         updateOn: 'change'
       }),
@@ -66,11 +75,13 @@ export class DialogPersonComponent implements OnInit {
     this.person.surname = this.personForm.controls['surname'].value;
     this.person.image1 = this.img1src;
     this.person.image2 = this.img2src;
-    this.thisDialogRef.close(this.person);
+    this.data === null ? this.requesterService.addPerson(this.person) : this.requesterService.editPerson(this.data.i, this.person);
+    // this.requesterService
+    this.thisDialogRef.close();
   }
 
   onCancel(){
-    this.thisDialogRef.close("Cancel");
+    this.thisDialogRef.close();
   }
 
   okAble(){

@@ -1,5 +1,5 @@
 <div class="requester-container">
-  <form class="requester-form" [formGroup]="requesterForm" novalidate>
+  <form class="requester-form" id="requester-form" [formGroup]="requesterForm" novalidate>
     <mat-form-field class="requester-field">
       <input matInput
         placeholder="Requester Name"
@@ -52,57 +52,50 @@
   </form>
   <div class="requester-props-container">
     <div class="requester-prop mat-elevation-z8">
-      <mat-table *ngIf="persons.length > 0" #pTable [dataSource]="persons">
-        <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-          <mat-cell *matCellDef="let person">{{person.name}}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="surname">
-          <mat-header-cell *matHeaderCellDef>Surname</mat-header-cell>
-          <mat-cell *matCellDef="let person">{{person.surname}}</mat-cell>
-        </ng-container>
 
-        <mat-header-row *matHeaderRowDef="displayedPersonColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedPersonColumns"></mat-row>
-      </mat-table>
+      <ul class="req_list">
+        <li class="req_li" *ngFor="let person of requesterService.getAllPersons(); let i = index">
+          <div class="req_info">
+            <span class="person-name">{{person.name}}</span>
+            <span class="person-surname">{{person.surname}}</span>
+          </div>
+          <div class="controls">
+            <button mat-raised-button class="btn-li-control"
+              (click)="editPerson(i)"><mat-icon>mode_edit</mat-icon></button>
+            <button mat-raised-button class="btn-li-control"
+              (click)="deletePerson(i)"><mat-icon>delete</mat-icon></button>
+          </div>
+        </li>
+      </ul>
       <button mat-fab (click)="openPersonDialog()" id="plusPerson">
         <svg style="width:24px;height:24px" viewBox="0 0 24 24">
           <path fill="#000000" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
         </svg>
       </button>
     </div>
-    <mat-table *ngIf="persons.length > 0" #pTable [dataSource]="persons">
-      <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-        <mat-cell *matCellDef="let person">{{person.name}}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="surname">
-        <mat-header-cell *matHeaderCellDef>Surname</mat-header-cell>
-        <mat-cell *matCellDef="let person">{{person.surname}}</mat-cell>
-      </ng-container>
-
-      <mat-header-row *matHeaderRowDef="displayedPersonColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedPersonColumns"></mat-row>
-    </mat-table>
     <div class="requester-prop mat-elevation-z8">
-      <mat-table *ngIf="vehicles.length > 0" #vTable [dataSource]="vehicles">
-        <ng-container matColumnDef="model">
-          <mat-header-cell *matHeaderCellDef>Model</mat-header-cell>
-          <mat-cell *matCellDef="let vehicle">{{vehicle.model}}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="plate">
-          <mat-header-cell *matHeaderCellDef>Plate</mat-header-cell>
-          <mat-cell *matCellDef="let vehicle">{{vehicle.plate}}</mat-cell>
-        </ng-container>
+      <ul class="req_list">
+        <li class="req_li" *ngFor="let v of requesterService.getAllVehicles(); let i = index">
+            <div class="req_info">
+              <span class="vehicle-plate">{{v.plate}}</span>
+            </div>
+            <div class="controls">
+              <button mat-raised-button class="btn-li-control"
+                (click)="editVehicle(i)"><mat-icon>mode_edit</mat-icon></button>
+              <button mat-raised-button class="btn-li-control"
+                (click)="deleteVehicle(i)"><mat-icon>delete</mat-icon></button>
+            </div>
+        </li>
+      </ul>
 
-        <mat-header-row *matHeaderRowDef="displayedVehicleColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedVehicleColumns"></mat-row>
-      </mat-table>
       <button mat-fab (click)="openVehicleDialog()" id="plusVehicle">
         <svg style="width:24px;height:24px" viewBox="0 0 24 24">
           <path fill="#000000" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
         </svg>
       </button>
+    </div>
+    <div style="text-align:right">
+      <button mat-raised-button class="main-send" [routerLink]="['/dashboard']">Send</button>
     </div>
   </div>
 </div>

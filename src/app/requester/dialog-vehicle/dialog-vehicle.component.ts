@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Vehicle } from '../../models/Vehicle.model';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { RequesterService } from '../../services/requester.service';
 
 @Component({
   selector: 'app-dialog-vehicle',
@@ -10,7 +11,10 @@ import { MatDialogRef } from '@angular/material';
 })
 export class DialogVehicleComponent implements OnInit {
 
-  constructor(public thisDialogRef: MatDialogRef<DialogVehicleComponent>) { }
+  constructor(public thisDialogRef: MatDialogRef<DialogVehicleComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: {vehicle, i},
+              private requesterService: RequesterService
+              ) { }
 
   vehicleForm: FormGroup;
   vehicle: Vehicle = {
@@ -19,11 +23,16 @@ export class DialogVehicleComponent implements OnInit {
   }
 
   ngOnInit() {
+
+      if(this.data !== null){
+        this.vehicle = this.data.vehicle;
+      }
+
       this.vehicleForm = new FormGroup({
-        'model': new FormControl('', {
+        'model': new FormControl(this.vehicle.model, {
           validators: Validators.required
         }),
-        'plate': new FormControl('', {
+        'plate': new FormControl(this.vehicle.plate, {
           validators: Validators.required
         })
       })
@@ -32,6 +41,7 @@ export class DialogVehicleComponent implements OnInit {
   onSubmit(){
     this.vehicle.model = this.vehicleForm.controls['model'].value;
     this.vehicle.plate = this.vehicleForm.controls['plate'].value;
+    this.data === null ? this.requesterService.addVehicle(this.vehicle) : this.requesterService.editVehicle(this.data.i, this.vehicle);
     this.thisDialogRef.close(this.vehicle);
   }
 

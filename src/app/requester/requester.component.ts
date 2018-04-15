@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Person } from '../models/Person.model';
 import { Vehicle } from '../models/Vehicle.model';
 import { Requester } from '../models/Requester.model';
@@ -8,6 +8,14 @@ import { startWith, map } from 'rxjs/operators';
 import { DialogPersonComponent } from './dialog-person/dialog-person.component';
 import { DialogVehicleComponent } from './dialog-vehicle/dialog-vehicle.component';
 import { MatDialog } from '@angular/material';
+import { DataSource } from '@angular/cdk/collections';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/merge';
+import "rxjs/add/observable/of";
+import { RequesterService } from '../services/requester.service';
+import { Router } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-requester',
@@ -31,7 +39,8 @@ export class RequesterComponent implements OnInit {
     }
   ];
 
-  persons: Person[] = [];
+  // persons: Observable<Person[]>;
+  // persons: Person[] = [];
   vehicles: Vehicle[] = [];
 
   displayedPersonColumns = ['name', 'surname'];
@@ -41,7 +50,9 @@ export class RequesterComponent implements OnInit {
 
   requesterForm: FormGroup;
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog,
+              private changeDetectorRef: ChangeDetectorRef,
+              public requesterService: RequesterService) { }
 
   ngOnInit() {
     this.requesterForm = new FormGroup({
@@ -66,21 +77,7 @@ export class RequesterComponent implements OnInit {
       }),
       'requesterNumOfEntries': new FormControl('', {
         validators: [Validators.required, this.intValidator]
-      }),
-      // 'person': new FormGroup({
-      //   'name': new FormControl('', {
-      //     validators: Validators.required
-      //   }),
-      //   'surname': new FormControl('', {
-      //     validators: Validators.required
-      //   }),
-      //   'image1': new FormControl('', {
-      //     validators: Validators.required
-      //   }),
-      //   'image2': new FormControl('', {
-      //     validators: Validators.required
-      //   })
-      // })
+      })
     })
 
     this.filteredCompanies = this.requesterForm.controls['requesterCompany'].valueChanges
@@ -105,14 +102,36 @@ export class RequesterComponent implements OnInit {
     let personDialogRef = this.dialog.open(DialogPersonComponent, {
       width: '45vw'
     });
+  }
 
-    personDialogRef.afterClosed()
-      .subscribe(person => {
-        if(person !== "Cancel"){
-          this.persons.push(person);
-          console.log(this.persons);
-        }
-      });
+  editPerson(index: number){
+    let p = this.requesterService.getPersonByIndex(index);
+    let editPersonDialogRef = this.dialog.open(DialogPersonComponent, {
+      width: '45wv',
+      data: {person: p, index: index},
+    });
+
+  }
+
+  deletePerson(index: number){
+    this.requesterService.deletePerson(index);
+  }
+
+  editVehicle(index: number){
+    let v = this.requesterService.getVehicleByIndex(index);
+    let editVehicleDialogRef = this.dialog.open(DialogVehicleComponent, {
+      width: '45vw',
+      data: {vehicle: v, index: index}
+    })
+
+    // .afterClosed()
+    //   .subscribe(vehicle => {
+    //     this.requesterService.editVehicle(index, vehicle);
+    //   })
+  }
+
+  deleteVehicle(index: number) {
+    this.requesterService.deleteVehicle(index);
   }
 
   openVehicleDialog() {
@@ -120,13 +139,13 @@ export class RequesterComponent implements OnInit {
       width: '45vw'
     });
 
-    vehicleDialogRef.afterClosed()
-      .subscribe(vehicle => {
-        if(vehicle !== "Cancel"){
-          this.vehicles.push(vehicle);
-          console.log(this.vehicles);
-        }
-      });
+    // vehicleDialogRef.afterClosed()
+    //   .subscribe(vehicle => {
+    //     if(vehicle !== "Cancel"){
+    //       this.requesterService.addVehicle(vehicle);
+    //       console.log(this.vehicles);
+    //     }
+    //   });
   }
 
 

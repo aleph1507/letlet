@@ -1,17 +1,25 @@
-.sidenav-container{
+.appContainer {
+  display: flex;
+  flex-direction: column;
   position: absolute;
-  top: 8vh;
+  top: 0;
   bottom: 0;
   left: 0;
   right: 0;
 }
+ mat-sidenav-container {
+     flex: 1;
+ }
+
+mat-toolbar {
+  z-index:2;
+}
 
 .sidenav-btn {
-  height:16vh;
+  height:7vh;
   margin-top:1vh;
-  margin-bottom:1vh;
-  margin-left:2vw;
-  margin-right:2vw;
+  margin-left:1vw;
+  margin-right:1vw;
   padding-left:2vw;
   padding-right:2vw;
 }
@@ -19,10 +27,9 @@
 .sidenav1 {
   display:flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
-.content {
-  padding-left:10%;
-  padding-right:2%;
+mat-sidenav-content {
+  padding-left:4%;
+  padding-right:4%;
 }

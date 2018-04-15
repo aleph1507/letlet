@@ -14,6 +14,9 @@ import { AppRoutingModule } from './modules/app-router.module';
 import { RequesterComponent } from './requester/requester.component';
 import { DialogPersonComponent } from './requester/dialog-person/dialog-person.component';
 import { DialogVehicleComponent } from './requester/dialog-vehicle/dialog-vehicle.component';
+import { RequesterService } from './services/requester.service';
+import { LoginComponent } from './login/login.component';
+import { LoginService } from './login.service';
 
 @NgModule({
   declarations: [
@@ -22,6 +25,7 @@ import { DialogVehicleComponent } from './requester/dialog-vehicle/dialog-vehicl
     RequesterComponent,
     DialogPersonComponent,
     DialogVehicleComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,7 +38,7 @@ import { DialogVehicleComponent } from './requester/dialog-vehicle/dialog-vehicl
     DialogPersonComponent,
     DialogVehicleComponent
   ],
-  providers: [],
+  providers: [RequesterService, LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
