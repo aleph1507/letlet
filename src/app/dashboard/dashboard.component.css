@@ -1,13 +1,8 @@
-.dash-card {
-  margin: 1vw;
-  width: 26vw;
-}
-
-div.dashboard-row {
+/*div.dashboard-row {
    display: flex;
    flex-wrap: wrap;
-  /* flex-direction: row;  */
-}
+   flex-direction: row;
+}*/
 
 /* div.odd {
   justify-content: flex-start;
@@ -16,34 +11,34 @@ div.dashboard-row {
   margin: 2vh;
 } */
 
+/*.flex-container > .dash-card {
+  width: 20vw;
+  margin: 2vh;
+}*/
 
 div.dashboard {
     display: flex;
     flex-wrap: wrap;
 }
 
-.flex-container > .dash-card {
-  width: 20vw;
-  margin: 2vh;
+.dash-card {
+  margin: 1%;
+  width: 27%;
+}
+
+@media only screen and (max-width: 600px) {
+  .dash-card {
+    margin: 1%;
+    width: 100%;
+  }
 }
 
 .card-content {
-  display:flex;
   flex-direction: row;
-  justify-content: space-between;
-}
-
-/* .card-text {
-  max-width: 70%;
+  justify-content: right;
 }
 
 .card-icon {
-  max-width: 30%;
-  font-size:3em;
+  float: right;
 }
 
-mat-icon {
-  width: 32px;
-  height:32px;
-  line-height:32px;
-} */

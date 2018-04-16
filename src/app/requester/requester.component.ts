@@ -24,6 +24,8 @@ import { Router } from '@angular/router';
 })
 export class RequesterComponent implements OnInit {
 
+  hoveredEditPerson = false;
+
   companies = [
     {
       name: 'AMC'
@@ -41,7 +43,7 @@ export class RequesterComponent implements OnInit {
 
   // persons: Observable<Person[]>;
   // persons: Person[] = [];
-  vehicles: Vehicle[] = [];
+  // vehicles: Vehicle[] = [];
 
   displayedPersonColumns = ['name', 'surname'];
   displayedVehicleColumns = ['model', 'plate'];

@@ -17,15 +17,37 @@ div.requester-props-container {
   justify-content: space-between;
 }
 
+div.list-row {
+  display: flex;
+  width:100%;
+  justify-content: space-between;
+  border:0;
+  padding:0;
+  margin:0;
+}
+
 div.controls {
-  display: inline-flex;
-  align-self: flex-end;
-  /* float:right; */
+  /* display: inline-flex; */
+  /* align-self: flex-end; */
+  float:right;
+
 }
 
 .btn-li-control {
   position: relative;
   top: -10px;
+}
+
+.icon-control {
+  cursor: pointer;
+}
+
+.icon-control:hover {
+  color: lightgray;
+}
+
+hoveredIconControl {
+
 }
 
 div.requester-prop {
@@ -36,8 +58,8 @@ div.requester-prop {
   /* align-content: space-between; */
   margin:2%;
   /* margin-right: 10%; */
-  width: 30vw;
-  height: 30vh;
+  width: 40vw;
+  height: 40vh;
   padding:2%;
   /* max-height: 20vh; */
   /* overflow-y: auto; */
