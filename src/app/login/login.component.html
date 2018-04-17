@@ -1,15 +1,25 @@
 <div class="flex-container">
-  <mat-card>
-    <mat-card-title>Log In</mat-card-title>
-    <mat-card-subtitle>Airport Security Entry Control</mat-card-subtitle>
+    <form class="login-form" id="login-form" [formGroup]="loginForm" ngSubmit="logIn()" novalidate>
+      <mat-card>
+        <mat-card-title>Log In</mat-card-title>
+        <mat-card-subtitle>Airport Security Entry Control</mat-card-subtitle>
 
-    <mat-form-field>
-      <input matInput placeholder="User Name">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Password">      
-    </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="User Name"
+            id="username"
+            name="username"
+            formControlName="username">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput
+            type="password"
+            placeholder="Password"
+            id="password"
+            name="password"
+            formControlName="password">
+        </mat-form-field>
 
-    <button mat-raised-button (click)="logIn()">Log In</button>
-  </mat-card>
+        <button type="submit" mat-raised-button (click)="logIn()">Log In</button>
+      </mat-card>
+    </form>
 </div>

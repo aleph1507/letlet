@@ -17,6 +17,8 @@ import { DialogVehicleComponent } from './requester/dialog-vehicle/dialog-vehicl
 import { RequesterService } from './services/requester.service';
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './login.service';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -32,13 +34,14 @@ import { LoginService } from './login.service';
     BrowserAnimationsModule,
     MatModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   entryComponents: [
     DialogPersonComponent,
     DialogVehicleComponent
   ],
-  providers: [RequesterService, LoginService],
+  providers: [RequesterService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

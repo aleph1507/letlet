@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { LoginService } from './login.service';
 import { Router } from '@angular/router';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -10,13 +11,13 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'ASEC';
 
-  loggedIn = this.loginService.isLoggedIn();
+  // loggedIn = this.loginService.isLoggedIn();
 
-  constructor(private loginService: LoginService,
+  constructor(private authService: AuthService,
               private router: Router){}
 
   logOut() {
-    this.loginService.logOut();
+    // this.loginService.logOut();
     this.router.navigate(['/login']);
   }
 
