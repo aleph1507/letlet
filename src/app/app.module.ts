@@ -19,6 +19,9 @@ import { LoginComponent } from './login/login.component';
 import { LoginService } from './login.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
+import { ApprovalsComponent } from './approvals/approvals.component';
+import { ApprovalsService } from './services/approvals.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,7 @@ import { AuthService } from './services/auth.service';
     DialogPersonComponent,
     DialogVehicleComponent,
     LoginComponent,
+    ApprovalsComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,13 +39,14 @@ import { AuthService } from './services/auth.service';
     MatModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   entryComponents: [
     DialogPersonComponent,
     DialogVehicleComponent
   ],
-  providers: [RequesterService, AuthService],
+  providers: [RequesterService, AuthService, ApprovalsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

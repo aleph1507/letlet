@@ -10,4 +10,5 @@ export class Requester {
   numEntries: number;
   persons: Person[];
   vehicles: Vehicle[];
+  date: number;
 }

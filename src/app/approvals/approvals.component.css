@@ -1,0 +1,27 @@
+div.filter-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+div.filter-dates {
+  max-width: 30%;
+}
+
+.date-filter-field {
+  max-width: 40%;
+}
+
+.show-approvals {
+  /* align-self: center; */
+  /* display:flex; */
+  width:35%;
+  /* justify-content: space-between; */
+  /* align-items:center; */
+  /* display:inline-block; */
+}
+
+.show-approvals mat-radio-group {
+  display: flex;
+  justify-content: space-between;
+}

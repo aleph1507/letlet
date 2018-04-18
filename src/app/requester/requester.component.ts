@@ -15,8 +15,6 @@ import "rxjs/add/observable/of";
 import { RequesterService } from '../services/requester.service';
 import { Router } from '@angular/router';
 
-
-
 @Component({
   selector: 'app-requester',
   templateUrl: './requester.component.html',
@@ -26,20 +24,22 @@ export class RequesterComponent implements OnInit {
 
   hoveredEditPerson = false;
 
-  companies = [
-    {
-      name: 'AMC'
-    },
-    {
-      name: 'BBC'
-    },
-    {
-      name: 'TAV'
-    },
-    {
-      name: 'DrinkLab'
-    }
-  ];
+  // companies = [
+  //   {
+  //     name: 'AMC'
+  //   },
+  //   {
+  //     name: 'BBC'
+  //   },
+  //   {
+  //     name: 'TAV'
+  //   },
+  //   {
+  //     name: 'DrinkLab'
+  //   }
+  // ];
+
+  companies = ['AMC', 'BBC', 'TAV', 'DrinkerLab'];
 
   // persons: Observable<Person[]>;
   // persons: Person[] = [];
@@ -48,9 +48,12 @@ export class RequesterComponent implements OnInit {
   displayedPersonColumns = ['name', 'surname'];
   displayedVehicleColumns = ['model', 'plate'];
 
-  filteredCompanies: Observable<any[]>;
+  filteredCompanies: Observable<string[]>;
 
   requesterForm: FormGroup;
+  request = new Requester();
+
+  validForm = true;
 
   constructor(private dialog: MatDialog,
               private changeDetectorRef: ChangeDetectorRef,
@@ -82,18 +85,37 @@ export class RequesterComponent implements OnInit {
       })
     })
 
-    this.filteredCompanies = this.requesterForm.controls['requesterCompany'].valueChanges
-      .pipe(
-        startWith(''),
-        map(company => company ? this.filterCompanies(company) : this.companies.slice())
-      )
-    this.requesterForm.controls['requesterCompany']
+    // this.filteredCompanies = this.requesterForm.controls['requesterCompany'].valueChanges
+    //   .pipe(
+    //     startWith(''),
+    //     map(company => company ? this.filterCompanies(company) : this.companies.slice())
+    //   )
+
+      this.filteredCompanies = this.requesterForm.controls['requesterCompany'].valueChanges
+        .pipe(
+          startWith(''),
+          map(company => this.filterCompanies(company))
+        );
+    // this.requesterForm.controls['requesterCompany']
+  }
+
+  onSubmit() {
+    if(this.requesterForm.valid) {
+      this.requesterService.pushRequest(
+        this.requesterForm.controls['requesterName'].value,
+        this.requesterForm.controls['requesterDescription'].value,
+        this.requesterForm.controls['requesterCompany'].value,
+        this.requesterForm.controls['requesterFromDate'].value,
+        this.requesterForm.controls['requesterToDate'].value,
+        this.requesterForm.controls['requesterNumOfEntries'].value
+      );
+    }
+    this.requesterForm.reset();
   }
 
   filterCompanies(name: string) {
-    return this.companies.filter(
-      company => company.name.toLowerCase().indexOf(name.toLowerCase()) === 0
-    );
+    return this.companies.filter(company =>
+      company.toLowerCase().indexOf(name.toLowerCase()) === 0);
   }
 
   intValidator(control: FormControl) {
@@ -125,11 +147,6 @@ export class RequesterComponent implements OnInit {
       width: '45vw',
       data: {vehicle: v, index: index}
     })
-
-    // .afterClosed()
-    //   .subscribe(vehicle => {
-    //     this.requesterService.editVehicle(index, vehicle);
-    //   })
   }
 
   deleteVehicle(index: number) {
@@ -141,15 +158,6 @@ export class RequesterComponent implements OnInit {
       width: '45vw'
     });
 
-    // vehicleDialogRef.afterClosed()
-    //   .subscribe(vehicle => {
-    //     if(vehicle !== "Cancel"){
-    //       this.requesterService.addVehicle(vehicle);
-    //       console.log(this.vehicles);
-    //     }
-    //   });
   }
-
-
 
 }

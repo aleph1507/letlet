@@ -2,12 +2,14 @@
   <mat-form-field class="requester-person-field">
     <input matInput name="personName"
       id="personName" placeholder="Name"
-      formControlName="name" required>
+      formControlName="name"
+      autocomplete="off" required>
   </mat-form-field>
   <mat-form-field class="requester-person-field">
     <input matInput name="personSurname"
       id="personsurName" placeholder="Surame"
-      formControlName="surname" required>
+      formControlName="surname"
+      autocomplete="off" required>
   </mat-form-field>
   <button type="button" mat-raised-button (click)="imgUpload1.click()">
     <mat-icon>keyboard_arrow_up</mat-icon>

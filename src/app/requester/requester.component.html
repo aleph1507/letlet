@@ -1,11 +1,12 @@
 <div class="requester-container">
-  <form class="requester-form" id="requester-form" [formGroup]="requesterForm" novalidate>
+  <form class="requester-form" id="requester-form" (ngSubmit)="onSubmit()" [formGroup]="requesterForm" novalidate>
     <mat-form-field class="requester-field">
       <input matInput
         placeholder="Requester Name"
         id="requesterName"
         name="requesterName"
         formControlName="requesterName"
+        autocomplete="off"
         required>
     </mat-form-field>
     <mat-form-field class="requester-field">
@@ -13,6 +14,7 @@
         id="requesterDescription"
         matInput placeholder="Description"
         formControlName="requesterDescription"
+        autocomplete="off"
       ></textarea>
     </mat-form-field>
     <mat-form-field class="requester-field">
@@ -22,12 +24,12 @@
         name="requesterCompany"
         id="requesterCompany"
         placeholder="Company" required>
+        <mat-autocomplete #companyAuto="matAutocomplete">
+          <mat-option *ngFor="let company of filteredCompanies | async" [value]="company">
+            {{ company }}
+          </mat-option>
+        </mat-autocomplete>
     </mat-form-field>
-    <mat-autocomplete #companyAuto="matAutocomplete">
-      <mat-option *ngFor="let company of companies" [value]="company.name">
-        {{ company.name }}
-      </mat-option>
-    </mat-autocomplete>
     <mat-form-field>
       <input matInput [matDatepicker]="fromPicker" placeholder="From date"
       formControlName="requesterFromDate" required>
@@ -47,8 +49,10 @@
         name="requesterNumOfEntries"
         id="requesterNumOfEntries"
         placeholder="Number of entries"
+        autocomplete="off"
         >
     </mat-form-field>
+    <button mat-raised-button type="submit" color="primary" [disabled]="!requesterForm.valid" class="main-send">Send</button>
   </form>
   <div class="requester-props-container">
     <div class="requester-prop mat-elevation-z8">
@@ -73,25 +77,7 @@
           <mat-divider></mat-divider>
         </mat-list-item>
       </mat-list>
-
-      <!-- <ul class="req_list">
-        <li class="req_li" *ngFor="let person of requesterService.getAllPersons(); let i = index">
-          <div class="req_info">
-            <span class="person-name">{{person.name}}</span>
-            <span class="person-surname">{{person.surname}}</span>
-          </div>
-          <div class="controls">
-            <button mat-raised-button class="btn-li-control"
-              (click)="editPerson(i)"><mat-icon>mode_edit</mat-icon></button>
-            <button mat-raised-button class="btn-li-control"
-              (click)="deletePerson(i)"><mat-icon>delete</mat-icon></button>
-          </div>
-        </li>
-      </ul> -->
       <button mat-mini-fab color="primary" (click)="openPersonDialog()" id="plusPerson">+
-        <!-- <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-          <path fill="#000000" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
-        </svg> -->
       </button>
     </div>
     <div class="requester-prop mat-elevation-z8">
@@ -115,29 +101,11 @@
           <mat-divider></mat-divider>
         </mat-list-item>
       </mat-list>
-
-      <!-- <ul class="req_list">
-        <li class="req_li" *ngFor="let v of requesterService.getAllVehicles(); let i = index">
-            <div class="req_info">
-              <span class="vehicle-plate">{{v.plate}}</span>
-            </div>
-            <div class="controls">
-              <button mat-raised-button class="btn-li-control"
-                (click)="editVehicle(i)"><mat-icon>mode_edit</mat-icon></button>
-              <button mat-raised-button class="btn-li-control"
-                (click)="deleteVehicle(i)"><mat-icon>delete</mat-icon></button>
-            </div>
-        </li>
-      </ul> -->
-
       <button mat-mini-fab color="primary" (click)="openVehicleDialog()" id="plusVehicle">+
-        <!-- <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-          <path fill="#000000" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
-        </svg> -->
       </button>
     </div>
     <div style="text-align:right">
-      <button mat-raised-button class="main-send" [routerLink]="['/dashboard']">Send</button>
+      <!-- <button mat-raised-button class="main-send">Send</button> -->
     </div>
   </div>
 </div>

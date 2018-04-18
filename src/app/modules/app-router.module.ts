@@ -3,12 +3,14 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 import { NgModule } from '@angular/core';
 import { RequesterComponent } from '../requester/requester.component';
 import { LoginComponent } from '../login/login.component';
+import { ApprovalsComponent } from '../approvals/approvals.component';
 
 const appRoutes: Routes = [
    { path: '', component: DashboardComponent, pathMatch: 'full' },
    { path: 'requester', component: RequesterComponent },
    { path: 'login', component: LoginComponent },
-   { path: 'dashboard', component: DashboardComponent}
+   { path: 'dashboard', component: DashboardComponent},
+   { path: 'approvals', component: ApprovalsComponent }
 ];
 
 @NgModule({

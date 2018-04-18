@@ -136,4 +136,7 @@ img.p-preview {
   /* margin-top:5%; */
   width:30%;
   padding: 3%;
+  position:relative;
+  top:31%;
+  left:150%;
 }

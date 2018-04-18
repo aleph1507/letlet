@@ -3,32 +3,72 @@ import { Person } from '../models/Person.model';
 import { Vehicle } from '../models/Vehicle.model';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
-
-// @Injectable()
-// export class PersonDataSource extends DataSource<any> {
-//   constructor(public persons: Person[]) {
-//     super();
-//   }
-//
-//   connect(): Observable<any> {
-//     return Observable.of(this.persons);
-//   }
-//
-//   disconnect() {
-//
-//   }
-// }
+import { Requester } from '../models/Requester.model';
 
 @Injectable()
 export class RequesterService {
 
-  persons: Person[] = [];
-  vehicles: Vehicle[] = [];
+  persons: Person[] = [
+      {
+        name: 'name1',
+        surname: 'surname1',
+        image1: 'https://griffonagedotcom.files.wordpress.com/2016/07/profile-modern-2e.jpg',
+        image2: 'https://media.gettyimages.com/photos/close-up-profile-of-pensive-brunette-woman-picture-id522796409'
+
+      },
+      {
+        name: 'name2',
+        surname: 'surname2',
+        image1: 'https://thumb9.shutterstock.com/display_pic_with_logo/1306012/561117598/stock-photo-beauty-woman-profile-face-portrait-beautiful-spa-model-girl-with-perfect-fresh-clean-skin-blonde-561117598.jpg',
+        image2: 'https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg'
+
+      },
+    ];
+  vehicles: Vehicle[] = [
+    {
+      model: 'zastava',
+      plate: 'sk-123-qw'
+    },
+    {
+      model: 'varburg',
+      plate: 've-666-zx'
+    },
+  ];
+  requests: Requester[] = [];
 
   constructor() { }
 
+  pushRequest(requesterName, description, company, from, to, numEntries){
+    let request = new Requester();
+    request.requesterName = requesterName;
+    request.description = description;
+    request.company = company;
+    request.from = from;
+    request.to = to;
+    request.numEntries = numEntries;
+    request.persons = this.persons;
+    request.vehicles = this.vehicles;
+    request.date = Date.now();
+    this.persons = [];
+    this.vehicles = [];
+
+    this.requests.push(request);
+  }
+
   addPerson(person: Person){
     this.persons.push(person);
+  }
+
+  getAllRequests(){
+    return this.requests;
+  }
+
+  getRequest(index: number) {
+    return this.requests[index];
+  }
+
+  getNumberRequests(){
+    return this.requests.length;
   }
 
   getPersonByIndex(index:number) {
@@ -37,6 +77,14 @@ export class RequesterService {
 
   getAllPersons(){
     return this.persons;
+  }
+
+  getNumberPersons() {
+    return this.persons.length;
+  }
+
+  getNumberVehicles() {
+    return this.vehicles.length;
   }
 
   editPerson(index: number, person: Person) {
