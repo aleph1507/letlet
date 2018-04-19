@@ -1,11 +1,13 @@
 div.filter-panel {
-  display: flex;
+  /* display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: baseline; */
+  /* display: inline-block; */
 }
 
 div.filter-dates {
-  max-width: 30%;
+  display: inline-block;
+  width: 33%;
 }
 
 .date-filter-field {
@@ -15,13 +17,22 @@ div.filter-dates {
 .show-approvals {
   /* align-self: center; */
   /* display:flex; */
-  width:35%;
+  display:inline-block;
+  width:33%;
   /* justify-content: space-between; */
   /* align-items:center; */
   /* display:inline-block; */
 }
 
+.filter-companies {
+  text-align:right;
+  display:inline-block;
+  width:33%;
+}
+
 .show-approvals mat-radio-group {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  border: 1px solid black;
+  padding: 2vh 2vw;
 }

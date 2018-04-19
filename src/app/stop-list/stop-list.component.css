@@ -1,0 +1,36 @@
+.slTable{
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+.slTable-header {
+  min-height: 64px;
+  padding: 8px 24px 0;
+}
+
+mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+mat-table {
+  overflow: auto;
+  max-height: 500px;
+}
+
+mat-header-row, mat-row {
+  min-width:125vw;
+}
+/*
+mat-header-cell {
+  min-width:11vw;
+}
+
+mat-cell {
+  min-width:11vw;
+}
+
+.cell-container {
+  min-width:11vw;
+} */

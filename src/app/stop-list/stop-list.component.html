@@ -1,0 +1,66 @@
+<div class="slTable mat-elevation-z8">
+  <div class="slTable-header">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </div>
+
+  <mat-table #slTable [dataSource]="slDataSource">
+    <ng-container class="cell-container" matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-cell *matCellDef="let slSubject"> {{slSubject.name}} </mat-cell>
+    </ng-container>
+    <ng-container class="cell-container" matColumnDef="surname">
+      <mat-header-cell *matHeaderCellDef>Surname</mat-header-cell>
+      <mat-cell *matCellDef="let slSubject">{{slSubject.surname}}</mat-cell>
+    </ng-container>
+    <ng-container class="cell-container" matColumnDef="jobTitle">
+      <mat-header-cell *matHeaderCellDef>Job Title</mat-header-cell>
+      <mat-cell *matCellDef="let slSubject">{{slSubject.jobTitle}}</mat-cell>
+    </ng-container>
+    <ng-container class="cell-container" matColumnDef="ID">
+      <mat-header-cell *matHeaderCellDef>ID Number</mat-header-cell>
+      <mat-cell *matCellDef="let slSubject">{{slSubject.ID}}</mat-cell>
+    </ng-container>
+    <ng-container class="cell-container" matColumnDef="validityDate">
+      <mat-header-cell *matHeaderCellDef>Validity Date</mat-header-cell>
+      <mat-cell *matCellDef="let slSubject">{{slSubject.validityDate | date:'shortDate'}}</mat-cell>
+    </ng-container>
+    <ng-container class="cell-container" matColumnDef="backgroundValidityCheck">
+      <mat-header-cell *matHeaderCellDef>Background Validity Check</mat-header-cell>
+      <mat-cell *matCellDef="let slSubject">{{slSubject.backgroundValidityCheck}}</mat-cell>
+    </ng-container >
+    <ng-container class="cell-container" matColumnDef="approvedAreas">
+      <mat-header-cell *matHeaderCellDef>Approved Areas</mat-header-cell>
+      <mat-cell *matCellDef="let slSubject">{{slSubject.approvedAreas}}</mat-cell>
+    </ng-container>
+    <ng-container class="cell-container" matColumnDef="dateOfIssue">
+      <mat-header-cell *matHeaderCellDef>Date Of Issue</mat-header-cell>
+      <mat-cell *matCellDef="let slSubject">{{slSubject.dateOfIssue | date:'shortDate'}}</mat-cell>
+    </ng-container>
+    <ng-container class="cell-container" matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+      <mat-cell *matCellDef="let slSubject">{{slSubject.status}}</mat-cell>
+    </ng-container>
+    <ng-container class="cell-container" matColumnDef="secAwareDOT">
+      <mat-header-cell *matHeaderCellDef>Security Awareness Date Of Training</mat-header-cell>
+      <mat-cell *matCellDef="let slSubject">{{slSubject.secAwareDOT | date:'shortDate'}}</mat-cell>
+    </ng-container>
+    <ng-container class="cell-container" matColumnDef="proximityCardNo">
+      <mat-header-cell *matHeaderCellDef>Proximity Card No</mat-header-cell>
+      <mat-cell *matCellDef="let slSubject">{{slSubject.proximityCardNo}}</mat-cell>
+    </ng-container>
+    <ng-container class="cell-container" matColumnDef="code">
+      <mat-header-cell *matHeaderCellDef>Code</mat-header-cell>
+      <mat-cell *matCellDef="let slSubject">{{slSubject.code}}</mat-cell>
+    </ng-container>
+    <ng-container class="cell-container" matColumnDef="airport">
+      <mat-header-cell *matHeaderCellDef>Airport</mat-header-cell>
+      <mat-cell *matCellDef="let slSubject">{{slSubject.airport}}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+</div>

@@ -22,6 +22,8 @@ import { AuthService } from './services/auth.service';
 import { ApprovalsComponent } from './approvals/approvals.component';
 import { ApprovalsService } from './services/approvals.service';
 import { FormsModule } from '@angular/forms';
+import { StopListComponent } from './stop-list/stop-list.component';
+import { StopListService } from './services/stop-list.service';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import { FormsModule } from '@angular/forms';
     DialogVehicleComponent,
     LoginComponent,
     ApprovalsComponent,
+    StopListComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,7 +49,8 @@ import { FormsModule } from '@angular/forms';
     DialogPersonComponent,
     DialogVehicleComponent
   ],
-  providers: [RequesterService, AuthService, ApprovalsService],
+  providers: [RequesterService, AuthService, ApprovalsService,
+              StopListService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
