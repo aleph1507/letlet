@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { StopListService } from '../services/stop-list.service';
 import { StopListEntry } from '../models/StopListEntry.model';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-stop-list',
@@ -17,6 +17,8 @@ export class StopListComponent implements OnInit {
     'code', 'airport'
   ];
 
+  @ViewChild(MatSort) sort: MatSort;
+
   slDataSource;
 
   constructor(private slService: StopListService) { }
@@ -24,8 +26,7 @@ export class StopListComponent implements OnInit {
   ngOnInit() {
     this.slEntries = this.slService.getStopListEntries();
     this.slDataSource = new MatTableDataSource(this.slEntries);
-    console.log(this.slService.getStopListEntries());
-    // console.log(this.dataSource);
+    this.slDataSource.sort = this.sort;
   }
 
   applyFilter(filterValue: string) {
