@@ -10,29 +10,48 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 })
 export class StopListComponent implements OnInit {
 
-  slEntries: StopListEntry[];
-  displayedColumns = [
-    'name', 'surname', 'jobTitle', 'ID', 'validityDate', 'backgroundValidityCheck',
-    'approvedAreas', 'dateOfIssue', 'status', 'secAwareDOT', 'proximityCardNo',
-    'code', 'airport'
+  // slEntries: StopListEntry[];
+  // displayedColumns = [
+  //   'name', 'surname', 'jobTitle', 'ID', 'validityDate', 'backgroundValidityCheck',
+  //   'approvedAreas', 'dateOfIssue', 'status', 'secAwareDOT', 'proximityCardNo',
+  //   'code', 'airport'
+  // ];
+
+  columnDefs = [
+    {headerName: 'Name', field: 'name'},
+    {headerName: 'Surname', field: 'surname'},
+    {headerName: 'Job Title', field: 'jobTitle'},
+    {headerName: 'ID Number', field: 'ID'},
+    {headerName: 'Validity Date', field: 'validityDate'},
+    {headerName: 'Background Validity Check', field: 'backgroundValidityCheck'},
+    {headerName: 'Approved Areas', field: 'approvedAreas'},
+    {headerName: 'Date Of Issue', field: 'dateOfIssue'},
+    {headerName: 'Status', field: 'status'},
+    {headerName: 'Security Awareness Date Of Training', field: 'secAwareDOT'},
+    {headerName: 'Proximity Card No', field: 'proximityCardNo'},
+    {headerName: 'Code', field: 'code'},
+    {headerName: 'Airport', field: 'airport'}
   ];
 
-  @ViewChild(MatSort) sort: MatSort;
+  rowData = [];
 
-  slDataSource;
+  // @ViewChild(MatSort) sort: MatSort;
+
+  // slDataSource;
 
   constructor(private slService: StopListService) { }
 
   ngOnInit() {
-    this.slEntries = this.slService.getStopListEntries();
-    this.slDataSource = new MatTableDataSource(this.slEntries);
-    this.slDataSource.sort = this.sort;
+    // this.slEntries = this.slService.getStopListEntries();
+    // this.slDataSource = new MatTableDataSource(this.slEntries);
+    // this.slDataSource.sort = this.sort;
+    this.rowData = this.slService.getStopListEntries();
   }
 
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim();
-    filterValue = filterValue.toLowerCase();
-    this.slDataSource.filter = filterValue;
-  }
+  // applyFilter(filterValue: string) {
+    // filterValue = filterValue.trim();
+    // filterValue = filterValue.toLowerCase();
+    // this.slDataSource.filter = filterValue;
+  // }
 
 }

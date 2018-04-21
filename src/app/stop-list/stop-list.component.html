@@ -1,11 +1,21 @@
-<div class="slTable mat-elevation-z8">
+<!-- <div class="slTable mat-elevation-z8">
   <div class="slTable-header">
     <mat-form-field>
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
     </mat-form-field>
-  </div>
+  </div> -->
 
-  <mat-table #slTable [dataSource]="slDataSource" matSort>
+  <ag-grid-angular
+    style="width: 100%; height: 100%;"
+    class="ag-theme-balham"
+    [enableSorting]="true"
+    [enableFilter]="true"
+    [rowData]="rowData"
+    [columnDefs]="columnDefs"
+  >
+  </ag-grid-angular>
+
+  <!-- <mat-table #slTable [dataSource]="slDataSource" matSort>
     <ng-container class="cell-container" matColumnDef="name">
       <mat-header-cell *matHeaderCellDef mat-sort-header > Name </mat-header-cell>
       <mat-cell *matCellDef="let slSubject"> {{slSubject.name}} </mat-cell>
@@ -61,6 +71,6 @@
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
+  </mat-table> -->
 
-</div>
+<!-- </div> -->

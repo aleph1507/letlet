@@ -24,6 +24,7 @@ import { ApprovalsService } from './services/approvals.service';
 import { FormsModule } from '@angular/forms';
 import { StopListComponent } from './stop-list/stop-list.component';
 import { StopListService } from './services/stop-list.service';
+import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { StopListService } from './services/stop-list.service';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    AgGridModule.withComponents([])
   ],
   entryComponents: [
     DialogPersonComponent,
