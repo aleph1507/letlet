@@ -17,7 +17,8 @@ export class ApprovalsComponent implements OnInit {
 
   approvalRequests = [];
   dataSource;
-  displayedColumns = ['date', 'requesterName', 'requesterCompany', 'nPersons', 'nVehicles'];
+  displayedColumns = ['date', 'requesterName', 'requesterCompany', 'nPersons',
+             'nVehicles', 'status', 'approvedDate', 'approvedFrom', 'reqID'];
   showApprovals = ['All', 'Approved', 'Declined'];
   selectedApprovals = 'All';
   filteredCompanies: Observable<string[]>;

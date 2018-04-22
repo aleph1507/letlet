@@ -6,6 +6,10 @@
   width: 40%;
 }
 
+div.img-upload {
+  display: block;
+}
+
 .half-padding {
   padding-left: 9%;
 }

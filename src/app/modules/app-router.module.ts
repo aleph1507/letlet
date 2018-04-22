@@ -8,7 +8,8 @@ import { StopListComponent } from '../stop-list/stop-list.component';
 
 const appRoutes: Routes = [
    { path: '', component: DashboardComponent, pathMatch: 'full' },
-   { path: 'requester', component: RequesterComponent },
+   { path: 'requester', component: RequesterComponent, pathMatch: 'full' },
+   { path: 'requester/edit/:id', component: RequesterComponent },
    { path: 'login', component: LoginComponent },
    { path: 'dashboard', component: DashboardComponent},
    { path: 'approvals', component: ApprovalsComponent },

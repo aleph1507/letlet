@@ -44,6 +44,7 @@ export class RequesterService {
 
   pushRequest(requesterName, description, company, from, to, numEntries){
     let request = new Requester();
+    request.requestID = this.requests.length;
     request.requesterName = requesterName;
     request.description = description;
     request.company = company;
@@ -57,6 +58,15 @@ export class RequesterService {
     this.vehicles = [];
 
     this.requests.push(request);
+  }
+
+  editRequest(req: Requester){
+    for(let i = 0; i<this.requests.length; i++){
+      if(this.requests[i].requestID == req.requestID){
+        this.requests[i] = req;
+        break;
+      }
+    }
   }
 
   addPerson(person: Person){
@@ -121,6 +131,14 @@ export class RequesterService {
 
   deleteVehicle(index: number) {
     this.vehicles.splice(index, 1);
+  }
+
+  setPersons(persons: Person[]){
+    this.persons = persons;
+  }
+
+  setVehicles(vehicles: Vehicle[]){
+    this.vehicles = vehicles;
   }
 
   isEmptyPersons(){

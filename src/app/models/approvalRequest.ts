@@ -4,4 +4,8 @@ export class ApprovalRequest {
   nPersons: number;
   nVehicles: number;
   date: number;
+  status: boolean;
+  approvedDate: number;
+  approvedFrom: string;
+  reqID: number;
 }

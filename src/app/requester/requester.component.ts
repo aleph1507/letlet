@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Person } from '../models/Person.model';
 import { Vehicle } from '../models/Vehicle.model';
 import { Requester } from '../models/Requester.model';
@@ -13,14 +13,14 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/merge';
 import "rxjs/add/observable/of";
 import { RequesterService } from '../services/requester.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-requester',
   templateUrl: './requester.component.html',
   styleUrls: ['./requester.component.css']
 })
-export class RequesterComponent implements OnInit {
+export class RequesterComponent implements OnInit, OnDestroy {
 
   hoveredEditPerson = false;
 
@@ -35,33 +35,49 @@ export class RequesterComponent implements OnInit {
   request = new Requester();
 
   validForm = true;
+  editMode: boolean = false;
+
+  paramsSub: any;
+  id: number = null;
 
   constructor(private dialog: MatDialog,
               private changeDetectorRef: ChangeDetectorRef,
-              public requesterService: RequesterService) { }
+              public requesterService: RequesterService,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
+
+    this.paramsSub = this.route.params.subscribe(params => {
+      if(params['id'] && this.requesterService.getRequest(+params['id']) !== undefined){
+        this.id = +params['id'];
+        this.editMode = true;
+        this.request = this.requesterService.getRequest(this.id);
+        this.requesterService.setPersons(this.request.persons);
+        this.requesterService.setVehicles(this.request.vehicles);
+      }
+    });
+
     this.requesterForm = new FormGroup({
-      'requesterName': new FormControl('', {
+      'requesterName': new FormControl(this.request.requesterName, {
         validators: Validators.required,
         updateOn: 'change'
       }),
-      'requesterDescription': new FormControl('', {
+      'requesterDescription': new FormControl(this.request.description, {
         updateOn: 'change'
       }),
-      'requesterCompany': new FormControl('', {
+      'requesterCompany': new FormControl(this.request.company, {
         validators: Validators.required,
         updateOn: 'change'
       }),
-      'requesterFromDate': new FormControl('', {
+      'requesterFromDate': new FormControl(this.request.from, {
         validators: Validators.required,
         updateOn: 'change'
       }),
-      'requesterToDate': new FormControl('', {
+      'requesterToDate': new FormControl(this.request.to, {
         validators: Validators.required,
         updateOn: 'change'
       }),
-      'requesterNumOfEntries': new FormControl('', {
+      'requesterNumOfEntries': new FormControl(this.request.numEntries, {
         validators: [Validators.required, this.intValidator]
       })
     })
@@ -76,14 +92,24 @@ export class RequesterComponent implements OnInit {
 
   onSubmit() {
     if(this.requesterForm.valid) {
-      this.requesterService.pushRequest(
-        this.requesterForm.controls['requesterName'].value,
-        this.requesterForm.controls['requesterDescription'].value,
-        this.requesterForm.controls['requesterCompany'].value,
-        this.requesterForm.controls['requesterFromDate'].value,
-        this.requesterForm.controls['requesterToDate'].value,
-        this.requesterForm.controls['requesterNumOfEntries'].value
-      );
+      if(this.editMode){
+        this.request.requesterName = this.requesterForm.controls['requesterName'].value;
+        this.request.description = this.requesterForm.controls['requesterDescription'].value;
+        this.request.company = this.requesterForm.controls['requesterCompany'].value;
+        this.request.from = this.requesterForm.controls['requesterFromDate'].value;
+        this.request.to = this.requesterForm.controls['requesterToDate'].value;
+        this.request.numEntries = this.requesterForm.controls['requesterNumOfEntries'].value;
+        this.requesterService.editRequest(this.request);
+      } else {
+        this.requesterService.pushRequest(
+          this.requesterForm.controls['requesterName'].value,
+          this.requesterForm.controls['requesterDescription'].value,
+          this.requesterForm.controls['requesterCompany'].value,
+          this.requesterForm.controls['requesterFromDate'].value,
+          this.requesterForm.controls['requesterToDate'].value,
+          this.requesterForm.controls['requesterNumOfEntries'].value
+        );
+      }
     }
     // this.requesterForm.reset();
     this.requesterForm.controls['requesterName'].setValue('');
@@ -152,5 +178,10 @@ export class RequesterComponent implements OnInit {
     });
 
   }
+
+  ngOnDestroy(): void {
+    this.paramsSub.unsubscribe();
+  }
+
 
 }

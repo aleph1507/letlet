@@ -21,6 +21,7 @@ export class ApprovalsService {
   }
 
   formatRequests() {
+    this.approvalRequests = [];
     this.requests = this.requesterService.getAllRequests();
 
     for(let i =0; i<this.requests.length; i++){
@@ -30,6 +31,10 @@ export class ApprovalsService {
       ar.requesterCompany = this.requests[i].company;
       ar.nPersons = this.requests[i].persons.length;
       ar.nVehicles = this.requests[i].vehicles.length;
+      ar.status = (i % 2 == 0);
+      ar.approvedDate = Date.now();
+      ar.approvedFrom = i.toString();
+      ar.reqID = this.requests[i].requestID;
       this.approvalRequests.push(ar);
     }
 
