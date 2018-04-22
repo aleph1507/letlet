@@ -11,14 +11,18 @@ export class RequesterService {
   persons: Person[] = [
       {
         name: 'name1',
+        nameCyrilic: 'наме1',
         surname: 'surname1',
+        surnameCyrilic: 'сурнаме1',
         image1: 'https://griffonagedotcom.files.wordpress.com/2016/07/profile-modern-2e.jpg',
         image2: 'https://media.gettyimages.com/photos/close-up-profile-of-pensive-brunette-woman-picture-id522796409'
 
       },
       {
         name: 'name2',
+        nameCyrilic: 'наме2',
         surname: 'surname2',
+        surnameCyrilic: 'сурнаме2',
         image1: 'https://thumb9.shutterstock.com/display_pic_with_logo/1306012/561117598/stock-photo-beauty-woman-profile-face-portrait-beautiful-spa-model-girl-with-perfect-fresh-clean-skin-blonde-561117598.jpg',
         image2: 'https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg'
 

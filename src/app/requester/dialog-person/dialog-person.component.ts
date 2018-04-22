@@ -17,7 +17,9 @@ export class DialogPersonComponent implements OnInit {
   img2src: string = '';
   person: Person = {
     name: '',
+    nameCyrilic: '',
     surname: '',
+    surnameCyrilic: '',
     image1: '',
     image2: ''
   };
@@ -40,7 +42,15 @@ export class DialogPersonComponent implements OnInit {
         validators: [Validators.required],
         updateOn: 'change'
       }),
+      'nameCyrilic': new FormControl(this.person.surnameCyrilic, {
+        validators: [Validators.required],
+        updateOn: 'change'
+      }),
       'surname': new FormControl(this.person.surname, {
+        validators: Validators.required,
+        updateOn: 'change'
+      }),
+      'surnameCyrilic': new FormControl(this.person.surnameCyrilic, {
         validators: Validators.required,
         updateOn: 'change'
       }),
@@ -70,9 +80,22 @@ export class DialogPersonComponent implements OnInit {
     }
   }
 
+  latinOnly(event) {
+    var regex = /[^a-z\s]/gi;
+    event.target.value = event.target.value.replace(regex, '');
+  }
+
+  cyrilicOnly(event) {
+    // var regex = /[^а-з\s]/gi;
+    var regex = /[^АБВГДЃЕЖЗЅИЈКЛЉМНЊОПРСТЌУФХЦЧЏШабвгдѓежзѕијклљмнњопрстќуфхцчџш\s]/g;
+    event.target.value = event.target.value.replace(regex, '');
+  }
+
   onSubmit(){
     this.person.name = this.personForm.controls['name'].value;
+    this.person.nameCyrilic = this.personForm.controls['nameCyrilic'].value;
     this.person.surname = this.personForm.controls['surname'].value;
+    this.person.surnameCyrilic = this.personForm.controls['surnameCyrilic'].value;
     this.person.image1 = this.img1src;
     this.person.image2 = this.img2src;
     this.data === null ? this.requesterService.addPerson(this.person) : this.requesterService.editPerson(this.data.i, this.person);

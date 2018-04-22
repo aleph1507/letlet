@@ -24,26 +24,7 @@ export class RequesterComponent implements OnInit {
 
   hoveredEditPerson = false;
 
-  // companies = [
-  //   {
-  //     name: 'AMC'
-  //   },
-  //   {
-  //     name: 'BBC'
-  //   },
-  //   {
-  //     name: 'TAV'
-  //   },
-  //   {
-  //     name: 'DrinkLab'
-  //   }
-  // ];
-
   companies = ['AMC', 'BBC', 'TAV', 'DrinkerLab'];
-
-  // persons: Observable<Person[]>;
-  // persons: Person[] = [];
-  // vehicles: Vehicle[] = [];
 
   displayedPersonColumns = ['name', 'surname'];
   displayedVehicleColumns = ['model', 'plate'];
@@ -85,12 +66,6 @@ export class RequesterComponent implements OnInit {
       })
     })
 
-    // this.filteredCompanies = this.requesterForm.controls['requesterCompany'].valueChanges
-    //   .pipe(
-    //     startWith(''),
-    //     map(company => company ? this.filterCompanies(company) : this.companies.slice())
-    //   )
-
       this.filteredCompanies = this.requesterForm.controls['requesterCompany'].valueChanges
         .pipe(
           startWith(''),
@@ -110,7 +85,25 @@ export class RequesterComponent implements OnInit {
         this.requesterForm.controls['requesterNumOfEntries'].value
       );
     }
-    this.requesterForm.reset();
+    // this.requesterForm.reset();
+    this.requesterForm.controls['requesterName'].setValue('');
+    this.requesterForm.controls['requesterName'].markAsPristine();
+    this.requesterForm.controls['requesterName'].markAsUntouched();
+    this.requesterForm.controls['requesterDescription'].setValue('');
+    this.requesterForm.controls['requesterDescription'].markAsPristine();
+    this.requesterForm.controls['requesterDescription'].markAsUntouched();
+    this.requesterForm.controls['requesterCompany'].setValue('');
+    this.requesterForm.controls['requesterCompany'].markAsPristine();
+    this.requesterForm.controls['requesterCompany'].markAsUntouched();
+    this.requesterForm.controls['requesterFromDate'].setValue('');
+    this.requesterForm.controls['requesterFromDate'].markAsPristine();
+    this.requesterForm.controls['requesterFromDate'].markAsUntouched();
+    this.requesterForm.controls['requesterToDate'].setValue('');
+    this.requesterForm.controls['requesterToDate'].markAsPristine();
+    this.requesterForm.controls['requesterToDate'].markAsUntouched();
+    this.requesterForm.controls['requesterNumOfEntries'].setValue('');
+    this.requesterForm.controls['requesterNumOfEntries'].markAsPristine();
+    this.requesterForm.controls['requesterNumOfEntries'].markAsUntouched();
   }
 
   filterCompanies(name: string) {

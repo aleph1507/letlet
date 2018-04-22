@@ -1,15 +1,31 @@
 <form class="requester-person-form" [formGroup]="personForm" (ngSubmit)="onSubmit()" novalidate>
-  <mat-form-field class="requester-person-field">
+  <mat-form-field class="requester-person-field half">
     <input matInput name="personName"
       id="personName" placeholder="Name"
       formControlName="name"
-      autocomplete="off" required>
+      autocomplete="off"
+      (keyup)="latinOnly($event)" required>
   </mat-form-field>
-  <mat-form-field class="requester-person-field">
+  <mat-form-field class="requester-person-field half half-padding">
+    <input matInput name="personNameCyrilic"
+      id="personNameCyrilic" placeholder="Кирилично име"
+      formControlName="nameCyrilic"
+      autocomplete="off"
+      (keyup)="cyrilicOnly($event)" required>
+  </mat-form-field>
+  <mat-form-field class="requester-person-field half">
     <input matInput name="personSurname"
       id="personsurName" placeholder="Surame"
       formControlName="surname"
-      autocomplete="off" required>
+      autocomplete="off"
+      (keyup)="latinOnly($event)" required>
+  </mat-form-field>
+  <mat-form-field class="requester-person-field half half-padding">
+    <input matInput name="personSurnameCyrilic"
+      id="personSurnameCyrilic" placeholder="Кирилично презиме"
+      formControlName="surnameCyrilic"
+      autocomplete="off"
+      (keyup)="cyrilicOnly($event)" required>
   </mat-form-field>
   <button type="button" mat-raised-button (click)="imgUpload1.click()">
     <mat-icon>keyboard_arrow_up</mat-icon>
