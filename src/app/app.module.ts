@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
@@ -25,6 +25,10 @@ import { FormsModule } from '@angular/forms';
 import { StopListComponent } from './stop-list/stop-list.component';
 import { StopListService } from './services/stop-list.service';
 import { AgGridModule } from 'ag-grid-angular';
+import { BadgesComponent } from './badges/badges.component';
+import { ResourcesService } from './services/resources.service';
+import { BadgesService } from './services/badges.service';
+import { BadgesCreateComponent } from './badges/badges-create/badges-create.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +40,8 @@ import { AgGridModule } from 'ag-grid-angular';
     LoginComponent,
     ApprovalsComponent,
     StopListComponent,
+    BadgesComponent,
+    BadgesCreateComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,10 +55,12 @@ import { AgGridModule } from 'ag-grid-angular';
   ],
   entryComponents: [
     DialogPersonComponent,
-    DialogVehicleComponent
+    DialogVehicleComponent,
+    BadgesCreateComponent
   ],
   providers: [RequesterService, AuthService, ApprovalsService,
-              StopListService],
+              StopListService, ResourcesService, BadgesService,
+              DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

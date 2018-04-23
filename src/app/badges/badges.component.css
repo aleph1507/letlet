@@ -1,0 +1,6 @@
+div#header {
+  display: flex;
+  justify-content: space-between;
+  align-items: space-between;
+  margin:1%;
+}

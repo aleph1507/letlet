@@ -14,6 +14,7 @@ import 'rxjs/add/observable/merge';
 import "rxjs/add/observable/of";
 import { RequesterService } from '../services/requester.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ResourcesService } from '../services/resources.service';
 
 @Component({
   selector: 'app-requester',
@@ -24,7 +25,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
 
   hoveredEditPerson = false;
 
-  companies = ['AMC', 'BBC', 'TAV', 'DrinkerLab'];
+  companies = this.resources.getCompanies();
 
   displayedPersonColumns = ['name', 'surname'];
   displayedVehicleColumns = ['model', 'plate'];
@@ -43,7 +44,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
   constructor(private dialog: MatDialog,
               private changeDetectorRef: ChangeDetectorRef,
               public requesterService: RequesterService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private resources: ResourcesService) { }
 
   ngOnInit() {
 

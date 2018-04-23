@@ -1,0 +1,56 @@
+<!-- <ag-grid-angular
+  style="width: 100%; height: 100%;"
+  class="ag-theme-balham"
+  [enableSorting]="true"
+  [enableFilter]="true"
+  [rowData]="rowData"
+  [columnDefs]="columnDefs"
+>
+</ag-grid-angular> -->
+
+<div id="header">
+  <h2>Badges</h2>
+  <button mat-fab color="primary" (click)="openDialog()">+</button>
+</div>
+<div class="badges-table mat-elevation-z8">
+  <mat-table #badgesTable [dataSource]="dataSource">
+    <ng-container matColumnDef="company">
+      <mat-header-cell *matHeaderCellDef> Company </mat-header-cell>
+      <mat-cell *matCellDef="let b"> {{b.company}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="personName">
+      <mat-header-cell *matHeaderCellDef> Person Name </mat-header-cell>
+      <mat-cell *matCellDef="let b"> {{b.personName}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="validTo">
+      <mat-header-cell *matHeaderCellDef> Valid To </mat-header-cell>
+      <mat-cell *matCellDef="let b"> {{b.validTo | date:'short'}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="zones">
+      <mat-header-cell *matHeaderCellDef> Zones </mat-header-cell>
+      <mat-cell *matCellDef="let b"> {{b.zones}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="dateSecCheck">
+      <mat-header-cell *matHeaderCellDef> Date Of Security Check </mat-header-cell>
+      <mat-cell *matCellDef="let b"> {{b.dateSecCheck | date:'short'}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="dateTraining">
+      <mat-header-cell *matHeaderCellDef> Date Of Training </mat-header-cell>
+      <mat-cell *matCellDef="let b"> {{b.dateTraining | date:'short'}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef> Edit </mat-header-cell>
+      <mat-cell *matCellDef="let b"> <a [routerLink]="['/badges/edit', b.id]"><mat-icon>mode_edit</mat-icon></a> </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator #paginator
+                 [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 20]"
+                 [showFirstLastButtons]="true">
+  </mat-paginator>
+
+</div>
