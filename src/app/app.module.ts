@@ -29,6 +29,10 @@ import { BadgesComponent } from './badges/badges.component';
 import { ResourcesService } from './services/resources.service';
 import { BadgesService } from './services/badges.service';
 import { BadgesCreateComponent } from './badges/badges-create/badges-create.component';
+import { ResourcesComponent } from './resources/resources.component';
+import { ResourceComponent } from './resources/resource/resource.component';
+import { CompanyModalComponent } from './resources/resource/company-modal/company-modal.component';
+import { EmployeeModalComponent } from './resources/resource/employee-modal/employee-modal.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +46,10 @@ import { BadgesCreateComponent } from './badges/badges-create/badges-create.comp
     StopListComponent,
     BadgesComponent,
     BadgesCreateComponent,
+    ResourcesComponent,
+    ResourceComponent,
+    CompanyModalComponent,
+    EmployeeModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,7 +64,9 @@ import { BadgesCreateComponent } from './badges/badges-create/badges-create.comp
   entryComponents: [
     DialogPersonComponent,
     DialogVehicleComponent,
-    BadgesCreateComponent
+    BadgesCreateComponent,
+    CompanyModalComponent,
+    EmployeeModalComponent
   ],
   providers: [RequesterService, AuthService, ApprovalsService,
               StopListService, ResourcesService, BadgesService,

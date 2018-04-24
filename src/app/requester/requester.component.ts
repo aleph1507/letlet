@@ -25,7 +25,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
 
   hoveredEditPerson = false;
 
-  companies = this.resources.getCompanies();
+  // companies = this.resources.getCompanies();
+  companies = this.resources.companies.getCompaniesNames();
 
   displayedPersonColumns = ['name', 'surname'];
   displayedVehicleColumns = ['model', 'plate'];
@@ -55,7 +56,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
         this.editMode = true;
         this.request = this.requesterService.getRequest(this.id);
         this.requesterService.setPersons(this.request.persons);
-        this.requesterService.setVehicles(this.request.vehicles);
+        // this.requesterService.setVehicles(this.request.vehicles);
+        this.resources.vehicles.setVehicles(this.request.vehicles);
       }
     });
 
@@ -163,7 +165,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
   }
 
   editVehicle(index: number){
-    let v = this.requesterService.getVehicleByIndex(index);
+    // let v = this.requesterService.getVehicleByIndex(index);
+    let v = this.resources.vehicles.getVehicleByIndex(index);
     let editVehicleDialogRef = this.dialog.open(DialogVehicleComponent, {
       width: '45vw',
       data: {vehicle: v, index: index}
@@ -171,7 +174,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
   }
 
   deleteVehicle(index: number) {
-    this.requesterService.deleteVehicle(index);
+    // this.requesterService.deleteVehicle(index);
+    this.resources.vehicles.deleteVehicle(index);
   }
 
   openVehicleDialog() {

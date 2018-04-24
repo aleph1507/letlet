@@ -1,0 +1,97 @@
+<div id="header">
+  <h2>{{category | titlecase}}</h2>
+  <button mat-mini-fab color="primary" class="add-resource-btn" (click)="addResource(category)">+
+  </button>
+</div>
+
+
+  <div class="input-field-header">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </div>
+
+  <div class="table-container mat-elevation-z8">
+
+    <mat-table [dataSource]="dataSource" matSort>
+
+      <!-- Employees resource -->
+      <div *ngIf="category=='employees'" class="employees-resource" id="employees-resource">
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+          <mat-cell *matCellDef="let emp"> {{emp.id}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+          <mat-cell *matCellDef="let emp"> {{emp.name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+          <mat-cell *matCellDef="let emp"> {{emp.email}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="edit">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
+          <mat-cell *matCellDef="let emp">
+            <mat-icon matListIcon
+            (click)="editEmployee(emp.id)"
+            class="icon-control"
+            >mode_edit</mat-icon>
+          </mat-cell>
+        </ng-container>
+      </div>
+      <!-- ./Employees resource -->
+
+      <!-- Vehicles resource -->
+      <div *ngIf="category=='vehicles'" class="vehicles-resource" id="vehicles-resource">
+        <ng-container matColumnDef="model">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Model </mat-header-cell>
+          <mat-cell *matCellDef="let vehicle"> {{vehicle.model}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="plate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Plate </mat-header-cell>
+          <mat-cell *matCellDef="let vehicle"> {{vehicle.plate}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="edit">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
+          <mat-cell *matCellDef="let vehicle">
+            <mat-icon matListIcon
+            (click)="editVehicle(vehicle.plate)"
+            class="icon-control"
+            >mode_edit</mat-icon>
+          </mat-cell>
+        </ng-container>
+      </div>
+      <!-- ./Vehicles resource -->
+
+      <!-- Companies resource -->
+      <div *ngIf="category=='companies'" class="companies-resource" id="companies-resource">
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+          <mat-cell *matCellDef="let comp"> {{comp.name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
+          <mat-cell *matCellDef="let comp">
+            <mat-icon matListIcon
+            (click)="editCompany(comp.id)"
+            class="icon-control"
+            >mode_edit</mat-icon>
+          </mat-cell>
+        </ng-container>
+      </div>
+      <!-- ./Companies resource -->
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;">
+      </mat-row>
+    </mat-table>
+
+    <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
+  </div>
+<!-- </div> -->

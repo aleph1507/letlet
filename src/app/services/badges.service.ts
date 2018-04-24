@@ -7,7 +7,7 @@ import { DatePipe } from '@angular/common';
 @Injectable()
 export class BadgesService {
 
-  companies = this.resources.getCompanies();
+  companies = this.resources.companies.getCompaniesNames();
   badges: Badge[] = [];
 
   constructor(private resources: ResourcesService,

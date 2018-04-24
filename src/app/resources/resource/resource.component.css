@@ -1,0 +1,35 @@
+.input-field-header {
+  min-height: 64px;
+  padding: 8px 24px 0;
+}
+
+
+.table-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
+}
+
+.add-resource-btn{
+  /* position: relative;
+  left: 98%;
+  margin-top: 1%;
+  margin-bottom: 1%; */
+}
+
+div#header {
+  display: flex;
+  justify-content: space-between;
+  align-items: space-between;
+  margin:1%;
+}

@@ -7,6 +7,7 @@ import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
 import {startWith} from 'rxjs/operators/startWith';
 import {map} from 'rxjs/operators/map';
+import { ResourcesService } from '../services/resources.service';
 
 @Component({
   selector: 'app-approvals',
@@ -23,12 +24,14 @@ export class ApprovalsComponent implements OnInit {
   selectedApprovals = 'All';
   filteredCompanies: Observable<string[]>;
 
-  companies = ['AMC', 'BBC', 'TAV', 'DrinkerLab'];
+  // companies = ['AMC', 'BBC', 'TAV', 'DrinkerLab'];
+  companies = this.resourcesService.companies.getCompaniesNames();
   fCompany: FormControl = new FormControl();
 
 
 
-  constructor(private approvalsService: ApprovalsService) { }
+  constructor(private approvalsService: ApprovalsService,
+              private resourcesService: ResourcesService) { }
 
   ngOnInit() {
     this.approvalRequests = this.approvalsService.formatRequests();

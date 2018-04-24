@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Vehicle } from '../../models/Vehicle.model';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { RequesterService } from '../../services/requester.service';
+import { ResourcesService } from '../../services/resources.service';
 
 @Component({
   selector: 'app-dialog-vehicle',
@@ -13,7 +14,8 @@ export class DialogVehicleComponent implements OnInit {
 
   constructor(public thisDialogRef: MatDialogRef<DialogVehicleComponent>,
               @Inject(MAT_DIALOG_DATA) public data: {vehicle, i},
-              private requesterService: RequesterService
+              private requesterService: RequesterService,
+              private resourcesService: ResourcesService
               ) { }
 
   vehicleForm: FormGroup;
@@ -41,7 +43,9 @@ export class DialogVehicleComponent implements OnInit {
   onSubmit(){
     this.vehicle.model = this.vehicleForm.controls['model'].value;
     this.vehicle.plate = this.vehicleForm.controls['plate'].value;
-    this.data === null ? this.requesterService.addVehicle(this.vehicle) : this.requesterService.editVehicle(this.data.i, this.vehicle);
+    console.log('prev call add vehicles: ', this.resourcesService.vehicles.getAllVehicles());
+    this.data === null ? this.resourcesService.vehicles.addVehicle(this.vehicle) : this.resourcesService.vehicles.editVehicle(this.data.i, this.vehicle);
+    console.log('post call add vehicles: ', this.resourcesService.vehicles.getAllVehicles());
     this.thisDialogRef.close(this.vehicle);
   }
 

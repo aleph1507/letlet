@@ -1,0 +1,14 @@
+<form [formGroup]="companyForm" (ngSubmit)="onSubmit()" novalidate>
+  <mat-form-field>
+    <input matInput name="companyName"
+      id="companyName" placeholder="Name"
+      formControlName="name"
+      autocomplete="off" required>
+  </mat-form-field>
+
+  <mat-divider class="sm-form-divider-margins"></mat-divider>
+  <mat-dialog-actions>
+    <button type="submit" [disabled]="!companyForm.valid" mat-raised-button>OK</button>
+    <button type="button" mat-raised-button (click)="onCancel()">Cancel</button>
+  </mat-dialog-actions>
+</form>
