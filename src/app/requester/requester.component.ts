@@ -46,7 +46,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
               private changeDetectorRef: ChangeDetectorRef,
               public requesterService: RequesterService,
               private route: ActivatedRoute,
-              private resources: ResourcesService) { }
+              private resources: ResourcesService
+            ) { }
 
   ngOnInit() {
 
@@ -57,7 +58,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
         this.request = this.requesterService.getRequest(this.id);
         this.requesterService.setPersons(this.request.persons);
         // this.requesterService.setVehicles(this.request.vehicles);
-        this.resources.vehicles.setVehicles(this.request.vehicles);
+        this.requesterService.setVehicles(this.request.vehicles);
       }
     });
 
@@ -165,24 +166,30 @@ export class RequesterComponent implements OnInit, OnDestroy {
   }
 
   editVehicle(index: number){
-    // let v = this.requesterService.getVehicleByIndex(index);
-    let v = this.resources.vehicles.getVehicleByIndex(index);
+    let v = this.requesterService.getVehicleByIndex(index);
+    // let v = this.resources.vehicles.getVehicleByIndex(index);
     let editVehicleDialogRef = this.dialog.open(DialogVehicleComponent, {
       width: '45vw',
-      data: {vehicle: v, index: index}
-    })
+      data: {vehicle: v, i: index, resource: false}
+    });
+
+    console.log('posle edit vehicles: ', this.requesterService.getAllVehicles());
   }
 
   deleteVehicle(index: number) {
-    // this.requesterService.deleteVehicle(index);
-    this.resources.vehicles.deleteVehicle(index);
+    this.requesterService.deleteVehicle(index);
+    // this.resources.vehicles.deleteVehicle(index);
   }
 
   openVehicleDialog() {
     let vehicleDialogRef = this.dialog.open(DialogVehicleComponent, {
-      width: '45vw'
+      width: '45vw',
+      data: {resource: false}
     });
 
+    vehicleDialogRef.afterClosed().subscribe(a => {
+      console.log('posle add vehicles: ', this.requesterService.getAllVehicles());
+    });
   }
 
   ngOnDestroy(): void {

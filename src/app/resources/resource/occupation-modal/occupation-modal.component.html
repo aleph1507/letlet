@@ -1,0 +1,26 @@
+<form [formGroup]="occupationForm" (ngSubmit)="onSubmit()" novalidate>
+  <mat-form-field>
+    <input matInput name="occupationID"
+    id="occupationID" placeholder="ID"
+    formControlName="id"
+    autocomplete="off" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput name="occupationCode"
+    id="occupationCode" placeholder="Code"
+    formControlName="code"
+    autocomplete="off" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput name="occupationName"
+    id="occupationName" placeholder="Name"
+    formControlName="name"
+    autocomplete="off" required>
+  </mat-form-field>
+
+  <mat-divider class="sm-form-divider-margins"></mat-divider>
+  <mat-dialog-actions>
+    <button type="submit" [disabled]="!occupationForm.valid" mat-raised-button>OK</button>
+    <button type="button" mat-raised-button (click)="onCancel()">Cancel</button>
+  </mat-dialog-actions>
+</form>

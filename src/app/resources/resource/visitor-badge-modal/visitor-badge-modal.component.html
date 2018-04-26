@@ -1,0 +1,32 @@
+<form [formGroup]="vbForm" (ngSubmit)="onSubmit()" novalidate>
+  <mat-form-field>
+    <input matInput name="vbID"
+    id="vbID" placeholder="ID"
+    formControlName="id"
+    autocomplete="off" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput name="vbCode"
+    id="vbCode" placeholder="Code"
+    formControlName="code"
+    autocomplete="off" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput name="vbName"
+    id="vbName" placeholder="Name"
+    formControlName="name"
+    autocomplete="off" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput name="vbBarcode"
+    id="vbBarcode" placeholder="Barcode"
+    formControlName="barcode"
+    autocomplete="off" required>
+  </mat-form-field>
+
+  <mat-divider class="sm-form-divider-margins"></mat-divider>
+  <mat-dialog-actions>
+    <button type="submit" [disabled]="!vbForm.valid" mat-raised-button>OK</button>
+    <button type="button" mat-raised-button (click)="onCancel()">Cancel</button>
+  </mat-dialog-actions>
+</form>

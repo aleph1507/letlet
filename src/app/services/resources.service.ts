@@ -3,9 +3,352 @@ import { Badge } from '../models/Badge.model';
 import { Company } from '../models/Company';
 import { Vehicle } from '../models/Vehicle.model';
 import { Employee } from '../models/Employee';
+import { Reason } from '../models/Reason';
+import { Gate } from '../models/Gate';
+import { Occupation } from '../models/Occupation';
+import { AirportZone } from '../models/AirportZone';
+import { VisitorBadge } from '../models/VisitorBadge';
+import { VisitorVehicleBadge } from '../models/VisitorVehicleBadge';
 
 
 class VisitorsBadges {
+
+}
+
+class VisitorVehicleBadges {
+  visitorVehicleBadges: VisitorVehicleBadge[] = [
+    {
+      id: 'visitor-vehicle-1',
+      code: 'visitor-vehicle-1',
+      number: 1
+    },
+    {
+      id: 'visitor-vehicle-2',
+      code: 'visitor-vehicle-2',
+      number: 2
+    },
+    {
+      id: 'visitor-vehicle-3',
+      code: 'visitor-vehicle-3',
+      number: 3
+    }
+  ];
+
+  getAllVisitorVehicleBadges() {
+    return this.visitorVehicleBadges;
+  }
+
+  getVisitorVehicleBadgeById(id: string){
+    for(let i = 0; i< this.visitorVehicleBadges.length; i++){
+      if(this.visitorVehicleBadges[i].id == id)
+        return this.visitorVehicleBadges[i];
+    }
+    return null;
+  }
+
+  addVisitorVehicleBadge(visitorVehicleBadge: VisitorVehicleBadge){
+    this.visitorVehicleBadges.push(visitorVehicleBadge);
+  }
+
+  editVisitorVehicleBadge(visitorVehicleBadge: VisitorVehicleBadge, id: string){
+    for(let i = 0; i<this.visitorVehicleBadges.length; i++){
+      if(this.visitorVehicleBadges[i].id == id){
+        this.visitorVehicleBadges[i] = visitorVehicleBadge;
+        return this.visitorVehicleBadges[i];
+      }
+    }
+    return null;
+  }
+
+  deleteVisitorVehicleBadgeById(id: string){
+    for(let i = 0; i<this.visitorVehicleBadges.length; i++){
+      if(this.visitorVehicleBadges[i].id == id){
+        this.visitorVehicleBadges.splice(i, 1);
+      }
+    }
+    return this.visitorVehicleBadges;
+  }
+
+
+}
+
+class VisitorBadges {
+  visitorBadges: VisitorBadge[] = [
+    {
+      id: 'visitor-badge1',
+      code: 'visitor-badge-code1',
+      name: 'visitor-badge-name1',
+      barcode: 'visitor-badge-barcode1'
+    },
+    {
+      id: 'visitor-badge2',
+      code: 'visitor-badge-code2',
+      name: 'visitor-badge-name2',
+      barcode: 'visitor-badge-barcode2'
+    },
+    {
+      id: 'visitor-badge3',
+      code: 'visitor-badge-code3',
+      name: 'visitor-badge-name3',
+      barcode: 'visitor-badge-barcode3'
+    },
+  ];
+
+  getAllVisitorBadges() {
+    return this.visitorBadges;
+  }
+
+  getVisitorBadgeById(id: string){
+    for(let i = 0; i< this.visitorBadges.length; i++){
+      if(this.visitorBadges[i].id == id)
+        return this.visitorBadges[i];
+    }
+    return null;
+  }
+
+  addVisitorBadge(visitorBadge: VisitorBadge){
+    this.visitorBadges.push(visitorBadge);
+  }
+
+  editVisitorBadge(visitorBadge: VisitorBadge, id: string){
+    for(let i = 0; i<this.visitorBadges.length; i++){
+      if(this.visitorBadges[i].id == id){
+        this.visitorBadges[i] = visitorBadge;
+        return this.visitorBadges[i];
+      }
+    }
+    return null;
+  }
+
+  deleteVisitorBadgeById(id: string){
+    for(let i = 0; i<this.visitorBadges.length; i++){
+      if(this.visitorBadges[i].id == id){
+        this.visitorBadges.splice(i, 1);
+      }
+    }
+    return this.visitorBadges;
+  }
+}
+
+class AirportZones {
+  airportZones: AirportZone[] = [
+    {
+      id: 'airport-zone1',
+      code: 'airport-zone-code1',
+      name: 'zirport-zone-name1'
+    },
+    {
+      id: 'airport-zone2',
+      code: 'airport-zone-code2',
+      name: 'zirport-zone-name2'
+    },
+    {
+      id: 'airport-zone3',
+      code: 'airport-zone-code3',
+      name: 'zirport-zone-name3'
+    },
+  ];
+
+  getAllAirportZones() {
+    return this.airportZones;
+  }
+
+  getAirportZoneById(id: string){
+    for(let i = 0; i< this.airportZones.length; i++){
+      if(this.airportZones[i].id == id)
+        return this.airportZones[i];
+    }
+    return null;
+  }
+
+  addAirportZone(airportZone: AirportZone){
+    this.airportZones.push(airportZone);
+  }
+
+  editAirportZone(airportZone: AirportZone, id: string){
+    for(let i = 0; i<this.airportZones.length; i++){
+      if(this.airportZones[i].id == id){
+        this.airportZones[i] = airportZone;
+        return this.airportZones[i];
+      }
+    }
+    return null;
+  }
+
+  deleteAirportZoneById(id: string){
+    for(let i = 0; i<this.airportZones.length; i++){
+      if(this.airportZones[i].id == id){
+        this.airportZones.splice(i, 1);
+      }
+    }
+    return this.airportZones;
+  }
+}
+
+class Occupations {
+  occupations: Occupation[] = [
+    {
+      id: 'occupation1',
+      code: 'occupation-code1',
+      name: 'occupation-name1'
+    },
+    {
+      id: 'occupation2',
+      code: 'occupation-code2',
+      name: 'occupation-name2'
+    },
+    {
+      id: 'occupation3',
+      code: 'occupation-code3',
+      name: 'occupation-name3'
+    },
+  ];
+
+  getAllOccupations() {
+    return this.occupations;
+  }
+
+  getOccupationById(id: string){
+    for(let i = 0; i< this.occupations.length; i++){
+      if(this.occupations[i].id == id)
+        return this.occupations[i];
+    }
+    return null;
+  }
+
+  addOccupation(occupation: Occupation){
+    this.occupations.push(occupation);
+  }
+
+  editOccupation(occupation: Occupation, id: string){
+    for(let i = 0; i<this.occupations.length; i++){
+      if(this.occupations[i].id == id){
+        this.occupations[i] = occupation;
+        return this.occupations[i];
+      }
+    }
+    return null;
+  }
+
+  deleteOccupationById(id: string){
+    for(let i = 0; i<this.occupations.length; i++){
+      if(this.occupations[i].id == id){
+        this.occupations.splice(i, 1);
+      }
+    }
+    return this.occupations;
+  }
+}
+
+class Gates {
+  gates: Gate[] = [
+    {
+      id: 'gate1',
+      code: 'gate-code1',
+      name: 'gate-name1'
+    },
+    {
+      id: 'gate2',
+      code: 'gate-code2',
+      name: 'gate-name2'
+    },
+    {
+      id: 'gate3',
+      code: 'gate-code3',
+      name: 'gate-name3'
+    },
+  ]
+
+  getAllGates() {
+    return this.gates;
+  }
+
+  getGateById(id: string){
+    for(let i = 0; i< this.gates.length; i++){
+      if(this.gates[i].id == id)
+        return this.gates[i];
+    }
+    return null;
+  }
+
+  addGate(gate: Gate){
+    this.gates.push(gate);
+  }
+
+  editGate(gate: Gate, id: string){
+    for(let i = 0; i<this.gates.length; i++){
+      if(this.gates[i].id == id){
+        this.gates[i] = gate;
+        return this.gates[i];
+      }
+    }
+    return null;
+  }
+
+  deleteGateById(id: string){
+    for(let i = 0; i<this.gates.length; i++){
+      if(this.gates[i].id == id){
+        this.gates.splice(i, 1);
+      }
+    }
+    return this.gates;
+  }
+}
+
+class Reasons {
+  reasons: Reason[] = [
+    {
+      id: 'reason1',
+      code: 'reason-code1',
+      name: 'reason-name1'
+    },
+    {
+      id: 'reason2',
+      code: 'reason-code2',
+      name: 'reason-name2'
+    },
+    {
+      id: 'reason3',
+      code: 'reason-code3',
+      name: 'reason-name3'
+    },
+  ]
+
+  getAllReasons() {
+    return this.reasons;
+  }
+
+  getReasonById(id: string){
+    for(let i = 0; i<this.reasons.length; i++)
+      if(this.reasons[i].id == id)
+        return this.reasons[i];
+
+    return null;
+  }
+
+  addReason(reason: Reason){
+    this.reasons.push(reason);
+  }
+
+  editReason(reason: Reason, id: string){
+    for(let i = 0; i<this.reasons.length; i++){
+      if(this.reasons[i].id == id){
+        this.reasons[i] = reason;
+        return this.reasons[i];
+      }
+    }
+    return null;
+  }
+
+  deleteReasonById(id: string){
+    for(let i = 0; i<this.reasons.length; i++){
+      if(this.reasons[i].id == id){
+        this.reasons.splice(i, 1);
+      }
+    }
+    return this.reasons;
+  }
+
 
 }
 
@@ -63,10 +406,12 @@ class Employees {
 class Vehicles {
   vehicles: Vehicle[] = [
     {
+      company: 'vC1',
       model: 'zastava',
       plate: 'sk-123-qw'
     },
     {
+      company: 'vC2',
       model: 'varburg',
       plate: 've-666-zx'
     },
@@ -196,18 +541,16 @@ export class ResourcesService {
   companies = new Companies();
   vehicles = new Vehicles();
   employees = new Employees();
+  reasons = new Reasons();
+  gates = new Gates();
+  occupations = new Occupations();
+  airportZones = new AirportZones();
+  visitorBadges = new VisitorBadges();
+  visitorVehicleBadges = new VisitorVehicleBadges();
   badges: Badge[] = [];
-  zones = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  // zones = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   constructor() { }
-
-  getZones() {
-    return this.zones;
-  }
-
-  setZones(zones: number[]) {
-    this.zones = zones;
-  }
 
   setBadges(badges: Badge[]) {
     this.badges = badges;

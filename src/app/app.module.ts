@@ -33,6 +33,12 @@ import { ResourcesComponent } from './resources/resources.component';
 import { ResourceComponent } from './resources/resource/resource.component';
 import { CompanyModalComponent } from './resources/resource/company-modal/company-modal.component';
 import { EmployeeModalComponent } from './resources/resource/employee-modal/employee-modal.component';
+import { ReasonModalComponent } from './resources/resource/reason-modal/reason-modal.component';
+import { GateModalComponent } from './resources/resource/gate-modal/gate-modal.component';
+import { OccupationModalComponent } from './resources/resource/occupation-modal/occupation-modal.component';
+import { AirportZoneModalComponent } from './resources/resource/airport-zone-modal/airport-zone-modal.component';
+import { VisitorBadgeModalComponent } from './resources/resource/visitor-badge-modal/visitor-badge-modal.component';
+import { VisitorVehicleBadgeModalComponent } from './resources/resource/visitor-vehicle-badge-modal/visitor-vehicle-badge-modal.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +56,12 @@ import { EmployeeModalComponent } from './resources/resource/employee-modal/empl
     ResourceComponent,
     CompanyModalComponent,
     EmployeeModalComponent,
+    ReasonModalComponent,
+    GateModalComponent,
+    OccupationModalComponent,
+    AirportZoneModalComponent,
+    VisitorBadgeModalComponent,
+    VisitorVehicleBadgeModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,7 +78,13 @@ import { EmployeeModalComponent } from './resources/resource/employee-modal/empl
     DialogVehicleComponent,
     BadgesCreateComponent,
     CompanyModalComponent,
-    EmployeeModalComponent
+    EmployeeModalComponent,
+    ReasonModalComponent,
+    GateModalComponent,
+    OccupationModalComponent,
+    AirportZoneModalComponent,
+    VisitorBadgeModalComponent,
+    VisitorVehicleBadgeModalComponent
   ],
   providers: [RequesterService, AuthService, ApprovalsService,
               StopListService, ResourcesService, BadgesService,

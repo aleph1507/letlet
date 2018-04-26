@@ -30,10 +30,12 @@ export class RequesterService {
     ];
   vehicles: Vehicle[] = [
     {
+      company: 'vCompany1',
       model: 'zastava',
       plate: 'sk-123-qw'
     },
     {
+      company: 'vComp2',
       model: 'varburg',
       plate: 've-666-zx'
     },

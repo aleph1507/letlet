@@ -1,0 +1,26 @@
+<form [formGroup]="reasonForm" (ngSubmit)="onSubmit()" novalidate>
+  <mat-form-field>
+    <input matInput name="reasonID"
+    id="reasonID" placeholder="ID"
+    formControlName="id"
+    autocomplete="off" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput name="reasonCode"
+    id="reasonCode" placeholder="Code"
+    formControlName="code"
+    autocomplete="off" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput name="reasonName"
+    id="reasonName" placeholder="Name"
+    formControlName="name"
+    autocomplete="off" required>
+  </mat-form-field>
+
+  <mat-divider class="sm-form-divider-margins"></mat-divider>
+  <mat-dialog-actions>
+    <button type="submit" [disabled]="!reasonForm.valid" mat-raised-button>OK</button>
+    <button type="button" mat-raised-button (click)="onCancel()">Cancel</button>
+  </mat-dialog-actions>
+</form>

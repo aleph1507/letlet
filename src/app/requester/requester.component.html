@@ -83,7 +83,7 @@
     <div class="requester-prop mat-elevation-z8">
 
       <mat-list dense role="list">
-        <mat-list-item *ngFor="let vehicle of resources.vehicles.getAllVehicles(); let i = index">
+        <mat-list-item *ngFor="let vehicle of requesterService.getAllVehicles(); let i = index">
           <div class="list-row">
             <div>
               <span class="vehicle-plate">{{vehicle.plate}}</span>

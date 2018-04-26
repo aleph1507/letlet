@@ -1,5 +1,11 @@
 <form class="requester-vehicle-form" [formGroup]="vehicleForm" (ngSubmit)="onSubmit()" novalidate>
   <mat-form-field class="requester-vehicle-field">
+    <input matInput name='vehicleCompany'
+    id="vehicleCompany" placeholder="Company"
+    formControlName="company"
+    autocomplete="off" required>
+  </mat-form-field>
+  <mat-form-field class="requester-vehicle-field">
     <input matInput name="vehicleModel"
     id="vehicleModel" placeholder="Model"
     formControlName="model"
