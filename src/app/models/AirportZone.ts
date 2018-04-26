@@ -1,5 +1,5 @@
 export interface AirportZone {
-  id: string;
+  id: any;
   code: string;
   name: string;
 }

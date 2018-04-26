@@ -1,5 +1,5 @@
 export interface Reason {
-  id: string,
+  id: any,
   code: string;
   name: string;
 }

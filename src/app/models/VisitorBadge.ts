@@ -1,5 +1,5 @@
 export interface VisitorBadge {
-  id: string;
+  id: any;
   code: string;
   name: string;
   barcode: string;

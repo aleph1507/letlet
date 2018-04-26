@@ -1,5 +1,5 @@
 export interface VisitorVehicleBadge {
-  id: string;
+  id: any;
   code: string;
   number: number;
 }
