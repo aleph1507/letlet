@@ -7,7 +7,7 @@ div.filter-panel {
 
 div.filter-dates {
   display: inline-block;
-  width: 33%;
+  width: 30%;
 }
 
 .date-filter-field {
@@ -18,7 +18,7 @@ div.filter-dates {
   /* align-self: center; */
   /* display:flex; */
   display:inline-block;
-  width:33%;
+  width:38%;
   /* justify-content: space-between; */
   /* align-items:center; */
   /* display:inline-block; */
@@ -27,7 +27,7 @@ div.filter-dates {
 .filter-companies {
   text-align:right;
   display:inline-block;
-  width:33%;
+  width:30%;
 }
 
 .show-approvals mat-radio-group {

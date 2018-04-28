@@ -42,7 +42,7 @@
       <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
       <mat-datepicker #toPicker></mat-datepicker>
     </mat-form-field>
-    <mat-form-field class="requester-field">
+    <!-- <mat-form-field class="requester-field">
       <input matInput
         formControlName="requesterNumOfEntries"
         type="number"
@@ -51,6 +51,17 @@
         placeholder="Number of entries"
         autocomplete="off"
         >
+    </mat-form-field> -->
+    <mat-form-field>
+      <mat-select placeholder="Number of entries" formControlName="requesterNumOfEntries"
+        name="requesterNumOfEntries" id="requesterNumOfEntries" autocomplete="off" required>
+        <!-- <mat-option></mat-option> -->
+        <mat-option *ngFor="let e of nEntries" selected [value]="e.value">
+          {{e.name}}
+        </mat-option>
+      </mat-select>
+      <!-- <mat-error *ngIf="requesterNumOfEntries.hasError('required')">Please choose a number of allowed entries</mat-error> -->
+      <!-- <mat-hint>{{animalControl.value?.sound}}</mat-hint> -->
     </mat-form-field>
     <button mat-raised-button type="submit" color="primary" [disabled]="!requesterForm.valid" class="main-send">Send</button>
   </form>

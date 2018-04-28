@@ -4,3 +4,12 @@ div#header {
   align-items: space-between;
   margin:1%;
 }
+
+.filter-header {
+  width: 96%;
+  margin: 2%;
+}
+
+.filter-header mat-form-field {
+  width: 100%;
+}

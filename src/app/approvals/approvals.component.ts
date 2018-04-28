@@ -20,8 +20,8 @@ export class ApprovalsComponent implements OnInit {
   dataSource;
   displayedColumns = ['date', 'requesterName', 'requesterCompany', 'nPersons',
              'nVehicles', 'status', 'approvedDate', 'approvedFrom', 'reqID'];
-  showApprovals = ['All', 'Approved', 'Declined'];
-  selectedApprovals = 'All';
+  showApprovals = ['Unverified', 'All', 'Approved', 'Declined'];
+  selectedApprovals = 'Unverified';
   filteredCompanies: Observable<string[]>;
 
   // companies = ['AMC', 'BBC', 'TAV', 'DrinkerLab'];

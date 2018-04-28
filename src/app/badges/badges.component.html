@@ -13,6 +13,11 @@
   <button mat-fab color="primary" (click)="openDialog()">+</button>
 </div>
 <div class="badges-table mat-elevation-z8">
+  <div class="filter-header">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </div>
   <mat-table #badgesTable [dataSource]="dataSource">
     <ng-container matColumnDef="company">
       <mat-header-cell *matHeaderCellDef> Company </mat-header-cell>

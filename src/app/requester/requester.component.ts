@@ -25,6 +25,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
 
   hoveredEditPerson = false;
 
+  nEntries = [];
+
   // companies = this.resources.getCompanies();
   companies = this.resources.companies.getCompaniesNames();
 
@@ -50,6 +52,10 @@ export class RequesterComponent implements OnInit, OnDestroy {
             ) { }
 
   ngOnInit() {
+    for(let i = 1; i<= 15; i++)
+      this.nEntries.push({name: i.toString(), value: i});
+
+    this.nEntries.push({name: 'Unlimited', value: -1});
 
     this.paramsSub = this.route.params.subscribe(params => {
       if(params['id'] && this.requesterService.getRequest(+params['id']) !== undefined){
@@ -61,6 +67,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
         this.requesterService.setVehicles(this.request.vehicles);
       }
     });
+
+    console.log('this.request: ', this.request);
 
     this.requesterForm = new FormGroup({
       'requesterName': new FormControl(this.request.requesterName, {
@@ -83,7 +91,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
         updateOn: 'change'
       }),
       'requesterNumOfEntries': new FormControl(this.request.numEntries, {
-        validators: [Validators.required, this.intValidator]
+        validators: [Validators.required]
       })
     })
 
