@@ -135,16 +135,17 @@ img.p-preview {
   /* margin-top:5%; */
   width:30%;
   padding: 3%;
-  position:relative;
-  top: 60%;
-  left:150%;
+  position:absolute;
+  top: 85%;
+  left:60%;
 }
 
 @media screen and (max-width: 1800px){
   .main-send{
     padding-top:0;
     padding-bottom:0;
-    top: 35%;
+    top: 90%;
+    left: 73%;
   }
 }
 

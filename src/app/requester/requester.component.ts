@@ -200,6 +200,128 @@ export class RequesterComponent implements OnInit, OnDestroy {
     });
   }
 
+  printRequest(): void {
+    console.log("printRequest");
+    let pNumber = this.request.persons.length;
+    console.log("pNumber : " + pNumber);
+    let personsTD1 = '', personsTD2 = '';
+  //   <span style="display: block;">1. Сотир Геракар/Sotir Gerakar</span>
+  //   <span style="display:block;">2. Ѓорѓи Додевски / Gjorgji Dodevski</span>
+  //   <span style="display:block;">3. Игор Ангеловски/Igor Angelovski</span>
+  // </td>
+  // <td>
+  //   <span style="display:block;">4. Александар Ангеловски / Aleksandar Angelovski</span>
+  //   <span style="display:block;">5. Ванчо Тенев / Vancho Tenev</span>
+  //   <span style="display:block;">6. Дејан Гелевски/Dejan Gelevski</span>
+    for(let i = 0; i<this.request.persons.length; i++){
+      console.log("this.request.person[i].surname : " + this.request.persons[i].surname);
+      if(i % 2 == 1){
+        personsTD2 += '<span style="display: block;">' + this.request.persons[i].name + ' ' +
+           this.request.persons[i].surname + '/' + this.request.persons[i].nameCyrilic + ' ' + this.request.persons[i].surnameCyrilic + '</span>';
+        continue;
+      }
+      personsTD1 += '<span style="display: block;">' + this.request.persons[i].name + ' ' +
+        this.request.persons[i].surname + '/' + this.request.persons[i].nameCyrilic + ' ' + this.request.persons[i].surnameCyrilic + '</span>';
+    }
+
+    console.log("personsTD1 : " + personsTD1);
+    console.log("personsTD2 : " + personsTD2);
+    let printContents, popupWin;
+    // printContents = document.getElementById('print-section').innerHTML;
+    popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
+    popupWin.document.open();
+    popupWin.document.write(`
+      <html style="width:100%; height:100%;">
+        <body onload="window.print();window.close()" style="width:100%; height:100%;">
+          <table style="width:80%; padding-left:30px; padding-right:30px;">
+            <tr style="padding-top: 30px; padding-bottom: 30px; display: block;">
+              <td>
+                <span style="display:block;">Министерство за внатрешни работи на Република Македонија</span>
+                <span style="display:block;">Ministry of Internal Affairs of Republic of Macedonia</span>
+                <span style="display:block;">Г-дин. Драги Илиевски/Mr. Dragi Ilievski</span>
+                <span style="display:block;">Командир/Commander</span>
+              </td>
+              <td>
+                <div style="margin-left:30%; display:block; border:2px solid black; height:2em; width:50%;"></div>
+                <span style="margin-left:30%; display:block; width: 100%;">Датум/Date: 30 / 04 / 2018</span>
+              </td>
+            </tr>
+            <tr style="padding-bottom: 30px; display: block;">
+              <td colspan="2">
+                <span style="display:block;">Предмет: Дозвола за влез во воздушната страна на Меѓународен Аеродром Скопје</span>
+                <span style="display:block;">Subject:  Permission to enter in the Airside zone of Skopje International Airport</span>
+              </td>
+            </tr>
+            <tr style="padding-bottom: 30px; display: block;">
+              <td colspan="2">
+                <span style="display:block;">Почитуван Г-дин. Илиевски, </span>
+                <span style="display:block;">Dear Mr. Илиевски</span>
+              </td>
+            </tr>
+            <tr style="padding-bottom: 15px; display: block;">
+              <td colspan="2">
+                <p>
+                  Ве молиме да одобрите дозвола за влез за
+                  долунаведенитe лицa од ${this.request.company} кои ќе
+                  извршат поставување на нов рекламен банер
+                   за ТАВ Македонија Оперативни Услуги од
+                    02.05.2018 до 04.05.2018
+                </p>
+              </td>
+            </tr>
+            <tr style="padding-bottom: 15px; display: block;">
+              <td>
+                <p>
+                  We kindly ask you to approve entrance permission for
+                   the below mentioned person from  ${this.request.company}  who will perform
+                    installation of advertising banner in TAV
+                     МОS  from 02.05.2018 to 04.05.2018
+                </p>
+              </td>
+            </tr>
+            <tr style="padding-bottom: 30px; padding-left: 15%; padding-right: 15%; display: block;">
+              <td>
+                ${personsTD1}
+              </td>
+              <td>
+                ${personsTD2}
+              </td>
+            </tr>
+            <tr style="padding-bottom: 1em; display: block;">
+              <td>
+                <span style="display:block;">Со почит,</span>
+                <span style="display:block;">Sincerely Yours,</span>
+              </td>
+            </tr>
+            <tr style="padding-bottom: 30px; display: block;">
+              <td>
+                <span style="display:block;">Александар Јаковлевски/ Aleksandar Jakovlevski</span>
+                <span style="display:block;">Менаџер на Оддел за Обезбедување</span>
+                <span style="display:block;">Security Manager</span>
+                <span style="display:block;">ТАВ Македонија Дооел/TAV Macedonia Dooel</span>
+              </td>
+              <td>
+                <span style="display:block;">Јигит Лацин / Yigit Lacin</span>
+                <span style="display:block;">Координатор на Аеродроми</span>
+                <span style="display:block;">Airports Coordinator</span>
+                <span style="display:block;">ТАВ Македонија Дооел/ TAV Macedonia Dooel</span>
+              </td>
+            </tr>
+            <tr style="display:block;">
+              <td colspan="2">
+                <span style="display:block; font-size: 0.7em; color:#222;"><span style="text-decoration:underline;">Прилог:</span> 6 Копии од лична карта</span>
+                <span style="display:block; font-size: 0.7em; color:#222;"><span style="text-decoration:underline;">Attachment:</span> 6 ID  Copy</span>
+                <span style="display:block; font-size: 0.7em; color:#222;">/м-р В.М/ M. Sc. V.M</span>
+              </td>
+            </tr>
+          </table>
+        </body>
+      </html>
+      `
+    );
+    popupWin.document.close();
+  };
+
   ngOnDestroy(): void {
     this.paramsSub.unsubscribe();
   }
