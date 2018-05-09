@@ -1,0 +1,258 @@
+<html style="width:100%; height:100%;">
+  <head>
+    <style>
+      div.grey-border {
+        border: 3px solid grey;
+      }
+
+      div.logo {
+        width: 30%;
+        display: inline-block;
+      }
+
+      img.logo {
+        width:100%;
+        border: 3px solid grey;
+      }
+
+      div.wide {
+        width: 100%;
+      }
+
+      div.header-div {
+        width:100%;
+        border: 3px solid grey;
+        display: flex;
+      }
+
+      div.title {
+        margin-left: 5%;
+      }
+
+      div.num-date {
+        margin-left: 40%;
+        display: flex;
+        justify-content: space-around;
+      }
+
+      div.baranje-za {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 3%;
+      }
+
+      span.after-header {
+        color:grey;
+      }
+
+      p.table-desc {
+        margin-top: 3%;
+      }
+
+      div.persons-div {
+        text-align:center;
+      }
+
+      table {
+        margin:auto;
+        margin-top: 3%;
+        border-collapse: collapse;
+      }
+
+      table.persons {
+        width:60%;
+      }
+
+      table.vehicles {
+        width: 30%;
+      }
+
+      table th, td {
+        border: 2px solid black;
+        padding: 3px;
+      }
+
+      table td.td-index {
+        text-align: center;
+      }
+
+      div.info-div {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 3%;
+      }
+
+      div.fgroup > span, div.group > div {
+        display: block;
+      }
+
+      div.fgroup {
+        width:40%;
+      }
+
+      div.fg2 {
+        width: 20%;
+      }
+
+      div.fgroup > div {
+        border: 1px solid black;
+        width: 100%;
+        padding: 3px;
+      }
+
+      div.req-desc {
+        margin-top: 3%;
+      }
+
+      div.req-desc > * {
+        display: block;
+      }
+
+      p.req-desc {
+        font-weight: bold;
+      }
+
+      div.req-desc-actual {
+        border: 1px solid black;
+        padding: 3px;
+        width: 100%;
+      }
+
+      div.footer {
+        margin-top: 5%;
+        font-weight: bold;
+        font-size: 0.8em;
+        display: flex;
+        justify-content: space-around;
+      }
+
+      div.names-titles span {
+        display: block;
+      }
+
+    </style>
+  </head>
+  <body style="width:90%; height:100%; padding-left: 5%; padding-right:5%">
+    <div class="header-div">
+      <div class="logo">
+        <img src="tav_logo.jpg" class="logo grey-border">
+      </div>
+      <div class="title">
+        <h1>Request for free of charge ID card / Vehicle entrance</h1>
+        <div class="num-date">
+          <span>Request NO: </span>
+          <span> Date:	08.05.2018 </span>
+        </div>
+      </div>
+    </div>
+    <span class="after-header">Unapproved requests will not be processed</span>
+    <div class="baranje-za">
+      <span style="font-weight: bold;">Барање за / Request for:</span>
+      <span><input type="checkbox" name="idcard" value="idcard">ИД карта / ID Card</span>
+      <span><input type="checkbox" name="vehicle-entrance" value="vehicle-entrance">Влез на возило на платформа / Vehicle Entrance at airside</span>
+    </div>
+
+    <p class="table-desc">
+      Бесплатни ИД карти да бидат издадени за следните лица / Free of charge ID cards should be issued to the following personnel:
+    </p>
+
+    <div class="persons-div">
+      <table class="persons">
+        <thead>
+          <th>No.</th>
+          <th>Name and Surname</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-index">1</td>
+            <td>Ласте Нојковски/Laste Nojkovski</td>
+          </tr>
+          <tr>
+            <td class="td-index">2</td>
+            <td>Ласте Нојковски/Laste Nojkovski</td>
+          </tr>
+          <tr>
+            <td class="td-index">3</td>
+            <td>Ласте Нојковски/Laste Nojkovski</td>
+          </tr>
+          <tr>
+            <td class="td-index">4</td>
+            <td>Ласте Нојковски/Laste Nojkovski</td>
+          </tr>
+          <tr>
+            <td class="td-index">5</td>
+            <td>Ласте Нојковски/Laste Nojkovski</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="table-desc">
+      Се одобрува бесплатен влез на платформа за следните возила / Free of charge entrance at airside is allowed for the following vehicles:
+    </p>
+    <div class="vehicles-div">
+      <table class="vehicles">
+        <thead>
+          <th>No.</th>
+          <th>Registration number</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-index">1</td>
+            <td>sk-111-qq</td>
+          </tr>
+          <tr>
+            <td class="td-index">2</td>
+            <td>sk-111-qq</td>
+          </tr>
+          <tr>
+            <td class="td-index">3</td>
+            <td>sk-111-qq</td>
+          </tr>
+          <tr>
+            <td class="td-index">4</td>
+            <td>sk-111-qq</td>
+          </tr>
+          <tr>
+            <td class="td-index">5</td>
+            <td>sk-111-qq</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="info-div">
+      <div class="fgroup fg1">
+        <span>Назив на компанијата \ Company name</span>
+        <div class="company-naziv">
+          STAKLOPAN
+        </div>
+      </div>
+      <div class="fgroup fg2">
+        <span>Важност \ Validity Period</span>
+        <div class="validity-period">
+          02.05.2018 to 04.05.2018
+        </div>
+      </div>
+    </div>
+
+    <div class="req-desc">
+      <p class="req-desc">Краток опис на причината за барањето / Short description for the reason of the request</p>
+      <div class="req-desc-actual">
+        Insight into the making of a glass fence VIP lounge
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>Approved by:</p>
+      <div class="names-titles">
+        <span>Mr. Aleksandar Jakovlevski</span>
+        <span>Security Manager</span>
+      </div>
+      <div class="names-titles">
+        <span>Mr. Yigit Lacin</span>
+        <span>Airports  Coordinator</span>
+      </div>
+    </div>
+  </body>
+</html>
