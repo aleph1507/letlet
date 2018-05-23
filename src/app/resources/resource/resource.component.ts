@@ -48,7 +48,21 @@ export class ResourceComponent implements OnInit {
         case 'visitors-badges':
           this.category = 'visitors-badges';
           this.categoryTitle = 'Visitors Badges';
-          this.dataSource = new MatTableDataSource<VisitorBadge>(this.resourcesService.visitorBadges.getAllVisitorBadges());
+          // this.resourcesService.visitorBadges.getAllVisitorBadges();
+          this.resourcesService.visitorBadges.getAllVisitorBadges()
+            .subscribe((data) => {
+              this.resourcesService.visitorBadges.visitorBadges = data;
+              this.dataSource = new
+                MatTableDataSource<VisitorBadge>(this.resourcesService.visitorBadges.visitorBadges);
+            });
+
+          // this.dataSource = new
+          //   MatTableDataSource<VisitorBadge>(this.resourcesService.visitorBadges.getAllVisitorBadges()
+          //     .subscribe((data) => {
+          //       this.resourcesService.visitorBadges.visitorBadges = data;
+          //     }));
+
+          //192.168.100.4
           this.displayedColumns = ['id', 'code', 'name', 'barcode', 'edit'];
           break;
         case 'visitors-vehicle-badges':
@@ -73,31 +87,37 @@ export class ResourceComponent implements OnInit {
         case 'employees':
           this.category = 'employees';
           this.categoryTitle = this.category;
-          this.dataSource = new MatTableDataSource<Employee>(this.resourcesService.employees.getAllEmployees());
+          // this.dataSource = new MatTableDataSource<Employee>(this.resourcesService.employees.getAllEmployees());
+          // this.resourcesService.employees.getAllEmployees()
+          //   .subscribe((data) => {
+          //     this.resourcesService.visitorBadges.visitorBadges = data;
+          //     this.dataSource = new
+          //       MatTableDataSource<VisitorBadge>(this.resourcesService.visitorBadges.visitorBadges);
+          //   });
           this.displayedColumns = ['id', 'name', 'email', 'edit'];
           break;
         case 'reasons':
           this.category = 'reasons';
           this.categoryTitle = this.category;
-          this.dataSource = new MatTableDataSource<Reason>(this.resourcesService.reasons.getAllReasons());
+          // this.dataSource = new MatTableDataSource<Reason>(this.resourcesService.reasons.getAllReasons());
           this.displayedColumns = ['id', 'code', 'name', 'edit'];
           break;
         case 'gates':
           this.category = 'gates';
           this.categoryTitle = this.category;
-          this.dataSource = new MatTableDataSource<Gate>(this.resourcesService.gates.getAllGates());
+          // this.dataSource = new MatTableDataSource<Gate>(this.resourcesService.gates.getAllGates());
           this.displayedColumns = ['id', 'code', 'name', 'edit'];
           break;
         case 'occupations':
           this.category = 'occupations';
           this.categoryTitle = this.category;
-          this.dataSource = new MatTableDataSource<Occupation>(this.resourcesService.occupations.getAllOccupations());
+          // this.dataSource = new MatTableDataSource<Occupation>(this.resourcesService.occupations.getAllOccupations());
           this.displayedColumns = ['id', 'code', 'name', 'edit'];
           break;
         case 'zones':
           this.category = 'zones';
           this.categoryTitle = this.category;
-          this.dataSource = new MatTableDataSource<AirportZone>(this.resourcesService.airportZones.getAllAirportZones());
+          // this.dataSource = new MatTableDataSource<AirportZone>(this.resourcesService.airportZones.getAllAirportZones());
           this.displayedColumns = ['id', 'code', 'name', 'edit'];
           break;
       }

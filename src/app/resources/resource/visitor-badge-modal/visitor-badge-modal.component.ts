@@ -21,10 +21,6 @@ export class VisitorBadgeModalComponent implements OnInit {
               private resourcesService: ResourcesService) { }
 
   ngOnInit() {
-    if(this.data){
-      this.vb = this.resourcesService.visitorBadges.getVisitorBadgeById(this.data);
-      this.oldID = this.data;
-    }
 
     this.vbForm = new FormGroup({
       'id': new FormControl(this.vb ? this.vb.id : '', {
@@ -44,6 +40,37 @@ export class VisitorBadgeModalComponent implements OnInit {
         updateOn: 'change'
       })
     });
+
+    if(this.data){
+      // this.vb = this.resourcesService.visitorBadges.getVisitorBadgeById(this.data).subscribe();
+      console.log('data - ' + this.data);
+      this.resourcesService.visitorBadges.getVisitorBadgeById(this.data)
+        .subscribe((vb : VisitorBadge) => {
+          this.vb = vb;
+          this.oldID = this.data;
+          this.vbForm = new FormGroup({
+            'id': new FormControl(this.vb ? this.vb.id : '', {
+              validators: [Validators.required],
+              updateOn: 'change'
+            }),
+            'code': new FormControl(this.vb ? this.vb.code : '', {
+              validators: [Validators.required],
+              updateOn: 'change'
+            }),
+            'name': new FormControl(this.vb ? this.vb.name : '', {
+              validators: [Validators.required],
+              updateOn: 'change'
+            }),
+            'barcode': new FormControl(this.vb ? this.vb.barcode : '', {
+              validators: [Validators.required],
+              updateOn: 'change'
+            })
+          });
+      });
+      // this.oldID = this.data;
+    }
+
+
   }
 
   onSubmit() {
@@ -54,9 +81,11 @@ export class VisitorBadgeModalComponent implements OnInit {
       barcode: this.vbForm.controls['barcode'].value
     }
     if(this.data){
-      this.resourcesService.visitorBadges.editVisitorBadge(this.vb, this.oldID);
+      this.resourcesService.visitorBadges.updateVisitorBadge(this.vb, this.oldID)
+        .subscribe(vb => this.resourcesService.visitorBadges.switchVisitorBadge(vb, this.oldID));
     } else {
-      this.resourcesService.visitorBadges.addVisitorBadge(this.vb);
+      this.resourcesService.visitorBadges.addVisitorBadge(this.vb)
+        .subscribe(vb => this.resourcesService.visitorBadges.pushVisitorBadge(vb));
     }
 
     this.dialogRef.close();
