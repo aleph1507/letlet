@@ -4,10 +4,24 @@ import { Vehicle } from '../models/Vehicle.model';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { Requester } from '../models/Requester.model';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { ResourcesService } from './resources.service';
+import { Company } from '../models/Company';
 
 @Injectable()
 export class RequesterService {
+
+  comp1: Company = null;
+  comp2: Company = null;
+
+  requestUrl = 'http://192.168.100.4:84/api/entryrequest';
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Authorization': 'Bearer ' + 'FCTyLtiYAdyYf1gQ9OdwXWw9__dQgwCkov0zhTJHDHIOxWf1dkH-1_KlvCBAYbF0rOdmD3fYM7H5ZmP2Ri7SLDtAmFeN6rHakdiaEpb0tBEu22HGOFcckatmvWD5pTDYDCbVi5VAmJ88psa6d10gCkJYDY6HHJu-yb7-LPCl9lOXyTmDIw509Shcb1FdLZy-Tz0YCvChXWdeECRNMFc1B1AqnYrdVqxaHWScbYq4-7krCWyrvtvDtavroqMV9-jlp8jQHnie4RnwklJIVGm6QPesDWb1uevNenMEUdanBGiCw6cztXYUe4mXGL7aKI71pOib75Nwn0PjbXw9Uz-enBHSGpFxNExlN4v9o_zCtiMbU2kCgouNQzRTvQuloivPKRXGVri7OVkdHu7ZOfLehA',
+      'Accept': 'application/json'
+    })
+  }
 
   persons: Person[] = [
       {
@@ -49,21 +63,23 @@ export class RequesterService {
     ];
   vehicles: Vehicle[] = [
     {
-      company: 'vCompany1',
+      id: null,
+      company: null,
       model: 'zastava',
       plate: 'sk-123-qw'
     },
     {
-      company: 'vComp2',
+      id: null,
+      company: null,
       model: 'varburg',
       plate: 've-666-zx'
     },
   ];
   requests: Requester[] = [];
 
-  reqUrl = '';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private resourcesService: ResourcesService) { }
 
   private handleError(error: HttpErrorResponse) {
   if (error.error instanceof ErrorEvent) {
@@ -82,7 +98,7 @@ export class RequesterService {
 };
 
   dlRequest() {
-    return this.http.get<Requester>(this.reqUrl);
+    return this.http.get<Requester>(this.requestUrl);
   }
 
   pushRequest(requesterName, description, company, from, to, numEntries){
@@ -100,7 +116,11 @@ export class RequesterService {
     this.persons = [];
     this.vehicles = [];
 
-    this.requests.push(request);
+    // this.requests.push(request);
+    this.http.post(this.requestUrl, request, this.httpOptions)
+      .subscribe((data : Requester) => {
+        this.requests.push(data);
+      });
   }
 
   editRequest(req: Requester){
