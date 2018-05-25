@@ -735,10 +735,7 @@ class Companies {
   }
 
   getCompanies() {
-    this.http.get<Company[]>(this.companiesUrl, this.httpOptions)
-      .subscribe((data) => {
-        console.log('data: ' + data);
-      });
+    return this.http.get<Company[]>(this.companiesUrl, this.httpOptions);
   }
 
   // getCompanies() {
@@ -821,12 +818,19 @@ class Companies {
 @Injectable()
 export class ResourcesService {
   constructor(private http : HttpClient,
-              private auth: AuthService) { }
+              private auth: AuthService) {  }
   // companies = ['AMC', 'BBC', 'TAV', 'DrinkerLab'];
+  // httpOptions = {
+  //   headers: new HttpHeaders({
+  //     'Content-Type':  'application/json',
+  //     'Authorization': 'Bearer ' + this.auth.getToken(),
+  //     'Accept': 'application/json'
+  //   })
+  // }
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
-      'Authorization': 'Bearer ' + this.auth.token,
+      'Authorization': 'Bearer ' + 'FCTyLtiYAdyYf1gQ9OdwXWw9__dQgwCkov0zhTJHDHIOxWf1dkH-1_KlvCBAYbF0rOdmD3fYM7H5ZmP2Ri7SLDtAmFeN6rHakdiaEpb0tBEu22HGOFcckatmvWD5pTDYDCbVi5VAmJ88psa6d10gCkJYDY6HHJu-yb7-LPCl9lOXyTmDIw509Shcb1FdLZy-Tz0YCvChXWdeECRNMFc1B1AqnYrdVqxaHWScbYq4-7krCWyrvtvDtavroqMV9-jlp8jQHnie4RnwklJIVGm6QPesDWb1uevNenMEUdanBGiCw6cztXYUe4mXGL7aKI71pOib75Nwn0PjbXw9Uz-enBHSGpFxNExlN4v9o_zCtiMbU2kCgouNQzRTvQuloivPKRXGVri7OVkdHu7ZOfLehA',
       'Accept': 'application/json'
     })
   }

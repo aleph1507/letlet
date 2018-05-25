@@ -18,7 +18,7 @@
           autocomplete="off"
         ></textarea>
       </mat-form-field>
-      <mat-form-field class="requester-field">
+      <!-- <mat-form-field class="requester-field">
         <input matInput
           formControlName="requesterCompany"
           [matAutocomplete]="companyAuto"
@@ -30,7 +30,19 @@
               {{ company.name }}
             </mat-option>
           </mat-autocomplete>
+      </mat-form-field> -->
+      <mat-form-field class="requester-field">
+        <input matInput type="text" name='requesterCompany'
+        id="requesterCompany" placeholder="Company"
+        formControlName="requesterCompany"
+        [matAutocomplete]="comp"
+        required>
       </mat-form-field>
+      <mat-autocomplete #comp="matAutocomplete" [displayWith]="displayFn">
+          <mat-option *ngFor="let c of companies" [value]="c" >
+            {{ c.name }}
+          </mat-option>
+      </mat-autocomplete>
       <mat-form-field>
         <input matInput [matDatepicker]="fromPicker" placeholder="From date"
         formControlName="requesterFromDate" required>

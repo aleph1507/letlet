@@ -57,7 +57,12 @@ export class RequesterComponent implements OnInit, OnDestroy {
             ) { }
 
   ngOnInit() {
-    this.resources.companies.getCompanies();
+
+    this.resources.companies.getCompanies()
+      .subscribe((data : Company[]) => {
+        // console.log('companies[] data: ' + JSON.stringify(data));
+        this.companies = data;
+      });
       // .subscribe(data => this.companies = data);
 
     for(let i = 1; i<= 15; i++)
@@ -113,7 +118,9 @@ export class RequesterComponent implements OnInit, OnDestroy {
     // this.requesterForm.controls['requesterCompany']
   }
 
-
+  displayFn(c?: Company) {
+    return c ? c.name : undefined;
+  }
 
   onSubmit() {
     if(this.requesterForm.valid) {

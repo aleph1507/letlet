@@ -24,11 +24,12 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   getToken() {
-    
+    if(this.token == null)
+      this.logIn();
     return this.token;
   }
 
-  logIn(username: string, password:string, gt = "password", cid = "AsecClient") {
+  logIn(username: string = 'Admin', password:string = 'admin1', gt = "password", cid = "AsecClient") {
     // console.log("username: ", username);
     // console.log("password: ", password);
     // console.log("gt: ", gt);
