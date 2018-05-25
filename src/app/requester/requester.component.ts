@@ -16,6 +16,7 @@ import { RequesterService } from '../services/requester.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ResourcesService } from '../services/resources.service';
 import { DatePipe } from '@angular/common';
+import { Company } from '../models/Company';
 
 @Component({
   selector: 'app-requester',
@@ -29,7 +30,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
   nEntries = [];
 
   // companies = this.resources.getCompanies();
-  companies = this.resources.companies.getCompaniesNames();
+  companies = [];
 
   displayedPersonColumns = ['name', 'surname'];
   displayedVehicleColumns = ['model', 'plate'];
@@ -56,6 +57,9 @@ export class RequesterComponent implements OnInit, OnDestroy {
             ) { }
 
   ngOnInit() {
+    this.resources.companies.getCompanies();
+      // .subscribe(data => this.companies = data);
+
     for(let i = 1; i<= 15; i++)
       this.nEntries.push({name: i.toString(), value: i});
 
@@ -109,7 +113,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
     // this.requesterForm.controls['requesterCompany']
   }
 
-  
+
 
   onSubmit() {
     if(this.requesterForm.valid) {

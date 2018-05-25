@@ -1,10 +1,22 @@
 <form class="requester-vehicle-form" [formGroup]="vehicleForm" (ngSubmit)="onSubmit()" novalidate>
-  <mat-form-field class="requester-vehicle-field">
+  <!-- <mat-form-field class="requester-vehicle-field">
     <input matInput name='vehicleCompany'
     id="vehicleCompany" placeholder="Company"
     formControlName="company"
     autocomplete="off" required>
+  </mat-form-field> -->
+  <mat-form-field class="requester-vehicle-field">
+    <input matInput type="text" name='vehicleCompany'
+    id="vehicleCompany" placeholder="Company"
+    formControlName="company"
+    [matAutocomplete]="comp"
+    required>
   </mat-form-field>
+  <mat-autocomplete #comp="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let c of companies" [value]="c" >
+        {{ c.name }}
+      </mat-option>
+  </mat-autocomplete>
   <mat-form-field class="requester-vehicle-field">
     <input matInput name="vehicleModel"
     id="vehicleModel" placeholder="Model"

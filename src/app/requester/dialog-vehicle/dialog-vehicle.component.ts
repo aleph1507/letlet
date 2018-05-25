@@ -4,6 +4,7 @@ import { Vehicle } from '../../models/Vehicle.model';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { RequesterService } from '../../services/requester.service';
 import { ResourcesService } from '../../services/resources.service';
+import { Company } from '../../models/Company';
 
 @Component({
   selector: 'app-dialog-vehicle',
@@ -22,12 +23,20 @@ export class DialogVehicleComponent implements OnInit {
 
   vehicleForm: FormGroup;
   vehicle: Vehicle = {
-    company: '',
-    model: '',
-    plate: ''
+    id: null,
+    company: null,
+    model: null,
+    plate: null
   }
 
+  companies: Company[] = [];
+
   ngOnInit() {
+
+      this.resourcesService.companies.getCompanies()
+        .subscribe((data: Company[]) => {
+          this.companies = data;
+        });
 
       if(this.data != null){
         if(this.data.vehicle != null)
@@ -37,7 +46,7 @@ export class DialogVehicleComponent implements OnInit {
       this.resource = this.data.resource;
 
       this.vehicleForm = new FormGroup({
-        'company': new FormControl(this.vehicle.company, {
+        'company': new FormControl(this.vehicle.company ? this.vehicle.company : '', {
           validators: Validators.required
         }),
         'model': new FormControl(this.vehicle.model, {
@@ -47,6 +56,10 @@ export class DialogVehicleComponent implements OnInit {
           validators: Validators.required
         })
       })
+  }
+
+  displayFn(c?: Company) {
+    return c ? c.name : undefined;
   }
 
   onSubmit(){
@@ -68,7 +81,15 @@ export class DialogVehicleComponent implements OnInit {
       // console.log('vo resource this.data.resource: ', this.data.resource);
       // console.log('vo resource this.data: ', this.data);
       // console.log('pre add (vModal) resources.vehicles: ', this.resourcesService.vehicles.getAllVehicles());
-      this.data.i == null ? this.resourcesService.vehicles.addVehicle(this.vehicle) : this.resourcesService.vehicles.editVehicle(this.data.i, this.vehicle);
+      this.data.i == null ?
+        this.resourcesService.vehicles.addVehicle(this.vehicle)
+          .subscribe((data) => {
+            console.log('data: ' + data);
+            this.resourcesService.vehicles.pushVehicle(data)
+          }) : this.resourcesService.vehicles.editVehicle(this.vehicle)
+                .subscribe((data : Vehicle) => {
+                  this.resourcesService.vehicles.switchVehicleById(this.vehicle)
+                });
       // console.log('post add (vModal) resources.vehicles: ', this.resourcesService.vehicles.getAllVehicles());
     }
 

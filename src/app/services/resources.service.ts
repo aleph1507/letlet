@@ -12,6 +12,7 @@ import { VisitorVehicleBadge } from '../models/VisitorVehicleBadge';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import { AuthService } from './auth.service';
 
 // class VisitorsBadges {
 //
@@ -38,16 +39,18 @@ class hError {
 class VisitorVehicleBadges {
   visitorVehicleBadges: VisitorVehicleBadge[] = [];
   public visitorVehicleBadgesUrl = 'http://192.168.100.4:84/api/visitorvehiclebadges';
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': 'Bearer aE4YgZl29OKjto9Ro6f_pDDQRNhs5aLouNGQnhFssfBp5ra307Q5cU_CQG_VzsmRSLEnOwP9DkHQX9dHROZP5SJPBVIaLSZELnLFRBl2Yhvyt6n2eNVDXaCbqeO7aq4g4wp6lvuJhiUsl5nzZp2pX_TjhwtLs8nGDZEtnnBXiaC8KLJ8Tymu9D1br9WAWUgTvFybzVjGyTYER3FJq3ooXyC7RXMyYf4v7eHObq2bNgQgaXZRRGZPUit4h6t2shC04efx0i6UdTXXCvs__0IJomHSwegeXFSv2fsPYnnYTvGjNDra3uGkgnRiD7Sq91_P54lShoHt3aXzaljTr599jsT_zSc3S9pu5h16xdQWbI6dEI-2KKg3OFao1I9G7VZv8vWP2hv3anTmMNA',
-      'Accept': 'application/json'
-    })
+  // httpOptions = {
+  //   headers: new HttpHeaders({
+  //     'Content-Type':  'application/json',
+  //     'Authorization': 'Bearer vLAF8elQ5r7gunytO65szem5dlajGWqLAmkaNtgfhVeQKi8fmlV-mzbYfa9fFBnJYWGa67b0fIzMuYUZdt2s3Sx7zdCvudAKXCHc1RgDikcNecmiHSIs_eu9eDnhYe7KIv1CWellcVQjatUEj1wFJtfIbds1-sgzeXXjQSLwT5gv-v9bOMsX0Kj-xehPvokv8VUYOYbz2luszzUuzQZ1Z7tS_YrAkTa2Ve_2HjcR6SClvjxbzYAGa6_P-Ea5BZvZwfNX8Q47NJhru9W0WDqOBHDH4_ch2b9AIePWArcx6krMyGJSfPN06c-46BvHDxevTkc4AbagtSFDZKMtWV8YFHenwNmof1aOKNv46PWacuptgfQFGv-CS7ot8Z4dYHVHoOidGz2mw0g0Y9ywuzimag',
+  //     'Accept': 'application/json'
+  //   })
+  // }
+
+  httpOptions = null;
+  constructor(private http: HttpClient, private ho) {
+    this.httpOptions = ho;
   }
-
-  constructor(private http: HttpClient) {}
-
   getAllVisitorVehicleBadges() {
     console.log('getAllVisitorVehicleBadges()');
     console.log('this.http : ' + this.http);
@@ -108,18 +111,20 @@ class VisitorBadges {
 
   // public http: HttpClient;
 
-  constructor(private http: HttpClient) {}
-
+  httpOptions = null;
+  constructor(private http: HttpClient, private ho) {
+    this.httpOptions = ho;
+  }
   visitorBadges: VisitorBadge[] = [];
 
   public visitorsBadgesUrl = 'http://192.168.100.4:84/api/visitorbadges';
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': 'Bearer vLAF8elQ5r7gunytO65szem5dlajGWqLAmkaNtgfhVeQKi8fmlV-mzbYfa9fFBnJYWGa67b0fIzMuYUZdt2s3Sx7zdCvudAKXCHc1RgDikcNecmiHSIs_eu9eDnhYe7KIv1CWellcVQjatUEj1wFJtfIbds1-sgzeXXjQSLwT5gv-v9bOMsX0Kj-xehPvokv8VUYOYbz2luszzUuzQZ1Z7tS_YrAkTa2Ve_2HjcR6SClvjxbzYAGa6_P-Ea5BZvZwfNX8Q47NJhru9W0WDqOBHDH4_ch2b9AIePWArcx6krMyGJSfPN06c-46BvHDxevTkc4AbagtSFDZKMtWV8YFHenwNmof1aOKNv46PWacuptgfQFGv-CS7ot8Z4dYHVHoOidGz2mw0g0Y9ywuzimag',
-      'Accept': 'application/json'
-    })
-  }
+  // httpOptions = {
+  //   headers: new HttpHeaders({
+  //     'Content-Type':  'application/json',
+  //     'Authorization': 'Bearer vLAF8elQ5r7gunytO65szem5dlajGWqLAmkaNtgfhVeQKi8fmlV-mzbYfa9fFBnJYWGa67b0fIzMuYUZdt2s3Sx7zdCvudAKXCHc1RgDikcNecmiHSIs_eu9eDnhYe7KIv1CWellcVQjatUEj1wFJtfIbds1-sgzeXXjQSLwT5gv-v9bOMsX0Kj-xehPvokv8VUYOYbz2luszzUuzQZ1Z7tS_YrAkTa2Ve_2HjcR6SClvjxbzYAGa6_P-Ea5BZvZwfNX8Q47NJhru9W0WDqOBHDH4_ch2b9AIePWArcx6krMyGJSfPN06c-46BvHDxevTkc4AbagtSFDZKMtWV8YFHenwNmof1aOKNv46PWacuptgfQFGv-CS7ot8Z4dYHVHoOidGz2mw0g0Y9ywuzimag',
+  //     'Accept': 'application/json'
+  //   })
+  // }
 
   getAllVisitorBadges() {
     // var he = new hError();
@@ -213,17 +218,19 @@ class VisitorBadges {
 }
 
 class AirportZones {
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': 'Bearer vLAF8elQ5r7gunytO65szem5dlajGWqLAmkaNtgfhVeQKi8fmlV-mzbYfa9fFBnJYWGa67b0fIzMuYUZdt2s3Sx7zdCvudAKXCHc1RgDikcNecmiHSIs_eu9eDnhYe7KIv1CWellcVQjatUEj1wFJtfIbds1-sgzeXXjQSLwT5gv-v9bOMsX0Kj-xehPvokv8VUYOYbz2luszzUuzQZ1Z7tS_YrAkTa2Ve_2HjcR6SClvjxbzYAGa6_P-Ea5BZvZwfNX8Q47NJhru9W0WDqOBHDH4_ch2b9AIePWArcx6krMyGJSfPN06c-46BvHDxevTkc4AbagtSFDZKMtWV8YFHenwNmof1aOKNv46PWacuptgfQFGv-CS7ot8Z4dYHVHoOidGz2mw0g0Y9ywuzimag',
-      'Accept': 'application/json'
-    })
-  }
+  // httpOptions = {
+  //   headers: new HttpHeaders({
+  //     'Content-Type':  'application/json',
+  //     'Authorization': 'Bearer vLAF8elQ5r7gunytO65szem5dlajGWqLAmkaNtgfhVeQKi8fmlV-mzbYfa9fFBnJYWGa67b0fIzMuYUZdt2s3Sx7zdCvudAKXCHc1RgDikcNecmiHSIs_eu9eDnhYe7KIv1CWellcVQjatUEj1wFJtfIbds1-sgzeXXjQSLwT5gv-v9bOMsX0Kj-xehPvokv8VUYOYbz2luszzUuzQZ1Z7tS_YrAkTa2Ve_2HjcR6SClvjxbzYAGa6_P-Ea5BZvZwfNX8Q47NJhru9W0WDqOBHDH4_ch2b9AIePWArcx6krMyGJSfPN06c-46BvHDxevTkc4AbagtSFDZKMtWV8YFHenwNmof1aOKNv46PWacuptgfQFGv-CS7ot8Z4dYHVHoOidGz2mw0g0Y9ywuzimag',
+  //     'Accept': 'application/json'
+  //   })
+  // }
   airportZones: AirportZone[] = [];
 
-  constructor(private http: HttpClient) {}
-
+  httpOptions = null;
+  constructor(private http: HttpClient, private ho) {
+    this.httpOptions = ho;
+  }
   public airportZonesUrl = 'http://192.168.100.4:84/api/zones';
 
   getAllAirportZones() {
@@ -305,47 +312,31 @@ class AirportZones {
 }
 
 class Occupations {
-  occupations: Occupation[] = [
-    {
-      id: 'occupation1',
-      code: 'occupation-code1',
-      name: 'occupation-name1'
-    },
-    {
-      id: 'occupation2',
-      code: 'occupation-code2',
-      name: 'occupation-name2'
-    },
-    {
-      id: 'occupation3',
-      code: 'occupation-code3',
-      name: 'occupation-name3'
-    },
-  ];
+  // httpOptions = {
+  //   headers: new HttpHeaders({
+  //     'Content-Type':  'application/json',
+  //     'Authorization': 'Bearer vLAF8elQ5r7gunytO65szem5dlajGWqLAmkaNtgfhVeQKi8fmlV-mzbYfa9fFBnJYWGa67b0fIzMuYUZdt2s3Sx7zdCvudAKXCHc1RgDikcNecmiHSIs_eu9eDnhYe7KIv1CWellcVQjatUEj1wFJtfIbds1-sgzeXXjQSLwT5gv-v9bOMsX0Kj-xehPvokv8VUYOYbz2luszzUuzQZ1Z7tS_YrAkTa2Ve_2HjcR6SClvjxbzYAGa6_P-Ea5BZvZwfNX8Q47NJhru9W0WDqOBHDH4_ch2b9AIePWArcx6krMyGJSfPN06c-46BvHDxevTkc4AbagtSFDZKMtWV8YFHenwNmof1aOKNv46PWacuptgfQFGv-CS7ot8Z4dYHVHoOidGz2mw0g0Y9ywuzimag',
+  //     'Accept': 'application/json'
+  //   })
+  // }
 
   public occupationsUrl = 'http://192.168.100.4:84/api/occupations';
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': 'TpASVw-gFSBtV8mXlNXVGinX-UHiHZn3uiGQlvj6VYNRH4lTVotSR6yT8bAOTr_9Hcy1TNGRsSRjF-r1KHjBcaBcVGuY2CmpZn0u6lrNcqhGP9Zhd5ecY21g5fJWzlbaBUMi-llphw_syOK2tEy2jF1v2Ff7aqCWVyMKJiriWqwiY2-hCQjNXC5VCQd9zlbSDlWehjFbDM0iBkLf17z5CKnMN1kccUGWrxJl_LrhdZybkiYD3n7rWUvnOzslstqx-XVDw2drwWx3ztNl5TMng9f4QKqiGDdcv-DQW2rClA6DYrIwpa5kdnEeqFTcH6G2RLnE3e_5yUZifefq9MDdaiPR5KFt6knOALAL30thoSPXS4kv_mhNfQnIn7Y7Dom3ngSPkKuZTyVEwCJ3e9N6Ig',
-      'Accept': 'application/json'
-    })
+  occupations: Occupation[] = [];
+
+  httpOptions = null;
+  constructor(private http: HttpClient, private ho) {
+    this.httpOptions = ho;
   }
-
-  constructor(private http : HttpClient) {}
-
   getAllOccupations() {
-    this.http.get<Occupation[]>(this.occupationsUrl)
-      .subscribe(data => console.log(data));
+    return this.http.get<Occupation[]>(this.occupationsUrl, this.httpOptions);
   }
 
   // getAllOccupations() {
   //   return this.occupations;
   // }
 
-  getOccupationById(id: string) {
-    this.http.get<Occupation>(this.occupationsUrl + '?' + id)
-      .subscribe(data => console.log(data));
+  getOccupationById(id: number) {
+    return this.http.get<Occupation>(this.occupationsUrl + '/' + id, this.httpOptions);
   }
 
   // getOccupationById(id: string){
@@ -357,8 +348,7 @@ class Occupations {
   // }
 
   addOccupation(occupation: Occupation){
-    this.http.post(this.occupationsUrl, occupation, this.httpOptions)
-      .subscribe(data => console.log(data));
+    return this.http.post(this.occupationsUrl, occupation, this.httpOptions);
   }
 
   pushOccupation(occupation: Occupation){
@@ -400,47 +390,31 @@ class Occupations {
 }
 
 class Gates {
-  gates: Gate[] = [
-    {
-      id: 'gate1',
-      code: 'gate-code1',
-      name: 'gate-name1'
-    },
-    {
-      id: 'gate2',
-      code: 'gate-code2',
-      name: 'gate-name2'
-    },
-    {
-      id: 'gate3',
-      code: 'gate-code3',
-      name: 'gate-name3'
-    },
-  ]
-
+  gates: Gate[] = [];
   public gatesUrl = 'http://192.168.100.4:84/api/gates';
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': 'TpASVw-gFSBtV8mXlNXVGinX-UHiHZn3uiGQlvj6VYNRH4lTVotSR6yT8bAOTr_9Hcy1TNGRsSRjF-r1KHjBcaBcVGuY2CmpZn0u6lrNcqhGP9Zhd5ecY21g5fJWzlbaBUMi-llphw_syOK2tEy2jF1v2Ff7aqCWVyMKJiriWqwiY2-hCQjNXC5VCQd9zlbSDlWehjFbDM0iBkLf17z5CKnMN1kccUGWrxJl_LrhdZybkiYD3n7rWUvnOzslstqx-XVDw2drwWx3ztNl5TMng9f4QKqiGDdcv-DQW2rClA6DYrIwpa5kdnEeqFTcH6G2RLnE3e_5yUZifefq9MDdaiPR5KFt6knOALAL30thoSPXS4kv_mhNfQnIn7Y7Dom3ngSPkKuZTyVEwCJ3e9N6Ig',
-      'Accept': 'application/json'
-    })
+  // httpOptions = {
+  //   headers: new HttpHeaders({
+  //     'Content-Type':  'application/json',
+  //     'Authorization': 'Bearer vLAF8elQ5r7gunytO65szem5dlajGWqLAmkaNtgfhVeQKi8fmlV-mzbYfa9fFBnJYWGa67b0fIzMuYUZdt2s3Sx7zdCvudAKXCHc1RgDikcNecmiHSIs_eu9eDnhYe7KIv1CWellcVQjatUEj1wFJtfIbds1-sgzeXXjQSLwT5gv-v9bOMsX0Kj-xehPvokv8VUYOYbz2luszzUuzQZ1Z7tS_YrAkTa2Ve_2HjcR6SClvjxbzYAGa6_P-Ea5BZvZwfNX8Q47NJhru9W0WDqOBHDH4_ch2b9AIePWArcx6krMyGJSfPN06c-46BvHDxevTkc4AbagtSFDZKMtWV8YFHenwNmof1aOKNv46PWacuptgfQFGv-CS7ot8Z4dYHVHoOidGz2mw0g0Y9ywuzimag',
+  //     'Accept': 'application/json'
+  //   })
+  // }
+  httpOptions = null;
+  constructor(private http: HttpClient, private ho) {
+    this.httpOptions = ho;
   }
-
-  constructor(private http: HttpClient) {}
-
   getAllGates() {
-    this.http.get<Gate[]>(this.gatesUrl)
-      .subscribe(data => console.log(data));
+    console.log('vo getAllGates()');
+    return this.http.get<Gate[]>(this.gatesUrl, this.httpOptions);
   }
 
   // getAllGates() {
   //   return this.gates;
   // }
 
-  getGateById(id: string){
-    this.http.get<Gate>(this.gatesUrl + '?' + id)
-      .subscribe(data => console.log(data));
+  getGateById(id: number){
+    console.log('vo getGateById');
+    return this.http.get<Gate>(this.gatesUrl + '/' + id, this.httpOptions);
   }
 
   // getGateById(id: string){
@@ -452,20 +426,19 @@ class Gates {
   // }
 
   addGate(gate: Gate){
-    this.http.post<Gate>(this.gatesUrl, this.httpOptions)
-      .subscribe(data => console.log(data));
+    console.log('vo addGate() this.httpOptions.headers : ' + this.httpOptions.headers.get('Authorization'));
+    return this.http.post<Gate>(this.gatesUrl, gate, this.httpOptions);
   }
 
   pushGate(gate: Gate){
     this.gates.push(gate);
   }
 
-  updateGate(gate: Gate, id: string){
-    this.http.put(this.gatesUrl + '?' + id, gate, this.httpOptions)
-      .subscribe(data => console.log(data));
+  updateGate(gate: Gate, id: number){
+    return this.http.patch(this.gatesUrl + '/' + id, gate, this.httpOptions);
   }
 
-  switchGate(gate: Gate, id: string){
+  switchGate(gate: Gate, id: number){
     for(let i = 0; i<this.gates.length; i++){
       if(this.gates[i].id == id){
         this.gates[i] = gate;
@@ -475,7 +448,7 @@ class Gates {
     return null;
   }
 
-  deleteGateById(id: string){
+  deleteGateById(id: number){
     this.http.delete(this.gatesUrl + '?' + id, this.httpOptions)
       .subscribe(data => console.log(data));
   }
@@ -491,39 +464,24 @@ class Gates {
 }
 
 class Reasons {
-  reasons: Reason[] = [
-    {
-      id: 'reason1',
-      code: 'reason-code1',
-      name: 'reason-name1'
-    },
-    {
-      id: 'reason2',
-      code: 'reason-code2',
-      name: 'reason-name2'
-    },
-    {
-      id: 'reason3',
-      code: 'reason-code3',
-      name: 'reason-name3'
-    },
-  ]
+  reasons: Reason[] = [];
 
   public reasonsUrl = 'http://192.168.100.4:84/api/reasons';
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': 'TpASVw-gFSBtV8mXlNXVGinX-UHiHZn3uiGQlvj6VYNRH4lTVotSR6yT8bAOTr_9Hcy1TNGRsSRjF-r1KHjBcaBcVGuY2CmpZn0u6lrNcqhGP9Zhd5ecY21g5fJWzlbaBUMi-llphw_syOK2tEy2jF1v2Ff7aqCWVyMKJiriWqwiY2-hCQjNXC5VCQd9zlbSDlWehjFbDM0iBkLf17z5CKnMN1kccUGWrxJl_LrhdZybkiYD3n7rWUvnOzslstqx-XVDw2drwWx3ztNl5TMng9f4QKqiGDdcv-DQW2rClA6DYrIwpa5kdnEeqFTcH6G2RLnE3e_5yUZifefq9MDdaiPR5KFt6knOALAL30thoSPXS4kv_mhNfQnIn7Y7Dom3ngSPkKuZTyVEwCJ3e9N6Ig',
-      'Accept': 'application/json'
-    })
+  // httpOptions = {
+  //   headers: new HttpHeaders({
+  //     'Content-Type':  'application/json',
+  //     'Authorization': 'Bearer vLAF8elQ5r7gunytO65szem5dlajGWqLAmkaNtgfhVeQKi8fmlV-mzbYfa9fFBnJYWGa67b0fIzMuYUZdt2s3Sx7zdCvudAKXCHc1RgDikcNecmiHSIs_eu9eDnhYe7KIv1CWellcVQjatUEj1wFJtfIbds1-sgzeXXjQSLwT5gv-v9bOMsX0Kj-xehPvokv8VUYOYbz2luszzUuzQZ1Z7tS_YrAkTa2Ve_2HjcR6SClvjxbzYAGa6_P-Ea5BZvZwfNX8Q47NJhru9W0WDqOBHDH4_ch2b9AIePWArcx6krMyGJSfPN06c-46BvHDxevTkc4AbagtSFDZKMtWV8YFHenwNmof1aOKNv46PWacuptgfQFGv-CS7ot8Z4dYHVHoOidGz2mw0g0Y9ywuzimag',
+  //     'Accept': 'application/json'
+  //   })
+  // }
+
+  httpOptions = null;
+  constructor(private http: HttpClient, private ho) {
+    this.httpOptions = ho;
   }
-
-  constructor(private http: HttpClient) {}
-
   getAllReasons() {
     console.log('vo getAllReasons()');
-    this.http.get<Reason[]>(this.reasonsUrl)
-      .subscribe(data => console.log(data));
+    return this.http.get<Reason[]>(this.reasonsUrl, this.httpOptions);
   }
 
   // getAllReasons() {
@@ -532,8 +490,7 @@ class Reasons {
 
   getReasonById(id: string){
     console.log('vo getReasonById()');
-    this.http.get<Reason>(this.reasonsUrl + '?' + id)
-      .subscribe(data => console.log(data));
+    return this.http.get<Reason>(this.reasonsUrl + '/' + id, this.httpOptions);
   }
 
   // getReasonById(id: string){
@@ -546,21 +503,19 @@ class Reasons {
 
   addReason(reason: Reason){
     console.log('vo AddReason()');
-    this.http.post(this.reasonsUrl, reason, this.httpOptions)
-      .subscribe(data => console.log(data));
+    return this.http.post(this.reasonsUrl, reason, this.httpOptions);
   }
 
   pushReason(reason: Reason){
     this.reasons.push(reason);
   }
 
-  updateReason(reason: Reason, id: string){
+  updateReason(reason: Reason, id: number){
     console.log('vo updateReason');
-    this.http.put(this.reasonsUrl + '?' + id, reason, this.httpOptions)
-      .subscribe(data => console.log(data));
+    return this.http.patch(this.reasonsUrl + '/' + id, reason, this.httpOptions);
   }
 
-  switchReason(reason: Reason, id: string){
+  switchReason(reason: Reason, id: number){
     for(let i = 0; i<this.reasons.length; i++){
       if(this.reasons[i].id == id){
         this.reasons[i] = reason;
@@ -586,34 +541,25 @@ class Reasons {
 }
 
 class Employees {
-  employees: Employee[] = [
-    {
-      id: 1,
-      name: 'emp1',
-      email: 'emp1@emp.com'
-    },
-    {
-      id: 2,
-      name: 'emp2',
-      email: 'emp2@emp.com'
-    }
-  ];
+  employees: Employee[] = [];
+  // httpOptions = {
+  //   headers: new HttpHeaders({
+  //     'Content-Type':  'application/json',
+  //     'Authorization': 'Bearer vLAF8elQ5r7gunytO65szem5dlajGWqLAmkaNtgfhVeQKi8fmlV-mzbYfa9fFBnJYWGa67b0fIzMuYUZdt2s3Sx7zdCvudAKXCHc1RgDikcNecmiHSIs_eu9eDnhYe7KIv1CWellcVQjatUEj1wFJtfIbds1-sgzeXXjQSLwT5gv-v9bOMsX0Kj-xehPvokv8VUYOYbz2luszzUuzQZ1Z7tS_YrAkTa2Ve_2HjcR6SClvjxbzYAGa6_P-Ea5BZvZwfNX8Q47NJhru9W0WDqOBHDH4_ch2b9AIePWArcx6krMyGJSfPN06c-46BvHDxevTkc4AbagtSFDZKMtWV8YFHenwNmof1aOKNv46PWacuptgfQFGv-CS7ot8Z4dYHVHoOidGz2mw0g0Y9ywuzimag',
+  //     'Accept': 'application/json'
+  //   })
+  // }
 
   public employeesUrl = 'http://192.168.100.4:84/api/employees';
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': 'TpASVw-gFSBtV8mXlNXVGinX-UHiHZn3uiGQlvj6VYNRH4lTVotSR6yT8bAOTr_9Hcy1TNGRsSRjF-r1KHjBcaBcVGuY2CmpZn0u6lrNcqhGP9Zhd5ecY21g5fJWzlbaBUMi-llphw_syOK2tEy2jF1v2Ff7aqCWVyMKJiriWqwiY2-hCQjNXC5VCQd9zlbSDlWehjFbDM0iBkLf17z5CKnMN1kccUGWrxJl_LrhdZybkiYD3n7rWUvnOzslstqx-XVDw2drwWx3ztNl5TMng9f4QKqiGDdcv-DQW2rClA6DYrIwpa5kdnEeqFTcH6G2RLnE3e_5yUZifefq9MDdaiPR5KFt6knOALAL30thoSPXS4kv_mhNfQnIn7Y7Dom3ngSPkKuZTyVEwCJ3e9N6Ig',
-      'Accept': 'application/json'
-    })
-  }
 
-  constructor(private http: HttpClient) {}
+  httpOptions = null;
+  constructor(private http: HttpClient, private ho) {
+    this.httpOptions = ho;
+  }
 
   getAllEmployees() {
     console.log('vo getAllEmployees');
-    this.http.get<Employee[]>(this.employeesUrl)
-      .subscribe(data => console.log(data));
+    return this.http.get<Employee[]>(this.employeesUrl, this.httpOptions);
   }
 
   // getAllEmployees() {
@@ -622,8 +568,7 @@ class Employees {
 
   getEmplyeeById(id: number) {
     console.log('vo getEmployeeById');
-    this.http.get<Employee>(this.employeesUrl + '?' + id)
-      .subscribe(data => console.log(data));
+    return this.http.get<Employee>(this.employeesUrl + '/' + id, this.httpOptions);
   }
 
   // getEmplyeeById(id: number){
@@ -634,8 +579,7 @@ class Employees {
   // }
 
   addEmployee(employee: Employee){
-    this.http.post(this.employeesUrl, employee, this.httpOptions)
-      .subscribe(data => console.log(data));
+    return this.http.post(this.employeesUrl, employee, this.httpOptions);
   }
 
   pushEmployee(employee: Employee){
@@ -643,8 +587,7 @@ class Employees {
   }
 
   deleteEmployeeById(id: number){
-    this.http.delete(this.employeesUrl + '?' + id, this.httpOptions)
-      .subscribe(data => console.log(data));
+    return this.http.delete(this.employeesUrl + '/' + id, this.httpOptions);
   }
 
   // deleteEmployeeById(id: number){
@@ -657,8 +600,7 @@ class Employees {
   // }
 
   updateEmployee(emp: Employee) {
-    this.http.put(this.employeesUrl, emp, this.httpOptions)
-      .subscribe(data => console.log(data));
+    return this.http.patch(this.employeesUrl + '/' + emp.id, emp, this.httpOptions);
   }
 
   switchEmployeeById(emp: Employee){
@@ -675,37 +617,69 @@ class Employees {
 }
 
 class Vehicles {
-  vehicles: Vehicle[] = [
-    {
-      company: 'vC1',
-      model: 'zastava',
-      plate: 'sk-123-qw'
-    },
-    {
-      company: 'vC2',
-      model: 'varburg',
-      plate: 've-666-zx'
-    },
-  ];
+  vehicles: Vehicle[] = [];
+  // httpOptions = {
+  //   headers: new HttpHeaders({
+  //     'Content-Type':  'application/json',
+  //     'Authorization': 'Bearer vLAF8elQ5r7gunytO65szem5dlajGWqLAmkaNtgfhVeQKi8fmlV-mzbYfa9fFBnJYWGa67b0fIzMuYUZdt2s3Sx7zdCvudAKXCHc1RgDikcNecmiHSIs_eu9eDnhYe7KIv1CWellcVQjatUEj1wFJtfIbds1-sgzeXXjQSLwT5gv-v9bOMsX0Kj-xehPvokv8VUYOYbz2luszzUuzQZ1Z7tS_YrAkTa2Ve_2HjcR6SClvjxbzYAGa6_P-Ea5BZvZwfNX8Q47NJhru9W0WDqOBHDH4_ch2b9AIePWArcx6krMyGJSfPN06c-46BvHDxevTkc4AbagtSFDZKMtWV8YFHenwNmof1aOKNv46PWacuptgfQFGv-CS7ot8Z4dYHVHoOidGz2mw0g0Y9ywuzimag',
+  //     'Accept': 'application/json'
+  //   })
+  // }
+
+  public vehiclesUrl = 'http://192.168.100.4:84/api/vehicles';
+
+  httpOptions = null;
+  constructor(private http: HttpClient, private ho) {
+    this.httpOptions = ho;
+    console.log('hoe: ' + ho.headers.get('Authorization'));
+  }
 
   addVehicle(vehicle: Vehicle){
-    console.log('add vehicle: ', vehicle);
-    this.vehicles.push(vehicle);
-    console.log('postadd vehicles: ', this.vehicles);
+    return this.http.post<Vehicle>(this.vehiclesUrl, vehicle, this.httpOptions);
   }
 
-  getVehicleByIndex(index: number) {
-    return this.vehicles[index];
+  pushVehicle(vehicle: Vehicle){
+    this.vehicles.push(vehicle);
   }
+
+  getVehicleByIndex(index: number){
+    return this.http.get<Vehicle>(this.vehiclesUrl, this.httpOptions);
+  }
+
+  // getVehicleByIndex(index: number) {
+  //   return this.vehicles[index];
+  // }
 
   getAllVehicles(){
-    return this.vehicles;
+    return this.http.get<Vehicle[]>(this.vehiclesUrl, this.httpOptions);
   }
 
-  editVehicle(index: number, vehicle: Vehicle) {
-    this.vehicles[index] = vehicle;
-    return this.vehicles[index];
+  // getAllVehicles(){
+  //   return this.vehicles;
+  // }
+
+  editVehicle(v: Vehicle){
+    return this.http.patch<Vehicle>(this.vehiclesUrl + '/' + v.id, v, this.httpOptions);
   }
+
+
+  switchVehicleById(v: Vehicle){
+    console.log('editVehicleByID vehicle: ', v);
+    for(let i = 0; i<this.vehicles.length; i++){
+      if(this.vehicles[i].id == v.id){
+        this.vehicles[i] = v;
+        // console.log('employee edited: ', this.employees[i]);
+        return 0;
+      }
+    }
+    return null;
+  }
+
+
+  // editVehicle(index: number, vehicle: Vehicle) {
+  //   this.vehicles[index] = vehicle;
+  //   return this.vehicles[index];
+  // }
 
   deleteVehicle(index: number) {
     this.vehicles.splice(index, 1);
@@ -726,28 +700,50 @@ class Vehicles {
 
 class Companies {
   // companies = ['AMC', 'BBC', 'TAV', 'DrinkerLab'];
-  companies: Company[] = [
-    {
-      id: 1,
-      name: 'AMC'
-    },
-    {
-      id: 2,
-      name: 'BBC'
-    },
-    {
-      id: 3,
-      name: 'TAV'
-    },
-    {
-      id: 4,
-      name: 'DrinkerLab'
-    }
-  ];
+  // companies: Company[] = [
+  //   {
+  //     id: 1,
+  //     name: 'AMC'
+  //   },
+  //   {
+  //     id: 2,
+  //     name: 'BBC'
+  //   },
+  //   {
+  //     id: 3,
+  //     name: 'TAV'
+  //   },
+  //   {
+  //     id: 4,
+  //     name: 'DrinkerLab'
+  //   }
+  // ];
+  companies: Company[] = [];
+  // httpOptions = {
+  //   headers: new HttpHeaders({
+  //     'Content-Type':  'application/json',
+  //     'Authorization': 'Bearer vLAF8elQ5r7gunytO65szem5dlajGWqLAmkaNtgfhVeQKi8fmlV-mzbYfa9fFBnJYWGa67b0fIzMuYUZdt2s3Sx7zdCvudAKXCHc1RgDikcNecmiHSIs_eu9eDnhYe7KIv1CWellcVQjatUEj1wFJtfIbds1-sgzeXXjQSLwT5gv-v9bOMsX0Kj-xehPvokv8VUYOYbz2luszzUuzQZ1Z7tS_YrAkTa2Ve_2HjcR6SClvjxbzYAGa6_P-Ea5BZvZwfNX8Q47NJhru9W0WDqOBHDH4_ch2b9AIePWArcx6krMyGJSfPN06c-46BvHDxevTkc4AbagtSFDZKMtWV8YFHenwNmof1aOKNv46PWacuptgfQFGv-CS7ot8Z4dYHVHoOidGz2mw0g0Y9ywuzimag',
+  //     'Accept': 'application/json'
+  //   })
+  // }
+
+  public companiesUrl = 'http://192.168.100.4:84/api/companies';
+
+  httpOptions = null;
+  constructor(private http: HttpClient, private ho) {
+    this.httpOptions = ho;
+  }
 
   getCompanies() {
-    return this.companies;
+    this.http.get<Company[]>(this.companiesUrl, this.httpOptions)
+      .subscribe((data) => {
+        console.log('data: ' + data);
+      });
   }
+
+  // getCompanies() {
+  //   return this.companies;
+  // }
 
   getCompaniesNames() {
     let compNames = [];
@@ -757,41 +753,57 @@ class Companies {
     return compNames;
   }
 
+  // getCompanyById(id: number) {
+  //   for(let i = 0; i<this.companies.length; i++)
+  //     if(this.companies[i].id == id)
+  //       return this.companies[i];
+  //   return null;
+  // }
+
   getCompanyById(id: number) {
-    for(let i = 0; i<this.companies.length; i++)
-      if(this.companies[i].id == id)
-        return this.companies[i];
-    return null;
+    return this.http.get<Company>(this.companiesUrl + '/' + id, this.httpOptions);
   }
 
   addCompany(company: Company) {
-    this.companies.push(company);
-    console.log('add company: ', company);
-    console.log('companies: ', this.companies);
+    return this.http.post<Company>(this.companiesUrl, company, this.httpOptions);
   }
 
-  editCompany(id: number, name: string){
+  pushCompany(company: Company) {
+    this.companies.push(company);
+    // console.log('add company: ', company);
+    // console.log('companies: ', this.companies);
+  }
+
+  editCompany(c : Company){
+    return this.http.patch<Company>(this.companiesUrl + '/' + c.id, c, this.httpOptions);
+  }
+
+  switchCompany(c: Company){
     // this.companies[index].name = name;
     for(let i = 0; i<this.companies.length; i++)
-      if(this.companies[i].id == id){
+      if(this.companies[i].id == c.id){
         // console.log('name: ', name);
         // console.log('edit company: ', this.companies[i]);
-        this.companies[i].name = name;
+        this.companies[i] = c;
         // console.log('companies postedit: ', this.companies);
         // return this.companies[i];
       }
     return null;
   }
 
-  getCompanyByIndex(index: number){
-    return this.companies[index];
-  }
+  // getCompanyByIndex(index: number){
+  //   return this.companies[index];
+  // }
 
   getCompanyByName(name: string){
     for(let i = 0; i<this.companies.length; i++)
       if(this.companies[i].name == name)
         return this.companies[i];
     return null;
+  }
+
+  deleteCompanyById(id : number) {
+    return this.http.delete(this.companiesUrl + '/' + id, this.httpOptions);
   }
 
   deleteCompanyByIndex(index: number){
@@ -808,21 +820,28 @@ class Companies {
 
 @Injectable()
 export class ResourcesService {
+  constructor(private http : HttpClient,
+              private auth: AuthService) { }
   // companies = ['AMC', 'BBC', 'TAV', 'DrinkerLab'];
-  companies = new Companies();
-  vehicles = new Vehicles();
-  employees = new Employees(this.http);
-  reasons = new Reasons(this.http);
-  gates = new Gates(this.http);
-  occupations = new Occupations(this.http);
-  airportZones = new AirportZones(this.http);
-  visitorBadges = new VisitorBadges(this.http);
-  visitorVehicleBadges = new VisitorVehicleBadges(this.http);
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Authorization': 'Bearer ' + this.auth.token,
+      'Accept': 'application/json'
+    })
+  }
+  companies = new Companies(this.http, this.httpOptions);
+  vehicles = new Vehicles(this.http, this.httpOptions);
+  employees = new Employees(this.http, this.httpOptions);
+  reasons = new Reasons(this.http, this.httpOptions);
+  gates = new Gates(this.http, this.httpOptions);
+  occupations = new Occupations(this.http, this.httpOptions);
+  airportZones = new AirportZones(this.http, this.httpOptions);
+  visitorBadges = new VisitorBadges(this.http, this.httpOptions);
+  visitorVehicleBadges = new VisitorVehicleBadges(this.http, this.httpOptions);
   badges: Badge[] = [];
+
   // zones = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-  constructor(private http : HttpClient) { }
-
   setBadges(badges: Badge[]) {
     this.badges = badges;
   }

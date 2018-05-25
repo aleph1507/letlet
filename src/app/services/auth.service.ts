@@ -5,8 +5,8 @@ import { LoginResponse } from '../models/LoginResponse';
 @Injectable()
 export class AuthService {
 
-  token: string;
-  url = 'http://192.168.100.11:84/token';
+  public token: string = null;
+  url = 'http://192.168.100.4:84/token';
 
   // httpOptions = {
   //   headers: new HttpHeaders({
@@ -23,6 +23,11 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
+  getToken() {
+    
+    return this.token;
+  }
+
   logIn(username: string, password:string, gt = "password", cid = "AsecClient") {
     // console.log("username: ", username);
     // console.log("password: ", password);
@@ -36,7 +41,9 @@ export class AuthService {
 
     this.http.post<LoginResponse>(this.url, body.toString(),
     { headers: this.headers }).subscribe(data => {
-      console.log(data);
+
+      this.token = data.access_token;
+      console.log('TTTOKKKEEN::: ' + this.token);
     })
   }
 

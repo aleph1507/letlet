@@ -50,7 +50,7 @@ export class ResourceComponent implements OnInit {
           this.categoryTitle = 'Visitors Badges';
           // this.resourcesService.visitorBadges.getAllVisitorBadges();
           this.resourcesService.visitorBadges.getAllVisitorBadges()
-            .subscribe((data) => {
+            .subscribe((data : VisitorBadge[]) => {
               this.resourcesService.visitorBadges.visitorBadges = data;
               this.dataSource = new
                 MatTableDataSource<VisitorBadge>(this.resourcesService.visitorBadges.visitorBadges);
@@ -74,38 +74,58 @@ export class ResourceComponent implements OnInit {
         case 'companies':
           this.category = 'companies';
           this.categoryTitle = this.category;
-          this.dataSource = new MatTableDataSource<Company>(this.resourcesService.companies.getCompanies());
+          this.resourcesService.companies.getCompanies()
+            .subscribe((data) => {
+              this.resourcesService.companies.companies = data;
+              this.dataSource = new
+                MatTableDataSource<Company>(this.resourcesService.companies.companies);
+            })
           this.displayedColumns = ['name', 'id'];
           break;
         case 'vehicles':
           this.category = 'vehicles';
           this.categoryTitle = this.category;
-          this.dataSource = new MatTableDataSource<Vehicle>(this.resourcesService.vehicles.getAllVehicles());
+          this.resourcesService.vehicles.getAllVehicles()
+            .subscribe((data : Vehicle[]) => {
+              this.resourcesService.vehicles.vehicles = data;
+              this.dataSource = new
+                MatTableDataSource<Vehicle>(this.resourcesService.vehicles.vehicles);
+            })
           this.displayedColumns = ['company', 'model', 'plate', 'edit'];
           break;
         case 'employees':
           this.category = 'employees';
           this.categoryTitle = this.category;
           // this.dataSource = new MatTableDataSource<Employee>(this.resourcesService.employees.getAllEmployees());
-          // this.resourcesService.employees.getAllEmployees()
-          //   .subscribe((data) => {
-          //     this.resourcesService.visitorBadges.visitorBadges = data;
-          //     this.dataSource = new
-          //       MatTableDataSource<VisitorBadge>(this.resourcesService.visitorBadges.visitorBadges);
-          //   });
-          this.displayedColumns = ['id', 'name', 'email', 'edit'];
+          this.resourcesService.employees.getAllEmployees()
+            .subscribe((data) => {
+              this.resourcesService.employees.employees = data;
+              this.dataSource = new
+                MatTableDataSource<Employee>(this.resourcesService.employees.employees);
+            });
+          this.displayedColumns = ['name', 'surname', 'company', 'edit'];
           break;
         case 'reasons':
           this.category = 'reasons';
           this.categoryTitle = this.category;
-          // this.dataSource = new MatTableDataSource<Reason>(this.resourcesService.reasons.getAllReasons());
-          this.displayedColumns = ['id', 'code', 'name', 'edit'];
+          this.resourcesService.reasons.getAllReasons()
+            .subscribe((data) => {
+              this.resourcesService.reasons.reasons = data;
+              this.dataSource = new
+                MatTableDataSource<Reason>(this.resourcesService.reasons.reasons);
+            })
+            this.displayedColumns = ['name', 'edit'];
           break;
         case 'gates':
           this.category = 'gates';
           this.categoryTitle = this.category;
-          // this.dataSource = new MatTableDataSource<Gate>(this.resourcesService.gates.getAllGates());
-          this.displayedColumns = ['id', 'code', 'name', 'edit'];
+          this.resourcesService.gates.getAllGates()
+            .subscribe((data) => {
+              this.resourcesService.gates.gates = data;
+              this.dataSource = new
+                MatTableDataSource<Gate>(this.resourcesService.gates.gates);
+            })
+          this.displayedColumns = ['name', 'edit'];
           break;
         case 'occupations':
           this.category = 'occupations';
@@ -231,10 +251,10 @@ export class ResourceComponent implements OnInit {
   }
 
   editEmployee(id = null){
-    let e: Employee = this.resourcesService.employees.getEmplyeeById(id);
+    // let e: Employee = this.resourcesService.employees.getEmplyeeById(id);
     let dialogRef = this.dialog.open(EmployeeModalComponent, {
       width: '40%',
-      data: e
+      data: id
     });
 
     dialogRef.afterClosed().subscribe(a => {
@@ -242,7 +262,7 @@ export class ResourceComponent implements OnInit {
     });
   }
 
-  editCompany(id): void {
+  editCompany(id = null): void {
     let dialogRef = this.dialog.open(CompanyModalComponent, {
       width: '40%',
       data: { id }

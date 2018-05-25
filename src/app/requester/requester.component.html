@@ -27,7 +27,7 @@
           placeholder="Company" required>
           <mat-autocomplete #companyAuto="matAutocomplete">
             <mat-option *ngFor="let company of filteredCompanies | async" [value]="company">
-              {{ company }}
+              {{ company.name }}
             </mat-option>
           </mat-autocomplete>
       </mat-form-field>

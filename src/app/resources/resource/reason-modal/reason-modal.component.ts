@@ -14,7 +14,7 @@ export class ReasonModalComponent implements OnInit {
 
   reason: Reason;
   reasonForm: FormGroup;
-  oldID: string;
+  oldID: number = null;
 
   constructor(public dialogRef: MatDialogRef<ReasonModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data,
@@ -22,19 +22,20 @@ export class ReasonModalComponent implements OnInit {
 
   ngOnInit() {
     if(this.data){
-      this.reason = this.resourcesService.reasons.getReasonById(this.data);
-      this.oldID = this.data;
+      this.resourcesService.reasons.getReasonById(this.data)
+        .subscribe((data : Reason) => {
+          this.reason = data;
+          this.oldID = this.data;
+          this.reasonForm = new FormGroup({
+            'name': new FormControl(this.reason ? this.reason.name : '', {
+              validators: [Validators.required],
+              updateOn: 'change'
+            })
+          });
+        });
     }
 
     this.reasonForm = new FormGroup({
-      'id': new FormControl(this.reason ? this.reason.id : '', {
-        validators: [Validators.required],
-        updateOn: 'change'
-      }),
-      'code': new FormControl(this.reason ? this.reason.code : '', {
-        validators: [Validators.required],
-        updateOn: 'change'
-      }),
       'name': new FormControl(this.reason ? this.reason.name : '', {
         validators: [Validators.required],
         updateOn: 'change'
@@ -44,14 +45,20 @@ export class ReasonModalComponent implements OnInit {
 
   onSubmit() {
     this.reason = {
-      id: this.reasonForm.controls['id'].value,
-      code: this.reasonForm.controls['code'].value,
+      id: this.oldID,
       name: this.reasonForm.controls['name'].value
     }
     if(this.data){
-      this.resourcesService.reasons.editReason(this.reason, this.oldID);
+      this.resourcesService.reasons.updateReason(this.reason, this.oldID)
+        .subscribe((data : Reason) => {
+          this.resourcesService.reasons.switchReason(data, this.oldID)
+        });
     } else {
-      this.resourcesService.reasons.addReason(this.reason);
+      this.resourcesService.reasons.addReason(this.reason)
+        .subscribe((data : Reason) => {
+          console.log('data: ' + data.id);
+          this.resourcesService.reasons.pushReason(data)
+        });
     }
 
     this.dialogRef.close();

@@ -1,10 +1,10 @@
 <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" novalidate>
-  <mat-form-field>
+  <!-- <mat-form-field>
     <input matInput name="empID"
       id="empID" placeholder="ID"
       formControlName="id"
       autocomplete="off" required>
-  </mat-form-field>
+  </mat-form-field> -->
   <mat-form-field>
     <input matInput name="empName"
       id="empName" placeholder="Name"
@@ -12,11 +12,23 @@
       autocomplete="off" required>
   </mat-form-field>
   <mat-form-field>
-  <input matInput name="empEmail"
-    id="empEmail" placeholder="Email"
-    formControlName="email"
-    autocomplete="off" required>
+    <input matInput name="empSurname"
+      id="empSurname" placeholder="Surname"
+      formControlName="surname"
+      autocomplete="off" required>
   </mat-form-field>
+  <mat-form-field class="requester-employee-field">
+    <input matInput type="text" name='company'
+    id="company" placeholder="Company"
+    formControlName="company"
+    [matAutocomplete]="comp"
+    required>
+  </mat-form-field>
+  <mat-autocomplete #comp="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let c of companies" [value]="c" >
+        {{ c.name }}
+      </mat-option>
+  </mat-autocomplete>
 
   <mat-divider class="sm-form-divider-margins"></mat-divider>
   <mat-dialog-actions>

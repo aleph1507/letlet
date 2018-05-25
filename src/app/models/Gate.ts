@@ -1,5 +1,4 @@
 export interface Gate {
-  id: any,
-  code: string;
+  id: number,
   name: string;
 }

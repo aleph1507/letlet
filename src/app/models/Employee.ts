@@ -1,5 +1,8 @@
+import { Company } from "./Company";
+
 export interface Employee {
   id: number;
   name: string;
-  email: string;
+  surname: string;
+  company: Company;
 }

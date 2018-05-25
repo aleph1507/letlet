@@ -1,5 +1,8 @@
+import { Company } from "./Company";
+
 export interface Vehicle {
-  company: string;
+  id: number;
+  company: Company;
   model: string;
   plate: string;
 }

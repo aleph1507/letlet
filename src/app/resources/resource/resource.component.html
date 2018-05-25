@@ -145,15 +145,15 @@
 
       <!-- Gates resource -->
       <div *ngIf="category=='gates'" class="gates-resource" id="gates-resource">
-        <ng-container matColumnDef="id">
+        <!-- <ng-container matColumnDef="id">
           <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
           <mat-cell *matCellDef="let gate"> {{gate.id}} </mat-cell>
-        </ng-container>
+        </ng-container> -->
 
-        <ng-container matColumnDef="code">
+        <!-- <ng-container matColumnDef="code">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Code </mat-header-cell>
           <mat-cell *matCellDef="let gate"> {{gate.code}} </mat-cell>
-        </ng-container>
+        </ng-container> -->
 
         <ng-container matColumnDef="name">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
@@ -176,7 +176,7 @@
 
       <!-- Reasons resource -->
       <div *ngIf="category=='reasons'" class="reasons-resource" id="reasons-resource">
-        <ng-container matColumnDef="id">
+        <!-- <ng-container matColumnDef="id">
           <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
           <mat-cell *matCellDef="let reason"> {{reason.id}} </mat-cell>
         </ng-container>
@@ -184,7 +184,7 @@
         <ng-container matColumnDef="code">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Code </mat-header-cell>
           <mat-cell *matCellDef="let reason"> {{reason.code}} </mat-cell>
-        </ng-container>
+        </ng-container> -->
 
         <ng-container matColumnDef="name">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
@@ -217,19 +217,24 @@
 
       <!-- Employees resource -->
       <div *ngIf="category=='employees'" class="employees-resource" id="employees-resource">
-        <ng-container matColumnDef="id">
+        <!-- <ng-container matColumnDef="id">
           <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
           <mat-cell *matCellDef="let emp"> {{emp.id}} </mat-cell>
-        </ng-container>
+        </ng-container> -->
 
         <ng-container matColumnDef="name">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
           <mat-cell *matCellDef="let emp"> {{emp.name}} </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="email">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
-          <mat-cell *matCellDef="let emp"> {{emp.email}} </mat-cell>
+        <ng-container matColumnDef="surname">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Surname </mat-header-cell>
+          <mat-cell *matCellDef="let emp"> {{emp.surname}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="company">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Company </mat-header-cell>
+          <mat-cell *matCellDef="let emp"> {{emp.company.name}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="edit">
@@ -248,7 +253,7 @@
       <div *ngIf="category=='vehicles'" class="vehicles-resource" id="vehicles-resource">
         <ng-container matColumnDef="company">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Company </mat-header-cell>
-          <mat-cell *matCellDef="let vehicle"> {{vehicle.company}} </mat-cell>
+          <mat-cell *matCellDef="let vehicle"> {{vehicle.company.name}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="model">
@@ -279,6 +284,7 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
           <mat-cell *matCellDef="let comp"> {{comp.name}} </mat-cell>
         </ng-container>
+
 
         <ng-container matColumnDef="id">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>

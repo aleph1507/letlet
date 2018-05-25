@@ -13,7 +13,7 @@ export class GateModalComponent implements OnInit {
 
   gate: Gate;
   gateForm: FormGroup;
-  oldID: string;
+  oldID: number = null;
 
   constructor(public dialogRef: MatDialogRef<GateModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data,
@@ -21,19 +21,29 @@ export class GateModalComponent implements OnInit {
 
   ngOnInit() {
     if(this.data){
-      this.gate = this.resourcesService.gates.getGateById(this.data);
-      this.oldID = this.data;
+      this.resourcesService.gates.getGateById(this.data)
+        .subscribe((data : Gate) => {
+          this.gate = data;
+          this.oldID = this.data;
+          this.gateForm = new FormGroup({
+            // 'id': new FormControl(this.gate ? this.gate.id : '', {
+            //   validators: [Validators.required],
+            //   updateOn: 'change'
+            // }),
+            'name': new FormControl(this.gate ? this.gate.name : '', {
+              validators: [Validators.required],
+              updateOn: 'change'
+            })
+          });
+        });
+
     }
 
     this.gateForm = new FormGroup({
-      'id': new FormControl(this.gate ? this.gate.id : '', {
-        validators: [Validators.required],
-        updateOn: 'change'
-      }),
-      'code': new FormControl(this.gate ? this.gate.code : '', {
-        validators: [Validators.required],
-        updateOn: 'change'
-      }),
+      // 'id': new FormControl(this.gate ? this.gate.id : '', {
+      //   validators: [Validators.required],
+      //   updateOn: 'change'
+      // }),
       'name': new FormControl(this.gate ? this.gate.name : '', {
         validators: [Validators.required],
         updateOn: 'change'
@@ -43,14 +53,19 @@ export class GateModalComponent implements OnInit {
 
   onSubmit() {
     this.gate = {
-      id: this.gateForm.controls['id'].value,
-      code: this.gateForm.controls['code'].value,
+      id: this.oldID,
       name: this.gateForm.controls['name'].value
     }
     if(this.data){
-      this.resourcesService.gates.editGate(this.gate, this.oldID);
+      this.resourcesService.gates.updateGate(this.gate, this.oldID)
+        .subscribe((data : Gate) => {
+          this.resourcesService.gates.switchGate(this.gate, this.oldID)
+        });
     } else {
-      this.resourcesService.gates.addGate(this.gate);
+      this.resourcesService.gates.addGate(this.gate)
+        .subscribe((data : Gate) => {
+          this.resourcesService.gates.pushGate(data)
+        });
     }
 
     this.dialogRef.close();
