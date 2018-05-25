@@ -36,41 +36,57 @@ class hError {
 }
 
 class VisitorVehicleBadges {
-  visitorVehicleBadges: VisitorVehicleBadge[] = [
-    {
-      id: 'visitor-vehicle-1',
-      code: 'visitor-vehicle-1',
-      number: 1
-    },
-    {
-      id: 'visitor-vehicle-2',
-      code: 'visitor-vehicle-2',
-      number: 2
-    },
-    {
-      id: 'visitor-vehicle-3',
-      code: 'visitor-vehicle-3',
-      number: 3
-    }
-  ];
+  visitorVehicleBadges: VisitorVehicleBadge[] = [];
+  public visitorVehicleBadgesUrl = 'http://192.168.100.4:84/api/visitorvehiclebadges';
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Authorization': 'Bearer aE4YgZl29OKjto9Ro6f_pDDQRNhs5aLouNGQnhFssfBp5ra307Q5cU_CQG_VzsmRSLEnOwP9DkHQX9dHROZP5SJPBVIaLSZELnLFRBl2Yhvyt6n2eNVDXaCbqeO7aq4g4wp6lvuJhiUsl5nzZp2pX_TjhwtLs8nGDZEtnnBXiaC8KLJ8Tymu9D1br9WAWUgTvFybzVjGyTYER3FJq3ooXyC7RXMyYf4v7eHObq2bNgQgaXZRRGZPUit4h6t2shC04efx0i6UdTXXCvs__0IJomHSwegeXFSv2fsPYnnYTvGjNDra3uGkgnRiD7Sq91_P54lShoHt3aXzaljTr599jsT_zSc3S9pu5h16xdQWbI6dEI-2KKg3OFao1I9G7VZv8vWP2hv3anTmMNA',
+      'Accept': 'application/json'
+    })
+  }
+
+  constructor(private http: HttpClient) {}
 
   getAllVisitorVehicleBadges() {
-    return this.visitorVehicleBadges;
+    console.log('getAllVisitorVehicleBadges()');
+    console.log('this.http : ' + this.http);
+    return this.http.get<VisitorVehicleBadge[]>(this.visitorVehicleBadgesUrl, this.httpOptions)
+      .pipe(
+        retry(3),
+      );
   }
 
-  getVisitorVehicleBadgeById(id: string){
-    for(let i = 0; i< this.visitorVehicleBadges.length; i++){
-      if(this.visitorVehicleBadges[i].id == id)
-        return this.visitorVehicleBadges[i];
-    }
-    return null;
+  getVisitorVehicleBadgeById(id: number){
+    console.log('vo getVisitorVehicleBadgeById');
+    return this.http.get<VisitorBadge>(this.visitorVehicleBadgesUrl + '/' + id, this.httpOptions).
+      pipe(
+        retry(3),
+      );
   }
+
+  // getVisitorVehicleBadgeById(id: number){
+  //   for(let i = 0; i< this.visitorVehicleBadges.length; i++){
+  //     if(this.visitorVehicleBadges[i].id == id)
+  //       return this.visitorVehicleBadges[i];
+  //   }
+  //   return null;
+  // }
 
   addVisitorVehicleBadge(visitorVehicleBadge: VisitorVehicleBadge){
+    console.log('vo addVisitorVehicleBadge(visitorVehicleBadge: VisitorVehicleBadge)');
+    return this.http.post(this.visitorVehicleBadgesUrl, visitorVehicleBadge, this.httpOptions);
+  }
+
+  pushVisitorVehicleBadge(visitorVehicleBadge: VisitorVehicleBadge){
     this.visitorVehicleBadges.push(visitorVehicleBadge);
   }
 
-  editVisitorVehicleBadge(visitorVehicleBadge: VisitorVehicleBadge, id: string){
+  updateVisitorVehicleBadge(vvb: VisitorVehicleBadge, id: number){
+    return this.http.patch(this.visitorVehicleBadgesUrl + '/' + id, vvb, this.httpOptions);
+  }
+
+  switchVisitorVehicleBadge(visitorVehicleBadge: VisitorVehicleBadge, id: number){
     for(let i = 0; i<this.visitorVehicleBadges.length; i++){
       if(this.visitorVehicleBadges[i].id == id){
         this.visitorVehicleBadges[i] = visitorVehicleBadge;
@@ -80,15 +96,10 @@ class VisitorVehicleBadges {
     return null;
   }
 
-  deleteVisitorVehicleBadgeById(id: string){
-    for(let i = 0; i<this.visitorVehicleBadges.length; i++){
-      if(this.visitorVehicleBadges[i].id == id){
-        this.visitorVehicleBadges.splice(i, 1);
-      }
-    }
-    return this.visitorVehicleBadges;
+  deleteVisitorVehicleBadgeById(id: number){
+    this.http.delete(this.visitorVehicleBadgesUrl + '?' + id, this.httpOptions)
+      .subscribe(data => console.log(data));
   }
-
 
 }
 
@@ -99,32 +110,13 @@ class VisitorBadges {
 
   constructor(private http: HttpClient) {}
 
-  visitorBadges: VisitorBadge[] = [
-    {
-      id: 'visitor-badge1',
-      code: 'visitor-badge-code1',
-      name: 'visitor-badge-name1',
-      barcode: 'visitor-badge-barcode1'
-    },
-    {
-      id: 'visitor-badge2',
-      code: 'visitor-badge-code2',
-      name: 'visitor-badge-name2',
-      barcode: 'visitor-badge-barcode2'
-    },
-    {
-      id: 'visitor-badge3',
-      code: 'visitor-badge-code3',
-      name: 'visitor-badge-name3',
-      barcode: 'visitor-badge-barcode3'
-    },
-  ];
+  visitorBadges: VisitorBadge[] = [];
 
   public visitorsBadgesUrl = 'http://192.168.100.4:84/api/visitorbadges';
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
-      'Authorization': 'Bearer OISzBvzSAdxa8W9gFkgVnNzPW4v3IpN32yI7bo-folhKUUu7cRoRDCHSfKZcIzMX9lpqwiCelLWPp4JmuYx_6F4mveUg-h8lL-fqGspf-jFVXrmCX0RGkuDy4LpLW9EaYzcP5Fa2SgGX8r33VSFEIdyAGP58WReoiOMmd0dvOfMeYTvy2pvfFA5tP7_P5aCVDm0mvi1TcDSEsilBvkWnkIYIaKtvvbqygJJ3QvSlsBjBVTu5KynF4fhRu8XAIvu4AGU08yVnZLBfr1sIogGszzILMZgInw-LIIhYr8uwGSxPgN2oByDpMPpF4sAnPFH-D8vLKY7xrFJSWkypDY1KDvnJevekTAiisiWm3vtPuQKC3pFB1h81l-mnpxMHV4PjztAlnk7K4_G0rwOSzQDcJQ',
+      'Authorization': 'Bearer vLAF8elQ5r7gunytO65szem5dlajGWqLAmkaNtgfhVeQKi8fmlV-mzbYfa9fFBnJYWGa67b0fIzMuYUZdt2s3Sx7zdCvudAKXCHc1RgDikcNecmiHSIs_eu9eDnhYe7KIv1CWellcVQjatUEj1wFJtfIbds1-sgzeXXjQSLwT5gv-v9bOMsX0Kj-xehPvokv8VUYOYbz2luszzUuzQZ1Z7tS_YrAkTa2Ve_2HjcR6SClvjxbzYAGa6_P-Ea5BZvZwfNX8Q47NJhru9W0WDqOBHDH4_ch2b9AIePWArcx6krMyGJSfPN06c-46BvHDxevTkc4AbagtSFDZKMtWV8YFHenwNmof1aOKNv46PWacuptgfQFGv-CS7ot8Z4dYHVHoOidGz2mw0g0Y9ywuzimag',
       'Accept': 'application/json'
     })
   }
@@ -189,15 +181,9 @@ class VisitorBadges {
   // }
 
   deleteVisitorBadgeById(id: string) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'TpASVw-gFSBtV8mXlNXVGinX-UHiHZn3uiGQlvj6VYNRH4lTVotSR6yT8bAOTr_9Hcy1TNGRsSRjF-r1KHjBcaBcVGuY2CmpZn0u6lrNcqhGP9Zhd5ecY21g5fJWzlbaBUMi-llphw_syOK2tEy2jF1v2Ff7aqCWVyMKJiriWqwiY2-hCQjNXC5VCQd9zlbSDlWehjFbDM0iBkLf17z5CKnMN1kccUGWrxJl_LrhdZybkiYD3n7rWUvnOzslstqx-XVDw2drwWx3ztNl5TMng9f4QKqiGDdcv-DQW2rClA6DYrIwpa5kdnEeqFTcH6G2RLnE3e_5yUZifefq9MDdaiPR5KFt6knOALAL30thoSPXS4kv_mhNfQnIn7Y7Dom3ngSPkKuZTyVEwCJ3e9N6Ig',
-        'Accept': 'application/json'
-      })
-    }
+
     // return this.http.delete(this.visitorsBadgesUrl + '?' + id, httpOptions);
-    this.http.delete(this.visitorsBadgesUrl + '?' + id, httpOptions)
+    this.http.delete(this.visitorsBadgesUrl + '?' + id, this.httpOptions)
       .subscribe(data => console.log(data));
   }
 
@@ -227,33 +213,25 @@ class VisitorBadges {
 }
 
 class AirportZones {
-  airportZones: AirportZone[] = [
-    {
-      id: 'airport-zone1',
-      code: 'airport-zone-code1',
-      name: 'zirport-zone-name1'
-    },
-    {
-      id: 'airport-zone2',
-      code: 'airport-zone-code2',
-      name: 'zirport-zone-name2'
-    },
-    {
-      id: 'airport-zone3',
-      code: 'airport-zone-code3',
-      name: 'zirport-zone-name3'
-    },
-  ];
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Authorization': 'Bearer vLAF8elQ5r7gunytO65szem5dlajGWqLAmkaNtgfhVeQKi8fmlV-mzbYfa9fFBnJYWGa67b0fIzMuYUZdt2s3Sx7zdCvudAKXCHc1RgDikcNecmiHSIs_eu9eDnhYe7KIv1CWellcVQjatUEj1wFJtfIbds1-sgzeXXjQSLwT5gv-v9bOMsX0Kj-xehPvokv8VUYOYbz2luszzUuzQZ1Z7tS_YrAkTa2Ve_2HjcR6SClvjxbzYAGa6_P-Ea5BZvZwfNX8Q47NJhru9W0WDqOBHDH4_ch2b9AIePWArcx6krMyGJSfPN06c-46BvHDxevTkc4AbagtSFDZKMtWV8YFHenwNmof1aOKNv46PWacuptgfQFGv-CS7ot8Z4dYHVHoOidGz2mw0g0Y9ywuzimag',
+      'Accept': 'application/json'
+    })
+  }
+  airportZones: AirportZone[] = [];
 
   constructor(private http: HttpClient) {}
 
-  public airportZonesUrl = 'http://192.168.100.4:84/api/airportzones';
+  public airportZonesUrl = 'http://192.168.100.4:84/api/zones';
 
   getAllAirportZones() {
     console.log('getAllAirportZones()');
-    this.http.get<AirportZone[]>(this.airportZonesUrl).subscribe(
-      data => console.log(data)
-    );
+    return this.http.get<AirportZone[]>(this.airportZonesUrl, this.httpOptions)
+      .pipe(
+        retry(3),
+      );
   }
 
   // getAllAirportZones() {
@@ -261,9 +239,7 @@ class AirportZones {
   // }
 
   getAirportZoneById(id: string) {
-    this.http.get<AirportZone>(this.airportZonesUrl + '?' + id).subscribe(
-      data => console.log(data)
-    );
+    return this.http.get<AirportZone>(this.airportZonesUrl + '/' + id, this.httpOptions);
   }
 
   // getAirportZoneById(id: string){
@@ -275,15 +251,7 @@ class AirportZones {
   // }
 
   addAirportZone(airportZone: AirportZone) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'TpASVw-gFSBtV8mXlNXVGinX-UHiHZn3uiGQlvj6VYNRH4lTVotSR6yT8bAOTr_9Hcy1TNGRsSRjF-r1KHjBcaBcVGuY2CmpZn0u6lrNcqhGP9Zhd5ecY21g5fJWzlbaBUMi-llphw_syOK2tEy2jF1v2Ff7aqCWVyMKJiriWqwiY2-hCQjNXC5VCQd9zlbSDlWehjFbDM0iBkLf17z5CKnMN1kccUGWrxJl_LrhdZybkiYD3n7rWUvnOzslstqx-XVDw2drwWx3ztNl5TMng9f4QKqiGDdcv-DQW2rClA6DYrIwpa5kdnEeqFTcH6G2RLnE3e_5yUZifefq9MDdaiPR5KFt6knOALAL30thoSPXS4kv_mhNfQnIn7Y7Dom3ngSPkKuZTyVEwCJ3e9N6Ig',
-        'Accept': 'application/json'
-      })
-    }
-    this.http.post(this.airportZonesUrl, airportZone, httpOptions)
-      .subscribe(data => console.log(data));
+    return this.http.post(this.airportZonesUrl, airportZone, this.httpOptions);
   }
 
   // addAirportZone(airportZone: AirportZone){
@@ -294,25 +262,25 @@ class AirportZones {
     this.airportZones.push(airportZone);
   }
 
-  editAirportZone() {
-    console.log('editAirportZone() empty');
+  editAirportZone(airportZone: AirportZone, id: number) {
+    return this.http.patch(this.airportZonesUrl + '/' + id, airportZone, this.httpOptions);
   }
 
-  updateAirportZone(airportZone: AirportZone, id: string){
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'TpASVw-gFSBtV8mXlNXVGinX-UHiHZn3uiGQlvj6VYNRH4lTVotSR6yT8bAOTr_9Hcy1TNGRsSRjF-r1KHjBcaBcVGuY2CmpZn0u6lrNcqhGP9Zhd5ecY21g5fJWzlbaBUMi-llphw_syOK2tEy2jF1v2Ff7aqCWVyMKJiriWqwiY2-hCQjNXC5VCQd9zlbSDlWehjFbDM0iBkLf17z5CKnMN1kccUGWrxJl_LrhdZybkiYD3n7rWUvnOzslstqx-XVDw2drwWx3ztNl5TMng9f4QKqiGDdcv-DQW2rClA6DYrIwpa5kdnEeqFTcH6G2RLnE3e_5yUZifefq9MDdaiPR5KFt6knOALAL30thoSPXS4kv_mhNfQnIn7Y7Dom3ngSPkKuZTyVEwCJ3e9N6Ig',
-        'Accept': 'application/json'
-      })
-    }
-    this.http.put(this.airportZonesUrl, airportZone, httpOptions)
-      .subscribe(
-        data => console.log(data)
-      )
-  }
+  // updateAirportZone(airportZone: AirportZone, id: string){
+  //   const httpOptions = {
+  //     headers: new HttpHeaders({
+  //       'Content-Type':  'application/json',
+  //       'Authorization': 'TpASVw-gFSBtV8mXlNXVGinX-UHiHZn3uiGQlvj6VYNRH4lTVotSR6yT8bAOTr_9Hcy1TNGRsSRjF-r1KHjBcaBcVGuY2CmpZn0u6lrNcqhGP9Zhd5ecY21g5fJWzlbaBUMi-llphw_syOK2tEy2jF1v2Ff7aqCWVyMKJiriWqwiY2-hCQjNXC5VCQd9zlbSDlWehjFbDM0iBkLf17z5CKnMN1kccUGWrxJl_LrhdZybkiYD3n7rWUvnOzslstqx-XVDw2drwWx3ztNl5TMng9f4QKqiGDdcv-DQW2rClA6DYrIwpa5kdnEeqFTcH6G2RLnE3e_5yUZifefq9MDdaiPR5KFt6knOALAL30thoSPXS4kv_mhNfQnIn7Y7Dom3ngSPkKuZTyVEwCJ3e9N6Ig',
+  //       'Accept': 'application/json'
+  //     })
+  //   }
+  //   this.http.put(this.airportZonesUrl, airportZone, httpOptions)
+  //     .subscribe(
+  //       data => console.log(data)
+  //     )
+  // }
 
-  switchAirportZone(airportZone: AirportZone, id: string){
+  switchAirportZone(airportZone: AirportZone, id: number){
     for(let i = 0; i<this.airportZones.length; i++){
       if(this.airportZones[i].id == id){
         this.airportZones[i] = airportZone;
@@ -323,15 +291,7 @@ class AirportZones {
   }
 
   deleteAirportZoneById(id: string){
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'TpASVw-gFSBtV8mXlNXVGinX-UHiHZn3uiGQlvj6VYNRH4lTVotSR6yT8bAOTr_9Hcy1TNGRsSRjF-r1KHjBcaBcVGuY2CmpZn0u6lrNcqhGP9Zhd5ecY21g5fJWzlbaBUMi-llphw_syOK2tEy2jF1v2Ff7aqCWVyMKJiriWqwiY2-hCQjNXC5VCQd9zlbSDlWehjFbDM0iBkLf17z5CKnMN1kccUGWrxJl_LrhdZybkiYD3n7rWUvnOzslstqx-XVDw2drwWx3ztNl5TMng9f4QKqiGDdcv-DQW2rClA6DYrIwpa5kdnEeqFTcH6G2RLnE3e_5yUZifefq9MDdaiPR5KFt6knOALAL30thoSPXS4kv_mhNfQnIn7Y7Dom3ngSPkKuZTyVEwCJ3e9N6Ig',
-        'Accept': 'application/json'
-      })
-    }
-    this.http.delete(this.airportZonesUrl + '?' + id, httpOptions)
-      .subscribe(data => console.log(data))
+    this.http.delete(this.airportZonesUrl + '/' + id, this.httpOptions);
   }
 
   // deleteAirportZoneById(id: string){
@@ -857,7 +817,7 @@ export class ResourcesService {
   occupations = new Occupations(this.http);
   airportZones = new AirportZones(this.http);
   visitorBadges = new VisitorBadges(this.http);
-  visitorVehicleBadges = new VisitorVehicleBadges();
+  visitorVehicleBadges = new VisitorVehicleBadges(this.http);
   badges: Badge[] = [];
   // zones = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 

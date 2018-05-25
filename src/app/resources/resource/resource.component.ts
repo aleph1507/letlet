@@ -56,21 +56,20 @@ export class ResourceComponent implements OnInit {
                 MatTableDataSource<VisitorBadge>(this.resourcesService.visitorBadges.visitorBadges);
             });
 
-          // this.dataSource = new
-          //   MatTableDataSource<VisitorBadge>(this.resourcesService.visitorBadges.getAllVisitorBadges()
-          //     .subscribe((data) => {
-          //       this.resourcesService.visitorBadges.visitorBadges = data;
-          //     }));
-
-          //192.168.100.4
-          this.displayedColumns = ['id', 'code', 'name', 'barcode', 'edit'];
+          //192.168.100.4:84/api/visitorbadges
+          this.displayedColumns = ['code', 'name', 'barcode', 'edit'];
           break;
         case 'visitors-vehicle-badges':
-          console.log('VO VISITOR VEHICLE BADGES');
+          // console.log('VO VISITOR VEHICLE BADGES');
           this.category = 'visitors-vehicle-badges';
           this.categoryTitle = 'Visitors Vehicle Badges';
-          this.dataSource = new MatTableDataSource<VisitorVehicleBadge>(this.resourcesService.visitorVehicleBadges.getAllVisitorVehicleBadges());
-          this.displayedColumns = ['id', 'code', 'number', 'edit'];
+          this.resourcesService.visitorVehicleBadges.getAllVisitorVehicleBadges()
+            .subscribe((data) => {
+              this.resourcesService.visitorVehicleBadges.visitorVehicleBadges = data;
+              this.dataSource = new
+                MatTableDataSource<VisitorVehicleBadge>(this.resourcesService.visitorVehicleBadges.visitorVehicleBadges);
+            })
+          this.displayedColumns = ['code', 'name', 'edit'];
           break;
         case 'companies':
           this.category = 'companies';
@@ -117,8 +116,15 @@ export class ResourceComponent implements OnInit {
         case 'zones':
           this.category = 'zones';
           this.categoryTitle = this.category;
+          this.resourcesService.airportZones.getAllAirportZones()
+            .subscribe((data) => {
+              console.log('zones: ' + data);
+              this.resourcesService.airportZones.airportZones = data;
+              this.dataSource = new
+                MatTableDataSource<AirportZone>(this.resourcesService.airportZones.airportZones);
+            })
           // this.dataSource = new MatTableDataSource<AirportZone>(this.resourcesService.airportZones.getAllAirportZones());
-          this.displayedColumns = ['id', 'code', 'name', 'edit'];
+          this.displayedColumns = ['code', 'name', 'edit'];
           break;
       }
     });

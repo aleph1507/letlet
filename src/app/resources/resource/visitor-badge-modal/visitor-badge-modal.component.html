@@ -1,12 +1,12 @@
 <form [formGroup]="vbForm" (ngSubmit)="onSubmit()" novalidate>
-  <mat-form-field>
+  <!-- <mat-form-field>
     <input matInput name="vbID"
     id="vbID" placeholder="ID"
     formControlName="id"
     autocomplete="off" required>
-  </mat-form-field>
+  </mat-form-field> -->
   <mat-form-field>
-    <input matInput name="vbCode"
+    <input matInput type="number" name="vbCode"
     id="vbCode" placeholder="Code"
     formControlName="code"
     autocomplete="off" required>

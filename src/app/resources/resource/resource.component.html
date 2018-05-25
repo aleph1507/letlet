@@ -17,19 +17,19 @@
 
       <!-- Visitor Vehicle Badges resource -->
       <div *ngIf="category=='visitors-vehicle-badges'" class="visitors-vehicle-badges-resource" id="visitors-vehicle-badges-resource">
-        <ng-container matColumnDef="id">
+        <!-- <ng-container matColumnDef="id">
           <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
           <mat-cell *matCellDef="let vvb"> {{vvb.id}} </mat-cell>
-        </ng-container>
+        </ng-container> -->
 
         <ng-container matColumnDef="code">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Code </mat-header-cell>
           <mat-cell *matCellDef="let vvb"> {{vvb.code}} </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="number">
+        <ng-container matColumnDef="name">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-          <mat-cell *matCellDef="let vvb"> {{vvb.number}} </mat-cell>
+          <mat-cell *matCellDef="let vvb"> {{vvb.name}} </mat-cell>
         </ng-container>
 
 
@@ -48,10 +48,10 @@
 
       <!-- Visitor Badges resource -->
       <div *ngIf="category=='visitors-badges'" class="visitors-badges-resource" id="zones-resource">
-        <ng-container matColumnDef="id">
+        <!-- <ng-container matColumnDef="id">
           <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
           <mat-cell *matCellDef="let vb"> {{vb.id}} </mat-cell>
-        </ng-container>
+        </ng-container> -->
 
         <ng-container matColumnDef="code">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Code </mat-header-cell>
@@ -83,10 +83,10 @@
 
       <!-- Airport Zone resource -->
       <div *ngIf="category=='zones'" class="zones-resource" id="zones-resource">
-        <ng-container matColumnDef="id">
+        <!-- <ng-container matColumnDef="id">
           <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
           <mat-cell *matCellDef="let zone"> {{zone.id}} </mat-cell>
-        </ng-container>
+        </ng-container> -->
 
         <ng-container matColumnDef="code">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Code </mat-header-cell>

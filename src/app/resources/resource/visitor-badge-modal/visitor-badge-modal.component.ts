@@ -13,7 +13,7 @@ export class VisitorBadgeModalComponent implements OnInit {
 
   vb: VisitorBadge;
   vbForm: FormGroup;
-  oldID: string;
+  oldID: string = null;
 
 
   constructor(public dialogRef: MatDialogRef<VisitorBadgeModalComponent>,
@@ -23,10 +23,10 @@ export class VisitorBadgeModalComponent implements OnInit {
   ngOnInit() {
 
     this.vbForm = new FormGroup({
-      'id': new FormControl(this.vb ? this.vb.id : '', {
-        validators: [Validators.required],
-        updateOn: 'change'
-      }),
+      // 'id': new FormControl(this.vb ? this.vb.id : '', {
+      //   validators: [Validators.required],
+      //   updateOn: 'change'
+      // }),
       'code': new FormControl(this.vb ? this.vb.code : '', {
         validators: [Validators.required],
         updateOn: 'change'
@@ -48,11 +48,12 @@ export class VisitorBadgeModalComponent implements OnInit {
         .subscribe((vb : VisitorBadge) => {
           this.vb = vb;
           this.oldID = this.data;
+          // this.vb.id = vb.id;
           this.vbForm = new FormGroup({
-            'id': new FormControl(this.vb ? this.vb.id : '', {
-              validators: [Validators.required],
-              updateOn: 'change'
-            }),
+            // 'id': new FormControl(this.vb ? this.vb.id : '', {
+            //   validators: [Validators.required],
+            //   updateOn: 'change'
+            // }),
             'code': new FormControl(this.vb ? this.vb.code : '', {
               validators: [Validators.required],
               updateOn: 'change'
@@ -68,24 +69,30 @@ export class VisitorBadgeModalComponent implements OnInit {
           });
       });
       // this.oldID = this.data;
-    }
-
-
+     }
   }
 
   onSubmit() {
+    // console.log('this.vbForm.controls[code].value: ' + this.vbForm.controls['code'].value);
+    // console.log('this.vb: ' + this.vb);
+    // assigned_id = this.data ? this.data.id :
+    console.log('oldID: ' + this.oldID);
     this.vb = {
-      id: this.vbForm.controls['id'].value,
-      code: this.vbForm.controls['code'].value,
-      name: this.vbForm.controls['name'].value,
-      barcode: this.vbForm.controls['barcode'].value
+      'id': this.oldID,
+      'code': this.vbForm.controls['code'].value,
+      'name': this.vbForm.controls['name'].value,
+      'barcode': this.vbForm.controls['barcode'].value
     }
     if(this.data){
       this.resourcesService.visitorBadges.updateVisitorBadge(this.vb, this.oldID)
-        .subscribe(vb => this.resourcesService.visitorBadges.switchVisitorBadge(vb, this.oldID));
+        .subscribe((vb : VisitorBadge) => {
+          this.resourcesService.visitorBadges.switchVisitorBadge(vb, this.oldID)
+        });
     } else {
       this.resourcesService.visitorBadges.addVisitorBadge(this.vb)
-        .subscribe(vb => this.resourcesService.visitorBadges.pushVisitorBadge(vb));
+        .subscribe((vb : VisitorBadge) => {
+          this.resourcesService.visitorBadges.pushVisitorBadge(vb)
+        });
     }
 
     this.dialogRef.close();

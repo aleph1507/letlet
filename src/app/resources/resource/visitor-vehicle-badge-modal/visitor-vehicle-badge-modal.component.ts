@@ -13,7 +13,7 @@ export class VisitorVehicleBadgeModalComponent implements OnInit {
 
   vvb: VisitorVehicleBadge;
   vvbForm: FormGroup;
-  oldID: string;
+  oldID: number = null;
 
   constructor(public dialogRef: MatDialogRef<VisitorVehicleBadgeModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data,
@@ -21,20 +21,39 @@ export class VisitorVehicleBadgeModalComponent implements OnInit {
 
   ngOnInit() {
     if(this.data){
-      this.vvb = this.resourcesService.visitorVehicleBadges.getVisitorVehicleBadgeById(this.data);
-      this.oldID = this.data;
+      this.resourcesService.visitorVehicleBadges.getVisitorVehicleBadgeById(this.data)
+        .subscribe((vvb : VisitorVehicleBadge) => {
+          console.log('vvb.name : ' + vvb.name);
+          this.vvb = vvb;
+          this.oldID = this.data;
+          this.vvbForm = new FormGroup({
+            // 'id': new FormControl(this.vvb ? this.vvb.id : '', {
+            //   validators: [Validators.required],
+            //   updateOn: 'change'
+            // }),
+            'code': new FormControl(this.vvb ? this.vvb.code : '', {
+              validators: [Validators.required],
+              updateOn: 'change'
+            }),
+            'name': new FormControl(this.vvb ? this.vvb.name : '', {
+              validators: [Validators.required],
+              updateOn: 'change'
+            })
+          });
+        });
+      // this.oldID = this.data;
     }
 
     this.vvbForm = new FormGroup({
-      'id': new FormControl(this.vvb ? this.vvb.id : '', {
-        validators: [Validators.required],
-        updateOn: 'change'
-      }),
+      // 'id': new FormControl(this.vvb ? this.vvb.id : '', {
+      //   validators: [Validators.required],
+      //   updateOn: 'change'
+      // }),
       'code': new FormControl(this.vvb ? this.vvb.code : '', {
         validators: [Validators.required],
         updateOn: 'change'
       }),
-      'number': new FormControl(this.vvb ? this.vvb.number : '', {
+      'name': new FormControl(this.vvb ? this.vvb.name : '', {
         validators: [Validators.required],
         updateOn: 'change'
       })
@@ -43,14 +62,21 @@ export class VisitorVehicleBadgeModalComponent implements OnInit {
 
   onSubmit() {
     this.vvb = {
-      id: this.vvbForm.controls['id'].value,
+      id: this.oldID,
+      // id: this.vvbForm.controls['id'].value,
       code: this.vvbForm.controls['code'].value,
-      number: this.vvbForm.controls['number'].value
+      name: this.vvbForm.controls['name'].value
     }
     if(this.data){
-      this.resourcesService.visitorVehicleBadges.editVisitorVehicleBadge(this.vvb, this.oldID);
+      this.resourcesService.visitorVehicleBadges.updateVisitorVehicleBadge(this.vvb, this.oldID)
+        .subscribe((data : VisitorVehicleBadge) => {
+          this.resourcesService.visitorVehicleBadges.switchVisitorVehicleBadge(this.vvb, this.oldID);
+        });
     } else {
-      this.resourcesService.visitorVehicleBadges.addVisitorVehicleBadge(this.vvb);
+      this.resourcesService.visitorVehicleBadges.addVisitorVehicleBadge(this.vvb)
+        .subscribe((data : VisitorVehicleBadge) => {
+          this.resourcesService.visitorVehicleBadges.pushVisitorVehicleBadge(data);
+        })
     }
 
     this.dialogRef.close();

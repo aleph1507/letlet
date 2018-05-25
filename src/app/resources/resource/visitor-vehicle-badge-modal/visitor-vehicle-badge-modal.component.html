@@ -1,20 +1,20 @@
 <form [formGroup]="vvbForm" (ngSubmit)="onSubmit()" novalidate>
-  <mat-form-field>
+  <!-- <mat-form-field>
     <input matInput name="vvbID"
     id="vvbID" placeholder="ID"
     formControlName="id"
     autocomplete="off" required>
-  </mat-form-field>
+  </mat-form-field> -->
   <mat-form-field>
-    <input matInput name="vvbCode"
+    <input matInput type="number" name="vvbCode"
     id="vvbCode" placeholder="Code"
     formControlName="code"
     autocomplete="off" required>
   </mat-form-field>
   <mat-form-field>
-    <input type="number" matInput name="vvbNumber"
-    id="vvbNumber" placeholder="Number"
-    formControlName="number"
+    <input matInput name="vvbName"
+    id="vvbNumber" placeholder="Name"
+    formControlName="name"
     autocomplete="off" required>
   </mat-form-field>
 
