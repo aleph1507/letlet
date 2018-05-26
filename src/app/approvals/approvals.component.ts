@@ -42,13 +42,22 @@ export class ApprovalsComponent implements OnInit {
     // this.approvalRequests = this.approvalsService.formatRequests();
     this.showApprovals = this.approvalsService.showApprovals;
     // console.log('showApprovals[0]: ' + this.showApprovals[0]);
-    this.dataSource = new MatTableDataSource(this.approvalRequests);
+    // this.dataSource = new MatTableDataSource(this.approvalRequests);
     this.filteredCompanies = this.fCompany.valueChanges
       .pipe(
         startWith(''),
         map(company => this.filterCompanies(company))
       );
   }
+
+  status(s) {
+    return s == true ? 'Approved' : 'Not Approved';
+  }
+
+  displayApprovedFrom(s, f) {
+    return s == true ? f : '';
+  }
+
   fromString : string = null;
   toString : string = null;
   getAR(picker, event: MatDatepickerInputEvent<Date>) {
@@ -80,6 +89,9 @@ export class ApprovalsComponent implements OnInit {
       this.approvalsService.getRequests(aUrl)
         .subscribe((data : ApprovalRequest[]) => {
           this.approvalRequests = data;
+          this.dataSource = new
+            MatTableDataSource<ApprovalRequest>(this.approvalRequests);
+          console.log(this.approvalRequests);
         })
     }
 

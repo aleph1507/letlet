@@ -5,6 +5,10 @@ div.filter-panel {
   /* display: inline-block; */
 }
 
+.green-row {
+  background-color: lightgreen;
+}
+
 div.filter-dates {
   display: inline-block;
   width: 30%;
