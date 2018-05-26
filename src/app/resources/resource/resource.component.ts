@@ -12,8 +12,8 @@ import { EmployeeModalComponent } from './employee-modal/employee-modal.componen
 import { ReasonModalComponent } from './reason-modal/reason-modal.component';
 import { Gate } from '../../models/Gate';
 import { GateModalComponent } from './gate-modal/gate-modal.component';
-import { Occupation } from '../../models/Occupation';
-import { OccupationModalComponent } from './occupation-modal/occupation-modal.component';
+// import { Occupation } from '../../models/Occupation';
+// import { OccupationModalComponent } from './occupation-modal/occupation-modal.component';
 import { AirportZone } from '../../models/AirportZone';
 import { AirportZoneModalComponent } from './airport-zone-modal/airport-zone-modal.component';
 import { VisitorBadge } from '../../models/VisitorBadge';
@@ -175,9 +175,9 @@ export class ResourceComponent implements OnInit {
       case 'gates':
         this.editGate();
         break;
-      case 'occupations':
-        this.editOccupation();
-        break;
+      // case 'occupations':
+      //   this.editOccupation();
+      //   break;
       case 'zones':
         this.editZone();
         break;
@@ -217,16 +217,16 @@ export class ResourceComponent implements OnInit {
     });
   }
 
-  editOccupation(id = null) {
-    let dialogRef = this.dialog.open(OccupationModalComponent, {
-      width: '40%',
-      data: id
-    });
-
-    dialogRef.afterClosed().subscribe(a => {
-      this.applyFilter('');
-    });
-  }
+  // editOccupation(id = null) {
+  //   let dialogRef = this.dialog.open(OccupationModalComponent, {
+  //     width: '40%',
+  //     data: id
+  //   });
+  //
+  //   dialogRef.afterClosed().subscribe(a => {
+  //     this.applyFilter('');
+  //   });
+  // }
 
   editGate(id = null) {
     let dialogRef = this.dialog.open(GateModalComponent, {

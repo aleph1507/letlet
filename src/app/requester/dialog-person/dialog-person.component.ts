@@ -16,10 +16,10 @@ export class DialogPersonComponent implements OnInit {
   img1src: string = '';
   img2src: string = '';
   person: Person = {
+    nameEn: '',
     name: '',
-    nameCyrilic: '',
+    surnameEn: '',
     surname: '',
-    surnameCyrilic: '',
     image1: '',
     image2: ''
   };
@@ -38,19 +38,19 @@ export class DialogPersonComponent implements OnInit {
     }
 
     this.personForm = new FormGroup({
-      'name': new FormControl(this.person.name, {
+      'name': new FormControl(this.person.nameEn, {
         validators: [Validators.required],
         updateOn: 'change'
       }),
-      'nameCyrilic': new FormControl(this.person.surnameCyrilic, {
+      'nameCyrilic': new FormControl(this.person.surname, {
         validators: [Validators.required],
         updateOn: 'change'
       }),
-      'surname': new FormControl(this.person.surname, {
+      'surname': new FormControl(this.person.surnameEn, {
         validators: Validators.required,
         updateOn: 'change'
       }),
-      'surnameCyrilic': new FormControl(this.person.surnameCyrilic, {
+      'surnameCyrilic': new FormControl(this.person.surname, {
         validators: Validators.required,
         updateOn: 'change'
       }),
@@ -92,10 +92,10 @@ export class DialogPersonComponent implements OnInit {
   }
 
   onSubmit(){
-    this.person.name = this.personForm.controls['name'].value;
-    this.person.nameCyrilic = this.personForm.controls['nameCyrilic'].value;
-    this.person.surname = this.personForm.controls['surname'].value;
-    this.person.surnameCyrilic = this.personForm.controls['surnameCyrilic'].value;
+    this.person.nameEn = this.personForm.controls['name'].value;
+    this.person.name = this.personForm.controls['nameCyrilic'].value;
+    this.person.surnameEn = this.personForm.controls['surname'].value;
+    this.person.surname = this.personForm.controls['surnameCyrilic'].value;
     this.person.image1 = this.img1src;
     this.person.image2 = this.img2src;
     this.data === null ? this.requesterService.addPerson(this.person) : this.requesterService.editPerson(this.data.i, this.person);

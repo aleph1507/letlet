@@ -827,6 +827,7 @@ export class ResourcesService {
   //     'Accept': 'application/json'
   //   })
   // }
+  bUrl : string = '';
   headers: HttpHeaders = new HttpHeaders({
     'Content-Type':  'application/json',
     'Authorization': 'Bearer ' + 'RhLV2Xd_l5NPR9XEKzIuThoXcUdHLnKhTZqykf96kzMQqNBRZJPc26ZIHNBEjXgVrVgsWSGrk6a0iR1S1RwB7uoUAUfeiWZGnYKGlLoYcll3q0OrDX3HdnEOYd24D0eYkSkWR9s_YJSAnOtNXduNliRZMwY5OXy27UTPdxYAKSe1GMgiyJudlaLl2858EZ4x5EH05B5CySoHn_DizrsNO6RkVZczJvWicarx3AjUkHHGdZZYS5EkvfZ54T01CdCn1pGy6rnJMOrgUPzOtW_6ILsYcr1NlSThyJxWbeNUBxCAlUaV7FQFv_Krl9ZasSZ8g5x5GTTORIY0FvGrk7Kbu6rbkIJjPnZbX0xDVjdDGwW0HI_Y8L0Cjo-iQ2TjWHy3MlvGmogRQhxy-WpA0fCm-A',
@@ -839,6 +840,12 @@ export class ResourcesService {
   //     'Accept': 'application/json'
   //   })
   // }
+  getBaseUrl() {
+    this.http.get('url.conf').subscribe((data : string) => {
+      this.bUrl = data;
+      return this.bUrl;
+    });
+  }
   companies = new Companies(this.http, this.headers);
   vehicles = new Vehicles(this.http, this.headers);
   employees = new Employees(this.http, this.headers);

@@ -26,7 +26,7 @@ export class DialogVehicleComponent implements OnInit {
   vehicleForm: FormGroup;
   vehicle: Vehicle = {
     id: null,
-    company: null,
+    // company: null,
     model: null,
     plate: null
   }
@@ -48,9 +48,9 @@ export class DialogVehicleComponent implements OnInit {
       this.resource = this.data.resource;
 
       this.vehicleForm = new FormGroup({
-        'company': new FormControl(this.vehicle.company ? this.vehicle.company : '', {
-          validators: Validators.required
-        }),
+        // 'company': new FormControl(this.vehicle.company ? this.vehicle.company : '', {
+        //   validators: Validators.required
+        // }),
         'model': new FormControl(this.vehicle.model, {
           validators: Validators.required
         }),
@@ -65,7 +65,7 @@ export class DialogVehicleComponent implements OnInit {
   }
 
   onSubmit(){
-    this.vehicle.company = this.vehicleForm.controls['company'].value;
+    // this.vehicle.company = this.vehicleForm.controls['company'].value;
     this.vehicle.model = this.vehicleForm.controls['model'].value;
     this.vehicle.plate = this.vehicleForm.controls['plate'].value;
     if(!this.data.resource){

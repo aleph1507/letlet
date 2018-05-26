@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { RequesterService } from './requester.service';
 import { Requester } from '../models/Requester.model';
 import { ApprovalRequest } from '../models/approvalRequest';
+import { ResourcesService } from './resources.service';
 
 @Injectable()
 export class ApprovalsService {
@@ -9,7 +10,8 @@ export class ApprovalsService {
   approvalRequests = Array<ApprovalRequest>();
   requests: Requester[];
 
-  constructor(private requesterService: RequesterService) { }
+  constructor(private requesterService: RequesterService,
+              private resourcesService: ResourcesService) { }
 
   getRequests() {
     this.requests = this.requesterService.getAllRequests();
@@ -23,6 +25,8 @@ export class ApprovalsService {
   formatRequests() {
     this.approvalRequests = [];
     this.requests = this.requesterService.getAllRequests();
+
+
 
     for(let i =0; i<this.requests.length; i++){
       let ar = new ApprovalRequest();

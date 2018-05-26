@@ -21,7 +21,7 @@ export class OccupationModalComponent implements OnInit {
 
   ngOnInit() {
     if(this.data){
-      this.occupation = this.resourcesService.occupations.getOccupationById(this.data);
+      // this.occupation = this.resourcesService.occupations.getOccupationById(this.data);
       this.oldID = this.data;
     }
 
@@ -48,7 +48,7 @@ export class OccupationModalComponent implements OnInit {
       name: this.occupationForm.controls['name'].value
     }
     if(this.data){
-      this.resourcesService.occupations.editOccupation(this.occupation, this.oldID);
+      // this.resourcesService.occupations.editOccupation(this.occupation, this.oldID);
     } else {
       this.resourcesService.occupations.addOccupation(this.occupation);
     }
