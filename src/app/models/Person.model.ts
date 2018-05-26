@@ -1,8 +1,8 @@
 export interface Person {
+  nameEn: string;
   name: string;
-  nameCyrilic: string;
+  surnameEn: string;
   surname: string;
-  surnameCyrilic: string;
   image1: string;
   image2: string;
 }

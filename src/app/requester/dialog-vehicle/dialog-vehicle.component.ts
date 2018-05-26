@@ -5,6 +5,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { RequesterService } from '../../services/requester.service';
 import { ResourcesService } from '../../services/resources.service';
 import { Company } from '../../models/Company';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/Rx';
 
 @Component({
   selector: 'app-dialog-vehicle',
@@ -29,12 +31,12 @@ export class DialogVehicleComponent implements OnInit {
     plate: null
   }
 
-  companies: Company[] = [];
+  companies: Company[];
 
   ngOnInit() {
 
       this.resourcesService.companies.getCompanies()
-        .subscribe((data: Company[]) => {
+        .subscribe((data) => {
           this.companies = data;
         });
 

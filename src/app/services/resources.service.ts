@@ -13,6 +13,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular
 import { Observable } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { AuthService } from './auth.service';
+import 'rxjs/Rx';
 
 // class VisitorsBadges {
 //
@@ -47,14 +48,14 @@ class VisitorVehicleBadges {
   //   })
   // }
 
-  httpOptions = null;
+  headers = null;
   constructor(private http: HttpClient, private ho) {
-    this.httpOptions = ho;
+    this.headers = ho;
   }
-  getAllVisitorVehicleBadges() {
+  getAllVisitorVehicleBadges() : Observable<VisitorVehicleBadge[]> {
     console.log('getAllVisitorVehicleBadges()');
     console.log('this.http : ' + this.http);
-    return this.http.get<VisitorVehicleBadge[]>(this.visitorVehicleBadgesUrl, this.httpOptions)
+    return this.http.get<VisitorVehicleBadge[]>(this.visitorVehicleBadgesUrl, { headers: this.headers })
       .pipe(
         retry(3),
       );
@@ -62,7 +63,7 @@ class VisitorVehicleBadges {
 
   getVisitorVehicleBadgeById(id: number){
     console.log('vo getVisitorVehicleBadgeById');
-    return this.http.get<VisitorBadge>(this.visitorVehicleBadgesUrl + '/' + id, this.httpOptions).
+    return this.http.get<VisitorBadge>(this.visitorVehicleBadgesUrl + '/' + id, { headers: this.headers }).
       pipe(
         retry(3),
       );
@@ -78,7 +79,7 @@ class VisitorVehicleBadges {
 
   addVisitorVehicleBadge(visitorVehicleBadge: VisitorVehicleBadge){
     console.log('vo addVisitorVehicleBadge(visitorVehicleBadge: VisitorVehicleBadge)');
-    return this.http.post(this.visitorVehicleBadgesUrl, visitorVehicleBadge, this.httpOptions);
+    return this.http.post(this.visitorVehicleBadgesUrl, visitorVehicleBadge, { headers: this.headers });
   }
 
   pushVisitorVehicleBadge(visitorVehicleBadge: VisitorVehicleBadge){
@@ -86,7 +87,7 @@ class VisitorVehicleBadges {
   }
 
   updateVisitorVehicleBadge(vvb: VisitorVehicleBadge, id: number){
-    return this.http.patch(this.visitorVehicleBadgesUrl + '/' + id, vvb, this.httpOptions);
+    return this.http.patch(this.visitorVehicleBadgesUrl + '/' + id, vvb, { headers: this.headers });
   }
 
   switchVisitorVehicleBadge(visitorVehicleBadge: VisitorVehicleBadge, id: number){
@@ -100,7 +101,7 @@ class VisitorVehicleBadges {
   }
 
   deleteVisitorVehicleBadgeById(id: number){
-    this.http.delete(this.visitorVehicleBadgesUrl + '?' + id, this.httpOptions)
+    this.http.delete(this.visitorVehicleBadgesUrl + '?' + id, { headers: this.headers })
       .subscribe(data => console.log(data));
   }
 
@@ -111,9 +112,9 @@ class VisitorBadges {
 
   // public http: HttpClient;
 
-  httpOptions = null;
+  headers = null;
   constructor(private http: HttpClient, private ho) {
-    this.httpOptions = ho;
+    this.headers = ho;
   }
   visitorBadges: VisitorBadge[] = [];
 
@@ -126,14 +127,14 @@ class VisitorBadges {
   //   })
   // }
 
-  getAllVisitorBadges() {
+  getAllVisitorBadges() : Observable<VisitorBadge[]>{
     // var he = new hError();
     console.log('getAllVisitorBadges()');
     console.log('this.http : ' + this.http);
     // this.http.get(this.visitorsBadgesUrl, this.httpOptions).subscribe(
     //   (data) => {console.log(data)}
     // );
-    return this.http.get<VisitorBadge[]>(this.visitorsBadgesUrl, this.httpOptions)
+    return this.http.get<VisitorBadge[]>(this.visitorsBadgesUrl, { headers: this.headers })
       .pipe(
         retry(3),
       );
@@ -145,7 +146,7 @@ class VisitorBadges {
 
   getVisitorBadgeById(id: string){
     console.log('vo getVisitorBadgeById');
-    return this.http.get<VisitorBadge>(this.visitorsBadgesUrl + '/' + id, this.httpOptions).
+    return this.http.get<VisitorBadge>(this.visitorsBadgesUrl + '/' + id, { headers: this.headers }).
       pipe(
         retry(3),
       );
@@ -160,7 +161,7 @@ class VisitorBadges {
   // }
 
   addVisitorBadge(visitorBadge: VisitorBadge){
-    return this.http.post(this.visitorsBadgesUrl, visitorBadge, this.httpOptions);
+    return this.http.post(this.visitorsBadgesUrl, visitorBadge, { headers: this.headers });
   }
 
   // addVisitorBadge(visitorBadge: VisitorBadge){
@@ -168,11 +169,11 @@ class VisitorBadges {
   // }
 
   editVisitorBadge(visitorBadge: VisitorBadge, id: string){
-    return this.http.put<VisitorBadge>(this.visitorsBadgesUrl, visitorBadge, this.httpOptions);
+    return this.http.put<VisitorBadge>(this.visitorsBadgesUrl, visitorBadge, { headers: this.headers });
   }
 
   updateVisitorBadge(vb: VisitorBadge, id: string){
-    return this.http.patch(this.visitorsBadgesUrl + '/' + id, vb, this.httpOptions);
+    return this.http.patch(this.visitorsBadgesUrl + '/' + id, vb, { headers: this.headers });
   }
 
   // editVisitorBadge(visitorBadge: VisitorBadge, id: string){
@@ -188,7 +189,7 @@ class VisitorBadges {
   deleteVisitorBadgeById(id: string) {
 
     // return this.http.delete(this.visitorsBadgesUrl + '?' + id, httpOptions);
-    this.http.delete(this.visitorsBadgesUrl + '?' + id, this.httpOptions)
+    this.http.delete(this.visitorsBadgesUrl + '?' + id, { headers: this.headers })
       .subscribe(data => console.log(data));
   }
 
@@ -227,15 +228,15 @@ class AirportZones {
   // }
   airportZones: AirportZone[] = [];
 
-  httpOptions = null;
+  headers = null;
   constructor(private http: HttpClient, private ho) {
-    this.httpOptions = ho;
+    this.headers = ho;
   }
   public airportZonesUrl = 'http://192.168.100.4:84/api/zones';
 
-  getAllAirportZones() {
+  getAllAirportZones() : Observable<AirportZone[]>{
     console.log('getAllAirportZones()');
-    return this.http.get<AirportZone[]>(this.airportZonesUrl, this.httpOptions)
+    return this.http.get<AirportZone[]>(this.airportZonesUrl, { headers: this.headers })
       .pipe(
         retry(3),
       );
@@ -246,7 +247,7 @@ class AirportZones {
   // }
 
   getAirportZoneById(id: string) {
-    return this.http.get<AirportZone>(this.airportZonesUrl + '/' + id, this.httpOptions);
+    return this.http.get<AirportZone>(this.airportZonesUrl + '/' + id, { headers: this.headers });
   }
 
   // getAirportZoneById(id: string){
@@ -258,7 +259,7 @@ class AirportZones {
   // }
 
   addAirportZone(airportZone: AirportZone) {
-    return this.http.post(this.airportZonesUrl, airportZone, this.httpOptions);
+    return this.http.post(this.airportZonesUrl, airportZone, { headers: this.headers });
   }
 
   // addAirportZone(airportZone: AirportZone){
@@ -270,7 +271,7 @@ class AirportZones {
   }
 
   editAirportZone(airportZone: AirportZone, id: number) {
-    return this.http.patch(this.airportZonesUrl + '/' + id, airportZone, this.httpOptions);
+    return this.http.patch(this.airportZonesUrl + '/' + id, airportZone, { headers: this.headers });
   }
 
   // updateAirportZone(airportZone: AirportZone, id: string){
@@ -298,7 +299,7 @@ class AirportZones {
   }
 
   deleteAirportZoneById(id: string){
-    this.http.delete(this.airportZonesUrl + '/' + id, this.httpOptions);
+    this.http.delete(this.airportZonesUrl + '/' + id, { headers: this.headers });
   }
 
   // deleteAirportZoneById(id: string){
@@ -323,12 +324,12 @@ class Occupations {
   public occupationsUrl = 'http://192.168.100.4:84/api/occupations';
   occupations: Occupation[] = [];
 
-  httpOptions = null;
+  headers = null;
   constructor(private http: HttpClient, private ho) {
-    this.httpOptions = ho;
+    this.headers = ho;
   }
-  getAllOccupations() {
-    return this.http.get<Occupation[]>(this.occupationsUrl, this.httpOptions);
+  getAllOccupations() : Observable<Occupation[]> {
+    return this.http.get<Occupation[]>(this.occupationsUrl, { headers: this.headers });
   }
 
   // getAllOccupations() {
@@ -336,7 +337,7 @@ class Occupations {
   // }
 
   getOccupationById(id: number) {
-    return this.http.get<Occupation>(this.occupationsUrl + '/' + id, this.httpOptions);
+    return this.http.get<Occupation>(this.occupationsUrl + '/' + id, { headers: this.headers });
   }
 
   // getOccupationById(id: string){
@@ -348,7 +349,7 @@ class Occupations {
   // }
 
   addOccupation(occupation: Occupation){
-    return this.http.post(this.occupationsUrl, occupation, this.httpOptions);
+    return this.http.post(this.occupationsUrl, occupation, { headers: this.headers });
   }
 
   pushOccupation(occupation: Occupation){
@@ -360,7 +361,7 @@ class Occupations {
   }
 
   updateOccupation(occupation: Occupation, id: string){
-    this.http.put<Occupation>(this.occupationsUrl + '?' + id, occupation, this.httpOptions)
+    this.http.put<Occupation>(this.occupationsUrl + '?' + id, occupation, { headers: this.headers })
       .subscribe(data => console.log(data));
   }
 
@@ -375,7 +376,7 @@ class Occupations {
   }
 
   deleteOccupationById(id: string) {
-    this.http.delete(this.occupationsUrl + '?' + id, this.httpOptions)
+    this.http.delete(this.occupationsUrl + '?' + id, { headers: this.headers })
       .subscribe(data => console.log(data));
   }
 
@@ -399,13 +400,13 @@ class Gates {
   //     'Accept': 'application/json'
   //   })
   // }
-  httpOptions = null;
+  headers = null;
   constructor(private http: HttpClient, private ho) {
-    this.httpOptions = ho;
+    this.headers = ho;
   }
-  getAllGates() {
+  getAllGates() : Observable<Gate[]>{
     console.log('vo getAllGates()');
-    return this.http.get<Gate[]>(this.gatesUrl, this.httpOptions);
+    return this.http.get<Gate[]>(this.gatesUrl, { headers: this.headers });
   }
 
   // getAllGates() {
@@ -414,7 +415,7 @@ class Gates {
 
   getGateById(id: number){
     console.log('vo getGateById');
-    return this.http.get<Gate>(this.gatesUrl + '/' + id, this.httpOptions);
+    return this.http.get<Gate>(this.gatesUrl + '/' + id, { headers: this.headers });
   }
 
   // getGateById(id: string){
@@ -426,8 +427,8 @@ class Gates {
   // }
 
   addGate(gate: Gate){
-    console.log('vo addGate() this.httpOptions.headers : ' + this.httpOptions.headers.get('Authorization'));
-    return this.http.post<Gate>(this.gatesUrl, gate, this.httpOptions);
+    // console.log('vo addGate() this.httpOptions.headers : ' + this.httpOptions.headers.get('Authorization'));
+    return this.http.post<Gate>(this.gatesUrl, gate, { headers: this.headers });
   }
 
   pushGate(gate: Gate){
@@ -435,7 +436,7 @@ class Gates {
   }
 
   updateGate(gate: Gate, id: number){
-    return this.http.patch(this.gatesUrl + '/' + id, gate, this.httpOptions);
+    return this.http.patch(this.gatesUrl + '/' + id, gate, { headers: this.headers });
   }
 
   switchGate(gate: Gate, id: number){
@@ -449,7 +450,7 @@ class Gates {
   }
 
   deleteGateById(id: number){
-    this.http.delete(this.gatesUrl + '?' + id, this.httpOptions)
+    this.http.delete(this.gatesUrl + '?' + id, { headers: this.headers })
       .subscribe(data => console.log(data));
   }
 
@@ -475,13 +476,13 @@ class Reasons {
   //   })
   // }
 
-  httpOptions = null;
+  headers = null;
   constructor(private http: HttpClient, private ho) {
-    this.httpOptions = ho;
+    this.headers = ho;
   }
-  getAllReasons() {
+  getAllReasons() : Observable<Reason[]> {
     console.log('vo getAllReasons()');
-    return this.http.get<Reason[]>(this.reasonsUrl, this.httpOptions);
+    return this.http.get<Reason[]>(this.reasonsUrl, { headers: this.headers });
   }
 
   // getAllReasons() {
@@ -490,7 +491,7 @@ class Reasons {
 
   getReasonById(id: string){
     console.log('vo getReasonById()');
-    return this.http.get<Reason>(this.reasonsUrl + '/' + id, this.httpOptions);
+    return this.http.get<Reason>(this.reasonsUrl + '/' + id, { headers: this.headers });
   }
 
   // getReasonById(id: string){
@@ -503,7 +504,7 @@ class Reasons {
 
   addReason(reason: Reason){
     console.log('vo AddReason()');
-    return this.http.post(this.reasonsUrl, reason, this.httpOptions);
+    return this.http.post(this.reasonsUrl, reason, { headers: this.headers });
   }
 
   pushReason(reason: Reason){
@@ -512,7 +513,7 @@ class Reasons {
 
   updateReason(reason: Reason, id: number){
     console.log('vo updateReason');
-    return this.http.patch(this.reasonsUrl + '/' + id, reason, this.httpOptions);
+    return this.http.patch(this.reasonsUrl + '/' + id, reason, { headers: this.headers });
   }
 
   switchReason(reason: Reason, id: number){
@@ -526,7 +527,7 @@ class Reasons {
   }
 
   deleteReasonById(id: string){
-    this.http.delete(this.reasonsUrl + '?' + id, this.httpOptions)
+    this.http.delete(this.reasonsUrl + '?' + id, { headers: this.headers })
       .subscribe(data => console.log(data));
   }
 
@@ -552,14 +553,14 @@ class Employees {
 
   public employeesUrl = 'http://192.168.100.4:84/api/employees';
 
-  httpOptions = null;
+  headers = null;
   constructor(private http: HttpClient, private ho) {
-    this.httpOptions = ho;
+    this.headers = ho;
   }
 
-  getAllEmployees() {
+  getAllEmployees() : Observable<Employee[]> {
     console.log('vo getAllEmployees');
-    return this.http.get<Employee[]>(this.employeesUrl, this.httpOptions);
+    return this.http.get<Employee[]>(this.employeesUrl, { headers: this.headers });
   }
 
   // getAllEmployees() {
@@ -568,7 +569,7 @@ class Employees {
 
   getEmplyeeById(id: number) {
     console.log('vo getEmployeeById');
-    return this.http.get<Employee>(this.employeesUrl + '/' + id, this.httpOptions);
+    return this.http.get<Employee>(this.employeesUrl + '/' + id, { headers: this.headers });
   }
 
   // getEmplyeeById(id: number){
@@ -579,7 +580,7 @@ class Employees {
   // }
 
   addEmployee(employee: Employee){
-    return this.http.post(this.employeesUrl, employee, this.httpOptions);
+    return this.http.post(this.employeesUrl, employee, { headers: this.headers });
   }
 
   pushEmployee(employee: Employee){
@@ -587,7 +588,7 @@ class Employees {
   }
 
   deleteEmployeeById(id: number){
-    return this.http.delete(this.employeesUrl + '/' + id, this.httpOptions);
+    return this.http.delete(this.employeesUrl + '/' + id, { headers: this.headers });
   }
 
   // deleteEmployeeById(id: number){
@@ -600,7 +601,7 @@ class Employees {
   // }
 
   updateEmployee(emp: Employee) {
-    return this.http.patch(this.employeesUrl + '/' + emp.id, emp, this.httpOptions);
+    return this.http.patch(this.employeesUrl + '/' + emp.id, emp, { headers: this.headers });
   }
 
   switchEmployeeById(emp: Employee){
@@ -628,14 +629,13 @@ class Vehicles {
 
   public vehiclesUrl = 'http://192.168.100.4:84/api/vehicles';
 
-  httpOptions = null;
+  headers = null;
   constructor(private http: HttpClient, private ho) {
-    this.httpOptions = ho;
-    console.log('hoe: ' + ho.headers.get('Authorization'));
+    this.headers = ho;
   }
 
   addVehicle(vehicle: Vehicle){
-    return this.http.post<Vehicle>(this.vehiclesUrl, vehicle, this.httpOptions);
+    return this.http.post<Vehicle>(this.vehiclesUrl, vehicle, { headers: this.headers });
   }
 
   pushVehicle(vehicle: Vehicle){
@@ -643,7 +643,7 @@ class Vehicles {
   }
 
   getVehicleByIndex(index: number){
-    return this.http.get<Vehicle>(this.vehiclesUrl, this.httpOptions);
+    return this.http.get<Vehicle>(this.vehiclesUrl, { headers: this.headers });
   }
 
   // getVehicleByIndex(index: number) {
@@ -651,7 +651,7 @@ class Vehicles {
   // }
 
   getAllVehicles(){
-    return this.http.get<Vehicle[]>(this.vehiclesUrl, this.httpOptions);
+    return this.http.get<Vehicle[]>(this.vehiclesUrl, { headers: this.headers });
   }
 
   // getAllVehicles(){
@@ -659,7 +659,7 @@ class Vehicles {
   // }
 
   editVehicle(v: Vehicle){
-    return this.http.patch<Vehicle>(this.vehiclesUrl + '/' + v.id, v, this.httpOptions);
+    return this.http.patch<Vehicle>(this.vehiclesUrl + '/' + v.id, v, { headers: this.headers });
   }
 
 
@@ -729,13 +729,13 @@ class Companies {
 
   public companiesUrl = 'http://192.168.100.4:84/api/companies';
 
-  httpOptions = null;
+  headers = null;
   constructor(private http: HttpClient, private ho) {
-    this.httpOptions = ho;
+    this.headers = ho;
   }
 
-  getCompanies() {
-    return this.http.get<Company[]>(this.companiesUrl, this.httpOptions);
+  getCompanies() : Observable<Company[]>{
+    return this.http.get<Company[]>(this.companiesUrl, { headers: this.headers });
   }
 
   // getCompanies() {
@@ -758,11 +758,11 @@ class Companies {
   // }
 
   getCompanyById(id: number) {
-    return this.http.get<Company>(this.companiesUrl + '/' + id, this.httpOptions);
+    return this.http.get<Company>(this.companiesUrl + '/' + id, { headers: this.headers });
   }
 
   addCompany(company: Company) {
-    return this.http.post<Company>(this.companiesUrl, company, this.httpOptions);
+    return this.http.post<Company>(this.companiesUrl, company, { headers: this.headers });
   }
 
   pushCompany(company: Company) {
@@ -772,7 +772,7 @@ class Companies {
   }
 
   editCompany(c : Company){
-    return this.http.patch<Company>(this.companiesUrl + '/' + c.id, c, this.httpOptions);
+    return this.http.patch<Company>(this.companiesUrl + '/' + c.id, c, { headers: this.headers });
   }
 
   switchCompany(c: Company){
@@ -800,7 +800,7 @@ class Companies {
   }
 
   deleteCompanyById(id : number) {
-    return this.http.delete(this.companiesUrl + '/' + id, this.httpOptions);
+    return this.http.delete(this.companiesUrl + '/' + id, { headers: this.headers });
   }
 
   deleteCompanyByIndex(index: number){
@@ -827,22 +827,27 @@ export class ResourcesService {
   //     'Accept': 'application/json'
   //   })
   // }
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': 'Bearer ' + 'FCTyLtiYAdyYf1gQ9OdwXWw9__dQgwCkov0zhTJHDHIOxWf1dkH-1_KlvCBAYbF0rOdmD3fYM7H5ZmP2Ri7SLDtAmFeN6rHakdiaEpb0tBEu22HGOFcckatmvWD5pTDYDCbVi5VAmJ88psa6d10gCkJYDY6HHJu-yb7-LPCl9lOXyTmDIw509Shcb1FdLZy-Tz0YCvChXWdeECRNMFc1B1AqnYrdVqxaHWScbYq4-7krCWyrvtvDtavroqMV9-jlp8jQHnie4RnwklJIVGm6QPesDWb1uevNenMEUdanBGiCw6cztXYUe4mXGL7aKI71pOib75Nwn0PjbXw9Uz-enBHSGpFxNExlN4v9o_zCtiMbU2kCgouNQzRTvQuloivPKRXGVri7OVkdHu7ZOfLehA',
-      'Accept': 'application/json'
-    })
-  }
-  companies = new Companies(this.http, this.httpOptions);
-  vehicles = new Vehicles(this.http, this.httpOptions);
-  employees = new Employees(this.http, this.httpOptions);
-  reasons = new Reasons(this.http, this.httpOptions);
-  gates = new Gates(this.http, this.httpOptions);
-  occupations = new Occupations(this.http, this.httpOptions);
-  airportZones = new AirportZones(this.http, this.httpOptions);
-  visitorBadges = new VisitorBadges(this.http, this.httpOptions);
-  visitorVehicleBadges = new VisitorVehicleBadges(this.http, this.httpOptions);
+  headers: HttpHeaders = new HttpHeaders({
+    'Content-Type':  'application/json',
+    'Authorization': 'Bearer ' + 'RhLV2Xd_l5NPR9XEKzIuThoXcUdHLnKhTZqykf96kzMQqNBRZJPc26ZIHNBEjXgVrVgsWSGrk6a0iR1S1RwB7uoUAUfeiWZGnYKGlLoYcll3q0OrDX3HdnEOYd24D0eYkSkWR9s_YJSAnOtNXduNliRZMwY5OXy27UTPdxYAKSe1GMgiyJudlaLl2858EZ4x5EH05B5CySoHn_DizrsNO6RkVZczJvWicarx3AjUkHHGdZZYS5EkvfZ54T01CdCn1pGy6rnJMOrgUPzOtW_6ILsYcr1NlSThyJxWbeNUBxCAlUaV7FQFv_Krl9ZasSZ8g5x5GTTORIY0FvGrk7Kbu6rbkIJjPnZbX0xDVjdDGwW0HI_Y8L0Cjo-iQ2TjWHy3MlvGmogRQhxy-WpA0fCm-A',
+    'Accept': 'application/json'
+  })
+  // httpOptions = {
+  //   headers: HttpHeaders = new HttpHeaders({
+  //     'Content-Type':  'application/json',
+  //     'Authorization': 'Bearer ' + 'RhLV2Xd_l5NPR9XEKzIuThoXcUdHLnKhTZqykf96kzMQqNBRZJPc26ZIHNBEjXgVrVgsWSGrk6a0iR1S1RwB7uoUAUfeiWZGnYKGlLoYcll3q0OrDX3HdnEOYd24D0eYkSkWR9s_YJSAnOtNXduNliRZMwY5OXy27UTPdxYAKSe1GMgiyJudlaLl2858EZ4x5EH05B5CySoHn_DizrsNO6RkVZczJvWicarx3AjUkHHGdZZYS5EkvfZ54T01CdCn1pGy6rnJMOrgUPzOtW_6ILsYcr1NlSThyJxWbeNUBxCAlUaV7FQFv_Krl9ZasSZ8g5x5GTTORIY0FvGrk7Kbu6rbkIJjPnZbX0xDVjdDGwW0HI_Y8L0Cjo-iQ2TjWHy3MlvGmogRQhxy-WpA0fCm-A',
+  //     'Accept': 'application/json'
+  //   })
+  // }
+  companies = new Companies(this.http, this.headers);
+  vehicles = new Vehicles(this.http, this.headers);
+  employees = new Employees(this.http, this.headers);
+  reasons = new Reasons(this.http, this.headers);
+  gates = new Gates(this.http, this.headers);
+  occupations = new Occupations(this.http, this.headers);
+  airportZones = new AirportZones(this.http, this.headers);
+  visitorBadges = new VisitorBadges(this.http, this.headers);
+  visitorVehicleBadges = new VisitorVehicleBadges(this.http, this.headers);
   badges: Badge[] = [];
 
   // zones = [1, 2, 3, 4, 5, 6, 7, 8, 9];

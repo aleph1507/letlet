@@ -1,16 +1,16 @@
 import { Person } from './Person.model';
 import { Vehicle } from './Vehicle.model';
-import { Company } from './Company';
+// import { Company } from './Company';
 
 export class Requester {
-  requestID: number;
+  id: number;
   requesterName: string;
   description: string;
-  company: Company;
-  from: Date;
-  to: Date;
-  numEntries: number;
-  persons: Person[];
-  vehicles: Vehicle[];
-  date: number;
+  companyId: number;
+  fromDate: Date;
+  toDate: Date;
+  numberOfEntries: number;
+  requestPersonJson: Person[];
+  requestVehicleJson: Vehicle[];
+  // date: number;
 }

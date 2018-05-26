@@ -46,6 +46,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
   paramsSub: any;
   id: number = null;
 
+  reqCompany : Company;
+
   todayDate;
 
   constructor(private dialog: MatDialog,
@@ -75,9 +77,9 @@ export class RequesterComponent implements OnInit, OnDestroy {
         this.id = +params['id'];
         this.editMode = true;
         this.request = this.requesterService.getRequest(this.id);
-        this.requesterService.setPersons(this.request.persons);
+        this.requesterService.setPersons(this.request.requestPersonJson);
         // this.requesterService.setVehicles(this.request.vehicles);
-        this.requesterService.setVehicles(this.request.vehicles);
+        this.requesterService.setVehicles(this.request.requestVehicleJson);
       }
 
       this.todayDate = this.datePipe.transform(new Date(), 'dd/MM/yyyy');
@@ -93,19 +95,19 @@ export class RequesterComponent implements OnInit, OnDestroy {
       'requesterDescription': new FormControl(this.request.description, {
         updateOn: 'change'
       }),
-      'requesterCompany': new FormControl(this.request.company, {
+      'requesterCompany': new FormControl(this.request.companyId, {
         validators: Validators.required,
         updateOn: 'change'
       }),
-      'requesterFromDate': new FormControl(this.request.from, {
+      'requesterFromDate': new FormControl(this.request.fromDate, {
         validators: Validators.required,
         updateOn: 'change'
       }),
-      'requesterToDate': new FormControl(this.request.to, {
+      'requesterToDate': new FormControl(this.request.toDate, {
         validators: Validators.required,
         updateOn: 'change'
       }),
-      'requesterNumOfEntries': new FormControl(this.request.numEntries, {
+      'requesterNumOfEntries': new FormControl(this.request.numberOfEntries, {
         validators: [Validators.required]
       })
     })
@@ -125,15 +127,21 @@ export class RequesterComponent implements OnInit, OnDestroy {
   onSubmit() {
     if(this.requesterForm.valid) {
       if(this.editMode){
+        this.resources.companies.getCompanyById(this.request.companyId)
+          .subscribe((data : Company) => {
+            this.reqCompany = data;
+          });
         this.request.requesterName = this.requesterForm.controls['requesterName'].value;
         this.request.description = this.requesterForm.controls['requesterDescription'].value;
-        this.request.company = this.requesterForm.controls['requesterCompany'].value;
-        this.request.from = this.requesterForm.controls['requesterFromDate'].value;
-        this.request.to = this.requesterForm.controls['requesterToDate'].value;
-        this.request.numEntries = this.requesterForm.controls['requesterNumOfEntries'].value;
+        this.request.companyId = this.requesterForm.controls['requesterCompany'].value;
+        this.request.fromDate = this.requesterForm.controls['requesterFromDate'].value;
+        this.request.toDate = this.requesterForm.controls['requesterToDate'].value;
+        this.request.numberOfEntries = this.requesterForm.controls['requesterNumOfEntries'].value;
         this.requesterService.editRequest(this.request);
       } else {
+        this.reqCompany = this.requesterForm.controls['requesterCompany'].value;
         this.requesterService.pushRequest(
+          null,
           this.requesterForm.controls['requesterName'].value,
           this.requesterForm.controls['requesterDescription'].value,
           this.requesterForm.controls['requesterCompany'].value,
@@ -221,18 +229,18 @@ export class RequesterComponent implements OnInit, OnDestroy {
 
   printRequest(): void {
     // console.log("printRequest");
-    let pNumber = this.request.persons.length;
+    let pNumber = this.request.requestPersonJson.length;
     // console.log("pNumber : " + pNumber);
     let personsTD1 = '', personsTD2 = '';
-    for(let i = 0; i<this.request.persons.length; i++){
+    for(let i = 0; i<this.request.requestPersonJson.length; i++){
       // console.log("this.request.person[i].surname : " + this.request.persons[i].surname);
       if(i % 2 == 1){
-        personsTD2 += '<span style="display: block;">' + (i+1) + '. ' + this.request.persons[i].name + ' ' +
-           this.request.persons[i].surname + '/' + this.request.persons[i].nameCyrilic + ' ' + this.request.persons[i].surnameCyrilic + '</span>';
+        personsTD2 += '<span style="display: block;">' + (i+1) + '. ' + this.request.requestPersonJson[i].name + ' ' +
+           this.request.requestPersonJson[i].surname + '/' + this.request.requestPersonJson[i].name + ' ' + this.request.requestPersonJson[i].surname + '</span>';
         continue;
       }
-      personsTD1 += '<span style="display: block;">' + (i+1) + '. ' + this.request.persons[i].name + ' ' +
-        this.request.persons[i].surname + '/' + this.request.persons[i].nameCyrilic + ' ' + this.request.persons[i].surnameCyrilic + '</span>';
+      personsTD1 += '<span style="display: block;">' + (i+1) + '. ' + this.request.requestPersonJson[i].nameEn + ' ' +
+        this.request.requestPersonJson[i].surnameEn + '/' + this.request.requestPersonJson[i].name + ' ' + this.request.requestPersonJson[i].surname + '</span>';
     }
 
     // console.log("personsTD1 : " + personsTD1);
@@ -273,7 +281,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
               <td colspan="2">
                 <p>
                   Ве молиме да одобрите дозвола за влез за
-                  долунаведенитe лицa од ${this.request.company} кои ќе
+                  долунаведенитe лицa од ${this.reqCompany} кои ќе
                   извршат поставување на нов рекламен банер
                    за ТАВ Македонија Оперативни Услуги од
                     02.05.2018 до 04.05.2018
@@ -284,7 +292,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
               <td>
                 <p>
                   We kindly ask you to approve entrance permission for
-                   the below mentioned person from  ${this.request.company}  who will perform
+                   the below mentioned person from  ${this.reqCompany}  who will perform
                     installation of advertising banner in TAV
                      МОS  from 02.05.2018 to 04.05.2018
                 </p>
@@ -342,13 +350,14 @@ export class RequesterComponent implements OnInit, OnDestroy {
   printRequest2(): void {
     console.log("printRequest2");
     let printContents, popupWin;
-    let fromDate = this.datePipe.transform(this.request.from, 'dd/MM/yyyy');
-    let toDate = this.datePipe.transform(this.request.to, 'dd/MM/yyyy');
+    let fromDate = this.datePipe.transform(this.request.fromDate, 'dd/MM/yyyy');
+    let toDate = this.datePipe.transform(this.request.toDate, 'dd/MM/yyyy');
     let personTR = '', vehiclesTR = '', vehiclesTable ='';
-    for(let i = 0; i<this.request.persons.length; i++){
-      personTR +=`<tr><td class="td-index">${i+1}</td><td>${this.request.persons[i].nameCyrilic} ${this.request.persons[i].surnameCyrilic}/${this.request.persons[i].name} ${this.request.persons[i].surname}</td></tr>`;
+    let reqCompany : Company;
+    for(let i = 0; i<this.request.requestPersonJson.length; i++){
+      personTR +=`<tr><td class="td-index">${i+1}</td><td>${this.request.requestPersonJson[i].name} ${this.request.requestPersonJson[i].surname}/${this.request.requestPersonJson[i].nameEn} ${this.request.requestPersonJson[i].surnameEn}</td></tr>`;
     }
-    if(this.request.vehicles.length > 0){
+    if(this.request.requestVehicleJson.length > 0){
       vehiclesTable += `
           <p class="table-desc">
              Се одобрува бесплатен влез на платформа за следните возила / Free of charge entrance at airside is allowed for the following vehicles:
@@ -361,8 +370,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
                </thead>
                <tbody>
           `;
-        for(let i = 0; i<this.request.vehicles.length; i++){
-          vehiclesTable += `<tr><td class="td-index">${i+1}</td><td>${this.request.vehicles[i].plate}</td></tr>`;
+        for(let i = 0; i<this.request.requestVehicleJson.length; i++){
+          vehiclesTable += `<tr><td class="td-index">${i+1}</td><td>${this.request.requestVehicleJson[i].plate}</td></tr>`;
         }
         vehiclesTable += `
               </tbody>
@@ -518,7 +527,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
             <div class="title">
               <h3>Request for free of charge ID card / Vehicle entrance</h3>
               <div class="num-date">
-                <span>Request NO: ${this.request.requestID} </span>
+                <span>Request NO: ${this.request.id} </span>
                 <span> Date: ${this.todayDate}</span>
               </div>
             </div>
@@ -552,7 +561,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
             <div class="fgroup fg1">
               <span>Назив на компанијата \ Company name</span>
               <div class="company-naziv">
-                ${this.request.company}
+                ${this.reqCompany}
               </div>
             </div>
             <div class="fgroup fg2">
