@@ -12,5 +12,6 @@ export class Requester {
   numberOfEntries: number;
   requestPersonJson: Person[];
   requestVehicleJson: Vehicle[];
+  approved: boolean;
   // date: number;
 }

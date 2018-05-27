@@ -32,9 +32,9 @@ export class BadgesService {
       b.dateSecCheck = Date.now()
       b.dateTraining = Date.now();
       b.validTo = Date.now();
-      b.zones = [(i+1)%this.resources.airportZones.getAllAirportZones().length,
-                  (i+2)%this.resources.airportZones.getAllAirportZones().length,
-                  (i+3)%this.resources.airportZones.getAllAirportZones().length]
+      // b.zones = [(i+1)%this.resources.airportZones.getAllAirportZones().length,
+      //             (i+2)%this.resources.airportZones.getAllAirportZones().length,
+      //             (i+3)%this.resources.airportZones.getAllAirportZones().length]
       this.badges.push(b);
     }
   }

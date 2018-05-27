@@ -23,7 +23,7 @@ export class ApprovalsComponent implements OnInit {
              'nVehicles', 'status', 'approvedDate', 'approvedFrom', 'reqID'];
   // showApprovals = ['Unverified', 'All', 'Approved', 'Declined'];
   showApprovals = [];
-  selectedApprovals = 'All';
+  selectedApprovals = 'Not Approved';
   filteredCompanies: Observable<string[]>;
   dateFrom = null;
   dateTo = null;
@@ -38,7 +38,15 @@ export class ApprovalsComponent implements OnInit {
   constructor(private approvalsService: ApprovalsService,
               private resourcesService: ResourcesService) { }
 
+  toDate : Date;
+  fromDate : Date;
+  fromString : string = null;
+  toString : string = null;
+
   ngOnInit() {
+    this.toDate = new Date();
+    this.fromDate = new Date();
+    this.fromDate.setDate(this.fromDate.getDate() - 30);
     // this.approvalRequests = this.approvalsService.formatRequests();
     this.showApprovals = this.approvalsService.showApprovals;
     // console.log('showApprovals[0]: ' + this.showApprovals[0]);
@@ -48,6 +56,8 @@ export class ApprovalsComponent implements OnInit {
         startWith(''),
         map(company => this.filterCompanies(company))
       );
+
+    this.getAR();
   }
 
   status(s) {
@@ -58,32 +68,51 @@ export class ApprovalsComponent implements OnInit {
     return s == true ? f : '';
   }
 
-  fromString : string = null;
-  toString : string = null;
-  getAR(picker, event: MatDatepickerInputEvent<Date>) {
-    var category = (this.showApprovals.indexOf(this.selectedApprovals) + 1).toString();
+  category = 3;
 
+  radioChange($event){
+    this.category = this.showApprovals.indexOf($event.value) + 1;
+    this.getAR();
+  }
+
+  getAR(picker = null, event: MatDatepickerInputEvent<Date> = null) {
     var month : string = '';
     var day : string = '';
-    // approvalsUrl = 'http://192.168.100.4:84/api/requests/approvals/3/2018-01-01/2019-01-01';
-    // this.approvalsUrl += category += '/'
+
+    if(event == null) {
+      // console.log('vo event == null');
+      this.fromDate.getMonth() >= 10 ?
+        month = '-' + (this.fromDate.getMonth() + 1).toString() : month = '-0' + (this.fromDate.getMonth()+1).toString();
+
+      this.fromDate.getDate() >= 10 ?
+        day = '-' + (this.fromDate.getDate()).toString() : day = '-0' + (this.fromDate.getDate()).toString();
+
+      this.fromString = this.fromDate.getFullYear() + month + day;
+
+      this.toDate.getMonth() >= 10 ?
+        month = '-' + (this.toDate.getMonth() + 1).toString() : month = '-0' + (this.toDate.getMonth()+1).toString();
+
+      this.toDate.getDate() >= 10 ?
+        day = '-' + (this.toDate.getDate()).toString() : day = '-0' + (this.toDate.getDate()).toString();
+
+      this.toString = this.toDate.getFullYear() + month + day;
+
+    } else {
+      event.value.getMonth() >= 10 ?
+        month = '-' + (event.value.getMonth() + 1).toString() : month = '-0' + (event.value.getMonth() + 1).toString();
+
+      // event.value.get
+      event.value.getDate() >= 10 ?
+        day = '-' + (event.value.getDate()).toString() : day = '-0' + (event.value.getDate()).toString();
+
+      picker == 'from' ? this.fromString = event.value.getFullYear() + month + day :
+                        this.toString = event.value.getFullYear() + month + day;
+
+    }
 
 
-    event.value.getMonth() >= 10 ?
-      month = '-' + (event.value.getMonth() + 1).toString() : month = '-0' + (event.value.getMonth() + 1).toString();
-
-    // event.value.get
-    event.value.getDate() >= 10 ?
-      day = '-' + (event.value.getDate()).toString() : day = '-0' + (event.value.getDate()).toString();
-
-      // console.log('month : ' + month + ' ,  day: ' + day);
-
-    picker == 'from' ? this.fromString = event.value.getFullYear() + month + day :
-                      this.toString = event.value.getFullYear() + month + day;
-
-    // console.log('fromString: ' + this.fromString + ', toString: ' + this.toString);
-
-    var aUrl = this.approvalsUrl + category + '/' + this.fromString + '/' + this.toString;
+    var aUrl = this.approvalsUrl + this.category + '/' + this.fromString + '/' + this.toString;
+    console.log(`aUrl: ` + aUrl);
 
     if(this.fromString != null && this.toString != null){
       this.approvalsService.getRequests(aUrl)
@@ -91,15 +120,10 @@ export class ApprovalsComponent implements OnInit {
           this.approvalRequests = data;
           this.dataSource = new
             MatTableDataSource<ApprovalRequest>(this.approvalRequests);
-          console.log(this.approvalRequests);
+          // console.log(this.approvalRequests);
         })
     }
 
-    // console.log('aUrl: ' + aUrl);
-
-    // console.log('category: ' + category + ', picker: ' + picker + ', event.value: ' + event.value +
-    //   ', event.value.getDay: ' + event.value.getDay() + ', event.value.getMonth: ' + event.value.getMonth()
-    //   + ', event.value: ' + event.value.getFullYear());
   }
 
   filterCompanies(name: string) {

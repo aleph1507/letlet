@@ -3,20 +3,23 @@
     <div class="filter-dates">
       <mat-form-field class="date-filter-field">
         <input matInput [matDatepicker]="fromPicker"
-          (dateInput)="getAR('from', $event)" placeholder="Date From">
+          (dateInput)="getAR('from', $event)"
+          [(ngModel)]="fromDate" placeholder="Date From">
         <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
         <mat-datepicker #fromPicker></mat-datepicker>
       </mat-form-field>
       <mat-form-field class="date-filter-field">
         <input matInput [matDatepicker]="toPicker"
-          (dateInput)="getAR('to', $event)" placeholder="Date To">
+          (dateInput)="getAR('to', $event)"
+          [(ngModel)]="toDate" placeholder="Date To">
         <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
         <mat-datepicker #toPicker></mat-datepicker>
       </mat-form-field>
     </div>
     <div class="show-approvals">
       <mat-radio-group [(ngModel)]="selectedApprovals">
-        <mat-radio-button *ngFor="let sa of showApprovals" color="primary" [value]="sa">
+        <mat-radio-button *ngFor="let sa of showApprovals"
+          color="primary" [value]="sa" (change)="radioChange($event)">
           {{sa}}
         </mat-radio-button>
       </mat-radio-group>
@@ -81,7 +84,7 @@
 
     <ng-container matColumnDef="reqID">
       <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
-      <mat-cell *matCellDef="let req"><a [routerLink]="['/requester/edit', req.reqID]"><mat-icon>border_color</mat-icon></a></mat-cell>
+      <mat-cell *matCellDef="let req"><a [routerLink]="['/requester', req.requestId]"><mat-icon>border_color</mat-icon></a></mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

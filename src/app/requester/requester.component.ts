@@ -49,13 +49,16 @@ export class RequesterComponent implements OnInit, OnDestroy {
   reqCompany : Company;
 
   todayDate;
+  showApproveBtn : boolean = false;
+  showDeclineBtn : boolean = false;
 
   constructor(private dialog: MatDialog,
               private changeDetectorRef: ChangeDetectorRef,
               public requesterService: RequesterService,
               private route: ActivatedRoute,
               private resources: ResourcesService,
-              private datePipe: DatePipe
+              private datePipe: DatePipe,
+              private router: Router
             ) { }
 
   ngOnInit() {
@@ -72,21 +75,9 @@ export class RequesterComponent implements OnInit, OnDestroy {
 
     this.nEntries.push({name: 'Unlimited', value: -1});
 
-    this.paramsSub = this.route.params.subscribe(params => {
-      if(params['id'] && this.requesterService.getRequest(+params['id']) !== undefined){
-        this.id = +params['id'];
-        this.editMode = true;
-        this.request = this.requesterService.getRequest(this.id);
-        this.requesterService.setPersons(this.request.requestPersonJson);
-        // this.requesterService.setVehicles(this.request.vehicles);
-        this.requesterService.setVehicles(this.request.requestVehicleJson);
-      }
-
-      this.todayDate = this.datePipe.transform(new Date(), 'dd/MM/yyyy');
-    });
-
-    console.log('this.request: ', this.request);
-
+    this.requesterService.setPersons([]);
+    this.requesterService.setVehicles([]);
+    // console.log('this.router.url :  ' + this.router.url);
     this.requesterForm = new FormGroup({
       'requesterName': new FormControl(this.request.requesterName, {
         validators: Validators.required,
@@ -112,6 +103,60 @@ export class RequesterComponent implements OnInit, OnDestroy {
       })
     })
 
+    this.paramsSub = this.route.params.subscribe(params => {
+      if(params['id']){
+        this.requesterService.getRequest(+params['id'])
+          .subscribe((req : Requester) => {
+            this.id = req.id;
+            this.editMode = true;
+            this.request = req;
+            this.requesterService.setPersons(req.requestPersonJson);
+            this.requesterService.setVehicles(req.requestVehicleJson);
+            let company = null;
+            this.resources.companies.getCompanyById(this.request.companyId)
+              .subscribe((c : Company) => {
+                this.requesterForm = new FormGroup({
+                  'requesterName': new FormControl({value : this.request.requesterName, disabled: true}, {
+                    validators: Validators.required,
+                    updateOn: 'change'
+                  }),
+                  'requesterDescription': new FormControl({value: this.request.description, disabled: true}, {
+                    updateOn: 'change'
+                  }),
+                  'requesterCompany': new FormControl({value: c, disabled: true}, {
+                    validators: Validators.required,
+                    updateOn: 'change'
+                  }),
+                  'requesterFromDate': new FormControl({value: this.request.fromDate, disabled: true}, {
+                    validators: Validators.required,
+                    updateOn: 'change'
+                  }),
+                  'requesterToDate': new FormControl({value: this.request.toDate, disabled: true}, {
+                    validators: Validators.required,
+                    updateOn: 'change'
+                  }),
+                  'requesterNumOfEntries': new FormControl({value: this.request.numberOfEntries, disabled: true}, {
+                    validators: [Validators.required]
+                  })
+                });
+              });
+              this.request.approved ? this.showDeclineBtn = true : this.showApproveBtn = true;
+          })
+      }
+      // if(params['id'] && this.requesterService.getRequest(+params['id']) !== undefined){
+      //   this.id = +params['id'];
+      //   this.editMode = true;
+      //   this.request = this.requesterService.getRequest(this.id);
+      //   this.requesterService.setPersons(this.request.requestPersonJson);
+      //   // this.requesterService.setVehicles(this.request.vehicles);
+      //   this.requesterService.setVehicles(this.request.requestVehicleJson);
+      // }
+
+      this.todayDate = this.datePipe.transform(new Date(), 'dd/MM/yyyy');
+    });
+
+    // console.log('this.request: ', this.request);
+
       this.filteredCompanies = this.requesterForm.controls['requesterCompany'].valueChanges
         .pipe(
           startWith(''),
@@ -122,6 +167,22 @@ export class RequesterComponent implements OnInit, OnDestroy {
 
   displayFn(c?: Company) {
     return c ? c.name : undefined;
+  }
+
+  approve(id: number){
+    this.requesterService.approveRequest(id).subscribe(
+      (data: boolean) => {
+        data ? console.log('Request Approved') : console.log('Request not approved');
+      }
+    );
+  }
+
+  decline(id: number){
+    this.requesterService.declineRequest(id).subscribe(
+      (data: boolean) => {
+        data ? console.log('Request Declined') : console.log('Request not declined');
+      }
+    );
   }
 
   onSubmit() {

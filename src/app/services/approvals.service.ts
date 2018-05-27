@@ -16,11 +16,11 @@ export class ApprovalsService {
   // 1 - all | 2 - approved | 3- not approved
   // approvalsUrl = 'http://192.168.100.4:84/api/requests/approvals/3/2018-01-01/2019-01-01';
 
-  public showApprovals = ['All', 'Approved', 'Declined'];
+  public showApprovals = ['All', 'Approved', 'Not Approved'];
   public selectedApprovals: string;
   headers: HttpHeaders = new HttpHeaders({
     'Content-Type':  'application/json',
-    'Authorization': 'Bearer ' + 'RhLV2Xd_l5NPR9XEKzIuThoXcUdHLnKhTZqykf96kzMQqNBRZJPc26ZIHNBEjXgVrVgsWSGrk6a0iR1S1RwB7uoUAUfeiWZGnYKGlLoYcll3q0OrDX3HdnEOYd24D0eYkSkWR9s_YJSAnOtNXduNliRZMwY5OXy27UTPdxYAKSe1GMgiyJudlaLl2858EZ4x5EH05B5CySoHn_DizrsNO6RkVZczJvWicarx3AjUkHHGdZZYS5EkvfZ54T01CdCn1pGy6rnJMOrgUPzOtW_6ILsYcr1NlSThyJxWbeNUBxCAlUaV7FQFv_Krl9ZasSZ8g5x5GTTORIY0FvGrk7Kbu6rbkIJjPnZbX0xDVjdDGwW0HI_Y8L0Cjo-iQ2TjWHy3MlvGmogRQhxy-WpA0fCm-A',
+    'Authorization': 'Bearer ' + 'OVdSQO8unD8O7jCsDBBqNnmbiLHbtR5h7jg_iA3SP8Wxc7TPFkcxXgy7TO5WZX9vBdD_GxDM0jtFMpzSTlx8Ooe5jNhbyflfYCZPfswkLY4POCso_ysWeUg_98y_8sWQvFVnkbmNRWKRqHCmLzOhGRrVjduJ8ORgTk3eScYc_R2fpiGHE1KBvfzPnuSOhvgpIFy-1B-FlxmZwbNz3wloSHHtklUdRkfelAZSKBGBJ5MH3dxgnbsau22Qm8muhXCE09FplfiqFq5B7KNMjEDd6vh-T0MQG8aDoARGVqA-VHwFShUvFKmY_4sjvmaCNYRAfbQf4c_wPdkmR6vqhYePAUK3oDI-50dQfgdGkBNcQN8aamujiKouRhnNSNRuXZ81s_MAdcBqyIrwJdc7khG6tg',
     'Accept': 'application/json'
   })
 

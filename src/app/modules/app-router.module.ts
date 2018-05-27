@@ -12,7 +12,7 @@ import { ResourceComponent } from '../resources/resource/resource.component';
 const appRoutes: Routes = [
    { path: '', component: DashboardComponent, pathMatch: 'full' },
    { path: 'requester', component: RequesterComponent, pathMatch: 'full' },
-   { path: 'requester/edit/:id', component: RequesterComponent },
+   { path: 'requester/:id', component: RequesterComponent },
    { path: 'login', component: LoginComponent },
    { path: 'dashboard', component: DashboardComponent},
    { path: 'approvals', component: ApprovalsComponent },

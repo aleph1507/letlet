@@ -19,7 +19,7 @@ export class RequesterService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
-      'Authorization': 'Bearer ' + 'RhLV2Xd_l5NPR9XEKzIuThoXcUdHLnKhTZqykf96kzMQqNBRZJPc26ZIHNBEjXgVrVgsWSGrk6a0iR1S1RwB7uoUAUfeiWZGnYKGlLoYcll3q0OrDX3HdnEOYd24D0eYkSkWR9s_YJSAnOtNXduNliRZMwY5OXy27UTPdxYAKSe1GMgiyJudlaLl2858EZ4x5EH05B5CySoHn_DizrsNO6RkVZczJvWicarx3AjUkHHGdZZYS5EkvfZ54T01CdCn1pGy6rnJMOrgUPzOtW_6ILsYcr1NlSThyJxWbeNUBxCAlUaV7FQFv_Krl9ZasSZ8g5x5GTTORIY0FvGrk7Kbu6rbkIJjPnZbX0xDVjdDGwW0HI_Y8L0Cjo-iQ2TjWHy3MlvGmogRQhxy-WpA0fCm-A',
+      'Authorization': 'Bearer ' + 'OVdSQO8unD8O7jCsDBBqNnmbiLHbtR5h7jg_iA3SP8Wxc7TPFkcxXgy7TO5WZX9vBdD_GxDM0jtFMpzSTlx8Ooe5jNhbyflfYCZPfswkLY4POCso_ysWeUg_98y_8sWQvFVnkbmNRWKRqHCmLzOhGRrVjduJ8ORgTk3eScYc_R2fpiGHE1KBvfzPnuSOhvgpIFy-1B-FlxmZwbNz3wloSHHtklUdRkfelAZSKBGBJ5MH3dxgnbsau22Qm8muhXCE09FplfiqFq5B7KNMjEDd6vh-T0MQG8aDoARGVqA-VHwFShUvFKmY_4sjvmaCNYRAfbQf4c_wPdkmR6vqhYePAUK3oDI-50dQfgdGkBNcQN8aamujiKouRhnNSNRuXZ81s_MAdcBqyIrwJdc7khG6tg',
       'Accept': 'application/json'
     })
   }
@@ -96,8 +96,8 @@ export class RequesterService {
     'Something bad happened; please try again later.');
 };
 
-  dlRequest() {
-    return this.http.get<Requester>(this.requestUrl);
+  getRequest(id: number) : Observable<Requester>{
+    return this.http.get<Requester>(this.requestUrl + '/' + id, this.httpOptions);
   }
 
   pushRequest(id = null, requesterName, description, company : Company, fromDate, toDate, numberOfEntries){
@@ -123,6 +123,15 @@ export class RequesterService {
       });
   }
 
+  approveRequest(id: number) : Observable<boolean>{
+    return this.http.post<boolean>(this.requestUrl + '/approve/' + id, {}, this.httpOptions);
+  }
+
+  declineRequest(id: number) : Observable<boolean>{
+    return this.http.post<boolean>(this.requestUrl + '/decline/' + id, {}, this.httpOptions);
+  }
+
+
   editRequest(req: Requester){
     for(let i = 0; i<this.requests.length; i++){
       if(this.requests[i].id == req.id){
@@ -140,9 +149,9 @@ export class RequesterService {
     return this.requests;
   }
 
-  getRequest(index: number) {
-    return this.requests[index];
-  }
+  // getRequest(index: number) {
+  //   return this.requests[index];
+  // }
 
   getNumberRequests(){
     return this.requests.length;

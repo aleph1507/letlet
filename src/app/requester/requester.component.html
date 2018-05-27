@@ -55,7 +55,7 @@
         <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
         <mat-datepicker #toPicker></mat-datepicker>
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf="!editMode">
         <mat-select placeholder="Number of entries" formControlName="requesterNumOfEntries"
           name="requesterNumOfEntries" id="requesterNumOfEntries" autocomplete="off" required>
           <!-- <mat-option></mat-option> -->
@@ -66,7 +66,18 @@
         <!-- <mat-error *ngIf="requesterNumOfEntries.hasError('required')">Please choose a number of allowed entries</mat-error> -->
         <!-- <mat-hint>{{animalControl.value?.sound}}</mat-hint> -->
       </mat-form-field>
-      <button mat-raised-button type="submit" color="primary" [disabled]="!requesterForm.valid" class="main-send">Send</button>
+      <mat-form-field *ngIf="editMode">
+        <input matInput
+          placeholder="Number of entries"
+          name="requesterNumberOfEntries"
+          formControlName="requesterNumOfEntries"
+          autocomplete="off"
+          required>
+      </mat-form-field>
+
+      <button *ngIf="!editMode" mat-raised-button type="submit" color="primary" [disabled]="!requesterForm.valid" class="main-send">Send</button>
+      <button *ngIf="showApproveBtn" (click)="approve(request.id)" mat-raised-button color="primary" class="main-send">Approve</button>
+      <button *ngIf="showDeclineBtn" (click)="decline(request.id)" mat-raised-button color="primary" class="main-send">Decline</button>
     </form>
 
     <div *ngIf="editMode" class="print-request" id="print-request">
@@ -87,11 +98,11 @@
               <span class="person-surname">{{person.surname}}</span>
             </div>
             <div>
-              <mat-icon matListIcon
+              <mat-icon *ngIf="!editMode" matListIcon
                 (click)="editPerson(i)"
                 class="icon-control"
                 >mode_edit</mat-icon>
-              <mat-icon matListIcon
+              <mat-icon *ngIf="!editMode" matListIcon
                 (click)="deletePerson(i)"
                 class="icon-control">delete</mat-icon>
             </div>
@@ -99,7 +110,7 @@
           <mat-divider></mat-divider>
         </mat-list-item>
       </mat-list>
-      <button mat-mini-fab color="primary" (click)="openPersonDialog()" id="plusPerson">+
+      <button mat-mini-fab *ngIf="!editMode" color="primary" (click)="openPersonDialog()" id="plusPerson">+
       </button>
     </div>
     <div class="requester-prop mat-elevation-z8">
@@ -110,11 +121,11 @@
               <span class="vehicle-plate">{{vehicle.plate}}</span>
             </div>
             <div>
-              <mat-icon matListIcon
+              <mat-icon *ngIf="!editMode" matListIcon
                 (click)="editVehicle(i)"
                 class="icon-control"
                 >mode_edit</mat-icon>
-              <mat-icon matListIcon
+              <mat-icon *ngIf="!editMode" matListIcon
                 (click)="deleteVehicle(i)"
                 class="icon-control">delete</mat-icon>
             </div>
@@ -122,7 +133,7 @@
           <mat-divider></mat-divider>
         </mat-list-item>
       </mat-list>
-      <button mat-mini-fab color="primary" (click)="openVehicleDialog()" id="plusVehicle">+
+      <button mat-mini-fab *ngIf="!editMode" color="primary" (click)="openVehicleDialog()" id="plusVehicle">+
       </button>
     </div>
     <div style="text-align:right">
