@@ -39,6 +39,7 @@ import { OccupationModalComponent } from './resources/resource/occupation-modal/
 import { AirportZoneModalComponent } from './resources/resource/airport-zone-modal/airport-zone-modal.component';
 import { VisitorBadgeModalComponent } from './resources/resource/visitor-badge-modal/visitor-badge-modal.component';
 import { VisitorVehicleBadgeModalComponent } from './resources/resource/visitor-vehicle-badge-modal/visitor-vehicle-badge-modal.component';
+import { DialogResourceVehicleComponent } from './resources/resource/dialog-vehicle/dialog-vehicle.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { VisitorVehicleBadgeModalComponent } from './resources/resource/visitor-
     RequesterComponent,
     DialogPersonComponent,
     DialogVehicleComponent,
+    DialogResourceVehicleComponent,
     LoginComponent,
     ApprovalsComponent,
     StopListComponent,
@@ -84,7 +86,8 @@ import { VisitorVehicleBadgeModalComponent } from './resources/resource/visitor-
     OccupationModalComponent,
     AirportZoneModalComponent,
     VisitorBadgeModalComponent,
-    VisitorVehicleBadgeModalComponent
+    VisitorVehicleBadgeModalComponent,
+    DialogResourceVehicleComponent
   ],
   providers: [RequesterService, AuthService, ApprovalsService,
               StopListService, ResourcesService, BadgesService,

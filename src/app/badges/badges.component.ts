@@ -13,7 +13,7 @@ import { BadgesCreateComponent } from './badges-create/badges-create.component';
 })
 export class BadgesComponent implements OnInit {
 
-  displayedColumns = ['cardSeriesNumber', 'cardNumber', 'expireDate', 'active', 'returned', 'employeeId', 'employeeName', 'zones', 'dateOfSecurityCheck', 'dateOfTraining', 'dateOfActivation'];
+  displayedColumns = ['cardSeriesNumber', 'cardNumber', 'expireDate', 'active', 'returned', 'employeeId', 'employeeName', 'zones', 'dateOfSecurityCheck', 'dateOfTraining', 'dateOfActivation', 'edit'];
   // dataSource: MatTableDataSource<Badge>(this.badgesService.getBadges());
   dataSource: MatTableDataSource<Badge>;
   length: number;
@@ -85,6 +85,18 @@ export class BadgesComponent implements OnInit {
       }
     });
   }
+
+  editBadge(id: number = null){
+    // let b = this.badgesService;
+    // let v = this.resources.vehicles.getVehicleByIndex(index);
+    // let editVehicleDialogRef = this.dialog.open(DialogVehicleComponent, {
+    //   width: '45vw',
+    //   data: {vehicle: v, i: index, resource: false}
+    // });
+    //
+    // console.log('posle edit vehicles: ', this.requesterService.getAllVehicles());
+  }
+
   // getPage(e: any){
   //   this.currentPage = e.pageIndex;
   //   this.pageSize = e.pageSize;
@@ -108,7 +120,7 @@ export class BadgesComponent implements OnInit {
 
   openDialog(): void {
     let dialogRef = this.dialog.open(BadgesCreateComponent, {
-      width: '40%',
+      width: '70%',
       // data: { name: this.name, animal: this.animal }
     });
   }

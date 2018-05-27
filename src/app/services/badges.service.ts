@@ -4,6 +4,7 @@ import { Badge } from '../models/Badge.model';
 import { DatePipe } from '@angular/common';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { retry } from 'rxjs/operator/retry';
 
 
 @Injectable()
@@ -33,14 +34,42 @@ export class BadgesService {
     return this.http.get<Badge[]>(this.badgesUrl + '/page/' + page, this.httpOptions);
   }
 
+  getBadgeById(id: number) : Observable<Badge>{
+    console.log('vo getBadgeById');
+    return this.http.get<Badge>(this.badgesUrl + '/' + id, this.httpOptions);
+  }
+
+  addBadge(badge: Badge){
+    console.log('vo addBadge()');
+    return this.http.post(this.badgesUrl, badge, this.httpOptions);
+  }
+
+  pushBadge(badge: Badge){
+    this.badges.push(badge);
+  }
+
+  updateBadge(b: Badge, id: number){
+    return this.http.patch(this.badgesUrl + '/' + id, b, this.httpOptions);
+  }
+
+  switchBadge(badge: Badge, id: number){
+    for(let i = 0; i<this.badges.length; i++){
+      if(this.badges[i].id == id){
+        this.badges[i] = badge;
+        return this.badges[i];
+      }
+    }
+    return null;
+  }
+
   // getBadges(){
   //   // console.log("badges: " + this.badges);
   //   return this.badges;
   // }
 
-  getBadgesPage(from: number, to: number) {
-    return this.badges.slice(from, to);
-  }
+  // getBadgesPage(from: number, to: number) {
+  //   return this.badges.slice(from, to);
+  // }
 
   // seedBadges(n: number = 10) {
   //   // console.log("vo seedBadges");

@@ -173,7 +173,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
     this.requesterService.approveRequest(id).subscribe(
       (data: boolean) => {
         data ? console.log('Request Approved') : console.log('Request not approved');
-        this.router.navigate(['/approvals']);
+        this.router.navigate(['/approvals', 2]);
       }
     );
   }
@@ -182,7 +182,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
     this.requesterService.declineRequest(id).subscribe(
       (data: boolean) => {
         data ? console.log('Request Declined') : console.log('Request not declined');
-        this.router.navigate(['/approvals']);
+        this.router.navigate(['/approvals', 3]);
       }
     );
   }

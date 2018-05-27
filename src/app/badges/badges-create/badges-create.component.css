@@ -1,0 +1,9 @@
+mat-form-field {
+  width: 40%;
+  margin: 2%;
+}
+
+mat-checkbox {
+  display: block;
+  margin: 2%;
+}

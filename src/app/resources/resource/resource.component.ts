@@ -4,7 +4,7 @@ import { MatTableModule, MatSort, MatTableDataSource, MatDialog } from '@angular
 import { Company } from '../../models/Company';
 import { CompanyModalComponent } from './company-modal/company-modal.component';
 import { ActivatedRoute } from '@angular/router';
-import { Vehicle } from '../../models/Vehicle.model';
+import { resourceVehicle } from '../../models/resourceVehicle';
 import { DialogVehicleComponent } from '../../requester/dialog-vehicle/dialog-vehicle.component';
 import { Employee } from '../../models/Employee';
 import { Reason } from '../../models/Reason';
@@ -20,6 +20,7 @@ import { VisitorBadge } from '../../models/VisitorBadge';
 import { VisitorBadgeModalComponent } from './visitor-badge-modal/visitor-badge-modal.component';
 import { VisitorVehicleBadge } from '../../models/VisitorVehicleBadge';
 import { VisitorVehicleBadgeModalComponent } from './visitor-vehicle-badge-modal/visitor-vehicle-badge-modal.component';
+import { DialogResourceVehicleComponent } from './dialog-vehicle/dialog-vehicle.component';
 
 @Component({
   selector: 'app-resource',
@@ -86,10 +87,10 @@ export class ResourceComponent implements OnInit {
           this.category = 'vehicles';
           this.categoryTitle = this.category;
           this.resourcesService.vehicles.getAllVehicles()
-            .subscribe((data : Vehicle[]) => {
+            .subscribe((data : resourceVehicle[]) => {
               this.resourcesService.vehicles.vehicles = data;
               this.dataSource = new
-                MatTableDataSource<Vehicle>(this.resourcesService.vehicles.vehicles);
+                MatTableDataSource<resourceVehicle>(this.resourcesService.vehicles.vehicles);
             })
           this.displayedColumns = ['company', 'model', 'plate', 'edit'];
           break;
@@ -273,12 +274,14 @@ export class ResourceComponent implements OnInit {
     });
   }
 
-  editVehicle(plate: string){
-    let v = this.resourcesService.vehicles.getVehicleByPlate(plate);
-    let data = v == null ? {resource: true} : {vehicle: v.vehicle, i: v.index, resource: true};
-    let editVehicleDialogRef = this.dialog.open(DialogVehicleComponent, {
+  editVehicle(id: number = null){
+    // var v = null;
+    // this.resourcesService.vehicles.getVehicleByIndex(id);
+    // let data = v == null ? {resource: true} : {vehicle: v.vehicle, i: v.index, resource: true};
+
+    let editVehicleDialogRef = this.dialog.open(DialogResourceVehicleComponent, {
       width: '45vw',
-      data: data
+      data: id
     });
 
     editVehicleDialogRef.afterClosed().subscribe(a => {

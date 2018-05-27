@@ -83,15 +83,15 @@ export class DialogVehicleComponent implements OnInit {
       // console.log('vo resource this.data.resource: ', this.data.resource);
       // console.log('vo resource this.data: ', this.data);
       // console.log('pre add (vModal) resources.vehicles: ', this.resourcesService.vehicles.getAllVehicles());
-      this.data.i == null ?
-        this.resourcesService.vehicles.addVehicle(this.vehicle)
-          .subscribe((data) => {
-            console.log('data: ' + data);
-            this.resourcesService.vehicles.pushVehicle(data)
-          }) : this.resourcesService.vehicles.editVehicle(this.vehicle)
-                .subscribe((data : Vehicle) => {
-                  this.resourcesService.vehicles.switchVehicleById(this.vehicle)
-                });
+      // this.data.i == null ?
+      //   this.resourcesService.vehicles.addRequestVehicle(this.vehicle)
+      //     .subscribe((data) => {
+      //       console.log('data: ' + data);
+      //       this.resourcesService.vehicles.pushVehicle(data)
+      //     }) : this.resourcesService.vehicles.editVehicle(this.vehicle)
+      //           .subscribe((data : Vehicle) => {
+      //             this.resourcesService.vehicles.switchVehicleById(this.vehicle)
+      //           });
       // console.log('post add (vModal) resources.vehicles: ', this.resourcesService.vehicles.getAllVehicles());
     }
 

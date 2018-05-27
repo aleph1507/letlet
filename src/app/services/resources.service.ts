@@ -14,6 +14,7 @@ import { Observable } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import 'rxjs/Rx';
+import { resourceVehicle } from '../models/resourceVehicle';
 
 // class VisitorsBadges {
 //
@@ -618,7 +619,7 @@ class Employees {
 }
 
 class Vehicles {
-  vehicles: Vehicle[] = [];
+  vehicles: resourceVehicle[] = [];
   // httpOptions = {
   //   headers: new HttpHeaders({
   //     'Content-Type':  'application/json',
@@ -634,16 +635,18 @@ class Vehicles {
     this.headers = ho;
   }
 
-  addVehicle(vehicle: Vehicle){
-    return this.http.post<Vehicle>(this.vehiclesUrl, vehicle, { headers: this.headers });
+  addVehicle(vehicle: resourceVehicle){
+    return this.http.post<resourceVehicle>(this.vehiclesUrl, vehicle, { headers: this.headers });
   }
 
-  pushVehicle(vehicle: Vehicle){
+  pushVehicle(vehicle: resourceVehicle){
+    console.log('vo pushvehicle');
+    console.log('vehicle: ' + vehicle);
     this.vehicles.push(vehicle);
   }
 
   getVehicleByIndex(index: number){
-    return this.http.get<Vehicle>(this.vehiclesUrl, { headers: this.headers });
+    return this.http.get<resourceVehicle>(this.vehiclesUrl + '/' + index, { headers: this.headers });
   }
 
   // getVehicleByIndex(index: number) {
@@ -651,19 +654,19 @@ class Vehicles {
   // }
 
   getAllVehicles(){
-    return this.http.get<Vehicle[]>(this.vehiclesUrl, { headers: this.headers });
+    return this.http.get<resourceVehicle[]>(this.vehiclesUrl, { headers: this.headers });
   }
 
   // getAllVehicles(){
   //   return this.vehicles;
   // }
 
-  editVehicle(v: Vehicle){
-    return this.http.patch<Vehicle>(this.vehiclesUrl + '/' + v.id, v, { headers: this.headers });
+  editVehicle(v: resourceVehicle){
+    return this.http.patch<resourceVehicle>(this.vehiclesUrl + '/' + v.id, v, { headers: this.headers });
   }
 
 
-  switchVehicleById(v: Vehicle){
+  switchVehicleById(v: resourceVehicle){
     console.log('editVehicleByID vehicle: ', v);
     for(let i = 0; i<this.vehicles.length; i++){
       if(this.vehicles[i].id == v.id){
@@ -685,7 +688,7 @@ class Vehicles {
     this.vehicles.splice(index, 1);
   }
 
-  setVehicles(vehicles: Vehicle[]){
+  setVehicles(vehicles: resourceVehicle[]){
     this.vehicles = vehicles;
   }
 

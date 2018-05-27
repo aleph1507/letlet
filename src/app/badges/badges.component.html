@@ -63,9 +63,18 @@
       <mat-header-cell *matHeaderCellDef> Date of Activation </mat-header-cell>
       <mat-cell *matCellDef="let b"> {{b.dateOfActivation}} </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="id">
+    <!-- <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef> Edit </mat-header-cell>
       <mat-cell *matCellDef="let b"> <a [routerLink]="['/badges/edit', b.id]"><mat-icon>mode_edit</mat-icon></a> </mat-cell>
+    </ng-container> -->
+    <ng-container matColumnDef="edit">
+      <mat-header-cell *matHeaderCellDef> Edit </mat-header-cell>
+      <mat-cell *matCellDef="let b">
+        <mat-icon matListIcon
+        (click)="editBadge(b.id)"
+        class="icon-control"
+        >mode_edit</mat-icon>
+      </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

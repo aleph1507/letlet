@@ -24,6 +24,12 @@
     [matAutocomplete]="comp"
     required>
   </mat-form-field>
+  <mat-form-field>
+    <input matInput name="empOccupation"
+      id="empOccupation" placeholder="Occupation"
+      formControlName="occupation"
+      autocomplete="off" required>
+  </mat-form-field>
   <mat-autocomplete #comp="matAutocomplete" [displayWith]="displayFn">
       <mat-option *ngFor="let c of companies" [value]="c" >
         {{ c.name }}

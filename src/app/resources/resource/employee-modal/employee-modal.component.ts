@@ -44,6 +44,10 @@ export class EmployeeModalComponent implements OnInit {
               validators: [Validators.required],
               updateOn: 'change'
             }),
+            'occupation': new FormControl(this.employee ? this.employee.occupation : '', {
+              validators: [Validators.required],
+              updateOn: 'change'
+            }),
             'company': new FormControl(this.employee ? this.employee.company : '', {
               validators: Validators.required
             }),
@@ -54,6 +58,10 @@ export class EmployeeModalComponent implements OnInit {
     this.employeeForm = new FormGroup({
       'company': new FormControl(this.employee ? this.employee.company : '', {
         validators: Validators.required
+      }),
+      'occupation': new FormControl(this.employee ? this.employee.occupation : '', {
+        validators: [Validators.required],
+        updateOn: 'change'
       }),
       'name': new FormControl(this.employee ? this.employee.name : '', {
         validators: [Validators.required],
@@ -75,7 +83,8 @@ export class EmployeeModalComponent implements OnInit {
       id: this.oldID,
       name: this.employeeForm.controls['name'].value,
       surname: this.employeeForm.controls['surname'].value,
-      company: this.employeeForm.controls['company'].value
+      company: this.employeeForm.controls['company'].value,
+      occupation: this.employeeForm.controls['occupation'].value
     }
     if(this.data){
       // this.resourcesService.employees.deleteEmployeeById(this.data.id);
