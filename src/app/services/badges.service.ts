@@ -26,8 +26,11 @@ export class BadgesService {
               public datePipe: DatePipe,
               private http: HttpClient) { }
 
-  getBadges() : Observable<Badge[]>{
-    return this.http.get<Badge[]>(this.badgesUrl, this.httpOptions);
+  getBadges(page = null) : Observable<Badge[]>{
+    if(page == null)
+      return this.http.get<Badge[]>(this.badgesUrl, this.httpOptions);
+
+    return this.http.get<Badge[]>(this.badgesUrl + '/page/' + page, this.httpOptions);
   }
 
   // getBadges(){
@@ -39,22 +42,22 @@ export class BadgesService {
     return this.badges.slice(from, to);
   }
 
-  seedBadges(n: number = 10) {
-    // console.log("vo seedBadges");
-    for(let i = 0; i<n; i++) {
-      let b = new Badge();
-      b.id = i;
-      b.company = this.companies[i % this.companies.length];
-      b.personName = 'name' + i.toString();
-      b.dateSecCheck = Date.now()
-      b.dateTraining = Date.now();
-      b.validTo = Date.now();
-      // b.zones = [(i+1)%this.resources.airportZones.getAllAirportZones().length,
-      //             (i+2)%this.resources.airportZones.getAllAirportZones().length,
-      //             (i+3)%this.resources.airportZones.getAllAirportZones().length]
-      this.badges.push(b);
-    }
-  }
+  // seedBadges(n: number = 10) {
+  //   // console.log("vo seedBadges");
+  //   for(let i = 0; i<n; i++) {
+  //     let b = new Badge();
+  //     b.id = i;
+  //     b.company = this.companies[i % this.companies.length];
+  //     b.personName = 'name' + i.toString();
+  //     b.dateSecCheck = Date.now()
+  //     b.dateTraining = Date.now();
+  //     b.validTo = Date.now();
+  //     // b.zones = [(i+1)%this.resources.airportZones.getAllAirportZones().length,
+  //     //             (i+2)%this.resources.airportZones.getAllAirportZones().length,
+  //     //             (i+3)%this.resources.airportZones.getAllAirportZones().length]
+  //     this.badges.push(b);
+  //   }
+  // }
 
 
 

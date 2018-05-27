@@ -13,7 +13,7 @@ import { BadgesCreateComponent } from './badges-create/badges-create.component';
 })
 export class BadgesComponent implements OnInit {
 
-  displayedColumns = ['company', 'personName', 'validTo', 'zones', 'dateSecCheck', 'dateTraining', 'id'];
+  displayedColumns = ['cardSeriesNumber', 'cardNumber', 'expireDate', 'active', 'returned', 'employeeId', 'employeeName', 'zones', 'dateOfSecurityCheck', 'dateOfTraining', 'dateOfActivation'];
   // dataSource: MatTableDataSource<Badge>(this.badgesService.getBadges());
   dataSource: MatTableDataSource<Badge>;
   length: number;
@@ -43,14 +43,67 @@ export class BadgesComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.badgesService.seedBadges(1000);
-    this.badgesService.getBadges().subscribe((data : Badge[]) => {
+    // this.badgesService.seedBadges(1000);
+    this.badgesService.getBadges(this.currentPage).subscribe((data : Badge[]) => {
       this.badges = data;
       this.dataSource = new MatTableDataSource<Badge>(this.badges);
       this.length = this.badges.length;
       this.dataSource.paginator = this.paginator;
       this.pageSize = 10;
     });
+  }
+
+  currentPage = 1;
+  nextDisabled = false;
+  prevDisabled = true;
+
+  prevPage(page: number) {
+    console.log('vo prev page');
+    if(this.currentPage > 1){
+      this.currentPage--;
+      this.badgesService.getBadges(this.currentPage).subscribe((data : Badge[]) => {
+        console.log('vo prev subscription data: ' + data);
+          this.badges = data;
+          console.log('this.badges : ' + this.badges);
+          this.dataSource = new MatTableDataSource<Badge>(this.badges);
+          this.nextDisabled = false;
+      });
+    }
+  }
+
+  nextPage(page: number) {
+    console.log('vo next page');
+    this.badgesService.getBadges(this.currentPage+1).subscribe((data : Badge[]) => {
+      console.log('vo next subscription data: ' + data);
+      if(data){
+        this.currentPage++;
+        this.badges = data;
+        console.log('this.badges : ' + this.badges);
+        this.dataSource = new MatTableDataSource<Badge>(this.badges);
+      } else {
+        this.nextDisabled = true;
+      }
+    });
+  }
+  // getPage(e: any){
+  //   this.currentPage = e.pageIndex;
+  //   this.pageSize = e.pageSize;
+  //   this.iterator();
+  // }
+  //
+  // private iterator() {
+  //   const end = (this.currentPage + 1) * this.pageSize;
+  //   const start = this.currentPage * this.pageSize;
+  //   const part = this.badges.slice(start, end);
+  //   this.dataSource.data = part;
+  // }
+
+  getZoneIDs(zones){
+    let IDs = [];
+    for(let i = 0; i<zones.length; i++){
+      IDs.push(zones[i].id);
+    }
+    return IDs;
   }
 
   openDialog(): void {

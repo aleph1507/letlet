@@ -1,12 +1,18 @@
-import {Person} from './Person.model';
-
+import { Employee } from './Employee';
 
 export class Badge {
   id: number;
-  company: string;
-  personName: string;
-  validTo: number;
+  cardSeriesNumber: number;
+  cardNumber: number;
+  // company: string;
+  // personName: string;
+  expireDate: number;
+  active: boolean;
+  returned: boolean;
+  employeeId: number;
+  employee: Employee;
   zones: number[];
-  dateSecCheck: number;
-  dateTraining: number;
+  dateOfSecurityCheck: string;
+  dateOfTraining: string;
+  dateOfActivation: string;
 }

@@ -9,6 +9,7 @@ import {startWith} from 'rxjs/operators/startWith';
 import {map} from 'rxjs/operators/map';
 import { ResourcesService } from '../services/resources.service';
 import { ApprovalRequest } from '../models/approvalRequest';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-approvals',
@@ -36,7 +37,8 @@ export class ApprovalsComponent implements OnInit {
   approvalsUrl = 'http://192.168.100.4:84/api/requests/approvals/';
 
   constructor(private approvalsService: ApprovalsService,
-              private resourcesService: ResourcesService) { }
+              private resourcesService: ResourcesService,
+              private route: ActivatedRoute) { }
 
   toDate : Date;
   fromDate : Date;
@@ -44,6 +46,21 @@ export class ApprovalsComponent implements OnInit {
   toString : string = null;
 
   ngOnInit() {
+    this.route.url.subscribe((u) => {
+      let activatedCategory = +this.route.snapshot.params.selectedradio;
+      switch(activatedCategory){
+        case 1:
+          this.selectedApprovals = 'All'
+          break;
+        case 2:
+          this.selectedApprovals = 'Approved';
+          break;
+        default:
+          this.selectedApprovals = 'Not Approved';
+          break;
+      }
+      console.log('this.route.snapshot.params.selectedradio:  ' + this.route.snapshot.params.selectedradio);
+    });
     this.toDate = new Date();
     this.fromDate = new Date();
     this.fromDate.setDate(this.fromDate.getDate() - 30);
