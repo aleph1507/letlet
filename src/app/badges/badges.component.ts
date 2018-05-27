@@ -18,6 +18,7 @@ export class BadgesComponent implements OnInit {
   dataSource: MatTableDataSource<Badge>;
   length: number;
   pageSize: number;
+  badges : Badge[];
   // pageSizeOptions = [5, 10, 25, 100];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -28,16 +29,28 @@ export class BadgesComponent implements OnInit {
               public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.badgesService.seedBadges(1000);
-    this.length = this.badgesService.getBadges().length;
-    this.pageSize = 10;
+    // this.badgesService.seedBadges(1000);
+    // this.badgesService.getBadges().subscribe((data : Badge[]) => {
+    //   this.badges = data;
+    //   this.dataSource = new MatTableDataSource<Badge>(this.badges);
+    //   this.length = this.badges.length;
+    // });
+    // this.length = this.badgesService.getBadges().length;
+    // this.pageSize = 10;
     // this.dataSource = new MatTableDataSource<Badge>(this.badgesService.getBadgesPage(this.pageEvent.pageIndex * this.pageEvent.pageSize,
                               // this.pageEvent.pageIndex * this.pageEvent.pageSize + this.pageEvent.pageSize));
-    this.dataSource = new MatTableDataSource<Badge>(this.badgesService.getBadges());
+    // this.dataSource = new MatTableDataSource<Badge>(this.badgesService.getBadges());
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    this.badgesService.seedBadges(1000);
+    this.badgesService.getBadges().subscribe((data : Badge[]) => {
+      this.badges = data;
+      this.dataSource = new MatTableDataSource<Badge>(this.badges);
+      this.length = this.badges.length;
+      this.dataSource.paginator = this.paginator;
+      this.pageSize = 10;
+    });
   }
 
   openDialog(): void {
