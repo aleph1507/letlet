@@ -831,11 +831,12 @@ export class ResourcesService {
   //   })
   // }
   bUrl : string = '';
-  headers: HttpHeaders = new HttpHeaders({
-    'Content-Type':  'application/json',
-    'Authorization': 'Bearer ' + 'OVdSQO8unD8O7jCsDBBqNnmbiLHbtR5h7jg_iA3SP8Wxc7TPFkcxXgy7TO5WZX9vBdD_GxDM0jtFMpzSTlx8Ooe5jNhbyflfYCZPfswkLY4POCso_ysWeUg_98y_8sWQvFVnkbmNRWKRqHCmLzOhGRrVjduJ8ORgTk3eScYc_R2fpiGHE1KBvfzPnuSOhvgpIFy-1B-FlxmZwbNz3wloSHHtklUdRkfelAZSKBGBJ5MH3dxgnbsau22Qm8muhXCE09FplfiqFq5B7KNMjEDd6vh-T0MQG8aDoARGVqA-VHwFShUvFKmY_4sjvmaCNYRAfbQf4c_wPdkmR6vqhYePAUK3oDI-50dQfgdGkBNcQN8aamujiKouRhnNSNRuXZ81s_MAdcBqyIrwJdc7khG6tg',
-    'Accept': 'application/json'
-  })
+  // headers: HttpHeaders = new HttpHeaders({
+  //   'Content-Type':  'application/json',
+  //   'Authorization': 'Bearer ' + 'OVdSQO8unD8O7jCsDBBqNnmbiLHbtR5h7jg_iA3SP8Wxc7TPFkcxXgy7TO5WZX9vBdD_GxDM0jtFMpzSTlx8Ooe5jNhbyflfYCZPfswkLY4POCso_ysWeUg_98y_8sWQvFVnkbmNRWKRqHCmLzOhGRrVjduJ8ORgTk3eScYc_R2fpiGHE1KBvfzPnuSOhvgpIFy-1B-FlxmZwbNz3wloSHHtklUdRkfelAZSKBGBJ5MH3dxgnbsau22Qm8muhXCE09FplfiqFq5B7KNMjEDd6vh-T0MQG8aDoARGVqA-VHwFShUvFKmY_4sjvmaCNYRAfbQf4c_wPdkmR6vqhYePAUK3oDI-50dQfgdGkBNcQN8aamujiKouRhnNSNRuXZ81s_MAdcBqyIrwJdc7khG6tg',
+  //   'Accept': 'application/json'
+  // })
+  headers: HttpHeaders = this.auth.getHeaders();
   // httpOptions = {
   //   headers: HttpHeaders = new HttpHeaders({
   //     'Content-Type':  'application/json',
@@ -843,12 +844,7 @@ export class ResourcesService {
   //     'Accept': 'application/json'
   //   })
   // }
-  getBaseUrl() {
-    this.http.get('url.conf').subscribe((data : string) => {
-      this.bUrl = data;
-      return this.bUrl;
-    });
-  }
+
   companies = new Companies(this.http, this.headers);
   vehicles = new Vehicles(this.http, this.headers);
   employees = new Employees(this.http, this.headers);

@@ -3,7 +3,7 @@
 </div> -->
 
 <div class="appContainer">
-    <mat-toolbar color="primary">
+    <mat-toolbar *ngIf="loggedIn" color="primary">
         <button type="button" mat-icon-button (click)="sidenav.toggle()">
           <mat-icon>menu</mat-icon>
         </button>
@@ -90,7 +90,7 @@
       </mat-sidenav>
       <mat-sidenav-content>
         <div id="screens">
-          <router-outlet></router-outlet>          
+          <router-outlet></router-outlet>
         </div>
       </mat-sidenav-content>
       <!-- <div class="content">
