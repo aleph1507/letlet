@@ -8,6 +8,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { ResourcesService } from './resources.service';
 import { Company } from '../models/Company';
 import 'rxjs/Rx';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class RequesterService {
@@ -15,7 +16,9 @@ export class RequesterService {
   comp1: Company = null;
   comp2: Company = null;
 
-  requestUrl = 'http://192.168.100.4:84/api/requests';
+  // requestUrl = 'http://192.168.100.4:84/api/requests';
+  requestUrl = this.authService.baseUrl + '/api/requests';
+
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
@@ -78,7 +81,8 @@ export class RequesterService {
 
 
   constructor(private http: HttpClient,
-              private resourcesService: ResourcesService) { }
+              private resourcesService: ResourcesService,
+              private authService: AuthService) { }
 
   private handleError(error: HttpErrorResponse) {
   if (error.error instanceof ErrorEvent) {

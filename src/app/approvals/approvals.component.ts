@@ -10,6 +10,7 @@ import {map} from 'rxjs/operators/map';
 import { ResourcesService } from '../services/resources.service';
 import { ApprovalRequest } from '../models/approvalRequest';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-approvals',
@@ -34,11 +35,13 @@ export class ApprovalsComponent implements OnInit {
   fCompany: FormControl = new FormControl();
 
   // approvalsUrl = 'http://192.168.100.4:84/api/requests/approvals/3/2018-01-01/2019-01-01';
-  approvalsUrl = 'http://192.168.100.4:84/api/requests/approvals/';
+  // approvalsUrl = 'http://192.168.100.4:84/api/requests/approvals/';
+  approvalsUrl = this.authService.baseUrl + '/api/requests/approvals/';
 
   constructor(private approvalsService: ApprovalsService,
               private resourcesService: ResourcesService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private authService: AuthService) { }
 
   toDate : Date;
   fromDate : Date;

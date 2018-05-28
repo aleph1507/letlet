@@ -14,7 +14,8 @@ export class BadgesService {
   companies = this.resources.companies.getCompaniesNames();
   badges: Badge[] = [];
 
-  public badgesUrl = 'http://192.168.100.4:84/api/badges';
+  // public badgesUrl = 'http://192.168.100.4:84/api/badges';
+  public badgesUrl = this.authService.baseUrl + '/api/badges';
 
   httpOptions = {
     headers: this.authService.getHeaders()
@@ -41,12 +42,12 @@ export class BadgesService {
   }
 
   getBadgeById(id: number) : Observable<Badge>{
-    console.log('vo getBadgeById');
+    // console.log('vo getBadgeById');
     return this.http.get<Badge>(this.badgesUrl + '/' + id, this.httpOptions);
   }
 
   addBadge(badge: Badge){
-    console.log('vo addBadge()');
+    // console.log('vo addBadge()');
     return this.http.post(this.badgesUrl, badge, this.httpOptions);
   }
 

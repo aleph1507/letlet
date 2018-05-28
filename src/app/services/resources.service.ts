@@ -40,7 +40,10 @@ class hError {
 
 class VisitorVehicleBadges {
   visitorVehicleBadges: VisitorVehicleBadge[] = [];
-  public visitorVehicleBadgesUrl = 'http://192.168.100.4:84/api/visitorvehiclebadges';
+  bUrl : string;
+  // public visitorVehicleBadgesUrl = 'http://12.168.100.4:84/api/visitorvehiclebadges';
+  public visitorVehicleBadgesUrl = this.bUrl + '/api/visitorvehiclebadges';
+
   // httpOptions = {
   //   headers: new HttpHeaders({
   //     'Content-Type':  'application/json',
@@ -50,8 +53,9 @@ class VisitorVehicleBadges {
   // }
 
   headers = null;
-  constructor(private http: HttpClient, private ho) {
+  constructor(private http: HttpClient, private ho, private baseUrl) {
     this.headers = ho;
+    this.bUrl = baseUrl;
   }
   getAllVisitorVehicleBadges() : Observable<VisitorVehicleBadge[]> {
     console.log('getAllVisitorVehicleBadges()');
@@ -114,12 +118,14 @@ class VisitorBadges {
   // public http: HttpClient;
 
   headers = null;
-  constructor(private http: HttpClient, private ho) {
+  constructor(private http: HttpClient, private ho, private baseUrl) {
     this.headers = ho;
   }
   visitorBadges: VisitorBadge[] = [];
 
-  public visitorsBadgesUrl = 'http://192.168.100.4:84/api/visitorbadges';
+  // public visitorsBadgesUrl = 'http://12.168.100.4:84/api/visitorbadges';
+  public visitorsBadgesUrl = this.baseUrl + '/api/visitorbadges';
+
   // httpOptions = {
   //   headers: new HttpHeaders({
   //     'Content-Type':  'application/json',
@@ -230,10 +236,11 @@ class AirportZones {
   airportZones: AirportZone[] = [];
 
   headers = null;
-  constructor(private http: HttpClient, private ho) {
+  constructor(private http: HttpClient, private ho, private baseUrl) {
     this.headers = ho;
   }
-  public airportZonesUrl = 'http://192.168.100.4:84/api/zones';
+  // public airportZonesUrl = 'http://12.168.100.4:84/api/zones';
+  public airportZonesUrl = this.baseUrl + '/api/zones';
 
   getAllAirportZones() : Observable<AirportZone[]>{
     console.log('getAllAirportZones()');
@@ -322,11 +329,13 @@ class Occupations {
   //   })
   // }
 
-  public occupationsUrl = 'http://192.168.100.4:84/api/occupations';
+  // public occupationsUrl = 'http://12.168.100.4:84/api/occupations';
+  public occupationsUrl = this.baseUrl + '/api/occupations';
+
   occupations: Occupation[] = [];
 
   headers = null;
-  constructor(private http: HttpClient, private ho) {
+  constructor(private http: HttpClient, private ho, private baseUrl) {
     this.headers = ho;
   }
   getAllOccupations() : Observable<Occupation[]> {
@@ -393,7 +402,9 @@ class Occupations {
 
 class Gates {
   gates: Gate[] = [];
-  public gatesUrl = 'http://192.168.100.4:84/api/gates';
+  // public gatesUrl = 'http://12.168.100.4:84/api/gates';
+  public gatesUrl = this.baseUrl + '/api/gates';
+
   // httpOptions = {
   //   headers: new HttpHeaders({
   //     'Content-Type':  'application/json',
@@ -402,7 +413,7 @@ class Gates {
   //   })
   // }
   headers = null;
-  constructor(private http: HttpClient, private ho) {
+  constructor(private http: HttpClient, private ho, private baseUrl) {
     this.headers = ho;
   }
   getAllGates() : Observable<Gate[]>{
@@ -468,7 +479,9 @@ class Gates {
 class Reasons {
   reasons: Reason[] = [];
 
-  public reasonsUrl = 'http://192.168.100.4:84/api/reasons';
+  // public reasonsUrl = 'http://12.168.100.4:84/api/reasons';
+  public reasonsUrl = this.baseUrl + '/api/reasons';
+
   // httpOptions = {
   //   headers: new HttpHeaders({
   //     'Content-Type':  'application/json',
@@ -478,7 +491,7 @@ class Reasons {
   // }
 
   headers = null;
-  constructor(private http: HttpClient, private ho) {
+  constructor(private http: HttpClient, private ho, private baseUrl) {
     this.headers = ho;
   }
   getAllReasons() : Observable<Reason[]> {
@@ -552,10 +565,11 @@ class Employees {
   //   })
   // }
 
-  public employeesUrl = 'http://192.168.100.4:84/api/employees';
+  // public employeesUrl = 'http://12.168.100.4:84/api/employees';
+  public employeesUrl = this.baseUrl + '/api/employees';
 
   headers = null;
-  constructor(private http: HttpClient, private ho) {
+  constructor(private http: HttpClient, private ho, private baseUrl) {
     this.headers = ho;
   }
 
@@ -628,10 +642,11 @@ class Vehicles {
   //   })
   // }
 
-  public vehiclesUrl = 'http://192.168.100.4:84/api/vehicles';
+  // public vehiclesUrl = 'http://12.168.100.4:84/api/vehicles';
+  public vehiclesUrl = this.baseUrl + '/api/vehicles';
 
   headers = null;
-  constructor(private http: HttpClient, private ho) {
+  constructor(private http: HttpClient, private ho, private baseUrl) {
     this.headers = ho;
   }
 
@@ -730,10 +745,11 @@ class Companies {
   //   })
   // }
 
-  public companiesUrl = 'http://192.168.100.4:84/api/companies';
+  // public companiesUrl = 'http://12.168.100.4:84/api/companies';
+  public companiesUrl = this.baseUrl + '/api/companies';
 
   headers = null;
-  constructor(private http: HttpClient, private ho) {
+  constructor(private http: HttpClient, private ho, private baseUrl) {
     this.headers = ho;
   }
 
@@ -830,7 +846,7 @@ export class ResourcesService {
   //     'Accept': 'application/json'
   //   })
   // }
-  bUrl : string = '';
+  bUrl = this.auth.baseUrl;
   // headers: HttpHeaders = new HttpHeaders({
   //   'Content-Type':  'application/json',
   //   'Authorization': 'Bearer ' + 'OVdSQO8unD8O7jCsDBBqNnmbiLHbtR5h7jg_iA3SP8Wxc7TPFkcxXgy7TO5WZX9vBdD_GxDM0jtFMpzSTlx8Ooe5jNhbyflfYCZPfswkLY4POCso_ysWeUg_98y_8sWQvFVnkbmNRWKRqHCmLzOhGRrVjduJ8ORgTk3eScYc_R2fpiGHE1KBvfzPnuSOhvgpIFy-1B-FlxmZwbNz3wloSHHtklUdRkfelAZSKBGBJ5MH3dxgnbsau22Qm8muhXCE09FplfiqFq5B7KNMjEDd6vh-T0MQG8aDoARGVqA-VHwFShUvFKmY_4sjvmaCNYRAfbQf4c_wPdkmR6vqhYePAUK3oDI-50dQfgdGkBNcQN8aamujiKouRhnNSNRuXZ81s_MAdcBqyIrwJdc7khG6tg',
@@ -845,15 +861,15 @@ export class ResourcesService {
   //   })
   // }
 
-  companies = new Companies(this.http, this.headers);
-  vehicles = new Vehicles(this.http, this.headers);
-  employees = new Employees(this.http, this.headers);
-  reasons = new Reasons(this.http, this.headers);
-  gates = new Gates(this.http, this.headers);
-  occupations = new Occupations(this.http, this.headers);
-  airportZones = new AirportZones(this.http, this.headers);
-  visitorBadges = new VisitorBadges(this.http, this.headers);
-  visitorVehicleBadges = new VisitorVehicleBadges(this.http, this.headers);
+  companies = new Companies(this.http, this.headers, this.bUrl);
+  vehicles = new Vehicles(this.http, this.headers, this.bUrl);
+  employees = new Employees(this.http, this.headers, this.bUrl);
+  reasons = new Reasons(this.http, this.headers, this.bUrl);
+  gates = new Gates(this.http, this.headers, this.bUrl);
+  occupations = new Occupations(this.http, this.headers, this.bUrl);
+  airportZones = new AirportZones(this.http, this.headers, this.bUrl);
+  visitorBadges = new VisitorBadges(this.http, this.headers, this.bUrl);
+  visitorVehicleBadges = new VisitorVehicleBadges(this.http, this.headers, this.bUrl);
   badges: Badge[] = [];
 
   // zones = [1, 2, 3, 4, 5, 6, 7, 8, 9];

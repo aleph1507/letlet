@@ -19,21 +19,15 @@ export class AppComponent implements OnInit {
               private router: Router){}
 
   ngOnInit(): void {
+    // this.authService.init();
     if(this.authService.getToken() == null){
       this.router.navigate(['/login']);
     }
 
-    console.log('pred loggedInStatus subscription app.component');
-
     this.authService.loggedInStatus()
       .subscribe((loggedIn : boolean) => {
-        console.log('vo loggedInStatus subscription app.component');
         this.loggedIn = loggedIn;
-        console.log('subscription loggedIn: ' + loggedIn);
-        console.log('subscription this.loggedIn: ' + this.loggedIn)
       });
-
-      console.log('app component loggedIn: ' + this.loggedIn);
     // this.loggedIn = this.authService.loggedIn;
   }
 

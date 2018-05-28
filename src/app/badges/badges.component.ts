@@ -58,13 +58,13 @@ export class BadgesComponent implements OnInit {
   prevDisabled = true;
 
   prevPage(page: number) {
-    console.log('vo prev page');
+    // console.log('vo prev page');
     if(this.currentPage > 1){
       this.currentPage--;
       this.badgesService.getBadges(this.currentPage).subscribe((data : Badge[]) => {
-        console.log('vo prev subscription data: ' + data);
+        // console.log('vo prev subscription data: ' + data);
           this.badges = data;
-          console.log('this.badges : ' + this.badges);
+          // console.log('this.badges : ' + this.badges);
           this.dataSource = new MatTableDataSource<Badge>(this.badges);
           this.nextDisabled = false;
       });
@@ -72,13 +72,13 @@ export class BadgesComponent implements OnInit {
   }
 
   nextPage(page: number) {
-    console.log('vo next page');
+    // console.log('vo next page');
     this.badgesService.getBadges(this.currentPage+1).subscribe((data : Badge[]) => {
-      console.log('vo next subscription data: ' + data);
+      // console.log('vo next subscription data: ' + data);
       if(data){
         this.currentPage++;
         this.badges = data;
-        console.log('this.badges : ' + this.badges);
+        // console.log('this.badges : ' + this.badges);
         this.dataSource = new MatTableDataSource<Badge>(this.badges);
       } else {
         this.nextDisabled = true;

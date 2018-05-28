@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   logIn() {
-    console.log("login.logIn");
+    // console.log("login.logIn");
     // this.loginService.logIn();
     this.authService.logIn(this.loginForm.controls['username'].value, this.loginForm.controls['password'].value);
   }

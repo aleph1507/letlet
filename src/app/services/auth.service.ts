@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { LoginResponse } from '../models/LoginResponse';
 import { Router } from '@angular/router';
@@ -6,11 +6,12 @@ import { BehaviorSubject } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
-export class AuthService {
+export class AuthService implements OnInit{
 
   public token: string = null;
-  url = 'http://192.168.100.4:84/token';
-  baseUrl = null;
+  // url = 'http://192.168.100.4:84/token';
+  public baseUrl = 'http://192.168.100.4:84';
+  url = this.baseUrl + '/token';
   loggedIn : boolean;
   private loggedStatus : BehaviorSubject<boolean>;
 
@@ -33,15 +34,21 @@ export class AuthService {
                 this.loggedStatus = new BehaviorSubject<boolean>(this.loggedIn);
               }
 
+  ngOnInit(): void {
+
+  }
+
+
   init() {
-    this.getBaseUrl().subscribe((data : string) => {
-      this.baseUrl = data;
-      return this.baseUrl;
-    });
+    // console.log('vo auth.init');
+    // this.getBaseUrl().subscribe((data : string) => {
+    //   this.baseUrl = data;
+    //   console.log('baseUrl: ' + this.baseUrl);
+    //   return this.baseUrl;
+    // });
   }
 
   loggedInStatus() : Observable<boolean>{
-    console.log('vo authService.loggedInStatus');
     return this.loggedStatus.asObservable();
   }
 
@@ -83,7 +90,6 @@ export class AuthService {
       if(data.access_token){
         this.token = data.access_token;
         this.loggedIn = true;
-        console.log('auth.service.token : ' + this.token);
         this.router.navigate(['/dashboard']);
         this.loggedStatus.next(this.loggedIn);
       }
