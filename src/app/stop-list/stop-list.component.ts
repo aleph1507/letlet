@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { StopListService } from '../services/stop-list.service';
 import { StopListEntry } from '../models/StopListEntry.model';
 import { MatTableDataSource, MatSort } from '@angular/material';
+import { GridOptions } from 'ag-grid';
 
 @Component({
   selector: 'app-stop-list',
@@ -17,21 +18,40 @@ export class StopListComponent implements OnInit {
   //   'code', 'airport'
   // ];
 
-  columnDefs = [
-    {headerName: 'Name', field: 'name'},
-    {headerName: 'Surname', field: 'surname'},
-    {headerName: 'Job Title', field: 'jobTitle'},
-    {headerName: 'ID Number', field: 'ID'},
-    {headerName: 'Validity Date', field: 'validityDate'},
-    {headerName: 'Background Validity Check', field: 'backgroundValidityCheck'},
-    {headerName: 'Approved Areas', field: 'approvedAreas'},
-    {headerName: 'Date Of Issue', field: 'dateOfIssue'},
-    {headerName: 'Status', field: 'status'},
-    {headerName: 'Security Awareness Date Of Training', field: 'secAwareDOT'},
-    {headerName: 'Proximity Card No', field: 'proximityCardNo'},
-    {headerName: 'Code', field: 'code'},
-    {headerName: 'Airport', field: 'airport'}
-  ];
+  // columnDefs = [
+  //   {headerName: 'Name', field: 'name'},
+  //   {headerName: 'Surname', field: 'surname'},
+  //   {headerName: 'Job Title', field: 'jobTitle'},
+  //   {headerName: 'ID Number', field: 'ID'},
+  //   {headerName: 'Validity Date', field: 'validityDate'},
+  //   {headerName: 'Background Validity Check', field: 'backgroundValidityCheck'},
+  //   {headerName: 'Approved Areas', field: 'approvedAreas'},
+  //   {headerName: 'Date Of Issue', field: 'dateOfIssue'},
+  //   {headerName: 'Status', field: 'status'},
+  //   {headerName: 'Security Awareness Date Of Training', field: 'secAwareDOT'},
+  //   {headerName: 'Proximity Card No', field: 'proximityCardNo'},
+  //   {headerName: 'Code', field: 'code'},
+  //   {headerName: 'Airport', field: 'airport'}
+  // ];
+
+  public gridOptions: GridOptions = <GridOptions>{
+    rowData: [],
+    columnDefs: [
+      {headerName: 'Name', field: 'name'},
+      {headerName: 'Surname', field: 'surname'},
+      {headerName: 'Job Title', field: 'jobTitle'},
+      {headerName: 'ID Number', field: 'ID'},
+      {headerName: 'Validity Date', field: 'validityDate'},
+      {headerName: 'Background Validity Check', field: 'backgroundValidityCheck'},
+      {headerName: 'Approved Areas', field: 'approvedAreas'},
+      {headerName: 'Date Of Issue', field: 'dateOfIssue'},
+      {headerName: 'Status', field: 'status'},
+      {headerName: 'Security Awareness Date Of Training', field: 'secAwareDOT'},
+      {headerName: 'Proximity Card No', field: 'proximityCardNo'},
+      {headerName: 'Code', field: 'code'},
+      {headerName: 'Airport', field: 'airport'}
+    ]
+  };
 
   rowData = [];
 
@@ -45,7 +65,8 @@ export class StopListComponent implements OnInit {
     // this.slEntries = this.slService.getStopListEntries();
     // this.slDataSource = new MatTableDataSource(this.slEntries);
     // this.slDataSource.sort = this.sort;
-    this.rowData = this.slService.getStopListEntries();
+    this.gridOptions.rowData = this.slService.getStopListEntries();
+    console.log('this.rowData: ' + this.rowData);
   }
 
   // applyFilter(filterValue: string) {

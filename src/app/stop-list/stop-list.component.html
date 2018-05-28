@@ -4,14 +4,15 @@
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
     </mat-form-field>
   </div> -->
+<!-- [enableSorting]="true" -->
+<!-- [enableFilter]="true" -->
+<!-- [rowData]="rowData"
+[columnDefs]="columnDefs" -->
 
   <ag-grid-angular
-    style="width: 100%; height: 100%;"
+    #agGrid style="width: 90vw; height: 90vh;"
     class="ag-theme-balham"
-    [enableSorting]="true"
-    [enableFilter]="true"
-    [rowData]="rowData"
-    [columnDefs]="columnDefs"
+    [gridOptions]="gridOptions"
   >
   </ag-grid-angular>
 
