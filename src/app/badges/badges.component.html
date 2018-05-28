@@ -71,7 +71,7 @@
       <mat-header-cell *matHeaderCellDef> Edit </mat-header-cell>
       <mat-cell *matCellDef="let b">
         <mat-icon matListIcon
-        (click)="editBadge(b.id)"
+        (click)="openDialog(b.id)"
         class="icon-control"
         >mode_edit</mat-icon>
       </mat-cell>

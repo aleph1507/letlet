@@ -118,11 +118,22 @@ export class BadgesComponent implements OnInit {
     return IDs;
   }
 
-  openDialog(): void {
-    let dialogRef = this.dialog.open(BadgesCreateComponent, {
-      width: '70%',
-      // data: { name: this.name, animal: this.animal }
-    });
+  openDialog(id = null): void {
+    if(id != null){
+      this.badgesService.getBadgeById(id)
+        .subscribe((res: Badge) => {
+          let dialogRef = this.dialog.open(BadgesCreateComponent, {
+            width: '70%',
+            data: res
+          });
+        })
+    } else {
+      let dialogRef = this.dialog.open(BadgesCreateComponent, {
+        width: '70%',
+        data: null
+        // data: { name: this.name, animal: this.animal }
+      });
+    }
   }
 
   applyFilter(filterValue: string) {

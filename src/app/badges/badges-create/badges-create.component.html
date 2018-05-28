@@ -10,14 +10,21 @@
     autocomplete="off" required>
   </mat-form-field>
   <mat-form-field>
-    <input matInput [matDatepicker]="expireDate" placeholder="Expire Date">
+    <input matInput
+      [matDatepicker]="expireDate"
+      formControlName="expireDate"
+      placeholder="Expire Date">
     <mat-datepicker-toggle matSuffix [for]="expireDate"></mat-datepicker-toggle>
     <mat-datepicker #expireDate></mat-datepicker>
   </mat-form-field>
+
   <mat-checkbox
+    class="chkReturned"
+    color="primary"
     formControlName="returned"
     [(ngModel)]="returned">Returned
   </mat-checkbox>
+
   <mat-form-field>
     <input matInput placeholder="Employee"
     formControlName="employee"
@@ -50,6 +57,15 @@
     <mat-datepicker-toggle matSuffix [for]="dateOfActivation"></mat-datepicker-toggle>
     <mat-datepicker #dateOfActivation></mat-datepicker>
   </mat-form-field>
+
+  <div class="zones">
+    <mat-checkbox
+      class="chkZone"
+      color="primary"
+      *ngFor="let z of zones; let i = index;"
+      [checked]="zonesBool[i]"
+      (change)="checkZone(i)">{{z.id}}</mat-checkbox>
+  </div>
 
   <mat-dialog-actions>
     <button type="submit" [disabled]="!badgeForm.valid" mat-raised-button >OK</button>

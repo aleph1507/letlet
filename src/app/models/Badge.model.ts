@@ -1,4 +1,5 @@
 import { Employee } from './Employee';
+import { AirportZone } from './AirportZone';
 
 export class Badge {
   id: number;
@@ -6,12 +7,12 @@ export class Badge {
   cardNumber: number;
   // company: string;
   // personName: string;
-  expireDate: number;
+  expireDate: string;
   active: boolean;
   returned: boolean;
   employeeId: number;
   employee: Employee;
-  zones: number[];
+  zones: AirportZone[];
   dateOfSecurityCheck: string;
   dateOfTraining: string;
   dateOfActivation: string;

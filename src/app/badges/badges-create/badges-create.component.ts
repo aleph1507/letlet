@@ -5,6 +5,7 @@ import { Badge } from '../../models/Badge.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ResourcesService } from '../../services/resources.service';
 import { Employee } from '../../models/Employee';
+import { AirportZone } from '../../models/AirportZone';
 
 
 @Component({
@@ -17,6 +18,9 @@ export class BadgesCreateComponent implements OnInit {
   badgeForm : FormGroup;
   badge : Badge = new Badge();
   employees : Employee[];
+  zonesBool : boolean[] = new Array<boolean>();
+  nZones : number;
+  zones : AirportZone[];
   returned : boolean = false;
 
   constructor(public dialogRef: MatDialogRef<BadgesCreateComponent>,
@@ -25,17 +29,70 @@ export class BadgesCreateComponent implements OnInit {
               private resourcesService: ResourcesService) { }
 
   ngOnInit() {
+    if(this.data != null){
+      this.badge = this.data;
+      console.log('this.badge.expireDate: ' + this.badge.expireDate);
+    }
+
     this.badgeForm = this.createBadgeForm();
     this.resourcesService.employees.getAllEmployees()
       .subscribe((res : Employee[]) => {
         this.employees = res;
         this.badgeForm = this.createBadgeForm();
-
+      });
+    this.resourcesService.airportZones.getAllAirportZones()
+      .subscribe((resZones : AirportZone[]) => {
+        this.zones = resZones;
+        this.nZones = this.zones.length;
+        if(this.data != null){
+          for(let i = 0; i<this.badge.zones.length; i++){
+            this.zonesBool[this.badge.zones[i].id] = true;
+          }
+        }
       });
   }
 
-  onSubmit() {
+  checkZone(i){
+    // console.log('z.isChecked: ' + z.checked + ' ,  i : ' + i);
+    this.zonesBool[i] = !this.zonesBool[i];
+    // console.log(`this.zonesBool[i] : ${this.zonesBool[i]} || i : ${i}`)
+  }
 
+  parseDate(dE: Date){
+    let parsedDE = dE.getFullYear() + '-';
+    dE.getMonth() < 10 ? parsedDE += '0' + dE.getMonth() : parsedDE += dE.getMonth();
+    dE.getDate() < 10 ? parsedDE += '-0' + dE.getDate() : parsedDE += '-' + dE.getDate();
+    return parsedDE;
+  }
+
+  onSubmit() {
+    var addedZones : AirportZone[] = [];
+    for(let i = 0; i<this.nZones; i++){
+      if(this.zonesBool[i] == true){
+        addedZones.push(this.zones[i]);
+      }
+    }
+    let dExpire = new Date(this.badgeForm.controls['expireDate'].value);
+    let dTraining = new Date(this.badgeForm.controls['dateOfTraining'].value);
+    let dSecurity = new Date(this.badgeForm.controls['dateOfSecurityCheck'].value);
+    let dActivation = new Date(this.badgeForm.controls['dateOfActivation'].value);
+    this.badge.id = null;
+    this.badge.returned = this.returned;
+    this.badge.expireDate = this.parseDate(dExpire);
+    this.badge.employee = this.badgeForm.controls['employee'].value;
+    this.badge.dateOfTraining = this.parseDate(dTraining);
+    this.badge.dateOfSecurityCheck = this.parseDate(dSecurity);
+    this.badge.dateOfActivation = this.parseDate(dActivation);
+    this.badge.cardSeriesNumber = this.badgeForm.controls['cardSeriesNumber'].value;
+    this.badge.cardNumber = this.badgeForm.controls['cardNumber'].value;
+    this.badge.zones = addedZones;
+    console.log('this.badge: ' + this.badge);
+    this.badgesService.addBadge(this.badge)
+      .subscribe((data : Badge) => {
+        console.log('vo addBadge subscription data: ' + data);
+        this.badgesService.pushBadge(data);
+      });
+      // this.dialogRef.close();
   }
 
   displayFn(e?: Employee) {
@@ -45,13 +102,13 @@ export class BadgesCreateComponent implements OnInit {
   createBadgeForm() {
     return new FormGroup({
       'cardSeriesNumber': new FormControl(this.badge.cardSeriesNumber, {
-        validators: Validators.required
+        // validators: Validators.required
       }),
       'cardNumber': new FormControl(this.badge.cardNumber, {
-        validators: Validators.required
+        // validators: Validators.required
       }),
       'expireDate': new FormControl(this.badge.expireDate, {
-        validators: Validators.required
+        // validators: Validators.required
       }),
       // 'active': new FormControl(this.badge.active, {
       //   validators: Validators.required
@@ -63,19 +120,19 @@ export class BadgesCreateComponent implements OnInit {
       //   validators: Validators.required
       // }),
       'employee': new FormControl(this.badge.employee, {
-        validators: Validators.required
+        // validators: Validators.required
       }),
       // 'zones': new FormControl(this.badge.zones, {
       //   validators: Validators.required
       // }),
       'dateOfSecurityCheck': new FormControl(this.badge.dateOfSecurityCheck, {
-        validators: Validators.required
+        // validators: Validators.required
       }),
       'dateOfTraining': new FormControl(this.badge.dateOfTraining, {
-        validators: Validators.required
+        // validators: Validators.required
       }),
       'dateOfActivation': new FormControl(this.badge.dateOfActivation, {
-        validators: Validators.required
+        // validators: Validators.required
       }),
     })
   }
