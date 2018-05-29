@@ -57,14 +57,8 @@ export class AuthService implements OnInit{
   }
 
   getHeaders() {
-    console.log('vo getHeaders()')
+    // console.log('vo getHeaders()')
     if(this.loggedIn){
-      console.log('vo getHeaders->loggedIn');
-      console.log(new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.getToken(),
-        'Accept': 'application/json'
-      }));
       return new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.getToken(),
@@ -81,8 +75,8 @@ export class AuthService implements OnInit{
     // if(this.token == null)
     //   this.logIn();
     // return this.token;
-    console.log('getToken()');
-    console.log('localStorage.getItem("token") :  ' + localStorage.getItem('token'));
+    // console.log('getToken()');
+    // console.log('localStorage.getItem("token") :  ' + localStorage.getItem('token'));
     return localStorage.getItem('token');
   }
 
