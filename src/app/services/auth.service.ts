@@ -32,6 +32,10 @@ export class AuthService implements OnInit{
   constructor(private http: HttpClient,
               private router: Router) {
                 this.loggedStatus = new BehaviorSubject<boolean>(this.loggedIn);
+                if(localStorage.getItem('token') != null){
+                  this.loggedIn = true;
+                  this.loggedStatus.next(this.loggedIn);
+                }
               }
 
   ngOnInit(): void {
@@ -53,10 +57,17 @@ export class AuthService implements OnInit{
   }
 
   getHeaders() {
+    console.log('vo getHeaders()')
     if(this.loggedIn){
+      console.log('vo getHeaders->loggedIn');
+      console.log(new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.getToken(),
+        'Accept': 'application/json'
+      }));
       return new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.token,
+        'Authorization': 'Bearer ' + this.getToken(),
         'Accept': 'application/json'
       })
     }
@@ -69,7 +80,10 @@ export class AuthService implements OnInit{
   getToken() {
     // if(this.token == null)
     //   this.logIn();
-    return this.token;
+    // return this.token;
+    console.log('getToken()');
+    console.log('localStorage.getItem("token") :  ' + localStorage.getItem('token'));
+    return localStorage.getItem('token');
   }
 
 
@@ -89,6 +103,7 @@ export class AuthService implements OnInit{
     { headers: this.headers }).subscribe(data => {
       if(data.access_token){
         this.token = data.access_token;
+        localStorage.setItem('token', this.token);
         this.loggedIn = true;
         this.router.navigate(['/dashboard']);
         this.loggedStatus.next(this.loggedIn);

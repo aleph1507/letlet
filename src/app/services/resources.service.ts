@@ -413,6 +413,9 @@ class Gates {
   headers = null;
   constructor(private http: HttpClient, private ho, private baseUrl) {
     this.headers = ho;
+    console.log('ho:  ' + ho);
+    console.log('gates.headers: ' + this.headers);
+    // console.log('gates.headers.Authorization:  ' + this.headers.Authorization)
   }
   getAllGates() : Observable<Gate[]>{
     console.log('vo getAllGates()');
