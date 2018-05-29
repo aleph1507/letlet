@@ -6,7 +6,7 @@
       [matAutocomplete]="entEmp"
       required>
   </mat-form-field>
-  <mat-autocomplete #entEmp="matAutocomplete" [displayWith]="displayFn">
+  <mat-autocomplete #entEmp="matAutocomplete" [displayWith]="displayFnEmployee">
       <mat-option *ngFor="let e of employees" [value]="e" >
         {{ e.name }}
       </mat-option>
@@ -41,7 +41,7 @@
 
   <mat-divider class="sm-form-divider-margins"></mat-divider>
   <mat-dialog-actions>
-    <button type="submit" [disabled]="!EnterPersonForm.valid" mat-raised-button>OK</button>
+    <button type="submit" [disabled]="!EnterVehicleForm.valid" mat-raised-button>OK</button>
     <button type="button" mat-raised-button (click)="onCancel()">Cancel</button>
   </mat-dialog-actions>
 </form>

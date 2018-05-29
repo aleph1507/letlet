@@ -40,9 +40,8 @@ class hError {
 
 class VisitorVehicleBadges {
   visitorVehicleBadges: VisitorVehicleBadge[] = [];
-  bUrl : string;
   // public visitorVehicleBadgesUrl = 'http://12.168.100.4:84/api/visitorvehiclebadges';
-  public visitorVehicleBadgesUrl = this.bUrl + '/api/visitorvehiclebadges';
+  public visitorVehicleBadgesUrl = this.baseUrl + '/api/visitorvehiclebadges';
 
   // httpOptions = {
   //   headers: new HttpHeaders({
@@ -55,7 +54,6 @@ class VisitorVehicleBadges {
   headers = null;
   constructor(private http: HttpClient, private ho, private baseUrl) {
     this.headers = ho;
-    this.bUrl = baseUrl;
   }
   getAllVisitorVehicleBadges() : Observable<VisitorVehicleBadge[]> {
     console.log('getAllVisitorVehicleBadges()');
