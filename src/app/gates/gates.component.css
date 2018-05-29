@@ -1,0 +1,25 @@
+div.gates {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.gate-card {
+  margin: 1%;
+  width: 27%;
+}
+
+@media only screen and (max-width: 600px) {
+  .gate-card {
+    margin: 1%;
+    width: 100%;
+  }
+}
+
+.card-content {
+  flex-direction: row;
+  justify-content: right;
+}
+
+.card-icon {
+  float: right;
+}

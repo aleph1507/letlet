@@ -1,0 +1,15 @@
+<div class="gates">
+  <mat-card *ngFor="let g of gates" class="gate-card">
+    <a [routerLink]="['/gates/', g.id]">
+      <div class="card-content">
+        <div class="card-text">
+          <mat-card-title>Gate {{g.id}}</mat-card-title>
+          <mat-card-subtitle>see entries for gate {{g.id}}</mat-card-subtitle>
+        </div>
+        <div class="card-icon">
+          <mat-icon>note_add</mat-icon>
+        </div>
+      </div>
+    </a>
+  </mat-card>
+</div>

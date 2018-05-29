@@ -40,6 +40,9 @@ import { AirportZoneModalComponent } from './resources/resource/airport-zone-mod
 import { VisitorBadgeModalComponent } from './resources/resource/visitor-badge-modal/visitor-badge-modal.component';
 import { VisitorVehicleBadgeModalComponent } from './resources/resource/visitor-vehicle-badge-modal/visitor-vehicle-badge-modal.component';
 import { DialogResourceVehicleComponent } from './resources/resource/dialog-vehicle/dialog-vehicle.component';
+import { GatesComponent } from './gates/gates.component';
+import { GatesService } from './services/gates.service';
+import { GateComponent } from './gates/gate/gate.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +67,8 @@ import { DialogResourceVehicleComponent } from './resources/resource/dialog-vehi
     AirportZoneModalComponent,
     VisitorBadgeModalComponent,
     VisitorVehicleBadgeModalComponent,
+    GatesComponent,
+    GateComponent,
   ],
   imports: [
     BrowserModule,
@@ -91,7 +96,7 @@ import { DialogResourceVehicleComponent } from './resources/resource/dialog-vehi
   ],
   providers: [RequesterService, AuthService, ApprovalsService,
               StopListService, ResourcesService, BadgesService,
-              DatePipe],
+              DatePipe, GatesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

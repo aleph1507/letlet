@@ -59,12 +59,12 @@ export class GateModalComponent implements OnInit {
     if(this.data){
       this.resourcesService.gates.updateGate(this.gate, this.oldID)
         .subscribe((data : Gate) => {
-          this.resourcesService.gates.switchGate(this.gate, this.oldID)
+          this.resourcesService.gates.switchGate(this.gate, this.oldID);
         });
     } else {
       this.resourcesService.gates.addGate(this.gate)
         .subscribe((data : Gate) => {
-          this.resourcesService.gates.pushGate(data)
+          this.resourcesService.gates.pushGate(data);
         });
     }
 

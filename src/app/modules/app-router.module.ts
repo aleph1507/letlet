@@ -8,6 +8,8 @@ import { StopListComponent } from '../stop-list/stop-list.component';
 import { BadgesComponent } from '../badges/badges.component';
 import { ResourcesComponent } from '../resources/resources.component';
 import { ResourceComponent } from '../resources/resource/resource.component';
+import { GatesComponent } from '../gates/gates.component';
+import { GateComponent } from '../gates/gate/gate.component';
 
 const appRoutes: Routes = [
    { path: '', component: DashboardComponent, pathMatch: 'full' },
@@ -21,7 +23,9 @@ const appRoutes: Routes = [
    { path: 'badges', component: BadgesComponent, pathMatch: 'full' },
    { path: 'badges/edit/:id', component: BadgesComponent },
    { path: 'resources', component: ResourcesComponent, pathMatch: 'full' },
-   { path: 'resources/:category', component: ResourceComponent }
+   { path: 'resources/:category', component: ResourceComponent },
+   { path: 'gates', component: GatesComponent, pathMatch: 'full' },
+   { path: 'gates/:id', component: GateComponent, pathMatch: 'full' }
 ];
 
 @NgModule({
