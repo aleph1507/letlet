@@ -54,10 +54,8 @@ export class ExitPersonModalComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('this.data.ep: ' + this.data.ep);
     var ee = this.ExitPersonForm.controls['exitEmployee'].value;
-    // if((this.ExitPersonForm.controls['billNumber'] != undefined))
-      this.billNumber = this.ExitPersonForm.controls['billNumber'].value;
+    this.billNumber = this.ExitPersonForm.controls['billNumber'].value;
     let exitPerson = {
       'id': this.data.ep.id,
       'exitGate': {

@@ -142,11 +142,17 @@ export class GateComponent implements OnInit {
   exitEnteredVehicle(enteredv: EnteredVehicle){
     let dialogRef = this.dialog.open(ExitVehicleModalComponent, {
       width: '70%',
-      data: enteredv
+      data: {ev: enteredv, gid: this.gid }
     });
 
     dialogRef.afterClosed().subscribe(a => {
+      if((a != undefined) && (a != null)){
+        this.expectedVehicles = a.expectedVehicles;
+        this.dataSourceExpectedVehicles = new MatTableDataSource<ExpectedVehicle>(this.expectedVehicles);
+        this.spliceExitedVehicles(a.id);
+      }
       this.applyFilterEnteredVehicles('');
+      this.applyFilterExpectedVehicles('');
     });
   }
 
@@ -170,6 +176,14 @@ export class GateComponent implements OnInit {
     for(let i = 0; i<this.enteredPersons.length; i++){
       if(this.enteredPersons[i].id == personId){
         this.enteredPersons.splice(i, 1);
+      }
+    }
+  }
+
+  spliceExitedVehicles(vehicleId) {
+    for(let i = 0; i<this.enteredVehicles.length; i++){
+      if(this.enteredVehicles[i].id == vehicleId){
+        this.enteredVehicles.splice(i, 1);
       }
     }
   }
