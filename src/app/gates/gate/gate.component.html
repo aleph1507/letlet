@@ -1,6 +1,7 @@
 <div class="lists-container">
   <div class="entered">
     <div class="persons">
+      <h3>Entered Persons</h3>
       <mat-form-field>
         <input matInput (keyup)="applyFilterEnteredPersons($event.target.value)" placeholder="Filter">
       </mat-form-field>
@@ -52,6 +53,7 @@
     </div>
 
     <div class="vehicles">
+      <h3>Entered Vehicles</h3>
       <mat-form-field>
         <input matInput (keyup)="applyFilterEnteredVehicles($event.target.value)" placeholder="Filter">
       </mat-form-field>
@@ -109,6 +111,7 @@
   </div>
   <div class="expected">
     <div class="persons">
+      <h3>Expected Persons</h3>
       <mat-form-field>
         <input matInput (keyup)="applyFilterExpectedPersons($event.target.value)" placeholder="Filter">
       </mat-form-field>
@@ -149,6 +152,7 @@
       </mat-table>
     </div>
     <div class="vehicles">
+      <h3>Expected Vehicles</h3>
       <mat-form-field>
         <input matInput (keyup)="applyFilterExpectedVehicles($event.target.value)" placeholder="Filter">
       </mat-form-field>
