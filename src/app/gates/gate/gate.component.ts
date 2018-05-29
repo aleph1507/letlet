@@ -12,6 +12,7 @@ import { EnterPersonModalComponent } from './enter-person-modal/enter-person-mod
 import { ExitPersonModalComponent } from './exit-person-modal/exit-person-modal.component';
 import { EnterVehicleModalComponent } from './enter-vehicle-modal/enter-vehicle-modal.component';
 import { ExitVehicleModalComponent } from './exit-vehicle-modal/exit-vehicle-modal.component';
+import { VisitPerson } from '../../models/VisitPerson.model';
 
 @Component({
   selector: 'app-gate',
@@ -47,6 +48,9 @@ export class GateComponent implements OnInit {
     this.getEnteredPersons();
     this.getEnteredVehicles();
     this.getExpectedVehicles();
+    this.route.params.subscribe((params) => {
+      this.gid = params.id;
+    });
   }
 
   getExpectedPersons() {
@@ -87,7 +91,7 @@ export class GateComponent implements OnInit {
   enterExpectedPerson(ep: ExpectedPerson) {
     let dialogRef = this.dialog.open(EnterPersonModalComponent, {
       width: '40%',
-      data: ep
+      data: {gid: this.gid, ep: ep}
     });
 
     dialogRef.afterClosed().subscribe(a => {
@@ -127,6 +131,14 @@ export class GateComponent implements OnInit {
       this.applyFilterEnteredVehicles('');
     });
   }
+
+  // spliceExpectedPersons(personRequestId) {
+  //   for(let i = 0; i<this.expectedPersons.length; i++){
+  //     if(this.expectedPersons[i].requestPersonId == personRequestId){
+  //       this.expectedPersons.splice(i, 1);
+  //     }
+  //   }
+  // }
 
   applyFilterExpectedPersons(filterValue: string) {
     filterValue = filterValue.trim();

@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { EnteredPerson } from '../models/EnteredPerson.model';
 import { ExpectedVehicle } from '../models/ExpectedVehicle.model';
 import { EnteredVehicle } from '../models/EnteredVehicles.model';
+import { VisitPerson } from '../models/VisitPerson.model';
 
 @Injectable()
 export class GatesService {
@@ -16,6 +17,9 @@ export class GatesService {
   expectedVehiclesUrl = this.authService.baseUrl + '/api/requests/expectedVehicles';
   enteredPersonsUrl = this.authService.baseUrl + '/api/visits/entered/person';
   enteredVehiclesUrl = this.authService.baseUrl + '/api/visits/entered/vehicles';
+
+  getPersonUrl = this.authService.baseUrl + '/api/visits/person/';
+  enterAPersonUrl = this.authService.baseUrl + '/api/visits/person/enter/';
 
   // headers : HttpHeaders = this.authService.getHeaders();
 
@@ -45,6 +49,16 @@ export class GatesService {
   getAllEnteredVehicles() : Observable<EnteredVehicle[]> {
     return this.http.get<EnteredVehicle[]>(this.enteredVehiclesUrl, this.httpOptions);
   }
+
+  postPersonEnter(enterPerson)  {
+    return this.http.post(this.enterAPersonUrl, enterPerson, this.httpOptions);
+  }
+
+
+  // getPerson(id=5) : Observable<VisitPerson>{
+  //   id = 5;
+  //   return this.http.get<VisitPerson>(this.getPersonUrl + id, this.httpOptions);
+  // }
 
 
 }
