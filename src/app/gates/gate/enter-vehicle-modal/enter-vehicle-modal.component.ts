@@ -38,10 +38,6 @@ export class EnterVehicleModalComponent implements OnInit {
                     this.companies = comps;
                     this.visitorVehicleBadges = vvbs;
                     this.EnterVehicleForm = new FormGroup({
-                      'company': new FormControl('',{
-                        validators: [Validators.required],
-                        updateOn: 'change'
-                      }),
                       'entryEmployee': new FormControl('',{
                         validators: [Validators.required],
                         updateOn: 'change'
@@ -72,13 +68,12 @@ export class EnterVehicleModalComponent implements OnInit {
   onSubmit() {
     let vvb = this.EnterVehicleForm.controls['visitorVehicleBadge'].value;
     let ee = this.EnterVehicleForm.controls['entryEmployee'].value;
-    let comp = this.EnterVehicleForm.controls['company'].value;
     let eVehicle = {
       'company': {
-        'id': comp.id
+        'id': this.data.exv.companyId
       },
       'vehicle': {
-        'id': this.data.exv.requestId
+        'id': this.data.exv.vehicleRequestId
       },
       'visitorVehicleBadge': {
         'id': vvb.id
@@ -96,7 +91,7 @@ export class EnterVehicleModalComponent implements OnInit {
         console.log('res: ' + res);
         this.gatesService.getAllEnteredVehicles()
           .subscribe((data: EnteredVehicle[]) => {
-            this.dialogRef.close({vehicleId: this.data.exv.requestId, vehiclesInside: data});
+            this.dialogRef.close({vehicleId: this.data.exv.vehicleRequestId, vehiclesInside: data});
           })
       });
   }

@@ -6,7 +6,7 @@ import { ExpectedPerson } from '../models/ExpectedPerson.model';
 import { Observable } from 'rxjs';
 import { EnteredPerson } from '../models/EnteredPerson.model';
 import { ExpectedVehicle } from '../models/ExpectedVehicle.model';
-import { EnteredVehicle } from '../models/EnteredVehicles.model';
+import { EnteredVehicle } from '../models/EnteredVehicle.model';
 import { VisitPerson } from '../models/VisitPerson.model';
 
 @Injectable()

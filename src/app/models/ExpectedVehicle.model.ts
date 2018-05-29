@@ -1,6 +1,7 @@
 export interface ExpectedVehicle {
-  requestId: number;
+  vehicleRequestId: number;
   model: string;
   plate: string;
   companyName: string;
+  companyId: number;
 }

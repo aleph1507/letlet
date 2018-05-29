@@ -130,12 +130,12 @@ export class GateComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(a => {
       if((a != undefined) && (a != null)){
-        // this.enteredPersons = a.personsInside;
-        // this.dataSourceEnteredPersons = new MatTableDataSource<EnteredPerson>(this.enteredPersons);
-        // this.spliceExpectedPersons(a.personId);
+        this.enteredVehicles = a.vehiclesInside;
+        this.dataSourceEnteredVehicles = new MatTableDataSource<EnteredVehicle>(this.enteredVehicles);
+        this.spliceExpectedVehicles(a.vehicleId);
       }
       this.applyFilterExpectedVehicles('');
-      this.applyFilterEnteredVehicles('');    
+      this.applyFilterEnteredVehicles('');
     });
   }
 
@@ -154,6 +154,14 @@ export class GateComponent implements OnInit {
     for(let i = 0; i<this.expectedPersons.length; i++){
       if(this.expectedPersons[i].requestPersonId == personRequestId){
         this.expectedPersons.splice(i, 1);
+      }
+    }
+  }
+
+  spliceExpectedVehicles(vehicleRequestId) {
+    for(let i = 0; i<this.expectedVehicles.length; i++){
+      if(this.expectedVehicles[i].vehicleRequestId == vehicleRequestId){
+        this.expectedVehicles.splice(i, 1);
       }
     }
   }
