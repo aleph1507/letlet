@@ -7,7 +7,11 @@ import { EnteredPerson } from '../../models/EnteredPerson.model';
 import { EnteredVehicle } from '../../models/EnteredVehicles.model';
 import { ExpectedPerson } from '../../models/ExpectedPerson.model';
 import { ExpectedVehicle } from '../../models/ExpectedVehicle.model';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialog } from '@angular/material';
+import { EnterPersonModalComponent } from './enter-person-modal/enter-person-modal.component';
+import { ExitPersonModalComponent } from './exit-person-modal/exit-person-modal.component';
+import { EnterVehicleModalComponent } from './enter-vehicle-modal/enter-vehicle-modal.component';
+import { ExitVehicleModalComponent } from './exit-vehicle-modal/exit-vehicle-modal.component';
 
 @Component({
   selector: 'app-gate',
@@ -20,39 +24,132 @@ export class GateComponent implements OnInit {
   enteredPersons : EnteredPerson[] = [];
   enteredVehicles : EnteredVehicle[] = [];
   expectedPersons : ExpectedPerson[] = [];
-  expectedVehicle : ExpectedVehicle[] = [];
+  expectedVehicles : ExpectedVehicle[] = [];
   // gore levo entered
-  dataSource;
+  dataSourceExpectedPersons;
+  dataSourceEnteredPersons;
+  dataSourceExpectedVehicles;
+  dataSourceEnteredVehicles;
 
-  displayedColumns = ['nameEn', 'surnameEn', 'companyName', 'enter'];
+  displayedColumnsExpectedPerson = ['nameEn', 'surnameEn', 'companyName', 'enter'];
+  displayedColumnsEnteredPerson = ['name', 'company', 'enteredGate', 'escortEmployee', 'approvedBy', 'exit'];
+  displayedColumnsExpectedVehicle = ['model', 'plate', 'companyName', 'enter'];
+  displayedColumnsEnteredVehicle = ['model', 'plate', 'company', 'enteredGate', 'escortEmployee', 'approvedBy', 'exit'];
 
   constructor(private gatesService: GatesService,
               private authService: AuthService,
               private resourceService: ResourcesService,
-              private route: ActivatedRoute,) { }
+              private route: ActivatedRoute,
+              public dialog: MatDialog) { }
 
   ngOnInit() {
     this.getExpectedPersons();
+    this.getEnteredPersons();
+    this.getEnteredVehicles();
+    this.getExpectedVehicles();
   }
 
   getExpectedPersons() {
     this.gatesService.getAllExpectedPersons()
       .subscribe((data : ExpectedPerson[]) => {
         this.expectedPersons = data;
-        this.dataSource = new MatTableDataSource<ExpectedPerson>(this.expectedPersons);
-        console.log(`expected persons: ${this.expectedPersons}`);
-        console.log(`dataSource: ${this.dataSource}`);
+        this.dataSourceExpectedPersons = new MatTableDataSource<ExpectedPerson>(this.expectedPersons);
       });
   }
 
-  enterExpectedPerson() {
-
+  getEnteredPersons() {
+    this.gatesService.getAllEnteredPersons()
+      .subscribe((data : EnteredPerson[]) => {
+        this.enteredPersons = data;
+        this.dataSourceEnteredPersons = new MatTableDataSource<EnteredPerson>(this.enteredPersons);
+      });
   }
 
-  applyFilter(filterValue: string) {
+  getExpectedVehicles() {
+    this.gatesService.getAllExpectedVehicles()
+      .subscribe((data : ExpectedVehicle[]) => {
+        this.expectedVehicles = data;
+        this.dataSourceExpectedVehicles = new MatTableDataSource<ExpectedVehicle>(this.expectedVehicles);
+      });
+  }
+
+  getEnteredVehicles() {
+    this.gatesService.getAllEnteredVehicles()
+      .subscribe((data : EnteredVehicle[]) => {
+        this.enteredVehicles = data;
+        console.log('this.enteredvehicles: ' + this.enteredVehicles);
+        this.dataSourceEnteredVehicles = new MatTableDataSource<EnteredVehicle>(this.enteredVehicles);
+      });
+  }
+
+
+
+  enterExpectedPerson(ep: ExpectedPerson) {
+    let dialogRef = this.dialog.open(EnterPersonModalComponent, {
+      width: '40%',
+      data: ep
+    });
+
+    dialogRef.afterClosed().subscribe(a => {
+      this.applyFilterExpectedPersons('');
+    });
+  }
+
+  exitEnteredPerson(enteredp: EnteredPerson) {
+    let dialogRef = this.dialog.open(ExitPersonModalComponent, {
+      width: '40%',
+      data: enteredp
+    });
+
+    dialogRef.afterClosed().subscribe(a => {
+      this.applyFilterEnteredPersons('');
+    });
+  }
+
+  enterExpectedVehicle(ev: ExpectedVehicle){
+    let dialogRef = this.dialog.open(EnterVehicleModalComponent, {
+      width: '40%',
+      data: ev
+    });
+
+    dialogRef.afterClosed().subscribe(a => {
+      this.applyFilterExpectedVehicles('');
+    });
+  }
+
+  exitEnteredVehicle(enteredv: EnteredVehicle){
+    let dialogRef = this.dialog.open(ExitVehicleModalComponent, {
+      width: '40%',
+      data: enteredv
+    });
+
+    dialogRef.afterClosed().subscribe(a => {
+      this.applyFilterEnteredVehicles('');
+    });
+  }
+
+  applyFilterExpectedPersons(filterValue: string) {
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
-    this.dataSource.filter = filterValue;
+    this.dataSourceExpectedPersons.filter = filterValue;
+  }
+
+  applyFilterEnteredPersons(filterValue: string) {
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.dataSourceEnteredPersons.filter = filterValue;
+  }
+
+  applyFilterExpectedVehicles(filterValue: string) {
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.dataSourceExpectedVehicles.filter = filterValue;
+  }
+
+  applyFilterEnteredVehicles(filterValue: string) {
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.dataSourceEnteredVehicles.filter = filterValue;
   }
 
 }

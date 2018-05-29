@@ -2,10 +2,118 @@
   <div class="entered">
     <div class="persons">
       <mat-form-field>
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        <input matInput (keyup)="applyFilterEnteredPersons($event.target.value)" placeholder="Filter">
       </mat-form-field>
 
-      <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <mat-table [dataSource]="dataSourceEnteredPersons" class="mat-elevation-z8">
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+          <mat-cell *matCellDef="let enteredp"> {{enteredp.name}} </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="company">
+          <mat-header-cell *matHeaderCellDef> Company </mat-header-cell>
+          <mat-cell *matCellDef="let enteredp"> {{enteredp.company}} </mat-cell>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="enteredGate">
+          <mat-header-cell *matHeaderCellDef> Entered At Gate </mat-header-cell>
+          <mat-cell *matCellDef="let enteredp"> {{enteredp.enteredGate}} </mat-cell>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="escortEmployee">
+          <mat-header-cell *matHeaderCellDef> Escort Employee </mat-header-cell>
+          <mat-cell *matCellDef="let enteredp">{{enteredp.escortEmployee}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="approvedBy">
+          <mat-header-cell *matHeaderCellDef> Approved By </mat-header-cell>
+          <mat-cell *matCellDef="let enteredp">{{enteredp.approvedBy}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="exit">
+          <mat-header-cell *matHeaderCellDef> Exit </mat-header-cell>
+          <mat-cell *matCellDef="let enteredp">
+            <mat-icon matListIcon
+            (click)="exitEnteredPerson(enteredp)"
+            class="icon-control"
+            >mode_edit</mat-icon>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumnsEnteredPerson"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumnsEnteredPerson;"></mat-row>
+      </mat-table>
+    </div>
+
+    <div class="vehicles">
+      <mat-form-field>
+        <input matInput (keyup)="applyFilterEnteredVehicles($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+
+      <mat-table [dataSource]="dataSourceEnteredVehicles" class="mat-elevation-z8">
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="model">
+          <mat-header-cell *matHeaderCellDef> Model </mat-header-cell>
+          <mat-cell *matCellDef="let enteredv"> {{enteredv.model}} </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="plate">
+          <mat-header-cell *matHeaderCellDef> Plate </mat-header-cell>
+          <mat-cell *matCellDef="let enteredv"> {{enteredv.plate}} </mat-cell>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="company">
+          <mat-header-cell *matHeaderCellDef> Company </mat-header-cell>
+          <mat-cell *matCellDef="let enteredv"> {{enteredv.company}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="enteredGate">
+          <mat-header-cell *matHeaderCellDef> Entered At Gate </mat-header-cell>
+          <mat-cell *matCellDef="let enteredv">{{enteredv.escortEmployee}}</mat-cell>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="escortEmployee">
+          <mat-header-cell *matHeaderCellDef> Escort Employee </mat-header-cell>
+          <mat-cell *matCellDef="let enteredv">{{enteredv.escortEmployee}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="approvedBy">
+          <mat-header-cell *matHeaderCellDef> Approved By </mat-header-cell>
+          <mat-cell *matCellDef="let enteredv">{{enteredv.approvedBy}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="exit">
+          <mat-header-cell *matHeaderCellDef> Exit </mat-header-cell>
+          <mat-cell *matCellDef="let enteredv">
+            <mat-icon matListIcon
+            (click)="exitEnteredVehicle(enteredv)"
+            class="icon-control"
+            >mode_edit</mat-icon>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumnsEnteredVehicle"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumnsEnteredVehicle;"></mat-row>
+      </mat-table>
+    </div>
+  </div>
+  <div class="expected">
+    <div class="persons">
+      <mat-form-field>
+        <input matInput (keyup)="applyFilterExpectedPersons($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+
+      <mat-table [dataSource]="dataSourceExpectedPersons" class="mat-elevation-z8">
 
         <!-- Position Column -->
         <ng-container matColumnDef="nameEn">
@@ -30,25 +138,55 @@
           <mat-header-cell *matHeaderCellDef> Enter </mat-header-cell>
           <mat-cell *matCellDef="let ep">
             <mat-icon matListIcon
-            (click)="enterExpectedPerson(ep.nameEn)"
+            (click)="enterExpectedPerson(ep)"
             class="icon-control"
             >mode_edit</mat-icon>
           </mat-cell>
         </ng-container>
 
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        <mat-header-row *matHeaderRowDef="displayedColumnsExpectedPerson"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumnsExpectedPerson;"></mat-row>
       </mat-table>
     </div>
     <div class="vehicles">
+      <mat-form-field>
+        <input matInput (keyup)="applyFilterExpectedVehicles($event.target.value)" placeholder="Filter">
+      </mat-form-field>
 
-    </div>
-  </div>
-  <div class="expected">
-    <div class="persons">
+      <mat-table [dataSource]="dataSourceExpectedVehicles" class="mat-elevation-z8">
 
-    </div>
-    <div class="vehicles">
+        <!-- Position Column -->
+        <ng-container matColumnDef="model">
+          <mat-header-cell *matHeaderCellDef> Model </mat-header-cell>
+          <mat-cell *matCellDef="let ev"> {{ev.model}} </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="plate">
+          <mat-header-cell *matHeaderCellDef> Plate </mat-header-cell>
+          <mat-cell *matCellDef="let ev"> {{ev.plate}} </mat-cell>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="companyName">
+          <mat-header-cell *matHeaderCellDef> Company </mat-header-cell>
+          <mat-cell *matCellDef="let ev"> {{ev.companyName}} </mat-cell>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="enter">
+          <mat-header-cell *matHeaderCellDef> Enter </mat-header-cell>
+          <mat-cell *matCellDef="let ev">
+            <mat-icon matListIcon
+            (click)="enterExpectedVehicle(ev)"
+            class="icon-control"
+            >mode_edit</mat-icon>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumnsExpectedVehicle"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumnsExpectedVehicle;"></mat-row>
+      </mat-table>
 
     </div>
   </div>

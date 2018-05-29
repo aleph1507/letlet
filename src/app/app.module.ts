@@ -43,6 +43,10 @@ import { DialogResourceVehicleComponent } from './resources/resource/dialog-vehi
 import { GatesComponent } from './gates/gates.component';
 import { GatesService } from './services/gates.service';
 import { GateComponent } from './gates/gate/gate.component';
+import { EnterPersonModalComponent } from './gates/gate/enter-person-modal/enter-person-modal.component';
+import { ExitPersonModalComponent } from './gates/gate/exit-person-modal/exit-person-modal.component';
+import { EnterVehicleModalComponent } from './gates/gate/enter-vehicle-modal/enter-vehicle-modal.component';
+import { ExitVehicleModalComponent } from './gates/gate/exit-vehicle-modal/exit-vehicle-modal.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +73,10 @@ import { GateComponent } from './gates/gate/gate.component';
     VisitorVehicleBadgeModalComponent,
     GatesComponent,
     GateComponent,
+    EnterPersonModalComponent,
+    ExitPersonModalComponent,
+    EnterVehicleModalComponent,
+    ExitVehicleModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -92,7 +100,11 @@ import { GateComponent } from './gates/gate/gate.component';
     AirportZoneModalComponent,
     VisitorBadgeModalComponent,
     VisitorVehicleBadgeModalComponent,
-    DialogResourceVehicleComponent
+    DialogResourceVehicleComponent,
+    EnterPersonModalComponent,
+    ExitPersonModalComponent,
+    EnterVehicleModalComponent,
+    ExitVehicleModalComponent
   ],
   providers: [RequesterService, AuthService, ApprovalsService,
               StopListService, ResourcesService, BadgesService,

@@ -4,6 +4,9 @@ import { ResourcesService } from './resources.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ExpectedPerson } from '../models/ExpectedPerson.model';
 import { Observable } from 'rxjs';
+import { EnteredPerson } from '../models/EnteredPerson.model';
+import { ExpectedVehicle } from '../models/ExpectedVehicle.model';
+import { EnteredVehicle } from '../models/EnteredVehicles.model';
 
 @Injectable()
 export class GatesService {
@@ -31,7 +34,17 @@ export class GatesService {
     return this.http.get<ExpectedPerson[]>(this.expectedPersonsUrl, this.httpOptions);
   }
 
+  getAllEnteredPersons() : Observable<EnteredPerson[]> {
+    return this.http.get<EnteredPerson[]>(this.enteredPersonsUrl, this.httpOptions);
+  }
 
+  getAllExpectedVehicles() : Observable<ExpectedVehicle[]> {
+    return this.http.get<ExpectedVehicle[]>(this.expectedVehiclesUrl, this.httpOptions);
+  }
+
+  getAllEnteredVehicles() : Observable<EnteredVehicle[]> {
+    return this.http.get<EnteredVehicle[]>(this.enteredVehiclesUrl, this.httpOptions);
+  }
 
 
 }
