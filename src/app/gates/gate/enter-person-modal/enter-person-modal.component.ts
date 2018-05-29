@@ -56,7 +56,6 @@ export class EnterPersonModalComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('this.gid: ' + this.gid);
     let vb = this.EnterPersonForm.controls['visitorBadge'].value;
     let ee = this.EnterPersonForm.controls['entryEmployee'].value;
     let ePerson = {

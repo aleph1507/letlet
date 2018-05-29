@@ -1,3 +1,47 @@
-<p>
-  enter-vehicle-modal works!
-</p>
+<form *ngIf="EnterVehicleForm != null" [formGroup]="EnterVehicleForm" (ngSubmit)="onSubmit()" novalidate>
+  <mat-form-field>
+    <input matInput type="text"
+      placeholder="Entry Employee"
+      formControlName="entryEmployee"
+      [matAutocomplete]="entEmp"
+      required>
+  </mat-form-field>
+  <mat-autocomplete #entEmp="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let e of employees" [value]="e" >
+        {{ e.name }}
+      </mat-option>
+  </mat-autocomplete>
+
+  <mat-form-field>
+    <input matInput type="text"
+      placeholder="Visitor Vehicle Badge"
+      formControlName="visitorVehicleBadge"
+      [matAutocomplete]="vvBadge"
+      required>
+  </mat-form-field>
+  <mat-autocomplete #vvBadge="matAutocomplete" [displayWith]="displayFnVB">
+      <mat-option *ngFor="let v of visitorVehicleBadges" [value]="v" >
+        {{ v.name }} {{ v.code }}
+      </mat-option>
+  </mat-autocomplete>
+
+  <mat-form-field>
+    <input matInput type="text" name='company'
+    id="company" placeholder="Company"
+    formControlName="company"
+    [matAutocomplete]="comp"
+    required>
+  </mat-form-field>
+
+  <mat-autocomplete #comp="matAutocomplete" [displayWith]="displayFnCompany">
+      <mat-option *ngFor="let c of companies" [value]="c" >
+        {{ c.name }}
+      </mat-option>
+  </mat-autocomplete>
+
+  <mat-divider class="sm-form-divider-margins"></mat-divider>
+  <mat-dialog-actions>
+    <button type="submit" [disabled]="!EnterPersonForm.valid" mat-raised-button>OK</button>
+    <button type="button" mat-raised-button (click)="onCancel()">Cancel</button>
+  </mat-dialog-actions>
+</form>

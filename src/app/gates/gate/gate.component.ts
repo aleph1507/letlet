@@ -4,7 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { ResourcesService } from '../../services/resources.service';
 import { ActivatedRoute } from '@angular/router';
 import { EnteredPerson } from '../../models/EnteredPerson.model';
-import { EnteredVehicle } from '../../models/EnteredVehicles.model';
+import { EnteredVehicle } from '../../models/EnteredVehicle.model';
 import { ExpectedPerson } from '../../models/ExpectedPerson.model';
 import { ExpectedVehicle } from '../../models/ExpectedVehicle.model';
 import { MatTableDataSource, MatDialog } from '@angular/material';
@@ -90,7 +90,7 @@ export class GateComponent implements OnInit {
 
   enterExpectedPerson(ep: ExpectedPerson) {
     let dialogRef = this.dialog.open(EnterPersonModalComponent, {
-      width: '40%',
+      width: '70%',
       data: {gid: this.gid, ep: ep}
     });
 
@@ -107,7 +107,7 @@ export class GateComponent implements OnInit {
 
   exitEnteredPerson(enteredp: EnteredPerson) {
     let dialogRef = this.dialog.open(ExitPersonModalComponent, {
-      width: '40%',
+      width: '70%',
       data: {ep: enteredp, gid: this.gid }
     });
 
@@ -124,18 +124,24 @@ export class GateComponent implements OnInit {
 
   enterExpectedVehicle(ev: ExpectedVehicle){
     let dialogRef = this.dialog.open(EnterVehicleModalComponent, {
-      width: '40%',
-      data: ev
+      width: '70%',
+      data: {gid: this.gid, exv : ev}
     });
 
     dialogRef.afterClosed().subscribe(a => {
+      if((a != undefined) && (a != null)){
+        // this.enteredPersons = a.personsInside;
+        // this.dataSourceEnteredPersons = new MatTableDataSource<EnteredPerson>(this.enteredPersons);
+        // this.spliceExpectedPersons(a.personId);
+      }
       this.applyFilterExpectedVehicles('');
+      this.applyFilterEnteredVehicles('');    
     });
   }
 
   exitEnteredVehicle(enteredv: EnteredVehicle){
     let dialogRef = this.dialog.open(ExitVehicleModalComponent, {
-      width: '40%',
+      width: '70%',
       data: enteredv
     });
 

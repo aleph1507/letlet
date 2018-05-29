@@ -21,6 +21,8 @@ export class GatesService {
   getPersonUrl = this.authService.baseUrl + '/api/visits/person/';
   enterAPersonUrl = this.authService.baseUrl + '/api/visits/person/enter/';
   exitAPersonUrl = this.authService.baseUrl + '/api/visits/person/exit/';
+  enterAVehicleUrl = this.authService.baseUrl + '/api/visits/vehicle/enter/';
+  exitAVehicleUrl = this.authService.baseUrl + '/api/visits/vehicle/exit/';
 
   // headers : HttpHeaders = this.authService.getHeaders();
 
@@ -57,6 +59,14 @@ export class GatesService {
 
   postPersonExit(exitPerson) {
     return this.http.post(this.exitAPersonUrl, exitPerson, this.httpOptions);
+  }
+
+  postVehicleEnter(enterVehicle)  {
+    return this.http.post(this.enterAVehicleUrl, enterVehicle, this.httpOptions);
+  }
+
+  postVehicleExit(exitVehicle) {
+    return this.http.post(this.exitAVehicleUrl, exitVehicle, this.httpOptions);
   }
 
 

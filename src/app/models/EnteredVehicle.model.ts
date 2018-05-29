@@ -1,4 +1,5 @@
 export interface EnteredVehicle {
+  id: number,
   model: string,
   plate: string,
   company: string,
