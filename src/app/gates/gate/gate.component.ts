@@ -95,18 +95,30 @@ export class GateComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(a => {
+      if((a != undefined) && (a != null)){
+        this.enteredPersons = a.personsInside;
+        this.dataSourceEnteredPersons = new MatTableDataSource<EnteredPerson>(this.enteredPersons);
+        this.spliceExpectedPersons(a.personId);
+      }
       this.applyFilterExpectedPersons('');
+      this.applyFilterEnteredPersons('');
     });
   }
 
   exitEnteredPerson(enteredp: EnteredPerson) {
     let dialogRef = this.dialog.open(ExitPersonModalComponent, {
       width: '40%',
-      data: enteredp
+      data: {ep: enteredp, gid: this.gid }
     });
 
     dialogRef.afterClosed().subscribe(a => {
+      if((a != undefined) && (a != null)){
+        this.expectedPersons = a.expectedPersons;
+        this.dataSourceExpectedPersons = new MatTableDataSource<ExpectedPerson>(this.expectedPersons);
+        this.spliceExitedPersons(a.id);
+      }
       this.applyFilterEnteredPersons('');
+      this.applyFilterExpectedPersons('');
     });
   }
 
@@ -132,13 +144,21 @@ export class GateComponent implements OnInit {
     });
   }
 
-  // spliceExpectedPersons(personRequestId) {
-  //   for(let i = 0; i<this.expectedPersons.length; i++){
-  //     if(this.expectedPersons[i].requestPersonId == personRequestId){
-  //       this.expectedPersons.splice(i, 1);
-  //     }
-  //   }
-  // }
+  spliceExpectedPersons(personRequestId) {
+    for(let i = 0; i<this.expectedPersons.length; i++){
+      if(this.expectedPersons[i].requestPersonId == personRequestId){
+        this.expectedPersons.splice(i, 1);
+      }
+    }
+  }
+
+  spliceExitedPersons(personId) {
+    for(let i = 0; i<this.enteredPersons.length; i++){
+      if(this.enteredPersons[i].id == personId){
+        this.enteredPersons.splice(i, 1);
+      }
+    }
+  }
 
   applyFilterExpectedPersons(filterValue: string) {
     filterValue = filterValue.trim();

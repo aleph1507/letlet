@@ -1,3 +1,31 @@
-<p>
-  exit-person-modal works!
-</p>
+<form *ngIf="ExitPersonForm != null" [formGroup]="ExitPersonForm" (ngSubmit)="onSubmit()" novalidate>
+  <mat-form-field>
+    <input matInput type="text"
+      placeholder="Exit Employee"
+      formControlName="exitEmployee"
+      [matAutocomplete]="entEmp"
+      required>
+  </mat-form-field>
+  <mat-autocomplete #entEmp="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let e of employees" [value]="e" >
+        {{ e.name }}
+      </mat-option>
+  </mat-autocomplete>
+
+  <mat-checkbox
+    [checked]="paid"
+    (change)="onPaid($event)">Paid</mat-checkbox>
+
+  <mat-form-field *ngIf="paid">
+    <input matInput type="text"
+      placeholder="Account Number"
+      formControlName="billNumber"
+      >
+  </mat-form-field>
+
+  <mat-divider class="sm-form-divider-margins"></mat-divider>
+  <mat-dialog-actions>
+    <button type="submit" [disabled]="!ExitPersonForm.valid" mat-raised-button>OK</button>
+    <button type="button" mat-raised-button (click)="onCancel()">Cancel</button>
+  </mat-dialog-actions>
+</form>

@@ -20,6 +20,7 @@ export class GatesService {
 
   getPersonUrl = this.authService.baseUrl + '/api/visits/person/';
   enterAPersonUrl = this.authService.baseUrl + '/api/visits/person/enter/';
+  exitAPersonUrl = this.authService.baseUrl + '/api/visits/person/exit/';
 
   // headers : HttpHeaders = this.authService.getHeaders();
 
@@ -52,6 +53,10 @@ export class GatesService {
 
   postPersonEnter(enterPerson)  {
     return this.http.post(this.enterAPersonUrl, enterPerson, this.httpOptions);
+  }
+
+  postPersonExit(exitPerson) {
+    return this.http.post(this.exitAPersonUrl, exitPerson, this.httpOptions);
   }
 
 

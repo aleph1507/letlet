@@ -6,6 +6,7 @@ import { Employee } from '../../../models/Employee';
 import { VisitorBadge } from '../../../models/VisitorBadge';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { GatesService } from '../../../services/gates.service';
+import { EnteredPerson } from '../../../models/EnteredPerson.model';
 
 @Component({
   selector: 'app-enter-person-modal',
@@ -16,7 +17,7 @@ export class EnterPersonModalComponent implements OnInit {
 
   employees : Employee[] = [];
   visitorBadges : VisitorBadge[] = [];
-  // gid: number;
+  gid: number;
   EnterPersonForm : FormGroup = null;
 
   constructor(private dialogRef: MatDialogRef<EnterPersonModalComponent>,
@@ -55,6 +56,7 @@ export class EnterPersonModalComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('this.gid: ' + this.gid);
     let vb = this.EnterPersonForm.controls['visitorBadge'].value;
     let ee = this.EnterPersonForm.controls['entryEmployee'].value;
     let ePerson = {
@@ -77,9 +79,11 @@ export class EnterPersonModalComponent implements OnInit {
 
     this.gatesService.postPersonEnter(ePerson)
       .subscribe((res : boolean) => {
-        // console.log('res: ' + res);
+        this.gatesService.getAllEnteredPersons()
+          .subscribe((data : EnteredPerson[]) =>{
+            this.dialogRef.close({personId: this.data.ep.requestPersonId, personsInside: data});
+          });
       });
-    this.dialogRef.close(this.data.ep.requestPersonId);
   }
 
   onCancel() {
