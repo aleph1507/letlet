@@ -1,0 +1,25 @@
+div.dashboard {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.dash-card {
+  margin: 1%;
+  width: 27%;
+}
+
+@media only screen and (max-width: 600px) {
+  .dash-card {
+    margin: 1%;
+    width: 100%;
+  }
+}
+
+.card-content {
+  flex-direction: row;
+  justify-content: right;
+}
+
+.card-icon {
+  float: right;
+}

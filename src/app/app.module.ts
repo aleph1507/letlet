@@ -47,6 +47,10 @@ import { EnterPersonModalComponent } from './gates/gate/enter-person-modal/enter
 import { ExitPersonModalComponent } from './gates/gate/exit-person-modal/exit-person-modal.component';
 import { EnterVehicleModalComponent } from './gates/gate/enter-vehicle-modal/enter-vehicle-modal.component';
 import { ExitVehicleModalComponent } from './gates/gate/exit-vehicle-modal/exit-vehicle-modal.component';
+import { ReportsComponent } from './reports/reports.component';
+import { ReportsService } from './services/reports.service';
+import { PersonReportComponent } from './reports/person-report/person-report.component';
+import { VehicleReportComponent } from './reports/vehicle-report/vehicle-report.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +81,9 @@ import { ExitVehicleModalComponent } from './gates/gate/exit-vehicle-modal/exit-
     ExitPersonModalComponent,
     EnterVehicleModalComponent,
     ExitVehicleModalComponent,
+    ReportsComponent,
+    PersonReportComponent,
+    VehicleReportComponent,
   ],
   imports: [
     BrowserModule,
@@ -108,7 +115,7 @@ import { ExitVehicleModalComponent } from './gates/gate/exit-vehicle-modal/exit-
   ],
   providers: [RequesterService, AuthService, ApprovalsService,
               StopListService, ResourcesService, BadgesService,
-              DatePipe, GatesService],
+              DatePipe, GatesService, ReportsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

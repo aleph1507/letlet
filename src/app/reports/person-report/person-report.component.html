@@ -1,0 +1,21 @@
+<input matInput [matDatepicker]="fromPicker"
+  (dateInput)="getReps('from', $event)"
+  [(ngModel)]="fromDate" placeholder="Date From">
+<mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+<mat-datepicker #fromPicker></mat-datepicker>
+<input matInput [matDatepicker]="toPicker"
+  (dateInput)="getReps('to', $event)"
+  [(ngModel)]="toDate" placeholder="Date To">
+<mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+<mat-datepicker #toPicker></mat-datepicker>
+
+<!-- *ngIf="gotRowData" -->
+<!--  -->
+<!-- [gridOptions]="gridOptions" -->
+<ag-grid-angular
+  #agGrid
+  style="width: 90vw; height: 70vh;"
+  class="ag-theme-balham"
+  [gridOptions]="gridOptions"
+>
+</ag-grid-angular>
