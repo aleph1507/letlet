@@ -37,23 +37,19 @@ export class StopListComponent implements OnInit {
   public gridOptions: GridOptions = <GridOptions>{
     rowData: [],
     columnDefs: [
-      {headerName: 'Name', field: 'name'},
-      {headerName: 'Surname', field: 'surname'},
-      {headerName: 'Job Title', field: 'jobTitle'},
-      {headerName: 'ID Number', field: 'ID'},
-      {headerName: 'Validity Date', field: 'validityDate'},
-      {headerName: 'Background Validity Check', field: 'backgroundValidityCheck'},
-      {headerName: 'Approved Areas', field: 'approvedAreas'},
-      {headerName: 'Date Of Issue', field: 'dateOfIssue'},
-      {headerName: 'Status', field: 'status'},
-      {headerName: 'Security Awareness Date Of Training', field: 'secAwareDOT'},
-      {headerName: 'Proximity Card No', field: 'proximityCardNo'},
-      {headerName: 'Code', field: 'code'},
-      {headerName: 'Airport', field: 'airport'}
-    ]
+      {headerName: 'Employee Name', field: 'employeeName'},
+      {headerName: 'Company Name', field: 'companyName'},
+      {headerName: 'Card Series Number', field: 'cardSeriesNumber'},
+      {headerName: 'Card Number', field: 'cardNumber'},
+      {headerName: 'Expire Date', field: 'expireDate'},
+    ],
+    enableCellChangeFlash: true,
+    refreshCells: true,
+    enableFilter: true,
+    enableSorting: true,
   };
 
-  rowData = [];
+  // rowData = [];
 
   // @ViewChild(MatSort) sort: MatSort;
 
@@ -62,11 +58,15 @@ export class StopListComponent implements OnInit {
   constructor(private slService: StopListService) { }
 
   ngOnInit() {
+    this.slService.getStopListEntries()
+      .subscribe((data : StopListEntry[]) => {
+        this.gridOptions.api.setRowData(data);
+      });
     // this.slEntries = this.slService.getStopListEntries();
     // this.slDataSource = new MatTableDataSource(this.slEntries);
     // this.slDataSource.sort = this.sort;
-    this.gridOptions.rowData = this.slService.getStopListEntries();
-    console.log('this.rowData: ' + this.rowData);
+    // this.gridOptions.rowData = this.slService.getStopListEntries();
+    // console.log('this.rowData: ' + this.rowData);
   }
 
   // applyFilter(filterValue: string) {
