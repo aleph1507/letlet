@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
   constructor(private authService: AuthService) { }
+  private LOGO = require('../img/asec-logo.png');
 
   logIn() {
     // console.log("login.logIn");

@@ -1,9 +1,11 @@
 <div class="flex-container">
     <form class="login-form" id="login-form" [formGroup]="loginForm" ngSubmit="logIn()" novalidate>
       <mat-card>
-        <mat-card-title>Log In</mat-card-title>
-        <mat-card-subtitle>Airport Security Entry Control</mat-card-subtitle>
-
+        <div class="card-head">
+          <!-- <mat-card-subtitle>Airport Security Entry Control</mat-card-subtitle> -->
+          <img [src]="LOGO">
+        </div>
+        <mat-card-title>Log In</mat-card-title>        
         <mat-form-field>
           <input matInput placeholder="User Name"
             id="username"

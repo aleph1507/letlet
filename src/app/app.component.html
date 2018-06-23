@@ -5,7 +5,7 @@
 <div class="appContainer">
     <mat-toolbar *ngIf="loggedIn" color="primary">
         <button type="button" mat-icon-button (click)="sidenav.toggle()">
-          <mat-icon>menu</mat-icon>
+          <mat-icon class="white">menu</mat-icon>
         </button>
         <span class="tb-spacer-max"></span>
         <button type="button" mat-icon-button [matMenuTriggerFor]="userMenu">
@@ -24,68 +24,69 @@
     </mat-menu>
     <mat-sidenav-container class="sidenav-container">
       <mat-sidenav #sidenav class="sidenav1" mode="over" position="start">
+        <a href="#" style="height:0; position:absolute;" class="mat-button"></a>
         <button mat-raised-button
           color="primary"
           class="sidenav-btn"
           [routerLink]="['/']"
           (click)="sidenav.close()">
-          <mat-icon>home</mat-icon>Home
+          <mat-icon>home</mat-icon><span>Home</span>
         </button>
         <button mat-raised-button
           color="primary"
           class="sidenav-btn"
           [routerLink]="['/requester']"
           (click)="sidenav.close()">
-          <mat-icon>note_add</mat-icon>Create Request
+          <mat-icon>note_add</mat-icon><span>Create Request</span>
         </button>
         <button mat-raised-button
           color="primary"
           class="sidenav-btn"
           [routerLink]="['/approvals']"
           (click)="sidenav.close()">
-          <mat-icon>assignment</mat-icon>Approvals
+          <mat-icon>assignment</mat-icon><span>Approvals</span>
         </button>
         <button mat-raised-button
           color="primary"
           class="sidenav-btn"
           [routerLink]="['/gates']"
           (click)="sidenav.close()">
-          <mat-icon>transfer_within_a_station</mat-icon>Select Gate
+          <mat-icon>transfer_within_a_station</mat-icon><span>Select Gate</span>
         </button>
         <button mat-raised-button
           color="primary"
           class="sidenav-btn"
           [routerLink]="['/badges']"
           (click)="sidenav.close()">
-          <mat-icon>assignment_ind</mat-icon>Badges
+          <mat-icon>assignment_ind</mat-icon><span>Badges</span>
         </button>
         <button mat-raised-button
           color="primary"
           class="sidenav-btn"
           [routerLink]="['/stop-list']"
           (click)="sidenav.close()">
-          <mat-icon>warning</mat-icon>Stop List
+          <mat-icon>warning</mat-icon><span>Stop List</span>
         </button>
         <button mat-raised-button
           color="primary"
           class="sidenav-btn"
           [routerLink]="['/reports']"
           (click)="sidenav.close()">
-          <mat-icon>assessment</mat-icon>Reports
+          <mat-icon>assessment</mat-icon><span>Reports</span>
         </button>
         <button mat-raised-button
           color="primary"
           class="sidenav-btn"
           [routerLink]="['/resources']"
           (click)="sidenav.close()">
-          <mat-icon>dashboard</mat-icon>Resources
+          <mat-icon>dashboard</mat-icon><span>Resources</span>
         </button>
         <button mat-raised-button
           color="primary"
           class="sidenav-btn"
           [routerLink]="['/requester']"
           (click)="sidenav.close()">
-          <mat-icon>settings</mat-icon>Settings
+          <mat-icon>settings</mat-icon><span>Settings</span>
         </button>
       </mat-sidenav>
       <mat-sidenav-content>

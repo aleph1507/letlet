@@ -29,3 +29,23 @@ button {
 mat-toolbar {
   display:none;
 }
+
+.card-head {
+  display: flex;
+}
+
+/* .card-head .mat-card-title {
+  align-self: flex-start;
+  dash-card: #3f9db6cc
+  dash-text: #fff
+  mat-icon: #000
+  primary-color: #3f9db6
+} */
+
+.card-head img {
+  height: 50%;
+  width: 50%;
+  align-self: flex-end;
+  /* margin-right: 15%; */
+  margin: auto;
+}

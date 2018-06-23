@@ -45,7 +45,7 @@
             <mat-icon matListIcon
             (click)="exitEnteredPerson(enteredp)"
             class="icon-control"
-            >mode_edit</mat-icon>
+            >border_color</mat-icon>
           </mat-cell>
         </ng-container>
 
@@ -104,7 +104,7 @@
             <mat-icon matListIcon
             (click)="exitEnteredVehicle(enteredv)"
             class="icon-control"
-            >mode_edit</mat-icon>
+            >border_color</mat-icon>
           </mat-cell>
         </ng-container>
 
@@ -149,7 +149,7 @@
             <mat-icon matListIcon
             (click)="enterExpectedPerson(ep)"
             class="icon-control"
-            >mode_edit</mat-icon>
+            >border_color</mat-icon>
           </mat-cell>
         </ng-container>
 
@@ -162,7 +162,7 @@
         <h3>Expected Vehicles</h3>
         <mat-form-field>
           <input matInput (keyup)="applyFilterExpectedVehicles($event.target.value)" placeholder="Filter">
-        </mat-form-field>  
+        </mat-form-field>
       </div>
 
       <mat-table [dataSource]="dataSourceExpectedVehicles" class="mat-elevation-z8">
@@ -192,7 +192,7 @@
             <mat-icon matListIcon
             (click)="enterExpectedVehicle(ev)"
             class="icon-control"
-            >mode_edit</mat-icon>
+            >border_color</mat-icon>
           </mat-cell>
         </ng-container>
 
