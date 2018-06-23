@@ -1,17 +1,19 @@
-<mat-form-field>
-<input matInput [matDatepicker]="fromPicker"
-  (dateInput)="getReps('from', $event)"
-  [(ngModel)]="fromDate" placeholder="Date From" disabled>
-<mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
-<mat-datepicker #fromPicker disabled="false"></mat-datepicker>
-</mat-form-field>
-<mat-form-field>
-<input matInput [matDatepicker]="toPicker"
-  (dateInput)="getReps('to', $event)"
-  [(ngModel)]="toDate" placeholder="Date To" disabled>
-<mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
-<mat-datepicker #toPicker disabled="false"></mat-datepicker>
-</mat-form-field>
+<div class="filter-panel">
+  <mat-form-field>
+  <input matInput [matDatepicker]="fromPicker"
+    (dateInput)="getReps('from', $event)"
+    [(ngModel)]="fromDate" placeholder="Date From" disabled>
+  <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+  <mat-datepicker #fromPicker disabled="false"></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+  <input matInput [matDatepicker]="toPicker"
+    (dateInput)="getReps('to', $event)"
+    [(ngModel)]="toDate" placeholder="Date To" disabled>
+  <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+  <mat-datepicker #toPicker disabled="false"></mat-datepicker>
+  </mat-form-field>
+</div>
 <!-- *ngIf="gotRowData" -->
 <!--  -->
 <!-- [gridOptions]="gridOptions" -->

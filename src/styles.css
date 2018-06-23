@@ -10,3 +10,8 @@
 .icon-control {
   cursor: pointer;
 }
+
+div.filter-panel {
+  background: rgba(240,240,240,0.8);
+  padding: 0 2em;
+}

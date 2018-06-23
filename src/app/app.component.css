@@ -6,10 +6,20 @@
   bottom: 0;
   left: 0;
   right: 0;
+  /* background: url('img/plane_bg_2_treshold-2.png'); */
+  /* background: blue; */
 }
  mat-sidenav-container {
      flex: 1;
+     background-size:cover;
+     background: url('img/plane-bg-greyscaled.jpg');
+     background-position: 50% 110%;
  }
+
+div.filter-panel {
+  background: rgba(240,240,240,0.8);
+  background: #00ff00;
+}
 
 mat-toolbar {
   z-index:2;
