@@ -2,9 +2,22 @@ div#header {
   display: flex;
   justify-content: space-between;
   align-items: space-between;
-  margin:1%;
+  /* margin:1%; */
+  background: #fff;
+  width: 96%;
+  padding-left: 2em;
+  padding-right: 2em;
+  padding-top:0.5em;
+  margin-bottom: 2em;
 }
 
+mat-table {
+  width: 100%;
+}
+
+.container {
+  width: 90%;
+}
 .filter-header {
   width: 96%;
   margin: 2%;

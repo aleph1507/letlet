@@ -20,6 +20,21 @@ input.ng-dirty, textarea.ng-dirty {
 }
 
 div.filter-panel {
-  background: rgba(240,240,240,0.8);
+  /* background: rgba(240,240,240,0.8); */
+  background: #fff;
   padding: 0 2em;
+}
+
+.badges-table {
+  background: #fff;
+}
+
+.requester-form {
+  background: #fff;
+  padding: 0.5em 1em;
+  height: 95%;
+}
+
+.mat-elevation-z8 {
+  background: #fff;
 }

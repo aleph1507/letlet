@@ -1,310 +1,313 @@
-<div id="header">
-  <h2>{{categoryTitle | titlecase}}</h2>
-  <button mat-mini-fab color="primary" class="add-resource-btn" (click)="addResource(category)">+
-  </button>
-</div>
+<div class="container">
+  <div id="header">
+    <h2>{{categoryTitle | titlecase}}</h2>
+    <button mat-mini-fab color="primary" class="add-resource-btn" (click)="addResource(category)">+
+    </button>
+  </div>
 
 
-  <div class="input-field-header">
-    <div class="filter-panel">
-      <mat-form-field>
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-      </mat-form-field>
+    <div class="input-field-header">
+      <div class="filter-panel">
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+      </div>
     </div>
-  </div>
 
-  <div class="table-container mat-elevation-z8">
+    <div class="table-container mat-elevation-z8">
 
-    <mat-table [dataSource]="dataSource" matSort>
+      <mat-table [dataSource]="dataSource" matSort>
 
-      <!-- Visitor Vehicle Badges resource -->
-      <div *ngIf="category=='visitors-vehicle-badges'" class="visitors-vehicle-badges-resource" id="visitors-vehicle-badges-resource">
-        <!-- <ng-container matColumnDef="id">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-          <mat-cell *matCellDef="let vvb"> {{vvb.id}} </mat-cell>
-        </ng-container> -->
+        <!-- Visitor Vehicle Badges resource -->
+        <div *ngIf="category=='visitors-vehicle-badges'" class="visitors-vehicle-badges-resource" id="visitors-vehicle-badges-resource">
+          <!-- <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+            <mat-cell *matCellDef="let vvb"> {{vvb.id}} </mat-cell>
+          </ng-container> -->
 
-        <ng-container matColumnDef="code">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Code </mat-header-cell>
-          <mat-cell *matCellDef="let vvb"> {{vvb.code}} </mat-cell>
-        </ng-container>
+          <ng-container matColumnDef="code">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Code </mat-header-cell>
+            <mat-cell *matCellDef="let vvb"> {{vvb.code}} </mat-cell>
+          </ng-container>
 
-        <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-          <mat-cell *matCellDef="let vvb"> {{vvb.name}} </mat-cell>
-        </ng-container>
-
-
-        <ng-container matColumnDef="edit">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
-          <mat-cell *matCellDef="let vvb">
-            <mat-icon matListIcon
-            (click)="editVisitorVehicleBadge(vvb.id)"
-            class="icon-control"
-            >mode_edit</mat-icon>
-          </mat-cell>
-        </ng-container>
-
-      </div>
-      <!-- ./Visitor Vehicle Badges resource -->
-
-      <!-- Visitor Badges resource -->
-      <div *ngIf="category=='visitors-badges'" class="visitors-badges-resource" id="zones-resource">
-        <!-- <ng-container matColumnDef="id">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-          <mat-cell *matCellDef="let vb"> {{vb.id}} </mat-cell>
-        </ng-container> -->
-
-        <ng-container matColumnDef="code">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Code </mat-header-cell>
-          <mat-cell *matCellDef="let vb"> {{vb.code}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-          <mat-cell *matCellDef="let vb"> {{vb.name}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="barcode">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Barcode </mat-header-cell>
-          <mat-cell *matCellDef="let vb"> {{vb.barcode}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="edit">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
-          <mat-cell *matCellDef="let vb">
-            <mat-icon matListIcon
-            (click)="editVisitorsBadge(vb.id)"
-            class="icon-control"
-            >mode_edit</mat-icon>
-          </mat-cell>
-        </ng-container>
-
-      </div>
-      <!-- ./Visitor Badges resource -->
-
-      <!-- Airport Zone resource -->
-      <div *ngIf="category=='zones'" class="zones-resource" id="zones-resource">
-        <!-- <ng-container matColumnDef="id">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-          <mat-cell *matCellDef="let zone"> {{zone.id}} </mat-cell>
-        </ng-container> -->
-
-        <ng-container matColumnDef="code">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Code </mat-header-cell>
-          <mat-cell *matCellDef="let zone"> {{zone.code}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-          <mat-cell *matCellDef="let zone"> {{zone.name}} </mat-cell>
-        </ng-container>
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+            <mat-cell *matCellDef="let vvb"> {{vvb.name}} </mat-cell>
+          </ng-container>
 
 
-        <ng-container matColumnDef="edit">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
-          <mat-cell *matCellDef="let zone">
-            <mat-icon matListIcon
-            (click)="editZone(zone.id)"
-            class="icon-control"
-            >mode_edit</mat-icon>
-          </mat-cell>
-        </ng-container>
+          <ng-container matColumnDef="edit">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
+            <mat-cell *matCellDef="let vvb">
+              <mat-icon matListIcon
+              (click)="editVisitorVehicleBadge(vvb.id)"
+              class="icon-control"
+              >mode_edit</mat-icon>
+            </mat-cell>
+          </ng-container>
 
-      </div>
-      <!-- ./Airport Zone resource -->
+        </div>
+        <!-- ./Visitor Vehicle Badges resource -->
 
-      <!-- Occupations resource -->
-      <!-- <div *ngIf="category=='occupations'" class="occupations-resource" id="occupations-resource">
-        <ng-container matColumnDef="id">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-          <mat-cell *matCellDef="let occ"> {{occ.id}} </mat-cell>
-        </ng-container>
+        <!-- Visitor Badges resource -->
+        <div *ngIf="category=='visitors-badges'" class="visitors-badges-resource" id="zones-resource">
+          <!-- <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+            <mat-cell *matCellDef="let vb"> {{vb.id}} </mat-cell>
+          </ng-container> -->
 
-        <ng-container matColumnDef="code">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Code </mat-header-cell>
-          <mat-cell *matCellDef="let occ"> {{occ.code}} </mat-cell>
-        </ng-container>
+          <ng-container matColumnDef="code">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Code </mat-header-cell>
+            <mat-cell *matCellDef="let vb"> {{vb.code}} </mat-cell>
+          </ng-container>
 
-        <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-          <mat-cell *matCellDef="let occ"> {{occ.name}} </mat-cell>
-        </ng-container>
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+            <mat-cell *matCellDef="let vb"> {{vb.name}} </mat-cell>
+          </ng-container>
 
+          <ng-container matColumnDef="barcode">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Barcode </mat-header-cell>
+            <mat-cell *matCellDef="let vb"> {{vb.barcode}} </mat-cell>
+          </ng-container>
 
-        <ng-container matColumnDef="edit">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
-          <mat-cell *matCellDef="let occ">
-            <mat-icon matListIcon
-            (click)="editOccupation(occ.id)"
-            class="icon-control"
-            >mode_edit</mat-icon>
-          </mat-cell>
-        </ng-container>
+          <ng-container matColumnDef="edit">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
+            <mat-cell *matCellDef="let vb">
+              <mat-icon matListIcon
+              (click)="editVisitorsBadge(vb.id)"
+              class="icon-control"
+              >mode_edit</mat-icon>
+            </mat-cell>
+          </ng-container>
 
-      </div> -->
-      <!-- ./Occupations resource -->
+        </div>
+        <!-- ./Visitor Badges resource -->
 
-      <!-- Gates resource -->
-      <div *ngIf="category=='gates'" class="gates-resource" id="gates-resource">
-        <!-- <ng-container matColumnDef="id">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-          <mat-cell *matCellDef="let gate"> {{gate.id}} </mat-cell>
-        </ng-container> -->
+        <!-- Airport Zone resource -->
+        <div *ngIf="category=='zones'" class="zones-resource" id="zones-resource">
+          <!-- <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+            <mat-cell *matCellDef="let zone"> {{zone.id}} </mat-cell>
+          </ng-container> -->
 
-        <!-- <ng-container matColumnDef="code">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Code </mat-header-cell>
-          <mat-cell *matCellDef="let gate"> {{gate.code}} </mat-cell>
-        </ng-container> -->
+          <ng-container matColumnDef="code">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Code </mat-header-cell>
+            <mat-cell *matCellDef="let zone"> {{zone.code}} </mat-cell>
+          </ng-container>
 
-        <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-          <mat-cell *matCellDef="let gate"> {{gate.name}} </mat-cell>
-        </ng-container>
-
-
-        <ng-container matColumnDef="edit">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
-          <mat-cell *matCellDef="let gate">
-            <mat-icon matListIcon
-            (click)="editGate(gate.id)"
-            class="icon-control"
-            >mode_edit</mat-icon>
-          </mat-cell>
-        </ng-container>
-
-      </div>
-      <!-- ./Gates resource -->
-
-      <!-- Reasons resource -->
-      <div *ngIf="category=='reasons'" class="reasons-resource" id="reasons-resource">
-        <!-- <ng-container matColumnDef="id">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-          <mat-cell *matCellDef="let reason"> {{reason.id}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="code">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Code </mat-header-cell>
-          <mat-cell *matCellDef="let reason"> {{reason.code}} </mat-cell>
-        </ng-container> -->
-
-        <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-          <mat-cell *matCellDef="let reason"> {{reason.name}} </mat-cell>
-        </ng-container>
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+            <mat-cell *matCellDef="let zone"> {{zone.name}} </mat-cell>
+          </ng-container>
 
 
-        <ng-container matColumnDef="edit">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
-          <mat-cell *matCellDef="let reason">
-            <mat-icon matListIcon
-            (click)="editReason(reason.id)"
-            class="icon-control"
-            >mode_edit</mat-icon>
-          </mat-cell>
-        </ng-container>
+          <ng-container matColumnDef="edit">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
+            <mat-cell *matCellDef="let zone">
+              <mat-icon matListIcon
+              (click)="editZone(zone.id)"
+              class="icon-control"
+              >mode_edit</mat-icon>
+            </mat-cell>
+          </ng-container>
 
-        <!-- <ng-container matColumnDef="edit">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
-          <mat-cell *matCellDef="let reason">
-            <mat-icon matListIcon
-              (click)="deleteVehicle(i)"
-              class="icon-control">delete</mat-icon>
-          </mat-cell>
-        </ng-container> -->
+        </div>
+        <!-- ./Airport Zone resource -->
 
+        <!-- Occupations resource -->
+        <!-- <div *ngIf="category=='occupations'" class="occupations-resource" id="occupations-resource">
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+            <mat-cell *matCellDef="let occ"> {{occ.id}} </mat-cell>
+          </ng-container>
 
-      </div>
-      <!-- ./Reason resource -->
+          <ng-container matColumnDef="code">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Code </mat-header-cell>
+            <mat-cell *matCellDef="let occ"> {{occ.code}} </mat-cell>
+          </ng-container>
 
-      <!-- Employees resource -->
-      <div *ngIf="category=='employees'" class="employees-resource" id="employees-resource">
-        <!-- <ng-container matColumnDef="id">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-          <mat-cell *matCellDef="let emp"> {{emp.id}} </mat-cell>
-        </ng-container> -->
-
-        <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-          <mat-cell *matCellDef="let emp"> {{emp.name}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="surname">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Surname </mat-header-cell>
-          <mat-cell *matCellDef="let emp"> {{emp.surname}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="company">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Company </mat-header-cell>
-          <mat-cell *matCellDef="let emp"> {{emp.company.name}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="edit">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
-          <mat-cell *matCellDef="let emp">
-            <mat-icon matListIcon
-            (click)="editEmployee(emp.id)"
-            class="icon-control"
-            >mode_edit</mat-icon>
-          </mat-cell>
-        </ng-container>
-      </div>
-      <!-- ./Employees resource -->
-
-      <!-- Vehicles resource -->
-      <div *ngIf="category=='vehicles'" class="vehicles-resource" id="vehicles-resource">
-        <ng-container matColumnDef="company">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Company </mat-header-cell>
-          <mat-cell *matCellDef="let vehicle"> {{vehicle.company.name}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="model">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Model </mat-header-cell>
-          <mat-cell *matCellDef="let vehicle"> {{vehicle.model}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="plate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Plate </mat-header-cell>
-          <mat-cell *matCellDef="let vehicle"> {{vehicle.plate}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="edit">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
-          <mat-cell *matCellDef="let vehicle">
-            <mat-icon matListIcon
-            (click)="editVehicle(vehicle.id)"
-            class="icon-control"
-            >mode_edit</mat-icon>
-          </mat-cell>
-        </ng-container>
-      </div>
-      <!-- ./Vehicles resource -->
-
-      <!-- Companies resource -->
-      <div *ngIf="category=='companies'" class="companies-resource" id="companies-resource">
-        <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-          <mat-cell *matCellDef="let comp"> {{comp.name}} </mat-cell>
-        </ng-container>
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+            <mat-cell *matCellDef="let occ"> {{occ.name}} </mat-cell>
+          </ng-container>
 
 
-        <ng-container matColumnDef="id">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
-          <mat-cell *matCellDef="let comp">
-            <mat-icon matListIcon
-            (click)="editCompany(comp.id)"
-            class="icon-control"
-            >mode_edit</mat-icon>
-          </mat-cell>
-        </ng-container>
-      </div>
-      <!-- ./Companies resource -->
+          <ng-container matColumnDef="edit">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
+            <mat-cell *matCellDef="let occ">
+              <mat-icon matListIcon
+              (click)="editOccupation(occ.id)"
+              class="icon-control"
+              >mode_edit</mat-icon>
+            </mat-cell>
+          </ng-container>
 
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;">
-      </mat-row>
-    </mat-table>
+        </div> -->
+        <!-- ./Occupations resource -->
 
-    <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
-  </div>
-<!-- </div> -->
+        <!-- Gates resource -->
+        <div *ngIf="category=='gates'" class="gates-resource" id="gates-resource">
+          <!-- <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+            <mat-cell *matCellDef="let gate"> {{gate.id}} </mat-cell>
+          </ng-container> -->
+
+          <!-- <ng-container matColumnDef="code">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Code </mat-header-cell>
+            <mat-cell *matCellDef="let gate"> {{gate.code}} </mat-cell>
+          </ng-container> -->
+
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+            <mat-cell *matCellDef="let gate"> {{gate.name}} </mat-cell>
+          </ng-container>
+
+
+          <ng-container matColumnDef="edit">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
+            <mat-cell *matCellDef="let gate">
+              <mat-icon matListIcon
+              (click)="editGate(gate.id)"
+              class="icon-control"
+              >mode_edit</mat-icon>
+            </mat-cell>
+          </ng-container>
+
+        </div>
+        <!-- ./Gates resource -->
+
+        <!-- Reasons resource -->
+        <div *ngIf="category=='reasons'" class="reasons-resource" id="reasons-resource">
+          <!-- <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+            <mat-cell *matCellDef="let reason"> {{reason.id}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="code">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Code </mat-header-cell>
+            <mat-cell *matCellDef="let reason"> {{reason.code}} </mat-cell>
+          </ng-container> -->
+
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+            <mat-cell *matCellDef="let reason"> {{reason.name}} </mat-cell>
+          </ng-container>
+
+
+          <ng-container matColumnDef="edit">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
+            <mat-cell *matCellDef="let reason">
+              <mat-icon matListIcon
+              (click)="editReason(reason.id)"
+              class="icon-control"
+              >mode_edit</mat-icon>
+            </mat-cell>
+          </ng-container>
+
+          <!-- <ng-container matColumnDef="edit">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
+            <mat-cell *matCellDef="let reason">
+              <mat-icon matListIcon
+                (click)="deleteVehicle(i)"
+                class="icon-control">delete</mat-icon>
+            </mat-cell>
+          </ng-container> -->
+
+
+        </div>
+        <!-- ./Reason resource -->
+
+        <!-- Employees resource -->
+        <div *ngIf="category=='employees'" class="employees-resource" id="employees-resource">
+          <!-- <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+            <mat-cell *matCellDef="let emp"> {{emp.id}} </mat-cell>
+          </ng-container> -->
+
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+            <mat-cell *matCellDef="let emp"> {{emp.name}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="surname">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Surname </mat-header-cell>
+            <mat-cell *matCellDef="let emp"> {{emp.surname}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="company">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Company </mat-header-cell>
+            <mat-cell *matCellDef="let emp"> {{emp.company.name}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="edit">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
+            <mat-cell *matCellDef="let emp">
+              <mat-icon matListIcon
+              (click)="editEmployee(emp.id)"
+              class="icon-control"
+              >mode_edit</mat-icon>
+            </mat-cell>
+          </ng-container>
+        </div>
+        <!-- ./Employees resource -->
+
+        <!-- Vehicles resource -->
+        <div *ngIf="category=='vehicles'" class="vehicles-resource" id="vehicles-resource">
+          <ng-container matColumnDef="company">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Company </mat-header-cell>
+            <mat-cell *matCellDef="let vehicle"> {{vehicle.company.name}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="model">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Model </mat-header-cell>
+            <mat-cell *matCellDef="let vehicle"> {{vehicle.model}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="plate">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Plate </mat-header-cell>
+            <mat-cell *matCellDef="let vehicle"> {{vehicle.plate}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="edit">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
+            <mat-cell *matCellDef="let vehicle">
+              <mat-icon matListIcon
+              (click)="editVehicle(vehicle.id)"
+              class="icon-control"
+              >mode_edit</mat-icon>
+            </mat-cell>
+          </ng-container>
+        </div>
+        <!-- ./Vehicles resource -->
+
+        <!-- Companies resource -->
+        <div *ngIf="category=='companies'" class="companies-resource" id="companies-resource">
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+            <mat-cell *matCellDef="let comp"> {{comp.name}} </mat-cell>
+          </ng-container>
+
+
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
+            <mat-cell *matCellDef="let comp">
+              <mat-icon matListIcon
+              (click)="editCompany(comp.id)"
+              class="icon-control"
+              >mode_edit</mat-icon>
+            </mat-cell>
+          </ng-container>
+        </div>
+        <!-- ./Companies resource -->
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;">
+        </mat-row>
+      </mat-table>
+
+      <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
+    </div>
+  <!-- </div> -->
+
+</div>
