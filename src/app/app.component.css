@@ -16,10 +16,10 @@
      background-position: 50% 110%;
  }
 
-div.filter-panel {
+/* div.filter-panel {
   background: rgba(240,240,240,0.8);
   background: #00ff00;
-}
+} */
 
 mat-toolbar {
   z-index:2;
