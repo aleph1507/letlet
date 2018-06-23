@@ -16,6 +16,12 @@
      background-position: 50% 110%;
  }
 
+.sidenav1 mat-icon {
+  float:left;
+  padding-left: 0.1em;
+  padding-right:0.5em;
+}
+
 /* div.filter-panel {
   background: rgba(240,240,240,0.8);
   background: #00ff00;
