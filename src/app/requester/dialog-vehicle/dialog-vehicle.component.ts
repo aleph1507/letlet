@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Vehicle } from '../../models/Vehicle.model';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -18,17 +18,23 @@ export class DialogVehicleComponent implements OnInit {
   constructor(public thisDialogRef: MatDialogRef<DialogVehicleComponent>,
               @Inject(MAT_DIALOG_DATA) public data: {vehicle, i, resource},
               private requesterService: RequesterService,
-              private resourcesService: ResourcesService
+              private resourcesService: ResourcesService,
+              private cd: ChangeDetectorRef
               ) { }
 
   resource: false;
+
+  img1src: string ='';
+  img2src: string = '';
 
   vehicleForm: FormGroup;
   vehicle: Vehicle = {
     id: null,
     // company: null,
     model: null,
-    plate: null
+    plate: null,
+    image1: null,
+    image2: null
   }
 
   companies: Company[];
@@ -41,8 +47,11 @@ export class DialogVehicleComponent implements OnInit {
         });
 
       if(this.data != null){
-        if(this.data.vehicle != null)
+        if(this.data.vehicle != null){
           this.vehicle = this.data.vehicle;
+          this.img1src = this.data.vehicle.image1;
+          this.img2src = this.data.vehicle.image2;
+        }
       }
 
       this.resource = this.data.resource;
@@ -56,8 +65,25 @@ export class DialogVehicleComponent implements OnInit {
         }),
         'plate': new FormControl(this.vehicle.plate, {
           validators: Validators.required
-        })
+        }),
+        'image1': new FormControl(null),
+        'image2': new FormControl(null)
       })
+  }
+
+  previewImage(event){
+    let elem = event.target || event.srcElement || event.currentTarget;
+    if(elem.files.length > 0){
+      let reader = new FileReader();
+      reader.onload = (event:any) => {
+        if(elem.attributes.formcontrolname.value == "image1")
+          this.img1src = event.target.result;
+        else
+          this.img2src = event.target.result;
+      }
+      reader.readAsDataURL(event.target.files[0]);
+      this.cd.markForCheck();
+    }
   }
 
   displayFn(c?: Company) {
@@ -68,9 +94,11 @@ export class DialogVehicleComponent implements OnInit {
     // this.vehicle.company = this.vehicleForm.controls['company'].value;
     this.vehicle.model = this.vehicleForm.controls['model'].value;
     this.vehicle.plate = this.vehicleForm.controls['plate'].value;
+    this.vehicle.image1 = this.img1src;
+    this.vehicle.image2 = this.img2src;
     if(!this.data.resource){
-      console.log('vo !resource this.data.resource: ', this.data.resource);
-      console.log('vo !resource this.data: ', this.data);
+      // console.log('vo !resource this.data.resource: ', this.data.resource);
+      // console.log('vo !resource this.data: ', this.data);
       // console.log('pre add (vModal) requester.vehicles: ', this.requesterService.getAllVehicles());
       this.data.i == null ? this.requesterService.addVehicle(this.vehicle) : this.requesterService.editVehicle(this.data.i, this.vehicle);
       // console.log('post add (vModal) requester.vehicles: ', this.requesterService.getAllVehicles());

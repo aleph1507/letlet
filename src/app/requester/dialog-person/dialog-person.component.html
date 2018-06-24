@@ -7,18 +7,18 @@
       (keyup)="latinOnly($event)" required>
   </mat-form-field>
   <mat-form-field class="requester-person-field half half-padding">
-    <input matInput name="personNameCyrilic"
-      id="personNameCyrilic" placeholder="Кирилично име"
-      formControlName="nameCyrilic"
-      autocomplete="off"
-      (keyup)="cyrilicOnly($event)" required>
-  </mat-form-field>
-  <mat-form-field class="requester-person-field half">
     <input matInput name="personSurname"
       id="personsurName" placeholder="Surame"
       formControlName="surname"
       autocomplete="off"
       (keyup)="latinOnly($event)" required>
+  </mat-form-field>
+  <mat-form-field class="requester-person-field half">
+    <input matInput name="personNameCyrilic"
+      id="personNameCyrilic" placeholder="Кирилично име"
+      formControlName="nameCyrilic"
+      autocomplete="off"
+      (keyup)="cyrilicOnly($event)" required>
   </mat-form-field>
   <mat-form-field class="requester-person-field half half-padding">
     <input matInput name="personSurnameCyrilic"
@@ -29,17 +29,19 @@
   </mat-form-field>
   <div class="img-upload">
     <button type="button" mat-raised-button (click)="imgUpload1.click()">
-      <mat-icon>keyboard_arrow_up</mat-icon>
+      Attach Image (JPEG or PNG)<mat-icon>keyboard_arrow_up</mat-icon>
       <input type="file" hidden #imgUpload1
+      accept="image/jpeg, image/png"
       (change)="previewImage($event)" name="image1" id="image1" formControlName="image1">
     </button>
     <img [src]="img1src" class="person-preview">
   </div>
-  <div class="img-upload" id="img2" *ngIf="img1src!==''">
+  <div class="img-upload" id="img2"> <!-- *ngIf="img1src!==''" -->
     <mat-divider class="sm-form-divider-margins"></mat-divider>
     <button type="button" mat-raised-button (click)="imgUpload2.click()">
-      <mat-icon>keyboard_arrow_up</mat-icon>
+      Attach Image (JPEG or PNG) <mat-icon>keyboard_arrow_up</mat-icon>
       <input type="file" hidden #imgUpload2
+      accept="image/jpeg, image/png"
       (change)="previewImage($event)" name="image1" id="image1" formControlName="image2">
     </button>
     <img [src]="img2src" class="person-preview">

@@ -6,3 +6,8 @@
 .requester-vehicle-field{
   width:100%;
 }
+
+.person-preview {
+  max-width: 20%;
+  max-height: 20%;
+}

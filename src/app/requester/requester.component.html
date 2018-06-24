@@ -74,10 +74,33 @@
           autocomplete="off"
           required>
       </mat-form-field>
+      <div class="pdf-upload">
+        <button type="button" mat-raised-button (click)="pdfUpload1.click()">
+          Attach PDF<mat-icon>keyboard_arrow_up</mat-icon>
+          <input type="file" hidden #pdfUpload1
+          accept="application/pdf"
+          (change)="savePdf($event)" name="pdf1" id="pdf1" formControlName="pdf1">
+        </button>
+      </div>
+      <div class="pdf-upload" style="margin-top:3%;">
+        <button type="button" mat-raised-button (click)="pdfUpload2.click()">
+          Attach Additional PDF<mat-icon>keyboard_arrow_up</mat-icon>
+          <input type="file" hidden #pdfUpload2
+          accept="application/pdf"
+          (change)="savePdf($event)" name="pdf2" id="pdf2" formControlName="pdf2">
+        </button>
+      </div>
 
-      <button *ngIf="!editMode" mat-raised-button type="submit" color="primary" [disabled]="!requesterForm.valid" class="main-send">Send</button>
-      <button *ngIf="showApproveBtn" (click)="approve(request.id)" mat-raised-button color="primary" class="main-send">Approve</button>
-      <button *ngIf="showDeclineBtn" (click)="decline(request.id)" mat-raised-button color="primary" class="main-send">Decline</button>
+      <button *ngIf="!editMode"
+        mat-raised-button type="submit" color="primary"
+        [disabled]="checkPersons() || checkVehicles() || !requesterForm.valid"
+        class="main-send">Send</button>
+      <button *ngIf="showApproveBtn"
+        (click)="approve(request.id)" mat-raised-button color="primary"
+        class="main-send">Approve</button>
+      <button *ngIf="showDeclineBtn"
+        (click)="decline(request.id)" mat-raised-button color="primary"
+        class="main-send">Decline</button>
     </form>
 
     <div *ngIf="editMode" class="print-request" id="print-request">

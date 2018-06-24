@@ -28,6 +28,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
   hoveredEditPerson = false;
 
   nEntries = [];
+  errorString: string = '';
+  missingImages: boolean;
 
   // companies = this.resources.getCompanies();
   companies = [];
@@ -52,13 +54,16 @@ export class RequesterComponent implements OnInit, OnDestroy {
   showApproveBtn : boolean = false;
   showDeclineBtn : boolean = false;
 
+  pdf1src: Blob;
+  pdf2src: Blob;
+
   constructor(private dialog: MatDialog,
               private changeDetectorRef: ChangeDetectorRef,
               public requesterService: RequesterService,
               private route: ActivatedRoute,
               private resources: ResourcesService,
               private datePipe: DatePipe,
-              private router: Router
+              private router: Router,
             ) { }
 
   ngOnInit() {
@@ -100,6 +105,12 @@ export class RequesterComponent implements OnInit, OnDestroy {
       }),
       'requesterNumOfEntries': new FormControl(this.request.numberOfEntries, {
         validators: [Validators.required]
+      }),
+      'pdf1': new FormControl(null, {
+        updateOn: 'change'
+      }),
+      'pdf2': new FormControl(null, {
+        updateOn: 'change'
       })
     })
 
@@ -110,6 +121,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
             this.id = req.id;
             this.editMode = true;
             this.request = req;
+            this.pdf1src = req.pdf1;
+            this.pdf2src = req.pdf2;
             this.requesterService.setPersons(req.requestPersonJson);
             this.requesterService.setVehicles(req.requestVehicleJson);
             let company = null;
@@ -137,6 +150,12 @@ export class RequesterComponent implements OnInit, OnDestroy {
                   }),
                   'requesterNumOfEntries': new FormControl({value: this.request.numberOfEntries, disabled: true}, {
                     validators: [Validators.required]
+                  }),
+                  'pdf1': new FormControl(null, {
+                    updateOn: 'change'
+                  }),
+                  'pdf2': new FormControl(null, {
+                    updateOn: 'change'
                   })
                 });
               });
@@ -165,6 +184,30 @@ export class RequesterComponent implements OnInit, OnDestroy {
     // this.requesterForm.controls['requesterCompany']
   }
 
+  savePdf(event){
+    let elem = event.target || event.srcElement || event.currentTarget;
+    if(elem.files.length > 0){
+      let reader = new FileReader();
+      console.log('event: ', event);
+      reader.onload = (event:any) => {
+        console.log('event.target: ', event.target);
+        console.log('event.target.files: ', event.target.files);
+        if(elem.attributes.formcontrolname.value == "pdf1"){
+          // this.pdf1src = event.target.files[0];
+          this.pdf1src = event.target.result;
+          // this.requesterForm.get('pdf1').setValue(this.pdf1src);
+        }
+        else{
+          // this.pdf2src = event.target.files[0];
+          this.pdf2src = event.target.result;
+          // this.requesterForm.get('pdf2').setValue(this.pdf2src);
+        }
+      }
+      reader.readAsDataURL(event.target.files[0]);
+      this.changeDetectorRef.markForCheck();
+    }
+  }
+
   displayFn(c?: Company) {
     return c ? c.name : undefined;
   }
@@ -187,6 +230,40 @@ export class RequesterComponent implements OnInit, OnDestroy {
     );
   }
 
+  // isPersonsEmpty: boolean;
+
+  checkPersons() {
+    // this.isPersonsEmpty = this.requesterService.isEmptyPersons();
+    if(this.requesterService.isEmptyPersons())
+      return true;
+
+    let persons: Person[] = this.requesterService.getAllPersons();
+
+    for(let i = 0; i<persons.length; i++){
+      // console.log(persons[i]);
+      if(persons[i].image1 == '' || persons[i].image1 == null || persons[i].image1 == undefined ||
+        persons[i].image2 == '' || persons[i].image2 == null || persons[i].image2 == undefined){
+          this.errorString += `\nPerson ${persons[i].name} ${persons[i].surname} is missing images.`;
+          this.missingImages = true;
+          return true;
+        }
+    }
+    return false;
+  }
+
+  checkVehicles() {
+    let vehicles:Vehicle[] = this.requesterService.getAllVehicles();
+    for(let i = 0; i<vehicles.length; i++){
+      if(vehicles[i].image1 == '' || vehicles[i].image1 == null || vehicles[i].image1 == undefined ||
+        vehicles[i].image2 == '' || vehicles[i].image2 == null || vehicles[i].image2 == undefined){
+          this.errorString += `\nVehicle ${vehicles[i].plate} of model ${vehicles[i].model} is missing images.`;
+          this.missingImages = true;
+          return true;
+        }
+    }
+    return false;
+  }
+
   onSubmit() {
     if(this.requesterForm.valid) {
       if(this.editMode){
@@ -200,6 +277,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
         this.request.fromDate = this.requesterForm.controls['requesterFromDate'].value;
         this.request.toDate = this.requesterForm.controls['requesterToDate'].value;
         this.request.numberOfEntries = this.requesterForm.controls['requesterNumOfEntries'].value;
+        this.request.pdf1 = this.pdf1src;
+        this.request.pdf2 = this.pdf2src;
         this.requesterService.editRequest(this.request);
       } else {
         this.reqCompany = this.requesterForm.controls['requesterCompany'].value;
@@ -210,7 +289,9 @@ export class RequesterComponent implements OnInit, OnDestroy {
           this.requesterForm.controls['requesterCompany'].value,
           this.requesterForm.controls['requesterFromDate'].value,
           this.requesterForm.controls['requesterToDate'].value,
-          this.requesterForm.controls['requesterNumOfEntries'].value
+          this.requesterForm.controls['requesterNumOfEntries'].value,
+          this.pdf1src,
+          this.pdf2src
         );
       }
     }

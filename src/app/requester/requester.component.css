@@ -9,12 +9,34 @@ h3, p {
 div.requester-container {
   display:flex;
   flex-direction: row;
+  position:relative;
+  height:80vh;
+  width: 80vw;
+  margin: auto;
+}
+
+div.req-form-container {
+  position: relative;
+  top:0;
+  left:0;
+  bottom:0;
+  right: 50%;
+  background: #fff;
+  /* height:100%; */
+  /* width:50%; */
 }
 
 div.requester-props-container {
   display: flex;
   flex-direction:column;
   justify-content: space-between;
+  align-items: space-between;
+  position: relative;
+  top:0;
+  bottom:0;
+  left:0;
+  right:100%;
+  margin-left:1%;
 }
 
 div.list-row {
@@ -56,11 +78,15 @@ div.requester-prop {
   /* justify-content: flex-end; */
   /* align-items: flex-end; */
   /* align-content: space-between; */
-  margin:2%;
+
+  /* margin:2%; */
+
   /* margin-right: 10%; */
+
   width: 40vw;
-  height: 35vh;
+  height: 46%;
   padding:2%;
+
   /* max-height: 20vh; */
   /* overflow-y: auto; */
   /* border: 2px solid black; */

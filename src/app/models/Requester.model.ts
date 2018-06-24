@@ -13,5 +13,7 @@ export class Requester {
   requestPersonJson: Person[];
   requestVehicleJson: Vehicle[];
   approved: boolean;
+  pdf1: Blob;
+  pdf2: Blob;
   // date: number;
 }

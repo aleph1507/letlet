@@ -27,6 +27,10 @@ mat-icon.white {
   color: white;
 }
 
+mat-card {
+  background-color: #ffffffd4 !important;
+}
+
 .sidenav1 mat-icon {
   color: white;
 }

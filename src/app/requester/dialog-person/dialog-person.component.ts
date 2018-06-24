@@ -55,11 +55,9 @@ export class DialogPersonComponent implements OnInit {
         updateOn: 'change'
       }),
       'image1': new FormControl(null, {
-        validators: [Validators.required],
         updateOn: 'change'
       }),
       'image2': new FormControl(null, {
-        validators: [Validators.required],
         updateOn: 'change'
       })
     })
@@ -108,9 +106,27 @@ export class DialogPersonComponent implements OnInit {
   }
 
   okAble(){
+    // console.log(!/[^a-z\s]/.test(this.personForm.controls['name'].value) + ' latin name test');
+    // console.log(!/[^a-z\s]/.test(this.personForm.controls['surname'].value) + ' latin surname test');
+    // console.log(!/[^АБВГДЃЕЖЗЅИЈКЛЉМНЊОПРСТЌУФХЦЧЏШабвгдѓежзѕијклљмнњопрстќуфхцчџш\s]/.test(this.personForm.controls['nameCyrilic'].value) + ' cyrilic name test');
+    // console.log(!/[^АБВГДЃЕЖЗЅИЈКЛЉМНЊОПРСТЌУФХЦЧЏШабвгдѓежзѕијклљмнњопрстќуфхцчџш\s]/.test(this.personForm.controls['surnameCyrilic'].value) + ' cyrilic surname test');
     return this.personForm.controls['name'].status === "VALID" &&
-      this.personForm.controls['surname'].status === "VALID" && this.img1src != ''
-      && this.img2src != '';
+      this.personForm.controls['surname'].status === "VALID" &&
+      this.personForm.controls['nameCyrilic'].status === "VALID" &&
+      this.personForm.controls['surnameCyrilic'].status === 'VALID' &&
+      this.personForm.controls['name'].value != '' &&
+      this.personForm.controls['surname'].value != '' &&
+      this.personForm.controls['nameCyrilic'].value != '' &&
+      this.personForm.controls['surnameCyrilic'].value != '' &&
+      this.personForm.controls['name'].value != null &&
+      this.personForm.controls['surname'].value != null &&
+      this.personForm.controls['nameCyrilic'].value != null &&
+      this.personForm.controls['surnameCyrilic'].value != null &&
+      !/[^a-z\s]/gi.test(this.personForm.controls['name'].value) &&
+      !/[^a-z\s]/gi.test(this.personForm.controls['surname'].value) &&
+      !/[^АБВГДЃЕЖЗЅИЈКЛЉМНЊОПРСТЌУФХЦЧЏШабвгдѓежзѕијклљмнњопрстќуфхцчџш\s]/g.test(this.personForm.controls['nameCyrilic'].value) &&
+      !/[^АБВГДЃЕЖЗЅИЈКЛЉМНЊОПРСТЌУФХЦЧЏШабвгдѓежзѕијклљмнњопрстќуфхцчџш\s]/g.test(this.personForm.controls['surnameCyrilic'].value);
+       //&& this.img1src != '' && this.img2src != '';
   }
 
 }

@@ -31,56 +31,58 @@ export class RequesterService {
   //   })
   // }
 
-  persons: Person[] = [
-      {
-        nameEn: 'name1',
-        name: 'наме1',
-        surnameEn: 'surname1',
-        surname: 'сурнаме1',
-        image1: 'https://griffonagedotcom.files.wordpress.com/2016/07/profile-modern-2e.jpg',
-        image2: 'https://media.gettyimages.com/photos/close-up-profile-of-pensive-brunette-woman-picture-id522796409'
+  persons: Person[] = [];
+      // {
+      //   nameEn: 'name1',
+      //   name: 'наме1',
+      //   surnameEn: 'surname1',
+      //   surname: 'сурнаме1',
+      //   image1: 'https://griffonagedotcom.files.wordpress.com/2016/07/profile-modern-2e.jpg',
+      //   image2: 'https://media.gettyimages.com/photos/close-up-profile-of-pensive-brunette-woman-picture-id522796409'
+      //
+      // },
+      // {
+      //   nameEn: 'name2',
+      //   name: 'наме2',
+      //   surnameEn: 'surname2',
+      //   surname: 'сурнаме2',
+      //   image1: 'https://thumb9.shutterstock.com/display_pic_with_logo/1306012/561117598/stock-photo-beauty-woman-profile-face-portrait-beautiful-spa-model-girl-with-perfect-fresh-clean-skin-blonde-561117598.jpg',
+      //   image2: 'https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg'
+      //
+      // },
+      // {
+      //   nameEn: 'name3',
+      //   name: 'наме3',
+      //   surnameEn: 'surname3',
+      //   surname: 'сурнаме3',
+      //   image1: 'https://griffonagedotcom.files.wordpress.com/2016/07/profile-modern-2e.jpg',
+      //   image2: 'https://media.gettyimages.com/photos/close-up-profile-of-pensive-brunette-woman-picture-id522796409'
+      //
+      // },
+      // {
+      //   nameEn: 'name4',
+      //   name: 'наме4',
+      //   surnameEn: 'surname4',
+      //   surname: 'сурнаме4',
+      //   image1: 'https://thumb9.shutterstock.com/display_pic_with_logo/1306012/561117598/stock-photo-beauty-woman-profile-face-portrait-beautiful-spa-model-girl-with-perfect-fresh-clean-skin-blonde-561117598.jpg',
+      //   image2: 'https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg'
+      //
+      // },
+    // ];
 
-      },
-      {
-        nameEn: 'name2',
-        name: 'наме2',
-        surnameEn: 'surname2',
-        surname: 'сурнаме2',
-        image1: 'https://thumb9.shutterstock.com/display_pic_with_logo/1306012/561117598/stock-photo-beauty-woman-profile-face-portrait-beautiful-spa-model-girl-with-perfect-fresh-clean-skin-blonde-561117598.jpg',
-        image2: 'https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg'
-
-      },
-      {
-        nameEn: 'name3',
-        name: 'наме3',
-        surnameEn: 'surname3',
-        surname: 'сурнаме3',
-        image1: 'https://griffonagedotcom.files.wordpress.com/2016/07/profile-modern-2e.jpg',
-        image2: 'https://media.gettyimages.com/photos/close-up-profile-of-pensive-brunette-woman-picture-id522796409'
-
-      },
-      {
-        nameEn: 'name4',
-        name: 'наме4',
-        surnameEn: 'surname4',
-        surname: 'сурнаме4',
-        image1: 'https://thumb9.shutterstock.com/display_pic_with_logo/1306012/561117598/stock-photo-beauty-woman-profile-face-portrait-beautiful-spa-model-girl-with-perfect-fresh-clean-skin-blonde-561117598.jpg',
-        image2: 'https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg'
-
-      },
-    ];
-  vehicles: Vehicle[] = [
-    {
-      id: null,
-      model: 'zastava',
-      plate: 'sk-123-qw'
-    },
-    {
-      id: null,
-      model: 'varburg',
-      plate: 've-666-zx'
-    },
-  ];
+    vehicles: Vehicle[] = [];
+  // vehicles: Vehicle[] = [
+  //   {
+  //     id: null,
+  //     model: 'zastava',
+  //     plate: 'sk-123-qw'
+  //   },
+  //   {
+  //     id: null,
+  //     model: 'varburg',
+  //     plate: 've-666-zx'
+  //   },
+  // ];
   requests: Requester[] = [];
 
 
@@ -108,7 +110,7 @@ export class RequesterService {
     return this.http.get<Requester>(this.requestUrl + '/' + id, this.httpOptions);
   }
 
-  pushRequest(id = null, requesterName, description, company : Company, fromDate, toDate, numberOfEntries){
+  pushRequest(id = null, requesterName, description, company : Company, fromDate, toDate, numberOfEntries, pdf1 = null, pdf2 = null){
     let request = new Requester();
     // request.requestID = this.requests.length;
     request.id = id;
@@ -120,7 +122,10 @@ export class RequesterService {
     request.numberOfEntries = numberOfEntries;
     request.requestPersonJson = this.persons;
     request.requestVehicleJson = this.vehicles;
+    request.pdf1 = pdf1;
+    request.pdf2 = pdf2;
     // request.date = Date.now();
+    console.log(request);
     this.persons = [];
     this.vehicles = [];
 
@@ -169,7 +174,7 @@ export class RequesterService {
     return this.persons[index];
   }
 
-  getAllPersons(){
+  getAllPersons(): Person[]{
     return this.persons;
   }
 
@@ -200,7 +205,7 @@ export class RequesterService {
     return this.vehicles[index];
   }
 
-  getAllVehicles(){
+  getAllVehicles(): Vehicle[]{
     return this.vehicles;
   }
 
