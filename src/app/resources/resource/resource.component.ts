@@ -1,6 +1,6 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { ResourcesService } from '../../services/resources.service';
-import { MatTableModule, MatSort, MatTableDataSource, MatDialog } from '@angular/material';
+import { MatTableModule, MatSort, MatTableDataSource, MatDialog, MatPaginator } from '@angular/material';
 import { Company } from '../../models/Company';
 import { CompanyModalComponent } from './company-modal/company-modal.component';
 import { ActivatedRoute } from '@angular/router';
@@ -21,6 +21,7 @@ import { VisitorBadgeModalComponent } from './visitor-badge-modal/visitor-badge-
 import { VisitorVehicleBadge } from '../../models/VisitorVehicleBadge';
 import { VisitorVehicleBadgeModalComponent } from './visitor-vehicle-badge-modal/visitor-vehicle-badge-modal.component';
 import { DialogResourceVehicleComponent } from './dialog-vehicle/dialog-vehicle.component';
+import { EmployeesDataSource } from './data_sources/EmployeesDataSource';
 
 @Component({
   selector: 'app-resource',
@@ -35,6 +36,14 @@ export class ResourceComponent implements OnInit {
   paramsSub: any;
   category;
   categoryTitle;
+  currentPage = 1;
+  employees: Employee[] = [];
+  length = 0;
+  pageSize = 10;
+  nextDisabled = false;
+  prevDisabled = true;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private resourcesService: ResourcesService,
               public dialog: MatDialog,
@@ -97,13 +106,28 @@ export class ResourceComponent implements OnInit {
         case 'employees':
           this.category = 'employees';
           this.categoryTitle = this.category;
+
+          this.resourcesService.employees.getEmployeesPage(this.currentPage)
+            .subscribe((data: Employee[]) => {
+              this.employees = data;
+              this.dataSource = new MatTableDataSource<Employee>(this.employees);
+              this.length = this.employees.length;
+              this.dataSource.paginator = this.paginator;
+              this.pageSize = 10;
+              console.log('data: ', data);
+            })
           // this.dataSource = new MatTableDataSource<Employee>(this.resourcesService.employees.getAllEmployees());
-          this.resourcesService.employees.getAllEmployees()
-            .subscribe((data) => {
-              this.resourcesService.employees.employees = data;
-              this.dataSource = new
-                MatTableDataSource<Employee>(this.resourcesService.employees.employees);
-            });
+
+          // let dataSource: EmployeesDataSource = new EmployeesDataSource(this.resourcesService.employees);
+          // this.dataSource.loadEmployees();
+
+          // this.resourcesService.employees.getAllEmployees()
+          //   .subscribe((data) => {
+          //     this.resourcesService.employees.employees = data;
+          //     this.dataSource = new
+          //       MatTableDataSource<Employee>(this.resourcesService.employees.employees);
+          //       this.dataSource.paginator = this.paginator;
+          //   });
           this.displayedColumns = ['name', 'surname', 'company', 'edit'];
           break;
         case 'reasons':
@@ -260,6 +284,35 @@ export class ResourceComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(a => {
       this.applyFilter('');
+    });
+  }
+
+  prevPageEmp(page: number) {
+    // console.log('vo prev page');
+    if(this.currentPage > 1){
+      this.currentPage--;
+      this.resourcesService.employees.getEmployeesPage(this.currentPage).subscribe((data : Employee[]) => {
+        // console.log('vo prev subscription data: ' + data);
+          this.employees = data;
+          // console.log('this.badges : ' + this.badges);
+          this.dataSource = new MatTableDataSource<Employee>(this.employees);
+          this.nextDisabled = false;
+      });
+    }
+  }
+
+  nextPageEmp(page: number) {
+    // console.log('vo next page');
+    this.resourcesService.employees.getEmployeesPage(this.currentPage+1).subscribe((data : Employee[]) => {
+      // console.log('vo next subscription data: ' + data);
+      if(data){
+        this.currentPage++;
+        this.employees = data;
+        // console.log('this.badges : ' + this.badges);
+        this.dataSource = new MatTableDataSource<Employee>(this.employees);
+      } else {
+        this.nextDisabled = true;
+      }
     });
   }
 

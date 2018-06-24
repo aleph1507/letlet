@@ -579,6 +579,24 @@ class Employees {
     return this.http.get<Employee[]>(this.employeesUrl, { headers: this.headers });
   }
 
+  getEmployeesPage(page = null) : Observable<Employee[]>{
+    if(page == null)
+      return this.http.get<Employee[]>(this.employeesUrl, { headers: this.headers });
+
+    return this.http.get<Employee[]>(this.employeesUrl + '/page/' + page, { headers: this.headers });
+  }
+
+  // getEmployeesPage(pageNumber = 0, pageSize = 10): Observable<Employee[]>{
+  //   console.log('vo getEmployeesPage');
+  //   let params = new HttpParams();
+  //   params.set('headers', this.headers);
+  //   params.set('pageNumber', pageNumber.toString());
+  //   params.set('pageSize', pageSize.toString());
+  //   return this.http.get(this.employeesUrl, {
+  //       params: params
+  //   }).pipe(res => res["payload"]);
+  // }
+
   // getAllEmployees() {
   //   return this.employees;
   // }

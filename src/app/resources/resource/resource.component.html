@@ -249,6 +249,13 @@
               >border_color</mat-icon>
             </mat-cell>
           </ng-container>
+          <!-- <mat-paginator [length]="length"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="pageSizeOptions"
+              (page)="pageEvent = $event">
+          </mat-paginator> -->
+          <!-- <button (click)="prevPage()" [disabled]="currentPage <=1" mat-raised-button>< Previous Page</button>
+          <button (click)="nextPage()" [disabled]="nextDisabled" mat-raised-button>Next Page ></button> -->
         </div>
         <!-- ./Employees resource -->
 
@@ -306,6 +313,8 @@
         </mat-row>
       </mat-table>
 
+      <button *ngIf="category=='employees'" (click)="prevPageEmp()" [disabled]="currentPage <=1" mat-raised-button>< Previous Page</button>
+      <button *ngIf="category=='employees'" (click)="nextPageEmp()" [disabled]="nextDisabled" mat-raised-button>Next Page ></button>
       <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
     </div>
   <!-- </div> -->

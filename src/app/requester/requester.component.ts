@@ -238,7 +238,6 @@ export class RequesterComponent implements OnInit, OnDestroy {
     } else if(this.pdf1src.size < 1 || this.pdf1src == null || this.pdf1src == undefined) {
       return this.checkPersons() || this.checkVehicles() ? true : false;
     } else {
-      console.log(`isEmptyPersons: ${this.requesterService.isEmptyPersons()}`);
       return this.requesterService.isEmptyPersons();
     }
   }
