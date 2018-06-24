@@ -93,7 +93,7 @@
 
       <button *ngIf="!editMode"
         mat-raised-button type="submit" color="primary"
-        [disabled]="checkPersons() || checkVehicles() || !requesterForm.valid"
+        [disabled]="imagesCheck() || !requesterForm.valid"
         class="main-send">Send</button>
       <button *ngIf="showApproveBtn"
         (click)="approve(request.id)" mat-raised-button color="primary"
