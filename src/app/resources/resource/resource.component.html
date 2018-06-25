@@ -313,8 +313,10 @@
         </mat-row>
       </mat-table>
 
-      <button *ngIf="category=='employees'" (click)="prevPageEmp()" [disabled]="currentPage <=1" mat-raised-button>< Previous Page</button>
-      <button *ngIf="category=='employees'" (click)="nextPageEmp()" [disabled]="nextDisabled" mat-raised-button>Next Page ></button>
+      <div *ngIf="category=='employees'" class="employees-pagination">
+        <button (click)="prevPageEmp()" [disabled]="currentPage <=1" class="prev-btn" mat-raised-button>< Previous Page</button>
+        <button (click)="nextPageEmp()" [disabled]="nextDisabled" class="next-btn" mat-raised-button>Next Page ></button>
+      </div>
       <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
     </div>
   <!-- </div> -->

@@ -21,7 +21,7 @@ import { VisitorBadgeModalComponent } from './visitor-badge-modal/visitor-badge-
 import { VisitorVehicleBadge } from '../../models/VisitorVehicleBadge';
 import { VisitorVehicleBadgeModalComponent } from './visitor-vehicle-badge-modal/visitor-vehicle-badge-modal.component';
 import { DialogResourceVehicleComponent } from './dialog-vehicle/dialog-vehicle.component';
-import { EmployeesDataSource } from './data_sources/EmployeesDataSource';
+// import { EmployeesDataSource } from './data_sources/EmployeesDataSource';
 
 @Component({
   selector: 'app-resource',
@@ -346,8 +346,16 @@ export class ResourceComponent implements OnInit {
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
-    this.dataSource.filter = filterValue;
+    if(this.category == 'employees'){
+      this.resourcesService.employees.filterEmployees(filterValue)
+        .subscribe((data: Employee[]) => {
+          if(data){
+            this.employees = data;
+            this.dataSource = new MatTableDataSource<Employee>(this.employees);
+          }
+        });
+    } else {
+      this.dataSource.filter = filterValue;
+    }
   }
-
-
 }

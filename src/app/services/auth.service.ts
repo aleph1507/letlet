@@ -13,7 +13,7 @@ export class AuthService implements OnInit{
   // public baseUrl = 'http://viksadesign.ddns.net:84/';
   public baseUrl = 'http://192.168.100.12:84';
   url = this.baseUrl + '/token';
-  loggedIn : boolean = true;
+  loggedIn : boolean;
   private loggedStatus : BehaviorSubject<boolean>;
 
 
@@ -33,7 +33,7 @@ export class AuthService implements OnInit{
   constructor(private http: HttpClient,
               private router: Router) {
                 this.loggedStatus = new BehaviorSubject<boolean>(this.loggedIn);
-                if(localStorage.getItem('token') != null){
+                if(localStorage.getItem('token') != 'null'){
                   this.loggedIn = true;
                   this.loggedStatus.next(this.loggedIn);
                 }
@@ -96,6 +96,7 @@ export class AuthService implements OnInit{
       .set('password', password)
       .set('client_id', cid);
 
+    localStorage.setItem('token', null);
     this.http.post<LoginResponse>(this.url, body.toString(),
     { headers: this.headers }).subscribe(data => {
       if(data.access_token){
@@ -107,10 +108,19 @@ export class AuthService implements OnInit{
       }
       else {
         this.loggedIn = false;
+        localStorage.setItem('token', null);
         this.token = null;
       }
       console.log('TTTOKKKEEN::: ' + this.token);
     })
+  }
+
+  logOut(){
+    localStorage.setItem('token', null);
+    this.token = null;
+    this.loggedIn = false;
+    this.loggedStatus.next(this.loggedIn);
+    this.router.navigate(['/login']);
   }
 
 }

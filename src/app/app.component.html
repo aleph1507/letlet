@@ -3,7 +3,7 @@
 </div> -->
 
 <div class="appContainer">
-    <mat-toolbar *ngIf="loggedIn" color="primary">
+    <mat-toolbar *ngIf="authService.loggedInStatus() | async" color="primary">
         <button type="button" mat-icon-button (click)="sidenav.toggle()">
           <mat-icon class="white">menu</mat-icon>
         </button>
