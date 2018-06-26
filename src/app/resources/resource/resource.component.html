@@ -314,6 +314,16 @@
       </mat-table>
 
       <div *ngIf="category=='employees'" class="employees-pagination">
+        <form class="employee-form">
+          <mat-form-field class="employee-field">
+            <input type="text" placeholder="Employee" [formControl]="employeeAutoCtrl" matInput [matAutocomplete]="emp_auto">
+            <mat-autocomplete #emp_auto="matAutocomplete" [displayWith]="displayEmpFn">
+              <mat-option *ngFor="let emp of employees_auto" [value]="emp">
+                {{ emp.name }} {{emp.surname}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </form>
         <button (click)="prevPageEmp()" [disabled]="currentPage <=1" class="prev-btn" mat-raised-button>< Previous Page</button>
         <button (click)="nextPageEmp()" [disabled]="nextDisabled" class="next-btn" mat-raised-button>Next Page ></button>
       </div>

@@ -21,6 +21,7 @@ import { VisitorBadgeModalComponent } from './visitor-badge-modal/visitor-badge-
 import { VisitorVehicleBadge } from '../../models/VisitorVehicleBadge';
 import { VisitorVehicleBadgeModalComponent } from './visitor-vehicle-badge-modal/visitor-vehicle-badge-modal.component';
 import { DialogResourceVehicleComponent } from './dialog-vehicle/dialog-vehicle.component';
+import { FormControl } from '@angular/forms';
 // import { EmployeesDataSource } from './data_sources/EmployeesDataSource';
 
 @Component({
@@ -38,10 +39,12 @@ export class ResourceComponent implements OnInit {
   categoryTitle;
   currentPage = 1;
   employees: Employee[] = [];
+  employees_auto: Employee[] = [];
   length = 0;
   pageSize = 10;
   nextDisabled = false;
   prevDisabled = true;
+  employeeAutoCtrl: FormControl = new FormControl();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -51,6 +54,13 @@ export class ResourceComponent implements OnInit {
               private changeDetectorRefs: ChangeDetectorRef) { }
 
   ngOnInit() {
+    this.employeeAutoCtrl.valueChanges
+      .subscribe(d => {
+        this.resourcesService.employees.filterEmployees(d)
+          .subscribe((data:Employee[]) => {
+            this.employees_auto = data;
+          });
+      });
     this.paramsSub = this.route.params.subscribe(params => {
       this.category = params['category'];
       console.log('category: ', this.category);
@@ -207,6 +217,10 @@ export class ResourceComponent implements OnInit {
         this.editZone();
         break;
     }
+  }
+
+  displayEmpFn(e?: Employee) {
+    return e ? e.name + ' ' + e.surname : undefined;
   }
 
   editVisitorVehicleBadge(id = null){
