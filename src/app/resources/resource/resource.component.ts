@@ -40,6 +40,7 @@ export class ResourceComponent implements OnInit {
   currentPage = 1;
   employees: Employee[] = [];
   employees_auto: Employee[] = [];
+  prev_employees: Employee[] = [];
   length = 0;
   pageSize = 10;
   nextDisabled = false;
@@ -364,8 +365,16 @@ export class ResourceComponent implements OnInit {
       this.resourcesService.employees.filterEmployees(filterValue)
         .subscribe((data: Employee[]) => {
           if(data){
-            this.employees = data;
-            this.dataSource = new MatTableDataSource<Employee>(this.employees);
+            if(filterValue != ''){
+              this.employees = data;
+              this.dataSource = new MatTableDataSource<Employee>(this.employees);
+            } else {
+              this.resourcesService.employees.getEmployeesPage(1)
+                .subscribe((data: Employee[]) => {
+                  this.employees = data;
+                  this.dataSource = new MatTableDataSource<Employee>(this.employees);
+                });
+            }
           }
         });
     } else {
