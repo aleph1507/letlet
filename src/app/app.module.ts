@@ -51,6 +51,9 @@ import { ReportsComponent } from './reports/reports.component';
 import { ReportsService } from './services/reports.service';
 import { PersonReportComponent } from './reports/person-report/person-report.component';
 import { VehicleReportComponent } from './reports/vehicle-report/vehicle-report.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './interceptors/token.interceptor';
+
 
 @NgModule({
   declarations: [
@@ -115,7 +118,13 @@ import { VehicleReportComponent } from './reports/vehicle-report/vehicle-report.
   ],
   providers: [RequesterService, AuthService, ApprovalsService,
               StopListService, ResourcesService, BadgesService,
-              DatePipe, GatesService, ReportsService],
+              DatePipe, GatesService, ReportsService,
+              {
+                provide: HTTP_INTERCEPTORS,
+                useClass: TokenInterceptor,
+                multi: true
+              }
+            ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -67,6 +67,8 @@ export class AuthService implements OnInit{
         'Authorization': 'Bearer ' + this.getToken(),
         'Accept': 'application/json'
       })
+    } else  {
+      return null;
     }
   }
 
