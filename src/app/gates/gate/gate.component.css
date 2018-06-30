@@ -1,40 +1,91 @@
 div.lists-container {
-  display: flex;
+  position: relative;
+  display:flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: space-between;
+  justify-content: center;
+  align-items: flex-start;
+  margin:auto;
+  /* display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: space-around;
+  margin:auto; */
   /* padding-bottom: 5%; */
-  width:90%;
-  height:100%;
+  /* width:100%;
+  height:100%; */
 }
 
-div.lists-container > div.entered, div.lists-container > div.expected {
+.filter-panel {
+  padding: 5px 1em;
+}
+
+.filter-panel h3 {
+  margin-top: 1.1%;
+  margin-bottom: 1.1%;
+}
+
+/* div.lists-container > div.entered, div.lists-container > div.expected {
   width:38vw;
   height:79vh;
-  /* border: 2px solid black; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: space-between;
+} */
+
+div.entered {
+  position: relative;
+  top:0;
+  left:0;
+  display:flex;
+  flex-direction:column;
+  height: 49%;
+  width:49%;
+  /* position: relative;
+
+  top: 0;
+  left: 0; */
+}
+
+div.expected {
+  display:flex;
+  flex-direction:column;
+  height: 49%;
+  width: 49%;
+  /* position: relative;
+  top: 0;
+  left: 50%; */
+}
+
+div.lists-container > div {
+  /* display:inline-block;
+  width:49%; */
 }
 
 div.entered > div, div.expected > div {
+  margin:1%;
+  /* height:10%; */
   /* border: 1px solid green; */
-  width: 38vw;
-  height: 35vh;
+  /* width: 38vw;
+  height: 35vh; */
+  /* height: 50vh;
+  width: 100%; */
 }
 
 mat-table {
-  width:100%;
+  width: 100%;
+  height: 25vh;
+  overflow:auto;
+  /* width:100%;
   height: 84%;
-  overflow: auto;
+  overflow: auto; */
 }
 
 
 h3 {
-  text-align:center;
+  /* text-align:center;
   margin: auto;
   font-family: monospace;
   font-variant: small-caps;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.2em; */
 }
