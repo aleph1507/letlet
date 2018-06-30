@@ -48,13 +48,13 @@ mat-card {
   color: #3f51b5;
 }
 
-input.ng-dirty, textarea.ng-dirty {
+/* input.ng-dirty, textarea.ng-dirty {
   background: rgba(240,240,240,0.8);
-}
+} */
 
-.requester-prop .list-row {
+/* .requester-prop .list-row {
   background: rgba(240,240,240,0.8);
-}
+} */
 
 div.filter-panel {
   /* background: rgba(240,240,240,0.8); */
