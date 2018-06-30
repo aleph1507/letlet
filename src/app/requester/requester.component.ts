@@ -91,6 +91,9 @@ export class RequesterComponent implements OnInit, OnDestroy {
       'requesterDescription': new FormControl(this.request.description, {
         updateOn: 'change'
       }),
+      'requesterDescriptionEng': new FormControl(this.request.descriptionEng, {
+        updateOn: 'change'
+      }),
       'requesterCompany': new FormControl(this.request.companyId, {
         validators: Validators.required,
         updateOn: 'change'
@@ -134,6 +137,9 @@ export class RequesterComponent implements OnInit, OnDestroy {
                     updateOn: 'change'
                   }),
                   'requesterDescription': new FormControl({value: this.request.description, disabled: true}, {
+                    updateOn: 'change'
+                  }),
+                  'requesterDescriptionEng': new FormControl(this.request.descriptionEng, {
                     updateOn: 'change'
                   }),
                   'requesterCompany': new FormControl({value: c, disabled: true}, {
@@ -283,6 +289,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
           });
         this.request.requesterName = this.requesterForm.controls['requesterName'].value;
         this.request.description = this.requesterForm.controls['requesterDescription'].value;
+        this.request.descriptionEng = this.requesterForm.controls['requesterDescriptionEng'].value;
         this.request.companyId = this.requesterForm.controls['requesterCompany'].value;
         this.request.fromDate = this.requesterForm.controls['requesterFromDate'].value;
         this.request.toDate = this.requesterForm.controls['requesterToDate'].value;
@@ -296,6 +303,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
           null,
           this.requesterForm.controls['requesterName'].value,
           this.requesterForm.controls['requesterDescription'].value,
+          this.requesterForm.controls['requesterDescriptionEng'].value,
           this.requesterForm.controls['requesterCompany'].value,
           this.requesterForm.controls['requesterFromDate'].value,
           this.requesterForm.controls['requesterToDate'].value,

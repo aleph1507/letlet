@@ -110,12 +110,13 @@ export class RequesterService {
     return this.http.get<Requester>(this.requestUrl + '/' + id, this.httpOptions);
   }
 
-  pushRequest(id = null, requesterName, description, company : Company, fromDate, toDate, numberOfEntries, pdf1 = null, pdf2 = null){
+  pushRequest(id = null, requesterName, description, descriptionEng, company : Company, fromDate, toDate, numberOfEntries, pdf1 = null, pdf2 = null){
     let request = new Requester();
     // request.requestID = this.requests.length;
     request.id = id;
     request.requesterName = requesterName;
     request.description = description;
+    request.descriptionEng = descriptionEng,
     request.companyId = company.id;
     request.fromDate = fromDate;
     request.toDate = toDate;

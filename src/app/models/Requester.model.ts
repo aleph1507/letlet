@@ -6,6 +6,7 @@ export class Requester {
   id: number;
   requesterName: string;
   description: string;
+  descriptionEng: string;
   companyId: number;
   fromDate: Date;
   toDate: Date;

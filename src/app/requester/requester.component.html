@@ -18,6 +18,14 @@
           autocomplete="off"
         ></textarea>
       </mat-form-field>
+      <mat-form-field class="requester-field">
+        <textarea name="requesterDescriptionEng"
+          id="requesterDescriptionEng"
+          matInput placeholder="Description in English"
+          formControlName="requesterDescriptionEng"
+          autocomplete="off"
+        ></textarea>
+      </mat-form-field>
       <!-- <mat-form-field class="requester-field">
         <input matInput
           formControlName="requesterCompany"
@@ -74,21 +82,42 @@
           autocomplete="off"
           required>
       </mat-form-field>
-      <div class="pdf-upload">
-        <button type="button" mat-raised-button (click)="pdfUpload1.click()">
-          Attach PDF<mat-icon>keyboard_arrow_up</mat-icon>
-          <input type="file" hidden #pdfUpload1
-          accept="application/pdf"
-          (change)="savePdf($event)" name="pdf1" id="pdf1" formControlName="pdf1">
-        </button>
+      <div *ngIf="!editMode" class="upload-pdfs">
+        <div class="pdf-upload">
+          <button type="button" mat-raised-button (click)="pdfUpload1.click()">
+            Attach PDF<mat-icon>keyboard_arrow_up</mat-icon>
+            <input type="file" hidden #pdfUpload1
+            accept="application/pdf"
+            (change)="savePdf($event)" name="pdf1" id="pdf1" formControlName="pdf1">
+          </button>
+        </div>
+        <div class="pdf-upload" style="margin-top:3%;">
+          <button type="button" mat-raised-button (click)="pdfUpload2.click()">
+            Attach Additional PDF<mat-icon>keyboard_arrow_up</mat-icon>
+            <input type="file" hidden #pdfUpload2
+            accept="application/pdf"
+            (change)="savePdf($event)" name="pdf2" id="pdf2" formControlName="pdf2">
+          </button>
+        </div>
       </div>
-      <div class="pdf-upload" style="margin-top:3%;">
-        <button type="button" mat-raised-button (click)="pdfUpload2.click()">
-          Attach Additional PDF<mat-icon>keyboard_arrow_up</mat-icon>
-          <input type="file" hidden #pdfUpload2
-          accept="application/pdf"
-          (change)="savePdf($event)" name="pdf2" id="pdf2" formControlName="pdf2">
-        </button>
+
+      <div *ngIf="editMode" class="download-pdfs">
+        <div class="pdf-upload">
+          <button type="button" mat-raised-button (click)="pdfUpload1.click()">
+            Download PDF<mat-icon>keyboard_arrow_down</mat-icon>
+            <input type="file" hidden #pdfUpload1
+            accept="application/pdf"
+            (change)="savePdf($event)" name="pdf1" id="pdf1" formControlName="pdf1">
+          </button>
+        </div>
+        <div class="pdf-upload" style="margin-top:3%;">
+          <button type="button" mat-raised-button (click)="pdfUpload2.click()">
+            Download Additional PDF<mat-icon>keyboard_arrow_down</mat-icon>
+            <input type="file" hidden #pdfUpload2
+            accept="application/pdf"
+            (change)="savePdf($event)" name="pdf2" id="pdf2" formControlName="pdf2">
+          </button>
+        </div>
       </div>
 
       <button *ngIf="!editMode"
