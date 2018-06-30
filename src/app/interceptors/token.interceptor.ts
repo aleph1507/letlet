@@ -36,7 +36,19 @@ export class TokenInterceptor implements HttpInterceptor {
     //   headers: req.headers.set qkYOFn12hS2y6kz
     // }) astT1cT6O1eWjORxY
 
-    return next.handle(req);
+    return next.handle(req)
+      .catch(error => {
+        return this.logoutUser();
+      });
+  }
+
+  handle401(req: HttpRequest<any>, next: HttpHandler){
+    return this.logoutUser();
+  }
+
+  logoutUser() {
+    this.authService.logOut();
+    return Observable.throw("401");
   }
 
 }
