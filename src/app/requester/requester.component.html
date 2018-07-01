@@ -109,13 +109,12 @@
             </button>
           </div>
         </a>
-        <div class="pdf-upload" style="margin-top:3%;">
-          <button type="button" mat-raised-button (click)="pdfUpload2.click()">
-            Download Additional PDF<mat-icon>keyboard_arrow_down</mat-icon>
-            <input type="file" hidden #pdfUpload2
-            accept="application/pdf"
-            (change)="savePdf($event)" name="pdf2" id="pdf2" formControlName="pdf2">
-          </button>
+        <div *ngIf="this.request.pdf2 != null" class="pdf-upload" style="margin-top:3%;">
+          <a [href]="sanitizeURL(pdfToBlob(this.request.pdf2))" target="_blank">
+            <button type="button" mat-raised-button>
+              Download Additional PDF<mat-icon>keyboard_arrow_down</mat-icon>
+            </button>
+          </a>
         </div>
       </div>
 
