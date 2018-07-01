@@ -17,6 +17,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ResourcesService } from '../services/resources.service';
 import { DatePipe } from '@angular/common';
 import { Company } from '../models/Company';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-requester',
@@ -64,9 +65,13 @@ export class RequesterComponent implements OnInit, OnDestroy {
               private resources: ResourcesService,
               private datePipe: DatePipe,
               private router: Router,
+              private sanitizer: DomSanitizer
             ) { }
 
   ngOnInit() {
+
+    console.log('pdf1');
+    console.log(this.request.pdf1);
 
     this.resources.companies.getCompanies()
       .subscribe((data : Company[]) => {
@@ -188,6 +193,39 @@ export class RequesterComponent implements OnInit, OnDestroy {
           map(company => this.filterCompanies(company))
         );
     // this.requesterForm.controls['requesterCompany']
+  }
+
+   b64toBlob(b64Data, contentType = 'application/pdf', sliceSize = 512) {
+    contentType = contentType || 'application/pdf';
+    sliceSize = sliceSize || 512;
+
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      var byteNumbers = new Array(slice.length);
+      for (var i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      var byteArray = new Uint8Array(byteNumbers);
+
+      byteArrays.push(byteArray);
+    }
+
+    var blob = new Blob(byteArrays, {type: contentType});
+    return blob;
+  }
+
+  pdfToBlob(b64pdf: string){
+    let blob = this.b64toBlob(b64pdf.slice(28, b64pdf.length));
+    return URL.createObjectURL(blob);
+  }
+
+  sanitizeURL(url : string) {
+    return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 
   savePdf(event){
@@ -320,6 +358,9 @@ export class RequesterComponent implements OnInit, OnDestroy {
     this.requesterForm.controls['requesterDescription'].setValue('');
     this.requesterForm.controls['requesterDescription'].markAsPristine();
     this.requesterForm.controls['requesterDescription'].markAsUntouched();
+    this.requesterForm.controls['requesterDescriptionEn'].setValue('');
+    this.requesterForm.controls['requesterDescriptionEn'].markAsPristine();
+    this.requesterForm.controls['requesterDescriptionEn'].markAsUntouched();
     this.requesterForm.controls['requesterCompany'].setValue('');
     this.requesterForm.controls['requesterCompany'].markAsPristine();
     this.requesterForm.controls['requesterCompany'].markAsUntouched();
@@ -332,6 +373,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
     this.requesterForm.controls['requesterNumOfEntries'].setValue('');
     this.requesterForm.controls['requesterNumOfEntries'].markAsPristine();
     this.requesterForm.controls['requesterNumOfEntries'].markAsUntouched();
+    this.router.navigate(['/approvals', 1]);
   }
 
   filterCompanies(name: string) {
@@ -392,30 +434,65 @@ export class RequesterComponent implements OnInit, OnDestroy {
   printRequest(): void {
     // console.log("printRequest");
     let pNumber = this.request.requestPersonJson.length;
+    let vozilaHeader = this.request.requestVehicleJson.length > 0 ? 'Возила' : '';
+    let vehiclesTable = '<table style="text-align:center; width: 80%; margin: auto; border: 1px solid black; border-collapse: collapse; margin-top: 5%; margin-bottom: 5%;">';
+    let personsTable = '<table style="text-align:center; width: 80%; margin: auto; border: 1px solid black; border-collapse: collapse; margin-top: 5%; margin-bottom: 5%;">';
+    for(let i = 0; i<this.request.requestVehicleJson.length; i++){
+      vehiclesTable += '<tr><td style="border: 1px solid black; width: 50%;">' + this.request.requestVehicleJson[i].model + '</td>';
+      vehiclesTable += '<td style="border: 1px solid black; width: 50%;">' + this.request.requestVehicleJson[i].plate + '</td></tr>';
+    }
     // console.log("pNumber : " + pNumber);
     let personsTD1 = '', personsTD2 = '';
     for(let i = 0; i<this.request.requestPersonJson.length; i++){
+      personsTable += '<tr><td style="border: 1px solid black; width: 50%;">' + this.request.requestPersonJson[i].name + ' ' +
+                      this.request.requestPersonJson[i].surname + '</td>';
+      personsTable += '<td style="border: 1px solid black; width: 50%;">' + this.request.requestPersonJson[i].nameEn + ' ' +
+                        this.request.requestPersonJson[i].surnameEn + '</td></tr>';
+
       // console.log("this.request.person[i].surname : " + this.request.persons[i].surname);
-      if(i % 2 == 1){
-        personsTD2 += '<span style="display: block;">' + (i+1) + '. ' + this.request.requestPersonJson[i].name + ' ' +
-           this.request.requestPersonJson[i].surname + '/' + this.request.requestPersonJson[i].name + ' ' + this.request.requestPersonJson[i].surname + '</span>';
-        continue;
-      }
-      personsTD1 += '<span style="display: block;">' + (i+1) + '. ' + this.request.requestPersonJson[i].nameEn + ' ' +
-        this.request.requestPersonJson[i].surnameEn + '/' + this.request.requestPersonJson[i].name + ' ' + this.request.requestPersonJson[i].surname + '</span>';
+      // if(i % 2 == 1){
+      //   personsTD2 += '<span style="display: block;">' + (i+1) + '. ' +
+      //      this.request.requestPersonJson[i].name + ' ' +
+      //      this.request.requestPersonJson[i].surname + '/' +
+      //      this.request.requestPersonJson[i].name + ' ' +
+      //      this.request.requestPersonJson[i].surname + '</span>';
+      //   continue;
+      // }
+      // personsTD1 += '<span style="display: block;">' + (i+1) + '. ' +
+      //     this.request.requestPersonJson[i].nameEn + ' ' +
+      //     this.request.requestPersonJson[i].surnameEn + '/' +
+      //     this.request.requestPersonJson[i].name + ' ' +
+      //     this.request.requestPersonJson[i].surname + '</span>';
     }
+    personsTable += '</table>';
 
     // console.log("personsTD1 : " + personsTD1);
     // console.log("personsTD2 : " + personsTD2);
+
+    // <td>
+    //   ${personsTD1}
+    // </td>
+    // <td>
+    //   ${personsTD2}
+    // </td>
+
+    // <tr style="padding-bottom: 30px; padding-left: 2%; padding-right: 2%; display: block; text-align: center; margin: auto; width: 100%; border: 5px solid grey;">
+    //   <td colspan="2" style="width:100%; background: #0000ff; border: 2px solid red;">
+    //     ${personsTable}
+    //   </td>
+    // </tr>
+
+      // <div class="content" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+      // </div>
     let printContents, popupWin;
     popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
     popupWin.document.open();
     popupWin.document.write(`
       <html style="width:100%; height:100%;">
         <body onload="window.print();window.close()" style="width:100%; height:100%;">
-          <div class="content" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
-          <table style="width:80%; padding-left:30px; padding-right:30px;">
-            <tr style="padding-top: 30px; padding-bottom: 30px; display: block;">
+
+          <table style="margin:auto;">
+            <tr style="padding-top: 20px; padding-bottom: 30px; display: block;">
               <td>
                 <span style="display:block;">Министерство за внатрешни работи на Република Македонија</span>
                 <span style="display:block;">Ministry of Internal Affairs of Republic of Macedonia</span>
@@ -442,34 +519,23 @@ export class RequesterComponent implements OnInit, OnDestroy {
             <tr style="padding-bottom: 15px; display: block;">
               <td colspan="2">
                 <p>
-                  Ве молиме да одобрите дозвола за влез за
-                  долунаведенитe лицa од ${this.reqCompany} кои ќе
-                  извршат поставување на нов рекламен банер
-                   за ТАВ Македонија Оперативни Услуги од
-                    02.05.2018 до 04.05.2018
+                  ${this.request.description}
                 </p>
               </td>
             </tr>
             <tr style="padding-bottom: 15px; display: block;">
               <td>
                 <p>
-                  We kindly ask you to approve entrance permission for
-                   the below mentioned person from  ${this.reqCompany}  who will perform
-                    installation of advertising banner in TAV
-                     МОS  from 02.05.2018 to 04.05.2018
+                  ${this.request.descriptionEn}
                 </p>
               </td>
             </tr>
-            <tr style="padding-bottom: 30px; padding-left: 2%; padding-right: 2%; display: block;">
-              <td>
-                ${personsTD1}
-              </td>
-              <td>
-                ${personsTD2}
-              </td>
-            </tr>
-
           </table>
+          <h3>Персонал</h3>
+          ${personsTable}
+
+          <h3>${vozilaHeader}</h3>
+          ${vehiclesTable}
           <div id="footer">
           <table>
             <tr style="padding-bottom: 1em; display: block;">
@@ -501,7 +567,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
             </tr>
           </table>
           </div>
-          </div>
+
         </body>
       </html>
       `

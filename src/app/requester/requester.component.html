@@ -102,14 +102,13 @@
       </div>
 
       <div *ngIf="editMode" class="download-pdfs">
-        <div class="pdf-upload">
-          <button type="button" mat-raised-button (click)="pdfUpload1.click()">
-            Download PDF<mat-icon>keyboard_arrow_down</mat-icon>
-            <input type="file" hidden #pdfUpload1
-            accept="application/pdf"
-            (change)="savePdf($event)" name="pdf1" id="pdf1" formControlName="pdf1">
-          </button>
-        </div>
+        <a [href]="sanitizeURL(pdfToBlob(this.request.pdf1))" target="_blank">
+          <div class="pdf-upload">
+            <button type="button" mat-raised-button>
+              Download PDF<mat-icon>keyboard_arrow_down</mat-icon>
+            </button>
+          </div>
+        </a>
         <div class="pdf-upload" style="margin-top:3%;">
           <button type="button" mat-raised-button (click)="pdfUpload2.click()">
             Download Additional PDF<mat-icon>keyboard_arrow_down</mat-icon>
