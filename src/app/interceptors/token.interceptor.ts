@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpInterceptor, HttpRequest, HttpHandler,
           HttpSentEvent, HttpHeaderResponse, HttpProgressEvent,
-          HttpResponse, HttpUserEvent } from "@angular/common/http";
+          HttpResponse, HttpUserEvent, HttpErrorResponse } from "@angular/common/http";
 import { Observable } from "rxjs/Observable";
 import { AuthService } from "../services/auth.service";
 
@@ -38,7 +38,11 @@ export class TokenInterceptor implements HttpInterceptor {
 
     return next.handle(req)
       .catch(error => {
-        return this.logoutUser();
+        if(error instanceof HttpErrorResponse){
+          if(error.status === 401){
+            return this.logoutUser();
+          }
+        }
       });
   }
 
@@ -47,6 +51,7 @@ export class TokenInterceptor implements HttpInterceptor {
   }
 
   logoutUser() {
+    console.log('vo interceptor logoutuser()');
     this.authService.logOut();
     return Observable.throw("401");
   }
