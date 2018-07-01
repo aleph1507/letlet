@@ -51,7 +51,6 @@ export class TokenInterceptor implements HttpInterceptor {
   }
 
   logoutUser() {
-    console.log('vo interceptor logoutuser()');
     this.authService.logOut();
     return Observable.throw("401");
   }

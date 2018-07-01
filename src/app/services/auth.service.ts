@@ -33,9 +33,7 @@ export class AuthService implements OnInit{
   constructor(private http: HttpClient,
               private router: Router) {
                 this.loggedStatus = new BehaviorSubject<boolean>(this.loggedIn);
-                console.log('vo auth constructor');
                 if(localStorage.getItem('token') != 'null'){
-                  console.log('vo auth constructor if');
                   this.loggedIn = true;
                   this.loggedStatus.next(this.loggedIn);
                 }
@@ -58,7 +56,6 @@ export class AuthService implements OnInit{
   }
 
   loggedInStatus() : Observable<boolean>{
-    console.log('vo loggedInStatus');
     return this.loggedStatus.asObservable();
   }
 
@@ -85,7 +82,6 @@ export class AuthService implements OnInit{
     // return this.token;
     // console.log('getToken()');
     // console.log('localStorage.getItem("token") :  ' + localStorage.getItem('token'));
-    console.log('vo get token: ' + localStorage.getItem('token'));
     return localStorage.getItem('token');
   }
 
@@ -122,7 +118,6 @@ export class AuthService implements OnInit{
   }
 
   logOut(){
-    console.log('vo logout');
     localStorage.setItem('token', null);
     this.token = null;
     this.loggedIn = false;

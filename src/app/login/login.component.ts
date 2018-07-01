@@ -34,8 +34,6 @@ export class LoginComponent implements OnInit {
         updateOn: 'change'
       })
     })
-    this.authService.loggedInStatus()
-      .subscribe((data) => { console.log('loggedIn data: ' + data)});
   }
 
 }
