@@ -18,7 +18,16 @@ export class EnterPersonModalComponent implements OnInit {
   employees : Employee[] = [];
   visitorBadges : VisitorBadge[] = [];
   gid: number;
-  EnterPersonForm : FormGroup = null;
+  EnterPersonForm : FormGroup = new FormGroup({
+    'entryEmployee': new FormControl('', {
+      validators: [Validators.required],
+      updateOn: 'change'
+    }),
+    'visitorBadge': new FormControl('', {
+      validators: [Validators.required],
+      updateOn: 'change'
+    })
+  });;
 
   constructor(private dialogRef: MatDialogRef<EnterPersonModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: {gid: number, ep: ExpectedPerson },
@@ -26,24 +35,36 @@ export class EnterPersonModalComponent implements OnInit {
               private gatesService: GatesService) { }
 
   ngOnInit() {
-    this.resourceService.employees.getAllEmployees()
-      .subscribe((emps: Employee[]) => {
-        this.employees = emps;
-        this.resourceService.visitorBadges.getAllVisitorBadges()
-          .subscribe((vbs : VisitorBadge[]) => {
-            this.visitorBadges = vbs;
-            this.EnterPersonForm = new FormGroup({
-              'entryEmployee': new FormControl('',{
-                validators: [Validators.required],
-                updateOn: 'change'
-              }),
-              'visitorBadge': new FormControl('', {
-                validators: [Validators.required],
-                updateOn: 'change'
-              })
-            });
+    this.resourceService.visitorBadges.getAllVisitorBadges()
+      .subscribe((vbs: VisitorBadge[]) => {
+        this.visitorBadges = vbs;
+      });
+
+    this.EnterPersonForm.controls['entryEmployee'].valueChanges
+      .subscribe(d => {
+        this.resourceService.employees.filterEmployees(d)
+          .subscribe((data: Employee[]) => {
+            this.employees = data;
           });
       });
+    // this.resourceService.employees.getAllEmployees()
+    //   .subscribe((emps: Employee[]) => {
+    //     this.employees = emps;
+    //     this.resourceService.visitorBadges.getAllVisitorBadges()
+    //       .subscribe((vbs : VisitorBadge[]) => {
+    //         this.visitorBadges = vbs;
+    //         this.EnterPersonForm = new FormGroup({
+    //           'entryEmployee': new FormControl('',{
+    //             validators: [Validators.required],
+    //             updateOn: 'change'
+    //           }),
+    //           'visitorBadge': new FormControl('', {
+    //             validators: [Validators.required],
+    //             updateOn: 'change'
+    //           })
+    //         });
+    //       });
+    //   });
       // this.gid = this.data.gid;
   }
 
@@ -53,6 +74,10 @@ export class EnterPersonModalComponent implements OnInit {
 
   displayFnVB(vb?: VisitorBadge) {
     return vb ? vb.barcode + ' ' + vb.code : undefined;
+  }
+
+  displayEmpFn(e?: Employee) {
+    return e ? e.name + ' ' + e.surname : undefined;
   }
 
   onSubmit() {

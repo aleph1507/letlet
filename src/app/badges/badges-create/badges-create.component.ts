@@ -24,6 +24,8 @@ export class BadgesCreateComponent implements OnInit {
   zones : AirportZone[];
   returned : boolean = false;
   id = null;
+  employeeAutoCtrl: FormControl = new FormControl();
+  employees_auto: Employee[] = [];
 
   constructor(public dialogRef: MatDialogRef<BadgesCreateComponent>,
               @Inject(MAT_DIALOG_DATA) public data: Badge,
@@ -37,11 +39,27 @@ export class BadgesCreateComponent implements OnInit {
     }
 
     this.badgeForm = this.createBadgeForm();
-    this.resourcesService.employees.getAllEmployees()
-      .subscribe((res : Employee[]) => {
-        this.employees = res;
-        this.badgeForm = this.createBadgeForm();
-      });
+    // this.resourcesService.employees.getAllEmployees()
+    //   .subscribe((res : Employee[]) => {
+    //     this.employees = res;
+    //     this.badgeForm = this.createBadgeForm();
+    //   });
+
+      // this.employeeAutoCtrl.valueChanges
+      //   .subscribe(d => {
+      //     this.resourcesService.employees.filterEmployees(d)
+      //       .subscribe((data:Employee[]) => {
+      //         this.employees_auto = data;
+      //       });
+      //   });
+
+      this.badgeForm.controls['employee'].valueChanges
+        .subscribe(d => {
+          this.resourcesService.employees.filterEmployees(d)
+            .subscribe((data: Employee[]) => {
+              this.employees_auto = data;
+            });
+        })
     this.resourcesService.airportZones.getAllAirportZones()
       .subscribe((resZones : AirportZone[]) => {
         this.zones = resZones;
@@ -67,13 +85,13 @@ export class BadgesCreateComponent implements OnInit {
     return parsedDE;
   }
 
-  validateLength(c: FormControl, l: number){
-    let n = c.value;
-    return n.length == l ? null : {
-      validateLength: {
-        valid: false
-      }}
-  }
+  // validateLength(c: FormControl, l: number){
+  //   let n = c.value;
+  //   return n.length == l ? null : {
+  //     validateLength: {
+  //       valid: false
+  //     }}
+  // }
 
   onSubmit() {
     var addedZones : AirportZone[] = [];
@@ -119,6 +137,19 @@ export class BadgesCreateComponent implements OnInit {
   displayFn(e?: Employee) {
     return e ? e.name + ' ' + e.surname: undefined;
   }
+
+  displayEmpFn(e?: Employee) {
+    return e ? e.name + ' ' + e.surname : undefined;
+  }
+
+  isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
 
   createBadgeForm() {
     return new FormGroup({

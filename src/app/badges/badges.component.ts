@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { BadgesService } from '../services/badges.service';
 import { Badge } from '../models/Badge.model';
 import { FormGroup } from '@angular/forms';
@@ -26,7 +26,8 @@ export class BadgesComponent implements OnInit {
   pageEvent: PageEvent;
 
   constructor(private badgesService: BadgesService,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog,
+              private changeDetectorRefs: ChangeDetectorRef) { }
 
   ngOnInit() {
     // this.badgesService.seedBadges(1000);
@@ -43,13 +44,17 @@ export class BadgesComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    // this.badgesService.seedBadges(1000);
+    this.refresh();
+  }
+
+  refresh() {
     this.badgesService.getBadges(this.currentPage).subscribe((data : Badge[]) => {
       this.badges = data;
       this.dataSource = new MatTableDataSource<Badge>(this.badges);
       this.length = this.badges.length;
       this.dataSource.paginator = this.paginator;
       this.pageSize = 10;
+      this.changeDetectorRefs.detectChanges();
     });
   }
 
@@ -118,22 +123,32 @@ export class BadgesComponent implements OnInit {
     return IDs;
   }
 
+  getZoneCodes(zones){
+    let codes = [];
+    for(let i = 0; i<zones.length; i++){
+      codes.push(zones[i].code);
+    }
+    return codes;
+  }
+
   openDialog(id = null): void {
+    let dialogRef;
     if(id != null){
       this.badgesService.getBadgeById(id)
         .subscribe((res: Badge) => {
-          let dialogRef = this.dialog.open(BadgesCreateComponent, {
+          dialogRef = this.dialog.open(BadgesCreateComponent, {
             width: '70%',
             data: res
-          });
+          }).afterClosed().subscribe(result => {this.refresh()});
         })
     } else {
-      let dialogRef = this.dialog.open(BadgesCreateComponent, {
+        dialogRef = this.dialog.open(BadgesCreateComponent, {
         width: '70%',
         data: null
         // data: { name: this.name, animal: this.animal }
-      });
+      }).afterClosed().subscribe(result => {this.refresh()});
     }
+
   }
 
   applyFilter(filterValue: string) {

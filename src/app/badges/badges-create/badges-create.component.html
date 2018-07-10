@@ -1,11 +1,11 @@
 <form name="badgeForm" id="badgeForm" [formGroup]="badgeForm" (ngSubmit)="onSubmit()">
   <mat-form-field>
-    <input matInput type="number" placeholder="cardSeriesNumber"
+    <input matInput type="text" pattern="[0-9]*" (keypress)="isNumber(event)" placeholder="cardSeriesNumber"
     formControlName="cardSeriesNumber"
     autocomplete="off">
   </mat-form-field>
   <mat-form-field>
-    <input matInput type="number" placeholder="cardNumber"
+    <input matInput type="text" (keypress)="isNumber(event)" placeholder="cardNumber"
     formControlName="cardNumber"
     autocomplete="off">
   </mat-form-field>
@@ -25,17 +25,29 @@
     [(ngModel)]="returned">Returned
   </mat-checkbox>
 
-  <mat-form-field>
+  <!-- <mat-form-field>
     <input matInput placeholder="Employee"
     formControlName="employee"
     [matAutocomplete]="emp"
     required>
+  </mat-form-field> -->
+
+  <mat-form-field class="employee-field">
+    <input type="text" placeholder="Employee" formControlName="employee" matInput [matAutocomplete]="emp_auto">
+    <mat-autocomplete #emp_auto="matAutocomplete" [displayWith]="displayEmpFn">
+      <mat-option *ngFor="let emp of employees_auto" [value]="emp">
+        {{ emp.name }} {{emp.surname}}
+      </mat-option>
+    </mat-autocomplete>
   </mat-form-field>
-  <mat-autocomplete #emp="matAutocomplete" [displayWith]="displayFn">
+  <!-- <mat-autocomplete #emp="matAutocomplete" [displayWith]="displayFn">
       <mat-option *ngFor="let e of employees" [value]="e" >
         {{ e.name }} {{ e.surname }}
       </mat-option>
-  </mat-autocomplete>
+  </mat-autocomplete> -->
+  <form class="employee-form">
+
+  </form>
   <mat-form-field>
     <input matInput [matDatepicker]="dateOfSecurityCheck"
       placeholder="Date Of Security Check"

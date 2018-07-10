@@ -6,9 +6,9 @@
       [matAutocomplete]="entEmp"
       required>
   </mat-form-field>
-  <mat-autocomplete #entEmp="matAutocomplete" [displayWith]="displayFnEmployee">
+  <mat-autocomplete #entEmp="matAutocomplete" [displayWith]="displayEmpFn">
       <mat-option *ngFor="let e of employees" [value]="e" >
-        {{ e.name }}
+        {{ e.name }} {{e.surname}}
       </mat-option>
   </mat-autocomplete>
 

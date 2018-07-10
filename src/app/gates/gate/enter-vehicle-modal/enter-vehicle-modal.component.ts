@@ -19,7 +19,16 @@ export class EnterVehicleModalComponent implements OnInit {
   employees : Employee[] = [];
   visitorVehicleBadges : VisitorVehicleBadge[] = [];
   gid: number;
-  EnterVehicleForm : FormGroup = null;
+  EnterVehicleForm : FormGroup = new FormGroup({
+    'entryEmployee': new FormControl('',{
+      validators: [Validators.required],
+      updateOn: 'change'
+    }),
+    'visitorVehicleBadge': new FormControl('', {
+      validators: [Validators.required],
+      updateOn: 'change'
+    })
+});;
   companies : Company[] = [];
 
   constructor(private dialogRef: MatDialogRef<EnterVehicleModalComponent>,
@@ -28,33 +37,53 @@ export class EnterVehicleModalComponent implements OnInit {
               private gatesService: GatesService) { }
 
   ngOnInit() {
-    this.resourceService.employees.getAllEmployees()
-      .subscribe((emps: Employee[]) => {
-        this.employees = emps;
-        this.resourceService.visitorVehicleBadges.getAllVisitorVehicleBadges()
-          .subscribe((vvbs : VisitorVehicleBadge[]) => {
-              this.resourceService.companies.getCompanies()
-                .subscribe((comps : Company[]) => {
-                    this.companies = comps;
-                    this.visitorVehicleBadges = vvbs;
-                    this.EnterVehicleForm = new FormGroup({
-                      'entryEmployee': new FormControl('',{
-                        validators: [Validators.required],
-                        updateOn: 'change'
-                      }),
-                      'visitorVehicleBadge': new FormControl('', {
-                        validators: [Validators.required],
-                        updateOn: 'change'
-                      })
-                });
-
+    this.resourceService.visitorVehicleBadges.getAllVisitorVehicleBadges()
+      .subscribe((vvbs : VisitorVehicleBadge[]) => {
+          this.visitorVehicleBadges = vvbs;
+          this.resourceService.companies.getCompanies()
+            .subscribe((comps : Company[]) => {
+                this.companies = comps;
             });
+        });
+
+    this.EnterVehicleForm.controls['entryEmployee'].valueChanges
+      .subscribe(d => {
+        this.resourceService.employees.filterEmployees(d)
+          .subscribe((data: Employee[]) => {
+            this.employees = data;
           });
       });
+    // this.resourceService.employees.getAllEmployees()
+    //   .subscribe((emps: Employee[]) => {
+    //     this.employees = emps;
+    //     this.resourceService.visitorVehicleBadges.getAllVisitorVehicleBadges()
+    //       .subscribe((vvbs : VisitorVehicleBadge[]) => {
+    //           this.resourceService.companies.getCompanies()
+    //             .subscribe((comps : Company[]) => {
+    //                 this.companies = comps;
+    //                 this.visitorVehicleBadges = vvbs;
+    //                 this.EnterVehicleForm = new FormGroup({
+    //                   'entryEmployee': new FormControl('',{
+    //                     validators: [Validators.required],
+    //                     updateOn: 'change'
+    //                   }),
+    //                   'visitorVehicleBadge': new FormControl('', {
+    //                     validators: [Validators.required],
+    //                     updateOn: 'change'
+    //                   })
+    //             });
+    //
+    //         });
+    //       });
+    //   });
   }
 
   displayFnCompany(c?: Company) {
     return c ? c.name : undefined;
+  }
+
+  displayEmpFn(e?: Employee) {
+    return e ? e.name + ' ' + e.surname : undefined;
   }
 
   displayFnEmployee(e?: Employee) {
