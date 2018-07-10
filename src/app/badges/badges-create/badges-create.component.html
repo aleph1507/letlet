@@ -1,13 +1,13 @@
-<form name="badgeForm" id="badgeForm" [formGroup]="badgeForm" (ngSubmit)="onSubmit()" novalidate>
+<form name="badgeForm" id="badgeForm" [formGroup]="badgeForm" (ngSubmit)="onSubmit()">
   <mat-form-field>
     <input matInput type="number" placeholder="cardSeriesNumber"
     formControlName="cardSeriesNumber"
-    autocomplete="off" required>
+    autocomplete="off">
   </mat-form-field>
   <mat-form-field>
     <input matInput type="number" placeholder="cardNumber"
     formControlName="cardNumber"
-    autocomplete="off" required>
+    autocomplete="off">
   </mat-form-field>
   <mat-form-field>
     <input matInput
@@ -39,21 +39,21 @@
   <mat-form-field>
     <input matInput [matDatepicker]="dateOfSecurityCheck"
       placeholder="Date Of Security Check"
-    formControlName="dateOfSecurityCheck" required>
+    formControlName="dateOfSecurityCheck">
     <mat-datepicker-toggle matSuffix [for]="dateOfSecurityCheck"></mat-datepicker-toggle>
     <mat-datepicker #dateOfSecurityCheck></mat-datepicker>
   </mat-form-field>
   <mat-form-field>
     <input matInput [matDatepicker]="dateOfTraining"
       placeholder="Date Of Training"
-    formControlName="dateOfTraining" required>
+    formControlName="dateOfTraining">
     <mat-datepicker-toggle matSuffix [for]="dateOfTraining"></mat-datepicker-toggle>
     <mat-datepicker #dateOfTraining></mat-datepicker>
   </mat-form-field>
   <mat-form-field>
     <input matInput [matDatepicker]="dateOfActivation"
       placeholder="Date Of Activation"
-    formControlName="dateOfActivation" required>
+    formControlName="dateOfActivation">
     <mat-datepicker-toggle matSuffix [for]="dateOfActivation"></mat-datepicker-toggle>
     <mat-datepicker #dateOfActivation></mat-datepicker>
   </mat-form-field>
@@ -64,7 +64,7 @@
       color="primary"
       *ngFor="let z of zones; let i = index;"
       [checked]="zonesBool[i]"
-      (change)="checkZone(i)">{{z.id}}</mat-checkbox>
+      (change)="checkZone(i)">{{z.code}}</mat-checkbox>
   </div>
 
   <mat-dialog-actions>

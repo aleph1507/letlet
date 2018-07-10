@@ -57,6 +57,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
 
   pdf1src: Blob;
   pdf2src: Blob;
+  pdf1filename: string = '';
+  pdf2filename: string = '';
 
   constructor(private dialog: MatDialog,
               private changeDetectorRef: ChangeDetectorRef,
@@ -70,8 +72,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    console.log('pdf1');
-    console.log(this.request.pdf1);
+    // console.log('pdf1');
+    // console.log(this.request.pdf1);
 
     this.resources.companies.getCompanies()
       .subscribe((data : Company[]) => {
@@ -231,19 +233,21 @@ export class RequesterComponent implements OnInit, OnDestroy {
   savePdf(event){
     let elem = event.target || event.srcElement || event.currentTarget;
     if(elem.files.length > 0){
+      let name = event.target.files[0].name;
       let reader = new FileReader();
-      console.log('event: ', event);
       reader.onload = (event:any) => {
-        console.log('event.target: ', event.target);
-        console.log('event.target.files: ', event.target.files);
         if(elem.attributes.formcontrolname.value == "pdf1"){
           // this.pdf1src = event.target.files[0];
+          // this.pdf1filename = event.target.files[0].name;
+          // console.log('pdf1filename: ' + this.pdf1filename);
           this.pdf1src = event.target.result;
+          this.pdf1filename = name;
           // this.requesterForm.get('pdf1').setValue(this.pdf1src);
         }
         else{
           // this.pdf2src = event.target.files[0];
           this.pdf2src = event.target.result;
+          this.pdf2filename = name;
           // this.requesterForm.get('pdf2').setValue(this.pdf2src);
         }
       }
@@ -412,7 +416,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
       data: {vehicle: v, i: index, resource: false}
     });
 
-    console.log('posle edit vehicles: ', this.requesterService.getAllVehicles());
+    // console.log('posle edit vehicles: ', this.requesterService.getAllVehicles());
   }
 
   deleteVehicle(index: number) {
@@ -427,7 +431,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
     });
 
     vehicleDialogRef.afterClosed().subscribe(a => {
-      console.log('posle add vehicles: ', this.requesterService.getAllVehicles());
+      // console.log('posle add vehicles: ', this.requesterService.getAllVehicles());
     });
   }
 
@@ -576,7 +580,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
   };
 
   printRequest2(): void {
-    console.log("printRequest2");
+    // console.log("printRequest2");
     let printContents, popupWin;
     let fromDate = this.datePipe.transform(this.request.fromDate, 'dd/MM/yyyy');
     let toDate = this.datePipe.transform(this.request.toDate, 'dd/MM/yyyy');

@@ -89,15 +89,15 @@
             <input type="file" hidden #pdfUpload1
             accept="application/pdf"
             (change)="savePdf($event)" name="pdf1" id="pdf1" formControlName="pdf1">
-          </button>
+          </button> <span>{{pdf1filename}}</span>
         </div>
         <div class="pdf-upload" style="margin-top:3%;">
           <button type="button" mat-raised-button (click)="pdfUpload2.click()">
-            Attach Additional PDF<mat-icon>keyboard_arrow_up</mat-icon>
+            Attach BSR<mat-icon>keyboard_arrow_up</mat-icon>
             <input type="file" hidden #pdfUpload2
             accept="application/pdf"
             (change)="savePdf($event)" name="pdf2" id="pdf2" formControlName="pdf2">
-          </button>
+          </button> <span>{{pdf2filename}}</span>
         </div>
       </div>
 

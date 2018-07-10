@@ -17,6 +17,7 @@ export class BadgesService {
   // public badgesUrl = 'http://192.168.100.4:84/api/badges';
   public badgesUrl = this.authService.baseUrl + '/api/badges';
 
+
   httpOptions = {
     headers: this.authService.getHeaders()
   }
@@ -49,6 +50,10 @@ export class BadgesService {
   addBadge(badge: Badge){
     // console.log('vo addBadge()');
     return this.http.post(this.badgesUrl, badge, this.httpOptions);
+  }
+
+  editBadge(badge: Badge, id:number){
+    return this.http.patch(this.badgesUrl + '/' + id, badge);
   }
 
   pushBadge(badge: Badge){

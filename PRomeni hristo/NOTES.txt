@@ -1,0 +1,2 @@
+1. Sekade kade shto fali header vo koj del od sistemot sme da se napishe.
+2. Site datumi vo format DD.MM.GGGG 
