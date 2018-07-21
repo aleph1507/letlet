@@ -39,7 +39,7 @@
             </mat-option>
           </mat-autocomplete>
       </mat-form-field> -->
-      <mat-form-field class="requester-field">
+      <!-- <mat-form-field class="requester-field">
         <input matInput type="text" name='requesterCompany'
         id="requesterCompany" placeholder="Company"
         formControlName="requesterCompany"
@@ -50,7 +50,15 @@
           <mat-option *ngFor="let c of companies" [value]="c" >
             {{ c.name }}
           </mat-option>
-      </mat-autocomplete>
+      </mat-autocomplete> -->
+      <mat-form-field class="company-field">
+        <input type="text" placeholder="Company" [formControl]="companiesAutoCtrl" matInput [matAutocomplete]="comp_auto">
+        <mat-autocomplete #comp_auto="matAutocomplete" [displayWith]="displayFn">
+          <mat-option *ngFor="let comp of companies_auto" [value]="comp">
+            {{ comp.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
       <mat-form-field>
         <input matInput [matDatepicker]="fromPicker" placeholder="From date"
         formControlName="requesterFromDate" required>
@@ -120,7 +128,7 @@
 
       <button *ngIf="!editMode"
         mat-raised-button type="submit" color="primary"
-        [disabled]="imagesCheck() || !requesterForm.valid"
+        [disabled]="imagesCheck() || !requesterForm.valid || !companyOk"
         class="main-send">Send</button>
       <button *ngIf="showApproveBtn"
         (click)="approve(request.id)" mat-raised-button color="primary"

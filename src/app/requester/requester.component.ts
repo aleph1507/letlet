@@ -60,6 +60,11 @@ export class RequesterComponent implements OnInit, OnDestroy {
   pdf1filename: string = '';
   pdf2filename: string = '';
 
+  companiesAutoCtrl: FormControl = new FormControl();
+  companies_auto: Company[] = [];
+
+  companyOk: boolean = this.companiesAutoCtrl.value == null ? false : (this.companiesAutoCtrl.value.id == undefined ? false : true);
+
   constructor(private dialog: MatDialog,
               private changeDetectorRef: ChangeDetectorRef,
               public requesterService: RequesterService,
@@ -75,12 +80,26 @@ export class RequesterComponent implements OnInit, OnDestroy {
     // console.log('pdf1');
     // console.log(this.request.pdf1);
 
-    this.resources.companies.getCompanies()
-      .subscribe((data : Company[]) => {
+    // this.resources.companies.getCompanies()
+    //   .subscribe((data : Company[]) => {
         // console.log('companies[] data: ' + JSON.stringify(data));
-        this.companies = data;
-      });
+      //   this.companies = data;
+      // });
       // .subscribe(data => this.companies = data);
+
+      this.companiesAutoCtrl.valueChanges
+        .subscribe(d => {
+          this.resources.companies.filterCompanies(d)
+            .subscribe((data: Company[]) => {
+              console.log('companies: ', data);
+              this.companies_auto = data;
+              this.companyOk = this.companiesAutoCtrl.value == null ? false :
+                (this.companiesAutoCtrl.value.id == undefined ? false : true);
+              console.log('this.companyOk: ', this.companyOk);
+              // if(this.companiesAutoCtrl.value && this.companiesAutoCtrl.value.id)
+              //   this.getAR();
+            });
+        });
 
     for(let i = 1; i<= 15; i++)
       this.nEntries.push({name: i.toString(), value: i});
@@ -101,10 +120,10 @@ export class RequesterComponent implements OnInit, OnDestroy {
       'requesterDescriptionEn': new FormControl(this.request.descriptionEn, {
         updateOn: 'change'
       }),
-      'requesterCompany': new FormControl(this.request.companyId, {
-        validators: Validators.required,
-        updateOn: 'change'
-      }),
+      // 'requesterCompany': new FormControl(this.request.companyId, {
+      //   validators: Validators.required,
+      //   updateOn: 'change'
+      // }),
       'requesterFromDate': new FormControl(this.request.fromDate, {
         validators: Validators.required,
         updateOn: 'change'
@@ -138,6 +157,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
             let company = null;
             this.resources.companies.getCompanyById(this.request.companyId)
               .subscribe((c : Company) => {
+                this.companiesAutoCtrl.setValue(c);
+                this.companiesAutoCtrl.disable();
                 this.requesterForm = new FormGroup({
                   'requesterName': new FormControl({value : this.request.requesterName, disabled: true}, {
                     validators: Validators.required,
@@ -146,13 +167,13 @@ export class RequesterComponent implements OnInit, OnDestroy {
                   'requesterDescription': new FormControl({value: this.request.description, disabled: true}, {
                     updateOn: 'change'
                   }),
-                  'requesterDescriptionEn': new FormControl(this.request.descriptionEn, {
+                  'requesterDescriptionEn': new FormControl({value: this.request.descriptionEn, disabled: true}, {
                     updateOn: 'change'
                   }),
-                  'requesterCompany': new FormControl({value: c, disabled: true}, {
-                    validators: Validators.required,
-                    updateOn: 'change'
-                  }),
+                  // 'requesterCompany': new FormControl({value: c, disabled: true}, {
+                  //   validators: Validators.required,
+                  //   updateOn: 'change'
+                  // }),
                   'requesterFromDate': new FormControl({value: this.request.fromDate, disabled: true}, {
                     validators: Validators.required,
                     updateOn: 'change'
@@ -189,11 +210,11 @@ export class RequesterComponent implements OnInit, OnDestroy {
 
     // console.log('this.request: ', this.request);
 
-      this.filteredCompanies = this.requesterForm.controls['requesterCompany'].valueChanges
-        .pipe(
-          startWith(''),
-          map(company => this.filterCompanies(company))
-        );
+      // this.filteredCompanies = this.requesterForm.controls['requesterCompany'].valueChanges
+      //   .pipe(
+      //     startWith(''),
+      //     map(company => this.filterCompanies(company))
+      //   );
     // this.requesterForm.controls['requesterCompany']
   }
 
@@ -332,7 +353,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
         this.request.requesterName = this.requesterForm.controls['requesterName'].value;
         this.request.description = this.requesterForm.controls['requesterDescription'].value;
         this.request.descriptionEn = this.requesterForm.controls['requesterDescriptionEn'].value;
-        this.request.companyId = this.requesterForm.controls['requesterCompany'].value;
+        // this.request.companyId = this.requesterForm.controls['requesterCompany'].value;
+        this.request.companyId = this.companiesAutoCtrl.value.id;
         this.request.fromDate = this.requesterForm.controls['requesterFromDate'].value;
         this.request.toDate = this.requesterForm.controls['requesterToDate'].value;
         this.request.numberOfEntries = this.requesterForm.controls['requesterNumOfEntries'].value;
@@ -340,13 +362,15 @@ export class RequesterComponent implements OnInit, OnDestroy {
         this.request.pdf2 = this.pdf2src;
         this.requesterService.editRequest(this.request);
       } else {
-        this.reqCompany = this.requesterForm.controls['requesterCompany'].value;
+        // this.reqCompany = this.requesterForm.controls['requesterCompany'].value;
+        this.reqCompany = this.companiesAutoCtrl.value;
         this.requesterService.pushRequest(
           null,
           this.requesterForm.controls['requesterName'].value,
           this.requesterForm.controls['requesterDescription'].value,
           this.requesterForm.controls['requesterDescriptionEn'].value,
-          this.requesterForm.controls['requesterCompany'].value,
+          // this.requesterForm.controls['requesterCompany'].value,
+          this.companiesAutoCtrl.value,
           this.requesterForm.controls['requesterFromDate'].value,
           this.requesterForm.controls['requesterToDate'].value,
           this.requesterForm.controls['requesterNumOfEntries'].value,
@@ -365,9 +389,9 @@ export class RequesterComponent implements OnInit, OnDestroy {
     this.requesterForm.controls['requesterDescriptionEn'].setValue('');
     this.requesterForm.controls['requesterDescriptionEn'].markAsPristine();
     this.requesterForm.controls['requesterDescriptionEn'].markAsUntouched();
-    this.requesterForm.controls['requesterCompany'].setValue('');
-    this.requesterForm.controls['requesterCompany'].markAsPristine();
-    this.requesterForm.controls['requesterCompany'].markAsUntouched();
+    // this.requesterForm.controls['requesterCompany'].setValue('');
+    // this.requesterForm.controls['requesterCompany'].markAsPristine();
+    // this.requesterForm.controls['requesterCompany'].markAsUntouched();
     this.requesterForm.controls['requesterFromDate'].setValue('');
     this.requesterForm.controls['requesterFromDate'].markAsPristine();
     this.requesterForm.controls['requesterFromDate'].markAsUntouched();
@@ -380,10 +404,10 @@ export class RequesterComponent implements OnInit, OnDestroy {
     this.router.navigate(['/approvals', 1]);
   }
 
-  filterCompanies(name: string) {
-    return this.companies.filter(company =>
-      company.toLowerCase().indexOf(name.toLowerCase()) === 0);
-  }
+  // filterCompanies(name: string) {
+  //   return this.companies.filter(company =>
+  //     company.toLowerCase().indexOf(name.toLowerCase()) === 0);
+  // }
 
   intValidator(control: FormControl) {
     return isNaN(control.value) ? { "error": "NaN" } : null;
