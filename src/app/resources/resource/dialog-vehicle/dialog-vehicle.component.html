@@ -1,30 +1,5 @@
 <form class="requester-vehicle-form" [formGroup]="vehicleForm" (ngSubmit)="onSubmit()" novalidate>
-  <!-- <mat-form-field class="requester-vehicle-field">
-    <input matInput name='vehicleCompany'
-    id="vehicleCompany" placeholder="Company"
-    formControlName="company"
-    autocomplete="off" required>
-  </mat-form-field> -->
-  <mat-form-field class="company-field">
-    <input type="text" placeholder="Company" [formControl]="companiesAutoCtrl" matInput [matAutocomplete]="comp_auto">
-    <mat-autocomplete #comp_auto="matAutocomplete" [displayWith]="displayFn">
-      <mat-option *ngFor="let comp of companies_auto" [value]="comp">
-        {{ comp.name }}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-  <!-- <mat-form-field class="requester-vehicle-field">
-    <input matInput type="text" name='vehicleCompany'
-    id="vehicleCompany" placeholder="Company"
-    formControlName="company"
-    [matAutocomplete]="comp"
-    required>
-  </mat-form-field>
-  <mat-autocomplete #comp="matAutocomplete" [displayWith]="displayFn">
-      <mat-option *ngFor="let c of companies" [value]="c" >
-        {{ c.name }}
-      </mat-option>
-  </mat-autocomplete> -->
+
   <mat-form-field class="requester-vehicle-field">
     <input matInput name="vehicleModel"
     id="vehicleModel" placeholder="Model"
@@ -36,6 +11,15 @@
     id="vehiclePlate" placeholder="Plate"
     formControlName="plate"
     autocomplete="off" required>
+  </mat-form-field>
+
+  <mat-form-field class="company-field">
+    <input type="text" placeholder="Company" [formControl]="companiesAutoCtrl" matInput [matAutocomplete]="comp_auto">
+    <mat-autocomplete #comp_auto="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let comp of companies_auto" [value]="comp">
+        {{ comp.name }}
+      </mat-option>
+    </mat-autocomplete>
   </mat-form-field>
 
   <mat-dialog-actions>

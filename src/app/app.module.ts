@@ -53,6 +53,8 @@ import { PersonReportComponent } from './reports/person-report/person-report.com
 import { VehicleReportComponent } from './reports/vehicle-report/vehicle-report.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/token.interceptor';
+import { VehicleBadgesComponent } from './vehicle-badges/vehicle-badges.component';
+import { VehicleBadgesService } from './services/vehicle-badges.service';
 
 
 @NgModule({
@@ -87,6 +89,7 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
     ReportsComponent,
     PersonReportComponent,
     VehicleReportComponent,
+    VehicleBadgesComponent,
   ],
   imports: [
     BrowserModule,
@@ -118,7 +121,7 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
   ],
   providers: [RequesterService, AuthService, ApprovalsService,
               StopListService, ResourcesService, BadgesService,
-              DatePipe, GatesService, ReportsService,
+              DatePipe, GatesService, ReportsService, VehicleBadgesService,
               {
                 provide: HTTP_INTERCEPTORS,
                 useClass: TokenInterceptor,

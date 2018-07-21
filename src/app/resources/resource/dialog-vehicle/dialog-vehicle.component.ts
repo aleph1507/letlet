@@ -73,6 +73,7 @@ export class DialogResourceVehicleComponent implements OnInit {
         this.resourcesService.vehicles.getVehicleByIndex(this.data)
           .subscribe((res : resourceVehicle) => {
             this.vehicle = res;
+            this.companiesAutoCtrl.setValue(res.company);
             this.vehicleForm = new FormGroup({
               // 'company': new FormControl(this.vehicle.company ? this.vehicle.company : '', {
               //   validators: Validators.required

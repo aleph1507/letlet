@@ -13,6 +13,7 @@ import { GateComponent } from '../gates/gate/gate.component';
 import { ReportsComponent } from '../reports/reports.component';
 import { PersonReportComponent } from '../reports/person-report/person-report.component';
 import { VehicleReportComponent } from '../reports/vehicle-report/vehicle-report.component';
+import { VehicleBadgesComponent } from '../vehicle-badges/vehicle-badges.component';
 
 const appRoutes: Routes = [
    { path: '', component: DashboardComponent, pathMatch: 'full' },
@@ -31,7 +32,8 @@ const appRoutes: Routes = [
    { path: 'gates/:id', component: GateComponent, pathMatch: 'full' },
    { path: 'reports', component: ReportsComponent, pathMatch: 'full' },
    { path: 'reports/personReport', component: PersonReportComponent, pathMatch: 'full'},
-   { path: 'reports/vehicleReport', component: VehicleReportComponent, pathMatch: 'full'},   
+   { path: 'reports/vehicleReport', component: VehicleReportComponent, pathMatch: 'full'},
+   { path: 'vehicle-badges', component: VehicleBadgesComponent, pathMatch: 'full' }
 ];
 
 @NgModule({

@@ -65,6 +65,13 @@
         <button mat-raised-button
           color="primary"
           class="sidenav-btn"
+          [routerLink]="['/vehicle-badges']"
+          (click)="sidenav.close()">
+          <mat-icon>assignment_ind</mat-icon><span>Vehicle Badges</span>
+        </button>
+        <button mat-raised-button
+          color="primary"
+          class="sidenav-btn"
           [routerLink]="['/stop-list']"
           (click)="sidenav.close()">
           <mat-icon>warning</mat-icon><span>Stop List</span>
