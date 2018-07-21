@@ -15,6 +15,7 @@ import { catchError, retry } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import 'rxjs/Rx';
 import { resourceVehicle } from '../models/resourceVehicle';
+import { FormControl } from '@angular/forms';
 
 // class VisitorsBadges {
 //
@@ -742,33 +743,8 @@ class Vehicles {
 }
 
 class Companies {
-  // companies = ['AMC', 'BBC', 'TAV', 'DrinkerLab'];
-  // companies: Company[] = [
-  //   {
-  //     id: 1,
-  //     name: 'AMC'
-  //   },
-  //   {
-  //     id: 2,
-  //     name: 'BBC'
-  //   },
-  //   {
-  //     id: 3,
-  //     name: 'TAV'
-  //   },
-  //   {
-  //     id: 4,
-  //     name: 'DrinkerLab'
-  //   }
-  // ];
+
   companies: Company[] = [];
-  // httpOptions = {
-  //   headers: new HttpHeaders({
-  //     'Content-Type':  'application/json',
-  //     'Authorization': 'Bearer vLAF8elQ5r7gunytO65szem5dlajGWqLAmkaNtgfhVeQKi8fmlV-mzbYfa9fFBnJYWGa67b0fIzMuYUZdt2s3Sx7zdCvudAKXCHc1RgDikcNecmiHSIs_eu9eDnhYe7KIv1CWellcVQjatUEj1wFJtfIbds1-sgzeXXjQSLwT5gv-v9bOMsX0Kj-xehPvokv8VUYOYbz2luszzUuzQZ1Z7tS_YrAkTa2Ve_2HjcR6SClvjxbzYAGa6_P-Ea5BZvZwfNX8Q47NJhru9W0WDqOBHDH4_ch2b9AIePWArcx6krMyGJSfPN06c-46BvHDxevTkc4AbagtSFDZKMtWV8YFHenwNmof1aOKNv46PWacuptgfQFGv-CS7ot8Z4dYHVHoOidGz2mw0g0Y9ywuzimag',
-  //     'Accept': 'application/json'
-  //   })
-  // }
 
   // public companiesUrl = 'http://12.168.100.4:84/api/companies';
   public companiesUrl = this.baseUrl + '/api/companies';
@@ -780,6 +756,17 @@ class Companies {
 
   getCompanies() : Observable<Company[]>{
     return this.http.get<Company[]>(this.companiesUrl, { headers: this.headers });
+  }
+
+  filterCompanies(filter = null) : Observable<Company[]>{
+    return this.http.get<Company[]>(this.companiesUrl + '/search/?token=' + filter);
+  }
+
+  getCompaniesPage(page = null) : Observable<Company[]>{
+    if(page == null)
+      return this.http.get<Company[]>(this.companiesUrl);
+
+    return this.http.get<Company[]>(this.companiesUrl + '/page/' + page);
   }
 
   // getCompanies() {
@@ -857,6 +844,8 @@ class Companies {
         return this.companies.splice(i, 1);
     return null;
   }
+
+
 }
 
 @Injectable()

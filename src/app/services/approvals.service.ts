@@ -34,8 +34,8 @@ export class ApprovalsService {
               private authService: AuthService) { }
 
   getRequests(aUrl : string) : Observable<ApprovalRequest[]> {
-    return this.http.get<ApprovalRequest[]>(aUrl, { headers: this.headers });
-    // this.requests = this.requesterService.getAllRequests();
+    return this.http.get<ApprovalRequest[]>(aUrl);
+    // this.requests = this.requesterService.getAllRequests(); , { headers: this.headers }
     // return this.requests;
   }
 

@@ -17,17 +17,28 @@ export class EmployeeModalComponent implements OnInit {
   employeeForm: FormGroup;
   oldID: number = null;
   companies : Company[] = [];
+  companiesAutoCtrl: FormControl = new FormControl();
+  companies_auto: Company[] = [];
+  // company: FormControl = new FormControl();
 
   constructor(public dialogRef: MatDialogRef<EmployeeModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: number,
               private resourcesService: ResourcesService) { }
 
   ngOnInit() {
-    this.resourcesService.companies.getCompanies()
-      .subscribe((data: Company[]) => {
-        this.companies = data;
-        console.log('companies: ' + this.companies);
-      });
+    // this.resourcesService.companies.getCompanies()
+    //   .subscribe((data: Company[]) => {
+    //     this.companies = data;
+    //     console.log('companies: ' + this.companies);
+    //   });
+      this.companiesAutoCtrl.valueChanges
+        .subscribe(d => {
+          this.resourcesService.companies.filterCompanies(d)
+            .subscribe((data:Company[]) => {
+              console.log('company: ', data);
+              this.companies_auto = data;
+            });
+        });
 
     if(this.data){
       console.log('data : ' + this.data);
@@ -35,6 +46,7 @@ export class EmployeeModalComponent implements OnInit {
         .subscribe((data : Employee) => {
           this.oldID = data.id;
           this.employee = data;
+          this.companiesAutoCtrl.setValue(this.employee.company);
           this.employeeForm = new FormGroup({
             'name': new FormControl(this.employee ? this.employee.name : '', {
               validators: [Validators.required],
@@ -48,17 +60,17 @@ export class EmployeeModalComponent implements OnInit {
               validators: [Validators.required],
               updateOn: 'change'
             }),
-            'company': new FormControl(this.employee ? this.employee.company : '', {
-              validators: Validators.required
-            }),
+            // 'company': new FormControl(this.employee ? this.employee.company : '', {
+            //   validators: Validators.required
+            // }),
           });
         });
     }
 
     this.employeeForm = new FormGroup({
-      'company': new FormControl(this.employee ? this.employee.company : '', {
-        validators: Validators.required
-      }),
+      // 'company': new FormControl(this.employee ? this.employee.company : '', {
+      //   validators: Validators.required
+      // }),
       'occupation': new FormControl(this.employee ? this.employee.occupation : '', {
         validators: [Validators.required],
         updateOn: 'change'
@@ -83,7 +95,7 @@ export class EmployeeModalComponent implements OnInit {
       id: this.oldID,
       name: this.employeeForm.controls['name'].value,
       surname: this.employeeForm.controls['surname'].value,
-      company: this.employeeForm.controls['company'].value,
+      company: this.companiesAutoCtrl.value,
       occupation: this.employeeForm.controls['occupation'].value
     }
     if(this.data){

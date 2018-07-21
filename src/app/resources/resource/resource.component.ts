@@ -38,6 +38,7 @@ export class ResourceComponent implements OnInit {
   category;
   categoryTitle;
   currentPage = 1;
+  currentPageComp = 1;
   employees: Employee[] = [];
   employees_auto: Employee[] = [];
   prev_employees: Employee[] = [];
@@ -45,7 +46,12 @@ export class ResourceComponent implements OnInit {
   pageSize = 10;
   nextDisabled = false;
   prevDisabled = true;
+  nextDisabledComp = false;
+  prevDisabledComp = true;
+  companiesAutoCtrl: FormControl = new FormControl();
   employeeAutoCtrl: FormControl = new FormControl();
+  companies_auto: Company[] = [];
+  companies: Company[] = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -62,6 +68,13 @@ export class ResourceComponent implements OnInit {
             this.employees_auto = data;
           });
       });
+      this.companiesAutoCtrl.valueChanges
+        .subscribe(d => {
+          this.resourcesService.companies.filterCompanies(d)
+            .subscribe((data:Company[]) => {
+              this.companies_auto = data;
+            });
+        });
     this.paramsSub = this.route.params.subscribe(params => {
       this.category = params['category'];
       console.log('category: ', this.category);
@@ -316,6 +329,20 @@ export class ResourceComponent implements OnInit {
     }
   }
 
+  prevPageComp(page: number) {
+    // console.log('vo prev page');
+    if(this.currentPageComp > 1){
+      this.currentPageComp--;
+      this.resourcesService.companies.getCompaniesPage(this.currentPageComp).subscribe((data : Company[]) => {
+        // console.log('vo prev subscription data: ' + data);
+          this.companies = data;
+          // console.log('this.badges : ' + this.badges);
+          this.dataSource = new MatTableDataSource<Company>(this.companies);
+          this.nextDisabledComp = false;
+      });
+    }
+  }
+
   nextPageEmp(page: number) {
     // console.log('vo next page');
     this.resourcesService.employees.getEmployeesPage(this.currentPage+1).subscribe((data : Employee[]) => {
@@ -327,6 +354,21 @@ export class ResourceComponent implements OnInit {
         this.dataSource = new MatTableDataSource<Employee>(this.employees);
       } else {
         this.nextDisabled = true;
+      }
+    });
+  }
+
+  nextPageComp(page: number) {
+    // console.log('vo next page');
+    this.resourcesService.companies.getCompaniesPage(this.currentPageComp+1).subscribe((data : Company[]) => {
+      // console.log('vo next subscription data: ' + data);
+      if(data){
+        this.currentPageComp++;
+        this.companies = data;
+        // console.log('this.badges : ' + this.badges);
+        this.dataSource = new MatTableDataSource<Company>(this.companies);
+      } else {
+        this.nextDisabledComp = true;
       }
     });
   }
@@ -377,6 +419,22 @@ export class ResourceComponent implements OnInit {
             }
           }
         });
+    } else if(this.category == 'companies') {
+      this.resourcesService.companies.filterCompanies(filterValue)
+        .subscribe((data: Company[]) => {
+          if(data){
+            if(filterValue != ''){
+              this.companies = data;
+              this.dataSource = new MatTableDataSource<Company>(this.companies);
+            } else {
+              this.resourcesService.companies.getCompaniesPage(1)
+                .subscribe((data: Company[]) => {
+                  this.companies = data;
+                  this.dataSource = new MatTableDataSource<Company>(this.companies);
+                });
+            }
+          }
+        })
     } else {
       this.dataSource.filter = filterValue;
     }

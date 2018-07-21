@@ -327,6 +327,21 @@
         <button (click)="prevPageEmp()" [disabled]="currentPage <=1" class="prev-btn" mat-raised-button>< Previous Page</button>
         <button (click)="nextPageEmp()" [disabled]="nextDisabled" class="next-btn" mat-raised-button>Next Page ></button>
       </div>
+
+      <div *ngIf="category=='companies'" class="companies-pagination">
+        <form class="company-form">
+          <mat-form-field class="company-field">
+            <input type="text" placeholder="Company" [formControl]="companiesAutoCtrl" matInput [matAutocomplete]="comp_auto">
+            <mat-autocomplete #comp_auto="matAutocomplete">
+              <mat-option *ngFor="let comp of companies_auto" [value]="comp">
+                {{ comp.name }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </form>
+        <button (click)="prevPageComp()" [disabled]="currentPageComp <= 1" class="prev-btn" mat-raised-button>< Previous Page</button>
+        <button (click)="nextPageComp()" [disabled]="nextDisabledComp" class="next-btn" mat-raised-button>Next Page ></button>
+      </div>
       <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
     </div>
   <!-- </div> -->

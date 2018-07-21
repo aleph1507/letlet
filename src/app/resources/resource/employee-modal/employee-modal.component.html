@@ -17,28 +17,42 @@
       formControlName="surname"
       autocomplete="off" required>
   </mat-form-field>
-  <mat-form-field class="requester-employee-field">
+  <!-- <mat-form-field class="requester-employee-field">
     <input matInput type="text" name='company'
     id="company" placeholder="Company"
     formControlName="company"
     [matAutocomplete]="comp"
     required>
-  </mat-form-field>
+  </mat-form-field> -->
+  <!-- <form class="company-form"> -->
+    <mat-form-field class="company-field">
+      <input type="text" placeholder="Company" [formControl]="companiesAutoCtrl" matInput [matAutocomplete]="comp_auto">
+      <mat-autocomplete #comp_auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let comp of companies_auto" [value]="comp">
+          {{ comp.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  <!-- </form> -->
   <mat-form-field>
     <input matInput name="empOccupation"
       id="empOccupation" placeholder="Occupation"
       formControlName="occupation"
       autocomplete="off" required>
   </mat-form-field>
-  <mat-autocomplete #comp="matAutocomplete" [displayWith]="displayFn">
+  <!-- <mat-autocomplete #comp="matAutocomplete" [displayWith]="displayFn">
       <mat-option *ngFor="let c of companies" [value]="c" >
         {{ c.name }}
       </mat-option>
-  </mat-autocomplete>
+  </mat-autocomplete> -->
+  <!-- <pre>empName: {{employeeForm.get('empName').valid}}</pre>
+  <pre>empSurname: {{employeeForm.get('empSurname').valid}}</pre> -->
+  <!-- <pre></pre>
+  <pre></pre> -->
 
   <mat-divider class="sm-form-divider-margins"></mat-divider>
   <mat-dialog-actions>
-    <button type="submit" [disabled]="!employeeForm.valid" mat-raised-button>OK</button>
+    <button type="submit" [disabled]="!employeeForm.valid || !companiesAutoCtrl.valid" mat-raised-button>OK</button>
     <button type="button" mat-raised-button (click)="onCancel()">Cancel</button>
   </mat-dialog-actions>
 </form>

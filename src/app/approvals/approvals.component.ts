@@ -11,6 +11,7 @@ import { ResourcesService } from '../services/resources.service';
 import { ApprovalRequest } from '../models/approvalRequest';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { Company } from '../models/Company';
 
 @Component({
   selector: 'app-approvals',
@@ -29,10 +30,13 @@ export class ApprovalsComponent implements OnInit {
   filteredCompanies: Observable<string[]>;
   dateFrom = null;
   dateTo = null;
+  page = 1;
+  companiesAutoCtrl: FormControl = new FormControl();
+  companies_auto: Company[] = [];
 
   // companies = ['AMC', 'BBC', 'TAV', 'DrinkerLab'];
-  companies = this.resourcesService.companies.getCompaniesNames();
-  fCompany: FormControl = new FormControl();
+  // companies = this.resourcesService.companies.getCompaniesNames();
+  // fCompany: FormControl = new FormControl();
 
   // approvalsUrl = 'http://192.168.100.4:84/api/requests/approvals/3/2018-01-01/2019-01-01';
   // approvalsUrl = 'http://192.168.100.4:84/api/requests/approvals/';
@@ -71,13 +75,30 @@ export class ApprovalsComponent implements OnInit {
     this.showApprovals = this.approvalsService.showApprovals;
     // console.log('showApprovals[0]: ' + this.showApprovals[0]);
     // this.dataSource = new MatTableDataSource(this.approvalRequests);
-    this.filteredCompanies = this.fCompany.valueChanges
-      .pipe(
-        startWith(''),
-        map(company => this.filterCompanies(company))
-      );
+
+    this.companiesAutoCtrl.valueChanges
+      .subscribe(d => {
+        this.resourcesService.companies.filterCompanies(d)
+          .subscribe((data: Company[]) => {
+            console.log('companies: ', data);
+            this.companies_auto = data;
+            if(this.companiesAutoCtrl.value && this.companiesAutoCtrl.value.id)
+              this.getAR();
+          });
+      });
+
+    //
+    // this.filteredCompanies = this.fCompany.valueChanges
+    //   .pipe(
+    //     startWith(''),
+    //     map(company => this.filterCompanies(company))
+    //   );
 
     this.getAR();
+  }
+
+  displayFn(c?: Company) {
+    return c ? c.name : undefined;
   }
 
   status(s) {
@@ -130,8 +151,13 @@ export class ApprovalsComponent implements OnInit {
 
     }
 
+    console.log('this.companiesAutoCtrl.value', this.companiesAutoCtrl.value);
 
-    var aUrl = this.approvalsUrl + this.category + '/' + this.fromString + '/' + this.toString;
+    let cSegment = (this.companiesAutoCtrl.value == null ? '' :
+      (this.companiesAutoCtrl.value.id == undefined ? '' : '?companyId=' + this.companiesAutoCtrl.value.id));
+
+    var aUrl = this.approvalsUrl + this.category + '/' + this.fromString + '/' + this.toString + '/' + this.page
+      + cSegment;
     console.log(`aUrl: ` + aUrl);
 
     if(this.fromString != null && this.toString != null){
@@ -146,9 +172,9 @@ export class ApprovalsComponent implements OnInit {
 
   }
 
-  filterCompanies(name: string) {
-    return this.companies.filter(company =>
-      company.toLowerCase().indexOf(name.toLowerCase()) === 0);
-  }
+  // filterCompanies(name: string) {
+  //   return this.companies.filter(company =>
+  //     company.toLowerCase().indexOf(name.toLowerCase()) === 0);
+  // }
 
 }
