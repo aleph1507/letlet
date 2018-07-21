@@ -31,19 +31,36 @@ export class DialogResourceVehicleComponent implements OnInit {
     plate: null
   }
 
+  companiesAutoCtrl: FormControl = new FormControl();
+  companies_auto: Company[] = [];
+
+  companyOk: boolean = this.companiesAutoCtrl.value == null ? false :
+    (this.companiesAutoCtrl.value.id == undefined ? false : true);
+
   companies: Company[];
 
   ngOnInit() {
 
-      this.resourcesService.companies.getCompanies()
-        .subscribe((data) => {
-          this.companies = data;
+      // this.resourcesService.companies.getCompanies()
+      //   .subscribe((data) => {
+      //     this.companies = data;
+      //   });
+
+      this.companiesAutoCtrl.valueChanges
+        .subscribe(d => {
+          this.resourcesService.companies.filterCompanies(d)
+            .subscribe((data:Company[]) => {
+              console.log('company: ', data);
+              this.companies_auto = data;
+              this.companyOk = this.companiesAutoCtrl.value == null ? false :
+                (this.companiesAutoCtrl.value.id == undefined ? false : true);
+            });
         });
 
       this.vehicleForm = new FormGroup({
-        'company': new FormControl(this.vehicle.company ? this.vehicle.company : '', {
-          validators: Validators.required
-        }),
+        // 'company': new FormControl(this.vehicle.company ? this.vehicle.company : '', {
+        //   validators: Validators.required
+        // }),
         'model': new FormControl(this.vehicle.model, {
           validators: Validators.required
         }),
@@ -57,9 +74,9 @@ export class DialogResourceVehicleComponent implements OnInit {
           .subscribe((res : resourceVehicle) => {
             this.vehicle = res;
             this.vehicleForm = new FormGroup({
-              'company': new FormControl(this.vehicle.company ? this.vehicle.company : '', {
-                validators: Validators.required
-              }),
+              // 'company': new FormControl(this.vehicle.company ? this.vehicle.company : '', {
+              //   validators: Validators.required
+              // }),
               'model': new FormControl(this.vehicle.model, {
                 validators: Validators.required
               }),
@@ -85,7 +102,8 @@ export class DialogResourceVehicleComponent implements OnInit {
   }
 
   onSubmit(){
-    this.vehicle.company = this.vehicleForm.controls['company'].value;
+    // this.vehicle.company = this.vehicleForm.controls['company'].value;
+    this.vehicle.company = this.companiesAutoCtrl.value;
     this.vehicle.model = this.vehicleForm.controls['model'].value;
     this.vehicle.plate = this.vehicleForm.controls['plate'].value;
 
