@@ -12,7 +12,7 @@ export class Badge {
   returned: boolean;
   employeeId: number;
   employee: Employee;
-  zones: AirportZone[];
+  zones;
   dateOfSecurityCheck: string;
   dateOfTraining: string;
   dateOfActivation: string;

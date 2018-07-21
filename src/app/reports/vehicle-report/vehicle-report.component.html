@@ -8,12 +8,14 @@
     <mat-datepicker #fromPicker disabled="false"></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
-    <input matInput [matDatepicker]="toPicker"
-      (dateInput)="getReps('to', $event)"
-      [(ngModel)]="toDate" placeholder="Date To" disabled>
-    <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
-    <mat-datepicker #toPicker disabled="false"></mat-datepicker>
+      <input matInput [matDatepicker]="toPicker"
+        (dateInput)="getReps('to', $event)"
+        [(ngModel)]="toDate" placeholder="Date To" disabled>
+      <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+      <mat-datepicker #toPicker disabled="false"></mat-datepicker>
     </mat-form-field>
+    <button mat-raised-button color="primary" (click)="export_to_xlsx()">Export to Excel</button>
+    <button mat-raised-button color="primary" (click)="export_to_pdf()">Export to PDF</button>
   </div>
   <!-- *ngIf="gotRowData" -->
   <!--  -->

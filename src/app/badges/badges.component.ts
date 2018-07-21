@@ -124,9 +124,10 @@ export class BadgesComponent implements OnInit {
   }
 
   getZoneCodes(zones){
+    // console.log('zones: ', zones);
     let codes = [];
     for(let i = 0; i<zones.length; i++){
-      codes.push(zones[i].code);
+      codes.push(zones[i].zone.code);
     }
     return codes;
   }
@@ -148,7 +149,6 @@ export class BadgesComponent implements OnInit {
         // data: { name: this.name, animal: this.animal }
       }).afterClosed().subscribe(result => {this.refresh()});
     }
-
   }
 
   applyFilter(filterValue: string) {

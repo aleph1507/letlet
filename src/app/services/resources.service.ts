@@ -676,6 +676,10 @@ class Vehicles {
     this.headers = ho;
   }
 
+  filterVehicles(filter = null) : Observable<resourceVehicle[]>{
+    return this.http.get<resourceVehicle[]>(this.vehiclesUrl + '/search/?token=' + filter);
+  }
+
   addVehicle(vehicle: resourceVehicle){
     return this.http.post<resourceVehicle>(this.vehiclesUrl, vehicle, { headers: this.headers });
   }

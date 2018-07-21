@@ -1,14 +1,15 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatDialog, MatPaginator } from '@angular/material';
 import { VehicleBadge } from '../models/VehicleBadge';
 import { VehicleBadgesService } from '../services/vehicle-badges.service';
+import { VehicleBadgesCreateComponent } from './vehicle-badges-create/vehicle-badges-create.component';
 
 @Component({
   selector: 'app-vehicle-badges',
   templateUrl: './vehicle-badges.component.html',
   styleUrls: ['./vehicle-badges.component.css']
 })
-export class VehicleBadgesComponent implements OnInit {
+export class VehicleBadgesComponent implements OnInit, AfterViewInit {
 
   displayedColumns = ['permitNumber', 'vehicleModel', 'vehiclePlate', 'vehicleCompany', 'expireDate', 'return', 'shreddingDate', 'edit'];
 
@@ -27,6 +28,10 @@ export class VehicleBadgesComponent implements OnInit {
               private changeDetectorRefs: ChangeDetectorRef) { }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    this.refresh();
   }
 
   refresh() {
@@ -67,6 +72,25 @@ export class VehicleBadgesComponent implements OnInit {
         this.nextDisabled = true;
       }
     });
+  }
+
+  openDialog(id = null): void {
+    let dialogRef;
+    if(id != null){
+      this.vehicleBadgesService.getVehicleBadgeById(id)
+        .subscribe((res: VehicleBadge) => {
+          dialogRef = this.dialog.open(VehicleBadgesCreateComponent, {
+            width: '70%',
+            data: res
+          }).afterClosed().subscribe(result => {this.refresh()});
+        })
+    } else {
+        dialogRef = this.dialog.open(VehicleBadgesCreateComponent, {
+        width: '70%',
+        data: null
+        // data: { name: this.name, animal: this.animal }
+      }).afterClosed().subscribe(result => {this.refresh()});
+    }
   }
 
 }

@@ -3,6 +3,11 @@ import { StopListService } from '../services/stop-list.service';
 import { StopListEntry } from '../models/StopListEntry.model';
 // import { MatTableDataSource, MatSort } from '@angular/material';
 import { GridOptions } from 'ag-grid';
+import * as XLSX from 'xlsx';
+import * as pdfMake from 'pdfmake/build/pdfmake.js';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
 
 @Component({
   selector: 'app-stop-list',
@@ -34,6 +39,9 @@ export class StopListComponent implements OnInit {
   //   {headerName: 'Airport', field: 'airport'}
   // ];
 
+  xlsx_report;
+  columns = ['Employee Name', 'Company Name', 'Card Series Number', 'Card Number', 'Expire Date'];
+
   public gridOptions: GridOptions = <GridOptions>{
     rowData: [],
     columnDefs: [
@@ -49,6 +57,42 @@ export class StopListComponent implements OnInit {
     enableSorting: true,
   };
 
+  export_to_xlsx() {
+    const workBook = XLSX.utils.book_new();
+    const workSheet = XLSX.utils.json_to_sheet(this.xlsx_report);
+
+    XLSX.utils.book_append_sheet(workBook, workSheet, 'StopList');
+    XLSX.writeFile(workBook, 'StopList.xlsx');
+  }
+
+  // columns = ['Employee Name', 'Company Name', 'Card Series Number', 'Card Number', 'Expire Date'];
+
+  export_to_pdf() {
+    // console.log('this.xlsx_report: ', this.xlsx_report);
+    let body = [];
+    body.push(this.columns);
+    let tmp = [];
+    for(let i = 0; i<this.xlsx_report.length; i++){
+      tmp.push(this.xlsx_report[i].employeeName, this.xlsx_report[i].companyName, this.xlsx_report[i].cardSeriesNumber,
+              this.xlsx_report[i].cardNumber, this.xlsx_report[i].expireDate);
+      body.push(tmp);
+      tmp = [];
+    }
+    // console.log('body: ', body);
+    let docDefinition = {
+      content: [
+        {
+          table: {
+            headerRows: 1,
+            widths: ['*', 'auto', 100, '*', '*'],
+
+            body: body
+          }
+        }
+      ]
+    }
+   pdfMake.createPdf(docDefinition).download('StopList.pdf');
+  }
   // rowData = [];
 
   // @ViewChild(MatSort) sort: MatSort;
@@ -60,6 +104,7 @@ export class StopListComponent implements OnInit {
   ngOnInit() {
     this.slService.getStopListEntries()
       .subscribe((data : StopListEntry[]) => {
+        this.xlsx_report = data;
         this.gridOptions.api.setRowData(data);
       });
     // this.slEntries = this.slService.getStopListEntries();

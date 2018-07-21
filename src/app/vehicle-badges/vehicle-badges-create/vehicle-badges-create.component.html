@@ -1,0 +1,42 @@
+<form name="vehicleBadgeForm" id="vehicleBadgeForm" [formGroup]="vehicleBadgeForm" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <input matInput type="text" pattern="[0-9]*" (keypress)="isNumber(event)" placeholder="permitNumber"
+    formControlName="permitNumber"
+    autocomplete="off">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput
+      [matDatepicker]="expireDate"
+      formControlName="expireDate"
+      placeholder="Expire Date">
+    <mat-datepicker-toggle matSuffix [for]="expireDate"></mat-datepicker-toggle>
+    <mat-datepicker #expireDate></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field class="vehicle-field">
+    <input type="text" placeholder="Vehicle" [formControl]="vehicleAutoCtrl" matInput [matAutocomplete]="vehicle_auto">
+    <mat-autocomplete #vehicle_auto="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let vehicle of vehicles_auto" [value]="vehicle">
+        {{ vehicle.model }} {{ vehicle.plate }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput
+      [matDatepicker]="shreddingDate"
+      formControlName="shreddingDate"
+      placeholder="Shredding Date">
+    <mat-datepicker-toggle matSuffix [for]="shreddingDate"></mat-datepicker-toggle>
+    <mat-datepicker #shreddingDate></mat-datepicker>
+  </mat-form-field>
+  <mat-checkbox
+    class="chkReturned"
+    color="primary"
+    formControlName="return"
+    [(ngModel)]="returned">Returned
+  </mat-checkbox>
+
+  <mat-dialog-actions>
+    <button type="submit" [disabled]="!vehicleBadgeForm.valid" mat-raised-button >OK</button>
+    <button type="button" mat-raised-button (click)="onCancel()">Cancel</button>
+  </mat-dialog-actions>
+</form>

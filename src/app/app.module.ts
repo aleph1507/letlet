@@ -55,6 +55,9 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { VehicleBadgesComponent } from './vehicle-badges/vehicle-badges.component';
 import { VehicleBadgesService } from './services/vehicle-badges.service';
+import { VehicleBadgesCreateComponent } from './vehicle-badges/vehicle-badges-create/vehicle-badges-create.component';
+import { VehicleStopListComponent } from './vehicle-stop-list/vehicle-stop-list.component';
+import { VslService } from './services/vsl.service';
 
 
 @NgModule({
@@ -70,6 +73,7 @@ import { VehicleBadgesService } from './services/vehicle-badges.service';
     StopListComponent,
     BadgesComponent,
     BadgesCreateComponent,
+    VehicleBadgesCreateComponent,
     ResourcesComponent,
     ResourceComponent,
     CompanyModalComponent,
@@ -90,6 +94,8 @@ import { VehicleBadgesService } from './services/vehicle-badges.service';
     PersonReportComponent,
     VehicleReportComponent,
     VehicleBadgesComponent,
+    VehicleBadgesCreateComponent,
+    VehicleStopListComponent,
   ],
   imports: [
     BrowserModule,
@@ -117,11 +123,13 @@ import { VehicleBadgesService } from './services/vehicle-badges.service';
     EnterPersonModalComponent,
     ExitPersonModalComponent,
     EnterVehicleModalComponent,
-    ExitVehicleModalComponent
+    ExitVehicleModalComponent,
+    VehicleBadgesCreateComponent
   ],
   providers: [RequesterService, AuthService, ApprovalsService,
               StopListService, ResourcesService, BadgesService,
               DatePipe, GatesService, ReportsService, VehicleBadgesService,
+              VslService,
               {
                 provide: HTTP_INTERCEPTORS,
                 useClass: TokenInterceptor,

@@ -35,23 +35,9 @@ export class BadgesCreateComponent implements OnInit {
   ngOnInit() {
     if(this.data != null){
       this.badge = this.data;
-      console.log('this.badge.expireDate: ' + this.badge.expireDate);
     }
 
     this.badgeForm = this.createBadgeForm();
-    // this.resourcesService.employees.getAllEmployees()
-    //   .subscribe((res : Employee[]) => {
-    //     this.employees = res;
-    //     this.badgeForm = this.createBadgeForm();
-    //   });
-
-      // this.employeeAutoCtrl.valueChanges
-      //   .subscribe(d => {
-      //     this.resourcesService.employees.filterEmployees(d)
-      //       .subscribe((data:Employee[]) => {
-      //         this.employees_auto = data;
-      //       });
-      //   });
 
       this.badgeForm.controls['employee'].valueChanges
         .subscribe(d => {
@@ -66,16 +52,14 @@ export class BadgesCreateComponent implements OnInit {
         this.nZones = this.zones.length;
         if(this.data != null){
           for(let i = 0; i<this.badge.zones.length; i++){
-            this.zonesBool[this.badge.zones[i].id] = true;
+            this.zonesBool[this.badge.zones[i].zone.code] = true;
           }
         }
       });
   }
 
   checkZone(i){
-    // console.log('z.isChecked: ' + z.checked + ' ,  i : ' + i);
     this.zonesBool[i] = !this.zonesBool[i];
-    // console.log(`this.zonesBool[i] : ${this.zonesBool[i]} || i : ${i}`)
   }
 
   parseDate(dE: Date){
@@ -114,19 +98,15 @@ export class BadgesCreateComponent implements OnInit {
     this.badge.cardSeriesNumber = this.badgeForm.controls['cardSeriesNumber'].value;
     this.badge.cardNumber = this.badgeForm.controls['cardNumber'].value;
     this.badge.zones = addedZones;
-    console.log('this.data: ', this.data);
-    console.log('this.badge: ' + this.badge);
     if(this.data == null){
       this.badgesService.addBadge(this.badge)
         .subscribe((data : Badge) => {
-          console.log('vo addBadge subscription data: ' + data);
           this.badgesService.pushBadge(data);
           this.dialogRef.close();
         });
     } else {
       this.badgesService.editBadge(this.badge, this.badge.id)
         .subscribe((data: Badge) => {
-          console.log('vo editBadge subscribe data: ' + data);
           this.badgesService.pushBadge(data);
           this.dialogRef.close();
         })
@@ -149,7 +129,7 @@ export class BadgesCreateComponent implements OnInit {
         return false;
     }
     return true;
-}
+  }
 
   createBadgeForm() {
     return new FormGroup({

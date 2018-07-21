@@ -9,12 +9,20 @@
 <!-- [rowData]="rowData"
 [columnDefs]="columnDefs" -->
 
+<div class="container">
+  <div class="filter-panel">
+    <button mat-raised-button color="primary" (click)="export_to_xlsx()">Export to Excel</button>
+    <button mat-raised-button color="primary" (click)="export_to_pdf()">Export to PDF</button>
+  </div>
   <ag-grid-angular
     #agGrid style="width: 90vw; height: 90vh;"
     class="ag-theme-balham"
     [gridOptions]="gridOptions"
   >
   </ag-grid-angular>
+</div>
+
+
 
   <!-- <mat-table #slTable [dataSource]="slDataSource" matSort>
     <ng-container class="cell-container" matColumnDef="name">

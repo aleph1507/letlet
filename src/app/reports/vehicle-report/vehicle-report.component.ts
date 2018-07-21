@@ -4,6 +4,10 @@ import { ReportsService } from '../../services/reports.service';
 import { VehicleReport } from '../../models/VehicleReport.model';
 import { AuthService } from '../../services/auth.service';
 import { MatDatepickerInputEvent } from '@angular/material';
+import * as XLSX from 'xlsx';
+import * as pdfMake from 'pdfmake/build/pdfmake.js';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-vehicle-report',
@@ -23,13 +27,18 @@ export class VehicleReportComponent implements OnInit {
   personsReportUrl = this.authService.baseUrl + '/api/visits/vehiclereport';
   gotRowData: boolean = false;
 
+  xlsx_report;
 
+  columns = ['Company Name', 'Vehicle Model', 'Vehicle Plate', 'Entered Through Gate',
+     'Entry Approved By', 'Entry Escorted By', 'Exited Through Gate', 'Exit Approved By',
+     'Exit Escorted By', 'Time On Air Side'];
 
   public gridOptions: GridOptions = <GridOptions>{
     rowData: [],
     columnDefs: [
       {headerName: 'Company Name', field: 'companyName'},
       {headerName: 'Vehicle Model', field: 'vehicleModel'},
+      {headerName: 'Vehicle Plate', field: 'plateNumber'},
       {headerName: 'Entered Through Gate', field: 'enteredOnGate'},
       {headerName: 'Entry Approved By', field: 'approvedEnterFrom'},
       {headerName: 'Entry Escorted By', field: 'entryEscortedBy'},
@@ -44,18 +53,57 @@ export class VehicleReportComponent implements OnInit {
     enableSorting: true,
   };
 
-  // rowData = [];
-
   constructor(private reportsService: ReportsService,
               private authService: AuthService) { }
 
   ngOnInit() {
-    // this.gridOptions.rowData = this.reportsService.getReports();
-    // console.log('this.rowData: ' + this.gridOptions.rowData);
     this.toDate = new Date();
     this.fromDate = new Date();
     this.fromDate.setDate(this.fromDate.getDate() - 30);
     this.getReps();
+  }
+
+  export_to_xlsx() {
+    const workBook = XLSX.utils.book_new();
+    const workSheet = XLSX.utils.json_to_sheet(this.xlsx_report);
+
+    XLSX.utils.book_append_sheet(workBook, workSheet, 'VehiclesReport');
+    XLSX.writeFile(workBook, 'VehiclesReport.xlsx');
+  }
+
+  export_to_pdf() {
+    let body = [];
+    body.push(this.columns);
+    let tmp = [];
+    for(let i = 0; i<this.xlsx_report.length; i++){
+      tmp.push(this.xlsx_report[i].companyName, this.xlsx_report[i].vehicleModel, this.xlsx_report[i].plateNumber,
+               this.xlsx_report[i].enteredOnGate, this.xlsx_report[i].approvedEnterFrom,
+               this.xlsx_report[i].entryEscortedBy, this.xlsx_report[i].exitedOnGate,
+               this.xlsx_report[i].approvedExitFrom, this.xlsx_report[i].exitEscortedBy,
+               this.xlsx_report[i].timeOnAirSide);
+      body.push(tmp);
+      tmp = [];
+    }
+    let docDefinition = {
+
+    extend: 'pdfHtml5',
+    // orientation: 'landscape',//landscape give you more space
+    pageSize: 'A3',//A0 is the largest A5 smallest(A0,A1,A2,A3,legal,A4,A5,letter))
+    alignment: 'center',
+
+    content: [
+        {
+          // alignment: 'center',
+          table: {
+            headerRows: 1,
+            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+
+            body: body
+          }
+        }
+      ]
+    }
+   pdfMake.createPdf(docDefinition).download('VehiclesReport.pdf');
   }
 
   getReps(picker = null, event: MatDatepickerInputEvent<Date> = null) {
@@ -65,7 +113,6 @@ export class VehicleReportComponent implements OnInit {
 
 
     if(event == null) {
-      // console.log('vo event == null');
       this.fromDate.getMonth() >= 10 ?
         month = '-' + (this.fromDate.getMonth() + 1).toString() : month = '-0' + (this.fromDate.getMonth()+1).toString();
 
@@ -83,7 +130,6 @@ export class VehicleReportComponent implements OnInit {
       this.toString = this.toDate.getFullYear() + month + day;
 
     } else {
-      // console.log('event.value: ' + event.value);
       var date = null;
       if(picker == 'from'){
         date = this.fromDate;
@@ -93,7 +139,6 @@ export class VehicleReportComponent implements OnInit {
       date.getMonth() >= 10 ?
         month = '-' + (date.getMonth() + 1).toString() : month = '-0' + (date.getMonth() + 1).toString();
 
-      // event.value.get
       date.getDate() >= 10 ?
         day = '-' + (date.getDate()).toString() : day = '-0' + (date.getDate()).toString();
 
@@ -104,21 +149,12 @@ export class VehicleReportComponent implements OnInit {
 
 
     var rUrl = this.personsReportUrl + '/' + this.fromString + '/' + this.toString;
-    console.log(`aUrl: ` + rUrl);
 
     if(this.fromString != null && this.toString != null){
       this.reportsService.getVehicleReports(rUrl)
         .subscribe((data : VehicleReport[]) => {
-          // this.gridOptions.onGridReady = function() {
-            this.gridOptions.api.setRowData(data);
-          // }
-          // this.personsReport = data;
-          // this.rowData = this.personsReport;
-          // console.log('gridoptions row data: ' + this.rowData);
-          // this.gotRowData = true;
-          // this.dataSource = new
-          //   MatTableDataSource<ApprovalRequest>(this.approvalRequests);
-          // console.log(this.approvalRequests);
+          this.xlsx_report = data;
+          this.gridOptions.api.setRowData(data);
         });
     }
 

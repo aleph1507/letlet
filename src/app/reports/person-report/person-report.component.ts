@@ -4,6 +4,11 @@ import { ReportsService } from '../../services/reports.service';
 import { MatDatepickerInputEvent } from '@angular/material';
 import { AuthService } from '../../services/auth.service';
 import { PersonReport } from '../../models/PersonReport.model';
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
+import * as pdfMake from 'pdfmake/build/pdfmake.js';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-person-report',
@@ -11,6 +16,9 @@ import { PersonReport } from '../../models/PersonReport.model';
   styleUrls: ['./person-report.component.css']
 })
 export class PersonReportComponent implements OnInit {
+
+  // EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+  // EXCEL_EXTENSION = '.xlsx';
 
   toDate : Date;
   fromDate : Date;
@@ -23,6 +31,11 @@ export class PersonReportComponent implements OnInit {
   personsReportUrl = this.authService.baseUrl + '/api/visits/personreport';
   gotRowData: boolean = false;
 
+  xlsx_report;
+
+  columns = ['Company Name', 'Person', 'Entered Through Gate', 'Entry Approved By',
+     'Entry Escorted By', 'Exited Through Gate', 'Exit Approved By', 'Exit Escorted By',
+     'Time On Air Side'];
 
 
   public gridOptions: GridOptions = <GridOptions>{
@@ -58,11 +71,70 @@ export class PersonReportComponent implements OnInit {
     this.getReps();
   }
 
+  export_to_xlsx() {
+    const workBook = XLSX.utils.book_new();
+    const workSheet = XLSX.utils.json_to_sheet(this.xlsx_report);
+
+    XLSX.utils.book_append_sheet(workBook, workSheet, 'PersonsReport');
+    XLSX.writeFile(workBook, 'PersonsReport.xlsx');
+  }
+
+  // columns = ['Company Name', 'Person', 'Entered Through Gate', 'Entry Approved By',
+  //    'Entry Escorted By', 'Exited Through Gate', 'Exit Approved By', 'Exit Escorted By',
+  //    'Time On Air Side'];
+
+     export_to_pdf() {
+       // console.log('this.xlsx_report: ', this.xlsx_report);
+       let body = [];
+       body.push(this.columns);
+       let tmp = [];
+       for(let i = 0; i<this.xlsx_report.length; i++){
+         tmp.push(this.xlsx_report[i].companyName, this.xlsx_report[i].personVisited,
+                  this.xlsx_report[i].enteredOnGate, this.xlsx_report[i].approvedEnterFrom,
+                  this.xlsx_report[i].entryEscortedBy, this.xlsx_report[i].exitedOnGate,
+                  this.xlsx_report[i].approvedExitFrom, this.xlsx_report[i].exitEscortedBy,
+                  this.xlsx_report[i].timeOnAirSide);
+         body.push(tmp);
+         tmp = [];
+       }
+       // console.log('body: ', body);
+       let docDefinition = {
+
+       extend: 'pdfHtml5',
+       // orientation: 'landscape',//landscape give you more space
+       pageSize: 'A3',//A0 is the largest A5 smallest(A0,A1,A2,A3,legal,A4,A5,letter))
+       alignment: 'center',
+
+       content: [
+           {
+             // alignment: 'center',
+             table: {
+               headerRows: 1,
+               widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+
+               body: body
+             }
+           }
+         ]
+       }
+      pdfMake.createPdf(docDefinition).download('PersonsReport.pdf');
+     }
+
+  // export_to_xlsx(){
+  //   /* generate worksheet */
+  //   const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(this.xlsx_report);
+  //
+  //   /* generate workbook and add the worksheet */
+  //   const wb: XLSX.WorkBook = XLSX.utils.book_new();
+  //   XLSX.utils.book_append_sheet(wb, ws, 'personsReport');
+  //
+  //   /* save to file */
+  //   XLSX.writeFile(wb, 'personsReport.xlsx');
+  // }
+
   getReps(picker = null, event: MatDatepickerInputEvent<Date> = null) {
     var month : string = '';
     var day : string = '';
-
-
 
     if(event == null) {
       // console.log('vo event == null');
@@ -110,6 +182,8 @@ export class PersonReportComponent implements OnInit {
       this.reportsService.getReports(rUrl)
         .subscribe((data : PersonReport[]) => {
           // this.gridOptions.onGridReady = function() {
+            this.xlsx_report = data;
+            // console.log('this.xlsx_report', this.xlsx_report);
             this.gridOptions.api.setRowData(data);
           // }
           // this.personsReport = data;

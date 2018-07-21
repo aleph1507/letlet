@@ -25,12 +25,6 @@
     [(ngModel)]="returned">Returned
   </mat-checkbox>
 
-  <!-- <mat-form-field>
-    <input matInput placeholder="Employee"
-    formControlName="employee"
-    [matAutocomplete]="emp"
-    required>
-  </mat-form-field> -->
 
   <mat-form-field class="employee-field">
     <input type="text" placeholder="Employee" formControlName="employee" matInput [matAutocomplete]="emp_auto">
@@ -40,11 +34,7 @@
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
-  <!-- <mat-autocomplete #emp="matAutocomplete" [displayWith]="displayFn">
-      <mat-option *ngFor="let e of employees" [value]="e" >
-        {{ e.name }} {{ e.surname }}
-      </mat-option>
-  </mat-autocomplete> -->
+
   <form class="employee-form">
 
   </form>
