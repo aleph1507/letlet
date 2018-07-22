@@ -51,38 +51,42 @@ export class ApprovalsComponent implements OnInit {
   fromDate : Date;
   fromString : string = null;
   toString : string = null;
+  category = 1;
 
   ngOnInit() {
-    this.route.url.subscribe((u) => {
-      let activatedCategory = +this.route.snapshot.params.selectedradio;
-      switch(activatedCategory){
-        case 1:
-          this.selectedApprovals = 'All'
-          break;
-        case 2:
-          this.selectedApprovals = 'Approved';
-          break;
-        default:
-          this.selectedApprovals = 'Not Approved';
-          break;
-      }
-      console.log('this.route.snapshot.params.selectedradio:  ' + this.route.snapshot.params.selectedradio);
-    });
     this.toDate = new Date();
     this.fromDate = new Date();
     this.fromDate.setDate(this.fromDate.getDate() - 30);
     // this.approvalRequests = this.approvalsService.formatRequests();
     this.showApprovals = this.approvalsService.showApprovals;
-    // console.log('showApprovals[0]: ' + this.showApprovals[0]);
-    // this.dataSource = new MatTableDataSource(this.approvalRequests);
+
+    this.route.url.subscribe((u) => {
+      let activatedCategory = +this.route.snapshot.params.selectedradio;
+      switch(activatedCategory){
+        case 1:
+          this.selectedApprovals = 'All'
+          this.category = 1;
+          break;
+        case 2:
+          this.selectedApprovals = 'Approved';
+          this.category = 2;
+          break;
+        default:
+          this.selectedApprovals = 'Not Approved';
+          this.category = 3;
+          break;
+      }
+      this.getAR();
+    });
+
 
     this.companiesAutoCtrl.valueChanges
       .subscribe(d => {
         this.resourcesService.companies.filterCompanies(d)
           .subscribe((data: Company[]) => {
-            console.log('companies: ', data);
             this.companies_auto = data;
-            if(this.companiesAutoCtrl.value && this.companiesAutoCtrl.value.id)
+            if((this.companiesAutoCtrl.value && this.companiesAutoCtrl.value.id) ||
+              (this.companiesAutoCtrl.value == null) || (this.companiesAutoCtrl.value == ''))
               this.getAR();
           });
       });
@@ -109,7 +113,7 @@ export class ApprovalsComponent implements OnInit {
     return s == true ? f : '';
   }
 
-  category = 3;
+  // category = 3;
 
   radioChange($event){
     this.category = this.showApprovals.indexOf($event.value) + 1;
@@ -121,7 +125,6 @@ export class ApprovalsComponent implements OnInit {
     var day : string = '';
 
     if(event == null) {
-      // console.log('vo event == null');
       this.fromDate.getMonth() >= 10 ?
         month = '-' + (this.fromDate.getMonth() + 1).toString() : month = '-0' + (this.fromDate.getMonth()+1).toString();
 
@@ -151,14 +154,11 @@ export class ApprovalsComponent implements OnInit {
 
     }
 
-    console.log('this.companiesAutoCtrl.value', this.companiesAutoCtrl.value);
-
     let cSegment = (this.companiesAutoCtrl.value == null ? '' :
       (this.companiesAutoCtrl.value.id == undefined ? '' : '?companyId=' + this.companiesAutoCtrl.value.id));
 
     var aUrl = this.approvalsUrl + this.category + '/' + this.fromString + '/' + this.toString + '/' + this.page
       + cSegment;
-    console.log(`aUrl: ` + aUrl);
 
     if(this.fromString != null && this.toString != null){
       this.approvalsService.getRequests(aUrl)
@@ -166,8 +166,7 @@ export class ApprovalsComponent implements OnInit {
           this.approvalRequests = data;
           this.dataSource = new
             MatTableDataSource<ApprovalRequest>(this.approvalRequests);
-          // console.log(this.approvalRequests);
-        })
+        });
     }
 
   }

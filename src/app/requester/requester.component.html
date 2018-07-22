@@ -139,10 +139,16 @@
     </form>
 
     <div *ngIf="editMode" class="print-request" id="print-request">
-      <mat-icon (click)="printRequest()"
-      class="icon-control">print</mat-icon>
-      <mat-icon (click)="printRequest2()"
-      class="icon-control">print</mat-icon>
+      <button mat-raised-button (click)="printRequest()">
+        Print Request 1 <mat-icon class="icon-control">print</mat-icon>
+      </button>
+      <button mat-raised-button (click)="printRequest2()">
+        Print Request 2 <mat-icon class="icon-control">print</mat-icon>
+      </button>
+      <!-- <mat-icon (click)="printRequest()"
+      class="icon-control">print</mat-icon> -->
+      <!-- <mat-icon (click)="printRequest2()"
+      class="icon-control">print</mat-icon> -->
     </div>
 
   </div>

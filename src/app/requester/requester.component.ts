@@ -361,6 +361,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
         this.request.pdf1 = this.pdf1src;
         this.request.pdf2 = this.pdf2src;
         this.requesterService.editRequest(this.request);
+        this.router.navigate(['/approvals', 1]);
       } else {
         // this.reqCompany = this.requesterForm.controls['requesterCompany'].value;
         this.reqCompany = this.companiesAutoCtrl.value;
@@ -377,31 +378,32 @@ export class RequesterComponent implements OnInit, OnDestroy {
           this.pdf1src,
           this.pdf2src
         );
+        // this.router.navigate(['/approvals', 1]);
       }
     }
     // this.requesterForm.reset();
-    this.requesterForm.controls['requesterName'].setValue('');
-    this.requesterForm.controls['requesterName'].markAsPristine();
-    this.requesterForm.controls['requesterName'].markAsUntouched();
-    this.requesterForm.controls['requesterDescription'].setValue('');
-    this.requesterForm.controls['requesterDescription'].markAsPristine();
-    this.requesterForm.controls['requesterDescription'].markAsUntouched();
-    this.requesterForm.controls['requesterDescriptionEn'].setValue('');
-    this.requesterForm.controls['requesterDescriptionEn'].markAsPristine();
-    this.requesterForm.controls['requesterDescriptionEn'].markAsUntouched();
-    // this.requesterForm.controls['requesterCompany'].setValue('');
-    // this.requesterForm.controls['requesterCompany'].markAsPristine();
-    // this.requesterForm.controls['requesterCompany'].markAsUntouched();
-    this.requesterForm.controls['requesterFromDate'].setValue('');
-    this.requesterForm.controls['requesterFromDate'].markAsPristine();
-    this.requesterForm.controls['requesterFromDate'].markAsUntouched();
-    this.requesterForm.controls['requesterToDate'].setValue('');
-    this.requesterForm.controls['requesterToDate'].markAsPristine();
-    this.requesterForm.controls['requesterToDate'].markAsUntouched();
-    this.requesterForm.controls['requesterNumOfEntries'].setValue('');
-    this.requesterForm.controls['requesterNumOfEntries'].markAsPristine();
-    this.requesterForm.controls['requesterNumOfEntries'].markAsUntouched();
-    this.router.navigate(['/approvals', 1]);
+    // this.requesterForm.controls['requesterName'].setValue('');
+    // this.requesterForm.controls['requesterName'].markAsPristine();
+    // this.requesterForm.controls['requesterName'].markAsUntouched();
+    // this.requesterForm.controls['requesterDescription'].setValue('');
+    // this.requesterForm.controls['requesterDescription'].markAsPristine();
+    // this.requesterForm.controls['requesterDescription'].markAsUntouched();
+    // this.requesterForm.controls['requesterDescriptionEn'].setValue('');
+    // this.requesterForm.controls['requesterDescriptionEn'].markAsPristine();
+    // this.requesterForm.controls['requesterDescriptionEn'].markAsUntouched();
+    // // this.requesterForm.controls['requesterCompany'].setValue('');
+    // // this.requesterForm.controls['requesterCompany'].markAsPristine();
+    // // this.requesterForm.controls['requesterCompany'].markAsUntouched();
+    // this.requesterForm.controls['requesterFromDate'].setValue('');
+    // this.requesterForm.controls['requesterFromDate'].markAsPristine();
+    // this.requesterForm.controls['requesterFromDate'].markAsUntouched();
+    // this.requesterForm.controls['requesterToDate'].setValue('');
+    // this.requesterForm.controls['requesterToDate'].markAsPristine();
+    // this.requesterForm.controls['requesterToDate'].markAsUntouched();
+    // this.requesterForm.controls['requesterNumOfEntries'].setValue('');
+    // this.requesterForm.controls['requesterNumOfEntries'].markAsPristine();
+    // this.requesterForm.controls['requesterNumOfEntries'].markAsUntouched();
+    // this.router.navigate(['/approvals', 1]);
   }
 
   // filterCompanies(name: string) {

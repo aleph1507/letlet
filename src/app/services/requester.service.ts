@@ -9,6 +9,7 @@ import { ResourcesService } from './resources.service';
 import { Company } from '../models/Company';
 import 'rxjs/Rx';
 import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class RequesterService {
@@ -88,7 +89,8 @@ export class RequesterService {
 
   constructor(private http: HttpClient,
               private resourcesService: ResourcesService,
-              private authService: AuthService) { }
+              private authService: AuthService,
+              private router: Router) { }
 
   private handleError(error: HttpErrorResponse) {
   if (error.error instanceof ErrorEvent) {
@@ -134,6 +136,7 @@ export class RequesterService {
     this.http.post(this.requestUrl, request, this.httpOptions)
       .subscribe((data : Requester) => {
         this.requests.push(data);
+        this.router.navigate(['/approvals', 1]);
       });
   }
 

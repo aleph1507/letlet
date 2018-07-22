@@ -65,7 +65,6 @@ export class VehicleStopListComponent implements OnInit {
   // columns = ['Permit Number', 'Vehicle Model', 'Vehicle Plate', 'Vehicle Company', 'Expire Date'];
 
   export_to_pdf() {
-    // console.log('this.xlsx_report: ', this.xlsx_report);
     let body = [];
     body.push(this.columns);
     let tmp = [];
@@ -75,7 +74,6 @@ export class VehicleStopListComponent implements OnInit {
       body.push(tmp);
       tmp = [];
     }
-    // console.log('body: ', body);
     let docDefinition = {
       content: [
         {
@@ -90,7 +88,6 @@ export class VehicleStopListComponent implements OnInit {
     }
    pdfMake.createPdf(docDefinition).download('VehicleStopList.pdf');
 
-    // console.log('xlsx_report: ', this.xlsx_report);
     // var doc = new jsPDF('p', 'pt');
     // doc.autoTable(this.columns, this.xlsx_report);
     //

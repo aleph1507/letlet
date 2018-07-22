@@ -166,6 +166,10 @@ img.p-preview {
   left:60%;
 }
 
+mat-list {
+  overflow: auto;
+}
+
 @media screen and (max-width: 1800px){
   .main-send{
     padding-top:0;

@@ -30,7 +30,7 @@
     autocomplete="off" required>
   </mat-form-field>
 
-  <div class="img-upload">
+  <!-- <div class="img-upload">
     <button type="button" mat-raised-button (click)="imgUpload1.click()">
       Attach Image (JPEG or PNG)<mat-icon>keyboard_arrow_up</mat-icon>
       <input type="file" hidden #imgUpload1
@@ -38,8 +38,8 @@
       (change)="previewImage($event)" name="image1" id="image1" formControlName="image1">
     </button>
     <img [src]="img1src" class="person-preview">
-  </div>
-  <div class="img-upload" id="img2"> <!-- *ngIf="img1src!==''" -->
+  </div> -->
+  <!-- <div class="img-upload" id="img2"> <!-- *ngIf="img1src!==''" --
     <mat-divider class="sm-form-divider-margins"></mat-divider>
     <button type="button" mat-raised-button (click)="imgUpload2.click()">
       Attach Image (JPEG or PNG)<mat-icon>keyboard_arrow_up</mat-icon>
@@ -48,7 +48,7 @@
       (change)="previewImage($event)" name="image1" id="image1" formControlName="image2">
     </button>
     <img [src]="img2src" class="person-preview">
-  </div>
+  </div> -->
 
   <mat-dialog-actions>
     <button type="submit" [disabled]="!vehicleForm.valid" mat-raised-button >OK</button>
