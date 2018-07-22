@@ -82,7 +82,7 @@
 
     <ng-container matColumnDef="approvedDate">
       <mat-header-cell *matHeaderCellDef>Approved Date</mat-header-cell>
-      <mat-cell *matCellDef="let req">{{ req.approvedDate | date:'short' }}</mat-cell>
+      <mat-cell *matCellDef="let req">{{ req.approvedDate | asptonormaldate }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="approvedFrom">

@@ -35,6 +35,7 @@ export class BadgesCreateComponent implements OnInit {
   ngOnInit() {
     if(this.data != null){
       this.badge = this.data;
+      console.log('data: ', this.data);
     }
 
     this.badgeForm = this.createBadgeForm();
@@ -52,7 +53,7 @@ export class BadgesCreateComponent implements OnInit {
         this.nZones = this.zones.length;
         if(this.data != null){
           for(let i = 0; i<this.badge.zones.length; i++){
-            this.zonesBool[this.badge.zones[i].zone.code] = true;
+            this.zonesBool[this.badge.zones[i].zone.code-1] = true;
           }
         }
       });

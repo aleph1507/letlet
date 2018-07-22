@@ -54,15 +54,15 @@
       </ng-container>
       <ng-container matColumnDef="dateOfSecurityCheck">
         <mat-header-cell *matHeaderCellDef> Date of Security Check </mat-header-cell>
-        <mat-cell *matCellDef="let b"> {{b.dateOfSecurityCheck}} </mat-cell>
+        <mat-cell *matCellDef="let b"> {{b.dateOfSecurityCheck | asptonormaldate}} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="dateOfTraining">
         <mat-header-cell *matHeaderCellDef> Date of Training </mat-header-cell>
-        <mat-cell *matCellDef="let b"> {{b.dateOfTraining}} </mat-cell>
+        <mat-cell *matCellDef="let b"> {{b.dateOfTraining | asptonormaldate}} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="dateOfActivation">
         <mat-header-cell *matHeaderCellDef> Date of Activation </mat-header-cell>
-        <mat-cell *matCellDef="let b"> {{b.dateOfActivation}} </mat-cell>
+        <mat-cell *matCellDef="let b"> {{b.dateOfActivation | asptonormaldate}} </mat-cell>
       </ng-container>
       <!-- <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef> Edit </mat-header-cell>

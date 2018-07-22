@@ -58,6 +58,9 @@ import { VehicleBadgesService } from './services/vehicle-badges.service';
 import { VehicleBadgesCreateComponent } from './vehicle-badges/vehicle-badges-create/vehicle-badges-create.component';
 import { VehicleStopListComponent } from './vehicle-stop-list/vehicle-stop-list.component';
 import { VslService } from './services/vsl.service';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
+import { MyDateAdapter, MY_DATE_FORMATS } from './shared/DateAdapter';
+import { AsptonormaldatePipe } from './shared/pipes/asptonormaldate.pipe';
 
 
 @NgModule({
@@ -96,6 +99,7 @@ import { VslService } from './services/vsl.service';
     VehicleBadgesComponent,
     VehicleBadgesCreateComponent,
     VehicleStopListComponent,
+    AsptonormaldatePipe
   ],
   imports: [
     BrowserModule,
@@ -130,6 +134,8 @@ import { VslService } from './services/vsl.service';
               StopListService, ResourcesService, BadgesService,
               DatePipe, GatesService, ReportsService, VehicleBadgesService,
               VslService,
+              { provide: DateAdapter, useClass: MyDateAdapter },
+              { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
               {
                 provide: HTTP_INTERCEPTORS,
                 useClass: TokenInterceptor,

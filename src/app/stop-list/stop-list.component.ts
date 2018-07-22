@@ -6,6 +6,7 @@ import { GridOptions } from 'ag-grid';
 import * as XLSX from 'xlsx';
 import * as pdfMake from 'pdfmake/build/pdfmake.js';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
+import { AsptonormaldatePipe } from '../shared/pipes/asptonormaldate.pipe';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 
@@ -105,6 +106,10 @@ export class StopListComponent implements OnInit {
     this.slService.getStopListEntries()
       .subscribe((data : StopListEntry[]) => {
         this.xlsx_report = data;
+        let atndPipe = new AsptonormaldatePipe();
+        for(let i = 0; i<this.xlsx_report.length; i++){
+          this.xlsx_report[i].expireDate = atndPipe.transform(this.xlsx_report[i].expireDate);
+        }
         this.gridOptions.api.setRowData(data);
       });
     // this.slEntries = this.slService.getStopListEntries();
