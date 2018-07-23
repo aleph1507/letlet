@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatCheckbox } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatCheckbox, MatDialog } from '@angular/material';
 import { BadgesService } from '../../services/badges.service';
 import { Badge } from '../../models/Badge.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -7,6 +7,7 @@ import { ResourcesService } from '../../services/resources.service';
 import { Employee } from '../../models/Employee';
 import { AirportZone } from '../../models/AirportZone';
 import { lengthValidator } from '../../customValidators/lengthValidator.directive';
+import { BadgesConfirmShredComponent } from './badges-confirm-shred/badges-confirm-shred.component';
 
 
 @Component({
@@ -26,11 +27,13 @@ export class BadgesCreateComponent implements OnInit {
   id = null;
   employeeAutoCtrl: FormControl = new FormControl();
   employees_auto: Employee[] = [];
+  do_patch = true;
 
   constructor(public dialogRef: MatDialogRef<BadgesCreateComponent>,
               @Inject(MAT_DIALOG_DATA) public data: Badge,
               private badgesService: BadgesService,
-              private resourcesService: ResourcesService) { }
+              private resourcesService: ResourcesService,
+              public confirmDialog: MatDialog) { }
 
   ngOnInit() {
     if(this.data != null){
@@ -80,6 +83,8 @@ export class BadgesCreateComponent implements OnInit {
   // }
 
   onSubmit() {
+    if(!this.do_patch)
+      return;
     var addedZones : AirportZone[] = [];
     for(let i = 0; i<this.nZones; i++){
       if(this.zonesBool[i] == true){
@@ -174,14 +179,18 @@ export class BadgesCreateComponent implements OnInit {
   }
 
   shredConfirm(id: number) {
+    this.do_patch = false;
     let cShred = confirm('Are you sure?');
     if(cShred){
       this.badgesService.shredBadge(id)
-        .subscribe(data => {
-          console.log(`Badge ${id} shredded data: `, data);
-          this.dialogRef.close();
+        .subscribe(d => {
+          console.log(`Badge id: ${id} shredded, d: `, d);
         });
+      this.dialogRef.close();
     }
+    // let confirmShredDialogRef = this.confirmDialog.open(BadgesConfirmShredComponent, {
+    //   data: id
+    // });
   }
 
   onCancel(): void {

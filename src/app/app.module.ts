@@ -61,6 +61,7 @@ import { VslService } from './services/vsl.service';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { MyDateAdapter, MY_DATE_FORMATS } from './shared/DateAdapter';
 import { AsptonormaldatePipe } from './shared/pipes/asptonormaldate.pipe';
+import { BadgesConfirmShredComponent } from './badges/badges-create/badges-confirm-shred/badges-confirm-shred.component';
 
 
 @NgModule({
@@ -99,7 +100,8 @@ import { AsptonormaldatePipe } from './shared/pipes/asptonormaldate.pipe';
     VehicleBadgesComponent,
     VehicleBadgesCreateComponent,
     VehicleStopListComponent,
-    AsptonormaldatePipe
+    AsptonormaldatePipe,
+    BadgesConfirmShredComponent
   ],
   imports: [
     BrowserModule,
@@ -128,7 +130,8 @@ import { AsptonormaldatePipe } from './shared/pipes/asptonormaldate.pipe';
     ExitPersonModalComponent,
     EnterVehicleModalComponent,
     ExitVehicleModalComponent,
-    VehicleBadgesCreateComponent
+    VehicleBadgesCreateComponent,
+    BadgesConfirmShredComponent
   ],
   providers: [RequesterService, AuthService, ApprovalsService,
               StopListService, ResourcesService, BadgesService,
