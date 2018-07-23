@@ -15,7 +15,7 @@ export class BadgesService {
   badges: Badge[] = [];
 
   // public badgesUrl = 'http://192.168.100.4:84/api/badges';
-  public badgesUrl = this.authService.baseUrl + '/api/badges';
+  public badgesUrl = this.authService.baseUrl + '/api/badges'; //shredding/id
 
 
   httpOptions = {
@@ -75,7 +75,7 @@ export class BadgesService {
   }
 
   shredBadge(id: number){
-    return this.http.delete(this.badgesUrl + '/' + id);
+    return this.http.post(this.badgesUrl + '/shredding/' + id, {});
   }
 
   // getBadges(){

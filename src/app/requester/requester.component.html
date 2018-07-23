@@ -119,11 +119,22 @@
         </a>
         <div *ngIf="this.request.pdf2 != null" class="pdf-upload" style="margin-top:3%;">
           <a [href]="sanitizeURL(pdfToBlob(this.request.pdf2))" target="_blank">
-            <button type="button" mat-raised-button>
+            <button type="button" style="margin-bottom: 5em;" mat-raised-button>
               Download Additional PDF<mat-icon>keyboard_arrow_down</mat-icon>
             </button>
           </a>
         </div>
+
+      </div>
+
+      <div *ngIf="editMode" class="print-request" id="print-request">
+        <button mat-raised-button style="margin:1rem;" (click)="printRequest()">
+          Print Request PDF 1 <mat-icon class="icon-control">print</mat-icon>
+        </button>
+        <br>
+        <button mat-raised-button style="margin:1rem;" (click)="printRequest2()">
+          Print Request PDF 2 <mat-icon class="icon-control">print</mat-icon>
+        </button>
       </div>
 
       <button *ngIf="!editMode"
@@ -137,19 +148,6 @@
         (click)="decline(request.id)" mat-raised-button color="primary"
         class="main-send">Decline</button>
     </form>
-
-    <div *ngIf="editMode" class="print-request" id="print-request">
-      <button mat-raised-button (click)="printRequest()">
-        Print Request 1 <mat-icon class="icon-control">print</mat-icon>
-      </button>
-      <button mat-raised-button (click)="printRequest2()">
-        Print Request 2 <mat-icon class="icon-control">print</mat-icon>
-      </button>
-      <!-- <mat-icon (click)="printRequest()"
-      class="icon-control">print</mat-icon> -->
-      <!-- <mat-icon (click)="printRequest2()"
-      class="icon-control">print</mat-icon> -->
-    </div>
 
   </div>
   <div class="requester-props-container">
