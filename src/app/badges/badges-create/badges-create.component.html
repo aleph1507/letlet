@@ -18,12 +18,7 @@
     <mat-datepicker #expireDate></mat-datepicker>
   </mat-form-field>
 
-  <mat-checkbox
-    class="chkReturned"
-    color="primary"
-    formControlName="returned"
-    [(ngModel)]="returned">Returned
-  </mat-checkbox>
+
 
 
   <mat-form-field class="employee-field">
@@ -68,6 +63,16 @@
       [checked]="zonesBool[i]"
       (change)="checkZone(i)">{{z.code}}</mat-checkbox>
   </div>
+
+  <mat-checkbox
+    class="chkReturned"
+    color="primary"
+    formControlName="returned"
+    [(ngModel)]="returned">Returned
+  </mat-checkbox>
+
+  <button mat-raised-button color="primary"
+    class="shred" *ngIf="data != null" (click)="shredConfirm(badge.id)">Shred Badge</button>
 
   <mat-dialog-actions>
     <button type="submit" [disabled]="!badgeForm.valid" mat-raised-button >OK</button>

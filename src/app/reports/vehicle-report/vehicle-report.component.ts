@@ -31,7 +31,7 @@ export class VehicleReportComponent implements OnInit {
 
   columns = ['Company Name', 'Vehicle Model', 'Vehicle Plate', 'Entered Through Gate',
      'Entry Approved By', 'Entry Escorted By', 'Exited Through Gate', 'Exit Approved By',
-     'Exit Escorted By', 'Time On Air Side'];
+     'Exit Escorted By', 'Days On Air Side', 'Time On Air Side'];
 
   public gridOptions: GridOptions = <GridOptions>{
     rowData: [],
@@ -45,6 +45,7 @@ export class VehicleReportComponent implements OnInit {
       {headerName: 'Exited Through Gate', field: 'exitedOnGate'},
       {headerName: 'Exit Approved By', field: 'approvedExitFrom'},
       {headerName: 'Exit Escorted By', field: 'exitEscortedBy'},
+      {headerName: 'Days On Air Side', field: 'numberOfDays'},
       {headerName: 'Time On Air Side', field: 'timeOnAirSide'}
     ],
     enableCellChangeFlash: true,
@@ -80,7 +81,7 @@ export class VehicleReportComponent implements OnInit {
                this.xlsx_report[i].enteredOnGate, this.xlsx_report[i].approvedEnterFrom,
                this.xlsx_report[i].entryEscortedBy, this.xlsx_report[i].exitedOnGate,
                this.xlsx_report[i].approvedExitFrom, this.xlsx_report[i].exitEscortedBy,
-               this.xlsx_report[i].timeOnAirSide);
+               this.xlsx_report[i].numberOfDays, this.xlsx_report[i].timeOnAirSide);
       body.push(tmp);
       tmp = [];
     }
@@ -153,6 +154,9 @@ export class VehicleReportComponent implements OnInit {
     if(this.fromString != null && this.toString != null){
       this.reportsService.getVehicleReports(rUrl)
         .subscribe((data : VehicleReport[]) => {
+          for(let i = 0; i<data.length; i++){
+            data[i].timeOnAirSide = data[i].timeOnAirSide.split('.')[0];
+          }
           this.xlsx_report = data;
           this.gridOptions.api.setRowData(data);
         });

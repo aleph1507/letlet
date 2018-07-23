@@ -7,5 +7,6 @@ export interface PersonReport {
   exitedOnGate: string;
   approvedExitFrom: string;
   exitEscortedBy: string;
-  timeOnAirSide: string;  
+  timeOnAirSide: string;
+  numberOfDays: number;
 }

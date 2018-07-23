@@ -35,7 +35,7 @@ export class PersonReportComponent implements OnInit {
 
   columns = ['Company Name', 'Person', 'Entered Through Gate', 'Entry Approved By',
      'Entry Escorted By', 'Exited Through Gate', 'Exit Approved By', 'Exit Escorted By',
-     'Time On Air Side'];
+     'Days On Air Side', 'Time On Air Side'];
 
 
   public gridOptions: GridOptions = <GridOptions>{
@@ -49,6 +49,7 @@ export class PersonReportComponent implements OnInit {
       {headerName: 'Exited Through Gate', field: 'exitedOnGate'},
       {headerName: 'Exit Approved By', field: 'approvedExitFrom'},
       {headerName: 'Exit Escorted By', field: 'exitEscortedBy'},
+      {headerName: 'Days On Air Side', field: 'numberOfDays'},
       {headerName: 'Time On Air Side', field: 'timeOnAirSide'}
     ],
     enableCellChangeFlash: true,
@@ -93,7 +94,7 @@ export class PersonReportComponent implements OnInit {
                   this.xlsx_report[i].enteredOnGate, this.xlsx_report[i].approvedEnterFrom,
                   this.xlsx_report[i].entryEscortedBy, this.xlsx_report[i].exitedOnGate,
                   this.xlsx_report[i].approvedExitFrom, this.xlsx_report[i].exitEscortedBy,
-                  this.xlsx_report[i].timeOnAirSide);
+                  this.xlsx_report[i].numberOfDays, this.xlsx_report[i].timeOnAirSide);
          body.push(tmp);
          tmp = [];
        }
@@ -182,7 +183,11 @@ export class PersonReportComponent implements OnInit {
       this.reportsService.getReports(rUrl)
         .subscribe((data : PersonReport[]) => {
           // this.gridOptions.onGridReady = function() {
+            for(let i = 0; i<data.length; i++){
+              data[i].timeOnAirSide = data[i].timeOnAirSide.split('.')[0];
+            }
             this.xlsx_report = data;
+            console.log('xlsx_report: ', this.xlsx_report);
             // console.log('this.xlsx_report', this.xlsx_report);
             this.gridOptions.api.setRowData(data);
           // }

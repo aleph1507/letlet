@@ -57,6 +57,7 @@ export class BadgesCreateComponent implements OnInit {
           }
         }
       });
+      this.badgeForm.controls['returned'].disable();
   }
 
   checkZone(i){
@@ -149,7 +150,7 @@ export class BadgesCreateComponent implements OnInit {
       //   validators: Validators.required
       // }),
       'returned': new FormControl(this.badge.returned, {
-        // validators: Validators.required
+
       }),
       // 'employeeId': new FormControl(this.badge.employeeId, {
       //   validators: Validators.required
@@ -170,6 +171,17 @@ export class BadgesCreateComponent implements OnInit {
         validators: Validators.required
       }),
     })
+  }
+
+  shredConfirm(id: number) {
+    let cShred = confirm('Are you sure?');
+    if(cShred){
+      this.badgesService.shredBadge(id)
+        .subscribe(data => {
+          console.log(`Badge ${id} shredded data: `, data);
+          this.dialogRef.close();
+        });
+    }
   }
 
   onCancel(): void {

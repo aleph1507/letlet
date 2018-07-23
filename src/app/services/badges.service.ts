@@ -74,6 +74,10 @@ export class BadgesService {
     return null;
   }
 
+  shredBadge(id: number){
+    return this.http.delete(this.badgesUrl + '/' + id);
+  }
+
   // getBadges(){
   //   // console.log("badges: " + this.badges);
   //   return this.badges;
