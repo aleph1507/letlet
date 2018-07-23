@@ -519,6 +519,24 @@ export class RequesterComponent implements OnInit, OnDestroy {
     popupWin.document.open();
     popupWin.document.write(`
       <html style="width:100%; height:100%;">
+        <style>
+          @media print {
+            tr {
+              page-break-inside: avoid;
+            }
+          }
+
+          @media print {
+            html, body {
+              page-break-after: avoid;
+              max-height: 99%;
+            }
+
+            div {
+              max-height: 100%;
+            }
+          }
+        </style>
         <body onload="window.print();window.close()" style="width:100%; height:100%;">
 
           <table style="margin:auto;">
@@ -772,9 +790,23 @@ export class RequesterComponent implements OnInit, OnDestroy {
               display: block;
             }
 
+            @media print {
+              tr {
+                page-break-inside: avoid;
+              }
+            }
+
+            @media print {
+              html, body {
+                page-break-after: avoid;
+                max-height: 99%;
+              }
+
+
+            }
           </style>
         </head>
-        <body onload="window.print();window.close()" style="width:90%; height:100%; padding-left: 5%; padding-right:5%">
+        <body onload="window.print();window.close()" style="width:90%; height:99%; padding-left: 5%; padding-right:5%">
           <div class="header-div">
             <div class="logo">
               <img
