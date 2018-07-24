@@ -62,6 +62,13 @@ export class StopListComponent implements OnInit {
     const workBook = XLSX.utils.book_new();
     const workSheet = XLSX.utils.json_to_sheet(this.xlsx_report);
 
+    let wscols = [];
+
+    for(let i = 0; i<10; i++)
+      wscols.push({wch: 20});
+
+    workSheet['!cols'] = wscols;
+
     XLSX.utils.book_append_sheet(workBook, workSheet, 'StopList');
     XLSX.writeFile(workBook, 'StopList.xlsx');
   }
