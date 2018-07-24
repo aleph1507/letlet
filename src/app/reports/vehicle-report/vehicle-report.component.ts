@@ -97,7 +97,7 @@ export class VehicleReportComponent implements OnInit {
           // alignment: 'center',
           table: {
             headerRows: 1,
-            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
 
             body: body
           }
