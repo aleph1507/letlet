@@ -15,6 +15,7 @@ import { PersonReportComponent } from '../reports/person-report/person-report.co
 import { VehicleReportComponent } from '../reports/vehicle-report/vehicle-report.component';
 import { VehicleBadgesComponent } from '../vehicle-badges/vehicle-badges.component';
 import { VehicleStopListComponent } from '../vehicle-stop-list/vehicle-stop-list.component';
+import { ShreddingReportComponent } from '../reports/shredding-report/shredding-report.component';
 
 const appRoutes: Routes = [
    { path: '', component: DashboardComponent, pathMatch: 'full' },
@@ -34,6 +35,7 @@ const appRoutes: Routes = [
    { path: 'reports', component: ReportsComponent, pathMatch: 'full' },
    { path: 'reports/personReport', component: PersonReportComponent, pathMatch: 'full'},
    { path: 'reports/vehicleReport', component: VehicleReportComponent, pathMatch: 'full'},
+   { path: 'reports/shreddingReport', component: ShreddingReportComponent, pathMatch: 'full'},
    { path: 'vehicle-badges', component: VehicleBadgesComponent, pathMatch: 'full' },
    { path: 'vehicles-stop-list', component: VehicleStopListComponent, pathMatch: 'full' }
 ];

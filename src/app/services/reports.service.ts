@@ -4,6 +4,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PersonReport } from '../models/PersonReport.model';
 import { VehicleReport } from '../models/VehicleReport.model';
+import { ShreddingReport } from '../models/ShreddingReport';
 
 
 @Injectable()
@@ -21,6 +22,10 @@ export class ReportsService {
 
   getReports(rUrl : string) : Observable<PersonReport[]> {
     return this.http.get<PersonReport[]>(rUrl, this.httpOptions);
+  }
+
+  getShreddingsReports(rUrl: string) : Observable<ShreddingReport[]> {
+    return this.http.get<ShreddingReport[]>(rUrl);
   }
 
   getVehicleReports(rUrl: string): Observable<VehicleReport[]> {

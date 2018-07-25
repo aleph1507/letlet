@@ -62,6 +62,7 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { MyDateAdapter, MY_DATE_FORMATS } from './shared/DateAdapter';
 import { AsptonormaldatePipe } from './shared/pipes/asptonormaldate.pipe';
 import { BadgesConfirmShredComponent } from './badges/badges-create/badges-confirm-shred/badges-confirm-shred.component';
+import { ShreddingReportComponent } from './reports/shredding-report/shredding-report.component';
 
 
 @NgModule({
@@ -101,7 +102,8 @@ import { BadgesConfirmShredComponent } from './badges/badges-create/badges-confi
     VehicleBadgesCreateComponent,
     VehicleStopListComponent,
     AsptonormaldatePipe,
-    BadgesConfirmShredComponent
+    BadgesConfirmShredComponent,
+    ShreddingReportComponent
   ],
   imports: [
     BrowserModule,
