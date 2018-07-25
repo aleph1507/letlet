@@ -185,9 +185,9 @@ export class ShreddingReportComponent implements OnInit {
       this.reportsService.getShreddingsReports(rUrl)
         .subscribe((data : ShreddingReport[]) => {
           // this.gridOptions.onGridReady = function() {
-            // for(let i = 0; i<data.length; i++){
-            //   data[i].timeOnAirSide = data[i].timeOnAirSide.split('.')[0];
-            // }
+            for(let i = 0; i<data.length; i++){
+              data[i].shreddingDate = data[i].shreddingDate.split('.')[0];
+            }
             this.xlsx_report = data;
             console.log('xlsx_report: ', this.xlsx_report);
             // console.log('this.xlsx_report', this.xlsx_report);
