@@ -18,6 +18,7 @@ import { ResourcesService } from '../services/resources.service';
 import { DatePipe } from '@angular/common';
 import { Company } from '../models/Company';
 import { DomSanitizer } from '@angular/platform-browser';
+// import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-requester',
@@ -298,7 +299,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
     this.requesterService.approveRequest(id).subscribe(
       (data: boolean) => {
         data ? console.log('Request Approved') : console.log('Request not approved');
-        this.router.navigate(['/approvals', 2]);
+        this.router.navigate(['/requester', id]);
       }
     );
   }
@@ -307,7 +308,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
     this.requesterService.declineRequest(id).subscribe(
       (data: boolean) => {
         data ? console.log('Request Declined') : console.log('Request not declined');
-        this.router.navigate(['/approvals', 3]);
+        this.router.navigate(['/requester', id]);
       }
     );
   }
@@ -357,6 +358,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
   }
 
   editRequest() {
+    console.log('vo requester component editRequest');
     if(this.requesterForm.valid) {
       if(this.editMode){
         this.resources.companies.getCompanyById(this.request.companyId)
@@ -374,7 +376,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
         this.request.pdf1 = this.pdf1src;
         this.request.pdf2 = this.pdf2src;
         this.requesterService.editRequest(this.request);
-        this.router.navigate(['/approvals', 1]);
+        // this.router.navigate(['/requester', this.request.id]);
       }
     }
   }

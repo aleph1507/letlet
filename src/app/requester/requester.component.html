@@ -141,14 +141,14 @@
         mat-raised-button type="submit" color="primary"
         [disabled]="imagesCheck() || !requesterForm.valid || !companyOk"
         class="main-send">Send</button>
-      <button *ngIf="showApproveBtn"
+      <button type="button" *ngIf="showApproveBtn"
         (click)="approve(request.id)" mat-raised-button color="primary"
         class="main-send">Approve</button>
-      <button *ngIf="showDeclineBtn"
+      <button type="button" *ngIf="showDeclineBtn"
         (click)="decline(request.id)" mat-raised-button color="primary"
         class="main-send">Decline</button>
-      <button *ngIf="showApproveBtn || showDeclineBtn" mat-raised-button color="primary"
-        style="float:right;"(click)="editRequest()">Update</button>
+      <button type="button" *ngIf="showApproveBtn || showDeclineBtn" mat-raised-button color="primary"
+        style="float:right;" (click)="editRequest()">Update</button>
     </form>
 
   </div>
