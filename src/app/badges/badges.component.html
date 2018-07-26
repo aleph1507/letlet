@@ -19,14 +19,18 @@
       </mat-form-field>
     </div> -->
     <mat-table #badgesTable [dataSource]="dataSource">
-      <ng-container matColumnDef="cardSeriesNumber">
+      <ng-container matColumnDef="badgeNumber">
+        <mat-header-cell *matHeaderCellDef> Badge Number </mat-header-cell>
+        <mat-cell *matCellDef="let b"> {{b.badgeNumber}} </mat-cell>
+      </ng-container>
+      <!-- <ng-container matColumnDef="cardSeriesNumber">
         <mat-header-cell *matHeaderCellDef> Card Series Number </mat-header-cell>
         <mat-cell *matCellDef="let b"> {{b.cardSeriesNumber}} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="cardNumber">
         <mat-header-cell *matHeaderCellDef> Card Number </mat-header-cell>
         <mat-cell *matCellDef="let b"> {{b.cardNumber}} </mat-cell>
-      </ng-container>
+      </ng-container> -->
       <ng-container matColumnDef="expireDate">
         <mat-header-cell *matHeaderCellDef> Expire Date </mat-header-cell>
         <mat-cell *matCellDef="let b"> {{b.expireDate | date:'short'}} </mat-cell>

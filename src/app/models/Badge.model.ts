@@ -5,6 +5,7 @@ export class Badge {
   id: number;
   cardSeriesNumber: number;
   cardNumber: number;
+  badgeNumber: number;
   // company: string;
   // personName: string;
   expireDate: string;

@@ -23,6 +23,10 @@ div.zones {
   align-items: space-around;
 }
 
+.input_lg {
+  font-size: 3rem;
+}
+
 /* mat-checkbox.chkZone {
   margin:2%;
 } */

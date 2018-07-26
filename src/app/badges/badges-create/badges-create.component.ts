@@ -104,6 +104,7 @@ export class BadgesCreateComponent implements OnInit {
     this.badge.dateOfActivation = this.parseDate(dActivation);
     this.badge.cardSeriesNumber = this.badgeForm.controls['cardSeriesNumber'].value;
     this.badge.cardNumber = this.badgeForm.controls['cardNumber'].value;
+    this.badge.badgeNumber = this.badgeForm.controls['badgeNumber'].value;
     this.badge.zones = addedZones;
     if(this.data == null){
       this.badgesService.addBadge(this.badge)
@@ -150,6 +151,10 @@ export class BadgesCreateComponent implements OnInit {
       }),
       'expireDate': new FormControl(this.badge.expireDate, {
         validators: Validators.required
+      }),
+      'badgeNumber': new FormControl(this.badge.badgeNumber, {
+        validators: [Validators.required,
+                      lengthValidator(4)]
       }),
       // 'active': new FormControl(this.badge.active, {
       //   validators: Validators.required

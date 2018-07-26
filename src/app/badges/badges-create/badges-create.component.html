@@ -18,9 +18,6 @@
     <mat-datepicker #expireDate></mat-datepicker>
   </mat-form-field>
 
-
-
-
   <mat-form-field class="employee-field">
     <input type="text" placeholder="Employee" formControlName="employee" matInput [matAutocomplete]="emp_auto">
     <mat-autocomplete #emp_auto="matAutocomplete" [displayWith]="displayEmpFn">
@@ -53,6 +50,12 @@
     formControlName="dateOfActivation">
     <mat-datepicker-toggle matSuffix [for]="dateOfActivation"></mat-datepicker-toggle>
     <mat-datepicker #dateOfActivation></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" pattern="[0-9]*" (keypress)="isNumber(event)" placeholder="Badge Number"
+    formControlName="badgeNumber"
+    class="input_lg"
+    autocomplete="off">
   </mat-form-field>
 
   <div class="zones">
