@@ -262,6 +262,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
   }
 
   pdfToBlob(b64pdf: string){
+    if(b64pdf == null)
+      return;
     let blob = this.b64toBlob(b64pdf.slice(28, b64pdf.length));
     return URL.createObjectURL(blob);
   }
@@ -370,20 +372,24 @@ export class RequesterComponent implements OnInit, OnDestroy {
           .subscribe((data : Company) => {
             this.reqCompany = data;
           });
-        this.request.requesterName = this.requesterForm.controls['requesterName'].value;
-        this.request.description = this.requesterForm.controls['requesterDescription'].value;
-        this.request.descriptionEn = this.requesterForm.controls['requesterDescriptionEn'].value;
+
+        let request: Requester = this.request;
+        request.requesterName = this.requesterForm.controls['requesterName'].value;
+        request.description = this.requesterForm.controls['requesterDescription'].value;
+        request.descriptionEn = this.requesterForm.controls['requesterDescriptionEn'].value;
         // this.request.companyId = this.requesterForm.controls['requesterCompany'].value;
-        this.request.companyId = this.companiesAutoCtrl.value.id;
-        this.request.fromDate = this.requesterForm.controls['requesterFromDate'].value;
-        this.request.toDate = this.requesterForm.controls['requesterToDate'].value;
-        this.request.numberOfEntries = this.requesterForm.controls['requesterNumOfEntries'].value;
-        this.request.personPay = this.personPay;
-        this.request.vehiclePay = this.vehiclePay;
-        console.log('requester component edit request: ', this.request);
+        request.companyId = this.companiesAutoCtrl.value.id;
+        request.fromDate = this.requesterForm.controls['requesterFromDate'].value;
+        request.toDate = this.requesterForm.controls['requesterToDate'].value;
+        request.numberOfEntries = this.requesterForm.controls['requesterNumOfEntries'].value;
+        request.personPay = this.personPay;
+        request.vehiclePay = this.vehiclePay;
+        request.pdf1 = null;
+        request.pdf2 = null;
+        console.log('requester component edit request: ', request);
         // this.request.pdf1 = this.pdf1src;
         // this.request.pdf2 = this.pdf2src;
-        this.requesterService.editRequest(this.request);
+        this.requesterService.editRequest(request);
         this.router.navigate(['/requester', this.request.id]);
       }
     }

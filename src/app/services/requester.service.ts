@@ -162,6 +162,8 @@ export class RequesterService {
 
   editRequest(req: Requester) {
     console.log('vo requester service editRequest req: ', req);
+    // req.pdf1 = null;
+    // req.pdf2 = null;
     this.http.patch(this.requestUrl + '/' + req.id, req)
       .subscribe((data : Requester) => {
         for(let i = 0; i<this.requests.length; i++){

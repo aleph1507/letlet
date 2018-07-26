@@ -110,6 +110,7 @@
       </div>
 
       <div *ngIf="editMode" class="download-pdfs">
+        <!-- <a [href]="sanitizeURL(pdfToBlob(this.request.pdf1))" target="_blank"> -->
         <a [href]="sanitizeURL(pdfToBlob(this.request.pdf1))" target="_blank">
           <div class="pdf-upload">
             <button type="button" mat-raised-button>
@@ -124,11 +125,13 @@
             </button>
           </a>
         </div>
-        <button mat-raised-button style="margin:1rem; margin-top: 0;" (click)="printRequest()">
+        <button mat-raised-button type="button"
+          style="margin:1rem; margin-top: 0;" (click)="printRequest()">
           Print Request PDF 1 <mat-icon class="icon-control">print</mat-icon>
         </button>
         <br>
-        <button mat-raised-button style="margin:1rem;" (click)="printRequest2()">
+        <button mat-raised-button type="button"
+          style="margin:1rem;" (click)="printRequest2()">
           Print Request PDF 2 <mat-icon class="icon-control">print</mat-icon>
         </button>
         <div style="display:block;">
