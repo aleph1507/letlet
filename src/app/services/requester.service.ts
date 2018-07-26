@@ -149,13 +149,26 @@ export class RequesterService {
   }
 
 
-  editRequest(req: Requester){
-    for(let i = 0; i<this.requests.length; i++){
-      if(this.requests[i].id == req.id){
-        this.requests[i] = req;
-        break;
-      }
-    }
+  // editRequest(req: Requester){
+  //   for(let i = 0; i<this.requests.length; i++){
+  //     if(this.requests[i].id == req.id){
+  //       this.requests[i] = req;
+  //       break;
+  //     }
+  //   }
+  // }
+
+  editRequest(req: Requester) {
+    this.http.patch(this.requestUrl + '/' + req.id, req)
+      .subscribe((data : Requester) => {
+        for(let i = 0; i<this.requests.length; i++){
+          if(this.requests[i].id == req.id){
+            this.requests.splice(i, 1, req);
+          }
+        }
+        // this.requests.push(data);
+        this.router.navigate(['/approvals', 1]);
+      });
   }
 
   addPerson(person: Person){

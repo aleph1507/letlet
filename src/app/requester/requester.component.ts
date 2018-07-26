@@ -158,33 +158,43 @@ export class RequesterComponent implements OnInit, OnDestroy {
             this.resources.companies.getCompanyById(this.request.companyId)
               .subscribe((c : Company) => {
                 this.companiesAutoCtrl.setValue(c);
-                this.companiesAutoCtrl.disable();
+                // this.companiesAutoCtrl.disable();
+
+                console.log('this.requesterForm pre-map: ' + this.requesterForm);
+                console.log('this.request.requesterName pre-map: ' + this.request.requesterName);
+
                 this.requesterForm = new FormGroup({
-                  'requesterName': new FormControl({value : this.request.requesterName, disabled: true}, {
-                    validators: Validators.required,
-                    updateOn: 'change'
-                  }),
-                  'requesterDescription': new FormControl({value: this.request.description, disabled: true}, {
-                    updateOn: 'change'
-                  }),
-                  'requesterDescriptionEn': new FormControl({value: this.request.descriptionEn, disabled: true}, {
-                    updateOn: 'change'
-                  }),
+                  // 'requesterName': new FormControl({value : this.request.requesterName, enabled: true}, { //disabled: true
+                  //   validators: Validators.required,
+                  //   updateOn: 'change'
+                  // }),
+                  'requesterName': new FormControl(this.request.requesterName),
+                  // 'requesterDescription': new FormControl({value: this.request.description}, { //disabled: true
+                  //   updateOn: 'change'
+                  // }),
+                  'requesterDescription': new FormControl(this.request.description),
+                  // 'requesterDescriptionEn': new FormControl({value: this.request.descriptionEn}, { //disabled: true
+                  //   updateOn: 'change'
+                  // }),
+                  'requesterDescriptionEn': new FormControl(this.request.descriptionEn),
                   // 'requesterCompany': new FormControl({value: c, disabled: true}, {
                   //   validators: Validators.required,
                   //   updateOn: 'change'
                   // }),
-                  'requesterFromDate': new FormControl({value: this.request.fromDate, disabled: true}, {
-                    validators: Validators.required,
-                    updateOn: 'change'
-                  }),
-                  'requesterToDate': new FormControl({value: this.request.toDate, disabled: true}, {
-                    validators: Validators.required,
-                    updateOn: 'change'
-                  }),
-                  'requesterNumOfEntries': new FormControl({value: this.request.numberOfEntries, disabled: true}, {
-                    validators: [Validators.required]
-                  }),
+                  // 'requesterFromDate': new FormControl({value: this.request.fromDate}, { //disabled: true
+                  //   validators: Validators.required,
+                  //   updateOn: 'change'
+                  // }),
+                  'requesterFromDate': new FormControl(this.request.fromDate),
+                  // 'requesterToDate': new FormControl({value: this.request.toDate}, { //disabled: true
+                  //   validators: Validators.required,
+                  //   updateOn: 'change'
+                  // }),
+                  'requesterToDate': new FormControl(this.request.toDate),
+                  // 'requesterNumOfEntries': new FormControl({value: this.request.numberOfEntries}, { //disabled: true
+                  //   validators: [Validators.required]
+                  // }),
+                  'requesterNumOfEntries': new FormControl(this.request.numberOfEntries),
                   'pdf1': new FormControl(null, {
                     updateOn: 'change'
                   }),
@@ -192,7 +202,10 @@ export class RequesterComponent implements OnInit, OnDestroy {
                     updateOn: 'change'
                   })
                 });
+                this.requesterForm.getRawValue();
               });
+              console.log('this.requesterForm post-map: ' + this.requesterForm);
+              console.log('this.request.requesterName post-map: ' + this.request.requesterName);
               this.request.approved ? this.showDeclineBtn = true : this.showApproveBtn = true;
           })
       }
@@ -341,6 +354,29 @@ export class RequesterComponent implements OnInit, OnDestroy {
         }
     }
     return false;
+  }
+
+  editRequest() {
+    if(this.requesterForm.valid) {
+      if(this.editMode){
+        this.resources.companies.getCompanyById(this.request.companyId)
+          .subscribe((data : Company) => {
+            this.reqCompany = data;
+          });
+        this.request.requesterName = this.requesterForm.controls['requesterName'].value;
+        this.request.description = this.requesterForm.controls['requesterDescription'].value;
+        this.request.descriptionEn = this.requesterForm.controls['requesterDescriptionEn'].value;
+        // this.request.companyId = this.requesterForm.controls['requesterCompany'].value;
+        this.request.companyId = this.companiesAutoCtrl.value.id;
+        this.request.fromDate = this.requesterForm.controls['requesterFromDate'].value;
+        this.request.toDate = this.requesterForm.controls['requesterToDate'].value;
+        this.request.numberOfEntries = this.requesterForm.controls['requesterNumOfEntries'].value;
+        this.request.pdf1 = this.pdf1src;
+        this.request.pdf2 = this.pdf2src;
+        this.requesterService.editRequest(this.request);
+        this.router.navigate(['/approvals', 1]);
+      }
+    }
   }
 
   onSubmit() {
