@@ -7,7 +7,7 @@ import { ResourcesService } from '../../services/resources.service';
 import { Employee } from '../../models/Employee';
 import { AirportZone } from '../../models/AirportZone';
 import { lengthValidator } from '../../customValidators/lengthValidator.directive';
-import { BadgesConfirmShredComponent } from './badges-confirm-shred/badges-confirm-shred.component';
+// import { BadgesConfirmShredComponent } from './badges-confirm-shred/badges-confirm-shred.component';
 
 
 @Component({

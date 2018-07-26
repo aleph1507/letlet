@@ -64,6 +64,9 @@ export class RequesterComponent implements OnInit, OnDestroy {
   companiesAutoCtrl: FormControl = new FormControl();
   companies_auto: Company[] = [];
 
+  personPay: boolean = true;
+  vehiclePay: boolean = true;
+
   companyOk: boolean = this.companiesAutoCtrl.value == null ? false : (this.companiesAutoCtrl.value.id == undefined ? false : true);
 
   constructor(private dialog: MatDialog,
@@ -153,6 +156,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
             this.request = req;
             this.pdf1src = req.pdf1;
             this.pdf2src = req.pdf2;
+            this.personPay = req.personPay;
+            this.vehiclePay = req.vehiclePay;
             this.requesterService.setPersons(req.requestPersonJson);
             this.requesterService.setVehicles(req.requestVehicleJson);
             let company = null;
@@ -373,10 +378,13 @@ export class RequesterComponent implements OnInit, OnDestroy {
         this.request.fromDate = this.requesterForm.controls['requesterFromDate'].value;
         this.request.toDate = this.requesterForm.controls['requesterToDate'].value;
         this.request.numberOfEntries = this.requesterForm.controls['requesterNumOfEntries'].value;
-        this.request.pdf1 = this.pdf1src;
-        this.request.pdf2 = this.pdf2src;
+        this.request.personPay = this.personPay;
+        this.request.vehiclePay = this.vehiclePay;
+        console.log('requester component edit request: ', this.request);
+        // this.request.pdf1 = this.pdf1src;
+        // this.request.pdf2 = this.pdf2src;
         this.requesterService.editRequest(this.request);
-        // this.router.navigate(['/requester', this.request.id]);
+        this.router.navigate(['/requester', this.request.id]);
       }
     }
   }
@@ -398,6 +406,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
         this.request.numberOfEntries = this.requesterForm.controls['requesterNumOfEntries'].value;
         this.request.pdf1 = this.pdf1src;
         this.request.pdf2 = this.pdf2src;
+        this.request.personPay = this.personPay;
+        this.request.vehiclePay = this.vehiclePay;
         this.requesterService.editRequest(this.request);
         this.router.navigate(['/approvals', 1]);
       } else {
@@ -414,7 +424,9 @@ export class RequesterComponent implements OnInit, OnDestroy {
           this.requesterForm.controls['requesterToDate'].value,
           this.requesterForm.controls['requesterNumOfEntries'].value,
           this.pdf1src,
-          this.pdf2src
+          this.pdf2src,
+          this.personPay,
+          this.vehiclePay
         );
         // this.router.navigate(['/approvals', 1]);
       }

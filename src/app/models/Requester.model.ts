@@ -16,5 +16,7 @@ export class Requester {
   approved: boolean;
   pdf1: Blob;
   pdf2: Blob;
+  personPay: boolean;
+  vehiclePay: boolean;
   // date: number;
 }

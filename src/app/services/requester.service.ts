@@ -112,7 +112,7 @@ export class RequesterService {
     return this.http.get<Requester>(this.requestUrl + '/' + id, this.httpOptions);
   }
 
-  pushRequest(id = null, requesterName, description, descriptionEn, company : Company, fromDate, toDate, numberOfEntries, pdf1 = null, pdf2 = null){
+  pushRequest(id = null, requesterName, description, descriptionEn, company : Company, fromDate, toDate, numberOfEntries, pdf1 = null, pdf2 = null, personPay, vehiclePay){
     let request = new Requester();
     // request.requestID = this.requests.length;
     request.id = id;
@@ -127,6 +127,8 @@ export class RequesterService {
     request.requestVehicleJson = this.vehicles;
     request.pdf1 = pdf1;
     request.pdf2 = pdf2;
+    request.personPay = personPay;
+    request.vehiclePay = vehiclePay;
     // request.date = Date.now();
     console.log(request);
     this.persons = [];
@@ -159,7 +161,7 @@ export class RequesterService {
   // }
 
   editRequest(req: Requester) {
-    console.log('vo requester service editRequest id: ' + req.id);
+    console.log('vo requester service editRequest req: ', req);
     this.http.patch(this.requestUrl + '/' + req.id, req)
       .subscribe((data : Requester) => {
         for(let i = 0; i<this.requests.length; i++){

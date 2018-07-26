@@ -20,14 +20,16 @@
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
-  <mat-form-field>
+  <!-- <mat-form-field>
     <input matInput
       [matDatepicker]="shreddingDate"
       formControlName="shreddingDate"
       placeholder="Shredding Date">
     <mat-datepicker-toggle matSuffix [for]="shreddingDate"></mat-datepicker-toggle>
     <mat-datepicker #shreddingDate></mat-datepicker>
-  </mat-form-field>
+  </mat-form-field> -->
+  <button *ngIf="vehicleBadge.id" type="button" mat-raised-button
+    color="primary" [disabled]="vehicleBadge.shreddingDate" (click)="shredConfirm(vehicleBadge.id)">Shred Badge</button>
   <mat-checkbox
     class="chkReturned"
     color="primary"

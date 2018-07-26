@@ -20,6 +20,7 @@ export class VehicleBadgesCreateComponent implements OnInit {
   vehicleAutoCtrl: FormControl = new FormControl();
   vehicles_auto: resourceVehicle[] = [];
   vehicleBadgeForm: FormGroup;
+  do_patch = true;
 
   constructor(public dialogRef: MatDialogRef<VehicleBadgesCreateComponent>,
               @Inject(MAT_DIALOG_DATA) public data: VehicleBadge,
@@ -27,14 +28,15 @@ export class VehicleBadgesCreateComponent implements OnInit {
               private resourcesService: ResourcesService) { }
 
   ngOnInit() {
-    console.log('data: ', this.data);
+    // console.log('data: ', this.data);
     if(this.data != null){
       this.vehicleBadge = this.data;
+      // console.log('this.vehicleBadge: ' + this.vehicleBadge);
       this.vehicleBadgeForm  = this.createVehicleBadgeForm();
       this.vehicleAutoCtrl.setValue(this.vehicleBadge.vehicle);
       this.vehicleBadge.return = this.vehicleBadge.return;
       this.vehicleBadgeForm.controls['return'].setValue(this.vehicleBadge.return);
-      console.log('this.vehicleBadge: ', this.vehicleBadge);
+      // console.log('this.vehicleBadge: ', this.vehicleBadge);
     } else {
       this.vehicleBadgeForm = this.createVehicleBadgeForm();
     }
@@ -43,13 +45,15 @@ export class VehicleBadgesCreateComponent implements OnInit {
       .subscribe(d => {
         this.resourcesService.vehicles.filterVehicles(d)
           .subscribe((data: resourceVehicle[]) => {
-            console.log('resourceVehicle: ', data);
+            // console.log('resourceVehicle: ', data);
             this.vehicles_auto = data;
           });
       });
   }
 
   onSubmit() {
+    if(!this.do_patch)
+      return;
     let dExpire = new Date(this.vehicleBadgeForm.controls['expireDate'].value);
     let dShredding = new Date(this.vehicleBadgeForm.controls['shreddingDate'].value);
     this.vehicleBadge.id = this.data == null ? null : this.data.id;
@@ -98,17 +102,29 @@ export class VehicleBadgesCreateComponent implements OnInit {
       'permitNumber': new FormControl(this.vehicleBadge.permitNumber, {
         validators: [Validators.required]
       }),
-      'return': new FormControl(this.vehicleBadge.return, {
+      'return': new FormControl({value: this.vehicleBadge.return, disabled: true}, {
 
       }),
       'expireDate': new FormControl(this.vehicleBadge.expireDate, {
         validators: [Validators.required]
       }),
-      'shreddingDate': new FormControl(this.vehicleBadge.shreddigDate, {
-        // validators: [Validators.required]
-      })
+      // 'shreddingDate': new FormControl(this.vehicleBadge.shreddigDate, {
+      //   // validators: [Validators.required]
+      // })
     })
   }
+
+  shredConfirm(id: number) {
+    this.do_patch = false;
+    let cShred = confirm('Are you sure?');
+    if(cShred){
+      this.vehicleBadgeService.shredVehicleBadge(id)
+        .subscribe(d => {
+          // console.log(`Vehicle Badge id: ${id} shredded, d: `, d);
+        });
+      this.dialogRef.close();
+      }
+   }
 
   onCancel(): void {
     this.dialogRef.close();

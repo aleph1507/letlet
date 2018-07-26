@@ -71,7 +71,7 @@
         <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
         <mat-datepicker #toPicker></mat-datepicker>
       </mat-form-field>
-      <mat-form-field *ngIf="!editMode">
+      <mat-form-field>
         <mat-select placeholder="Number of entries" formControlName="requesterNumOfEntries"
           name="requesterNumOfEntries" id="requesterNumOfEntries" autocomplete="off" required>
           <!-- <mat-option></mat-option> -->
@@ -82,14 +82,14 @@
         <!-- <mat-error *ngIf="requesterNumOfEntries.hasError('required')">Please choose a number of allowed entries</mat-error> -->
         <!-- <mat-hint>{{animalControl.value?.sound}}</mat-hint> -->
       </mat-form-field>
-      <mat-form-field *ngIf="editMode">
+      <!-- <mat-form-field *ngIf="editMode">
         <input matInput
           placeholder="Number of entries"
           name="requesterNumberOfEntries"
           formControlName="requesterNumOfEntries"
           autocomplete="off"
           required>
-      </mat-form-field>
+      </mat-form-field> -->
       <div *ngIf="!editMode" class="upload-pdfs">
         <div class="pdf-upload">
           <button type="button" mat-raised-button (click)="pdfUpload1.click()">
@@ -124,18 +124,37 @@
             </button>
           </a>
         </div>
-
-      </div>
-
-      <div *ngIf="editMode" class="print-request" id="print-request">
-        <button mat-raised-button style="margin:1rem;" (click)="printRequest()">
+        <button mat-raised-button style="margin:1rem; margin-top: 0;" (click)="printRequest()">
           Print Request PDF 1 <mat-icon class="icon-control">print</mat-icon>
         </button>
         <br>
         <button mat-raised-button style="margin:1rem;" (click)="printRequest2()">
           Print Request PDF 2 <mat-icon class="icon-control">print</mat-icon>
         </button>
+        <div style="display:block;">
+          <mat-checkbox
+            color="primary"
+            [(ngModel)]="personPay"
+            [ngModelOptions]="{standalone: true}">Charge Persons
+          </mat-checkbox>
+          <mat-checkbox
+            color="primary"
+            [(ngModel)]="vehiclePay"
+            style="margin-left:2rem;"
+            [ngModelOptions]="{standalone: true}">Charge Vehicles
+          </mat-checkbox>
+        </div>
       </div>
+
+      <!-- <div *ngIf="editMode" class="print-request" id="print-request">
+        <button mat-raised-button style="margin:1rem; margin-top: 0;" (click)="printRequest()">
+          Print Request PDF 1 <mat-icon class="icon-control">print</mat-icon>
+        </button>
+        <br>
+        <button mat-raised-button style="margin:1rem;" (click)="printRequest2()">
+          Print Request PDF 2 <mat-icon class="icon-control">print</mat-icon>
+        </button>
+      </div> -->
 
       <button *ngIf="!editMode"
         mat-raised-button type="submit" color="primary"
@@ -148,7 +167,7 @@
         (click)="decline(request.id)" mat-raised-button color="primary"
         class="main-send">Decline</button>
       <button type="button" *ngIf="showApproveBtn || showDeclineBtn" mat-raised-button color="primary"
-        style="float:right;" (click)="editRequest()">Update</button>
+        style="float:left; margin:2rem; margin-left:5rem;" (click)="editRequest()">Update</button>
     </form>
 
   </div>
@@ -162,11 +181,13 @@
               <span class="person-surname">{{person.surname}}</span>
             </div>
             <div>
-              <mat-icon *ngIf="!editMode" matListIcon
+              <!--  *ngIf="!editMode" -->
+              <mat-icon matListIcon
                 (click)="editPerson(i)"
                 class="icon-control"
                 >border_color</mat-icon>
-              <mat-icon *ngIf="!editMode" matListIcon
+                <!--  *ngIf="!editMode" -->
+              <mat-icon matListIcon
                 (click)="deletePerson(i)"
                 class="icon-control">delete</mat-icon>
             </div>
@@ -185,11 +206,13 @@
               <span class="vehicle-plate">{{vehicle.plate}}</span>
             </div>
             <div>
-              <mat-icon *ngIf="!editMode" matListIcon
+               <!-- *ngIf="!editMode" -->
+              <mat-icon matListIcon
                 (click)="editVehicle(i)"
                 class="icon-control"
                 >border_color</mat-icon>
-              <mat-icon *ngIf="!editMode" matListIcon
+                 <!-- *ngIf="!editMode" -->
+              <mat-icon matListIcon
                 (click)="deleteVehicle(i)"
                 class="icon-control">delete</mat-icon>
             </div>
