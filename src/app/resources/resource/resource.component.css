@@ -1,3 +1,11 @@
+.resourceSpinner {
+    position: absolute;
+    /* z-index: 2; */
+    width: 88.4%;
+    height: 80%;
+    background-color: rgba(180,180,200, 0.55);
+}
+
 .input-field-header {
   min-height: 64px;
   padding: 8px 24px 0;

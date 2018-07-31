@@ -1,5 +1,6 @@
 <div class="requester-container">
   <div class="req-form-container">
+    <app-spinner class="reqSpinner mat-elevation-z8" *ngIf="showRequestSpinner"></app-spinner>
     <form class="requester-form" id="requester-form" (ngSubmit)="onSubmit()" [formGroup]="requesterForm" novalidate>
       <mat-form-field class="requester-field">
         <input matInput
@@ -176,6 +177,7 @@
   </div>
   <div class="requester-props-container">
     <div class="requester-prop mat-elevation-z8">
+      <app-spinner *ngIf="showRequestSpinner" class="reqSpinner mat-elevation-z8"></app-spinner>
       <mat-list dense role="list">
         <mat-list-item *ngFor="let person of requesterService.getAllPersons(); let i = index">
           <div class="list-row">

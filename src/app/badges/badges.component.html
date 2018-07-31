@@ -7,7 +7,8 @@
   [columnDefs]="columnDefs"
 >
 </ag-grid-angular> -->
-<div class="container">
+<app-spinner *ngIf="showSpinner" class="badgeSpinner mat-elevation-z8"></app-spinner>
+<div *ngIf="!showSpinner" class="container">
   <div id="header">
     <h2>Badges</h2>
     <button mat-fab color="primary" (click)="openDialog()">+</button>

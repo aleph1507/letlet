@@ -37,6 +37,8 @@ export class GateComponent implements OnInit {
   displayedColumnsExpectedVehicle = ['model', 'plate', 'companyName', 'enter'];
   displayedColumnsEnteredVehicle = ['model', 'plate', 'company', 'enteredGate', 'escortEmployee', 'approvedBy', 'exit'];
 
+  loadings: boolean[] = [false, false, false, false];
+
   constructor(private gatesService: GatesService,
               private authService: AuthService,
               private resourceService: ResourcesService,
@@ -58,6 +60,7 @@ export class GateComponent implements OnInit {
       .subscribe((data : ExpectedPerson[]) => {
         this.expectedPersons = data;
         this.dataSourceExpectedPersons = new MatTableDataSource<ExpectedPerson>(this.expectedPersons);
+        this.loadings[0] = true;
       });
   }
 
@@ -66,6 +69,7 @@ export class GateComponent implements OnInit {
       .subscribe((data : EnteredPerson[]) => {
         this.enteredPersons = data;
         this.dataSourceEnteredPersons = new MatTableDataSource<EnteredPerson>(this.enteredPersons);
+        this.loadings[1] = true;
       });
   }
 
@@ -74,6 +78,7 @@ export class GateComponent implements OnInit {
       .subscribe((data : ExpectedVehicle[]) => {
         this.expectedVehicles = data;
         this.dataSourceExpectedVehicles = new MatTableDataSource<ExpectedVehicle>(this.expectedVehicles);
+        this.loadings[2] = true;
       });
   }
 
@@ -83,10 +88,17 @@ export class GateComponent implements OnInit {
         this.enteredVehicles = data;
         console.log('this.enteredvehicles: ' + this.enteredVehicles);
         this.dataSourceEnteredVehicles = new MatTableDataSource<EnteredVehicle>(this.enteredVehicles);
+        this.loadings[3] = true;
       });
   }
 
+  showSpinner(): boolean {
+    for(let i = 0; i<this.loadings.length; i++)
+      if(this.loadings[i] == false)
+        return true;
 
+    return false;
+  }
 
   enterExpectedPerson(ep: ExpectedPerson) {
     let dialogRef = this.dialog.open(EnterPersonModalComponent, {

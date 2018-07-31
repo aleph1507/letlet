@@ -28,6 +28,8 @@ export class ShreddingReportComponent implements OnInit {
   shreddingsReportUrl = this.authService.baseUrl + '/api/badges/shreddingreport';
   gotRowData: boolean = false;
 
+  showSpinner : boolean  = true;
+
   xlsx_report;
 
   columns = ['Shredding Date', 'Type Of Card', 'Details', 'Card Number',
@@ -136,6 +138,7 @@ export class ShreddingReportComponent implements OnInit {
   // }
 
   getReps(picker = null, event: MatDatepickerInputEvent<Date> = null) {
+    this.showSpinner = true;
     var month : string = '';
     var day : string = '';
 
@@ -192,6 +195,7 @@ export class ShreddingReportComponent implements OnInit {
             console.log('xlsx_report: ', this.xlsx_report);
             // console.log('this.xlsx_report', this.xlsx_report);
             this.gridOptions.api.setRowData(data);
+            this.showSpinner = false;
           // }
           // this.personsReport = data;
           // this.rowData = this.personsReport;

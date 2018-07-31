@@ -1,4 +1,5 @@
-<div class="container">
+<app-spinner *ngIf="showSpinner" class="vehicleBadgeSpinner mat-elevation-z8"></app-spinner>
+<div *ngIf="!showSpinner" class="container">
   <div id="header">
     <h2>Vehicle Badges</h2>
     <button mat-fab color="primary" (click)="openDialog()">+</button>

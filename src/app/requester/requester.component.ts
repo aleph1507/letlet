@@ -67,6 +67,10 @@ export class RequesterComponent implements OnInit, OnDestroy {
   personPay: boolean = true;
   vehiclePay: boolean = true;
 
+  showPersonsSpinner: boolean = false;
+  showVehiclesSpinner: boolean = false;
+  showRequestSpinner: boolean = false;
+
   companyOk: boolean = this.companiesAutoCtrl.value == null ? false : (this.companiesAutoCtrl.value.id == undefined ? false : true);
 
   constructor(private dialog: MatDialog,
@@ -76,7 +80,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
               private resources: ResourcesService,
               private datePipe: DatePipe,
               private router: Router,
-              private sanitizer: DomSanitizer
+              private sanitizer: DomSanitizer,
             ) { }
 
   ngOnInit() {
@@ -149,6 +153,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
 
     this.paramsSub = this.route.params.subscribe(params => {
       if(params['id']){
+        this.showRequestSpinner = true;
         this.requesterService.getRequest(+params['id'])
           .subscribe((req : Requester) => {
             this.id = req.id;
@@ -213,6 +218,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
               console.log('this.requesterForm post-map: ' + this.requesterForm);
               console.log('this.request.requesterName post-map: ' + this.request.requesterName);
               this.request.approved ? this.showDeclineBtn = true : this.showApproveBtn = true;
+              this.showRequestSpinner = false;
           })
       }
       // if(params['id'] && this.requesterService.getRequest(+params['id']) !== undefined){
@@ -390,7 +396,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
         // this.request.pdf1 = this.pdf1src;
         // this.request.pdf2 = this.pdf2src;
         this.requesterService.editRequest(request);
-        this.router.navigate(['/requester', this.request.id]);
+        this.router.navigate(['/approvals']);
       }
     }
   }

@@ -1,3 +1,11 @@
+.personSpinner {
+  position: absolute;
+  /* z-index: 2; */
+  width: 88.4%;
+  height: 80%;
+  background-color: rgba(180,180,200, 0.55);
+}
+
 .container {
   width: 90vw;
 }

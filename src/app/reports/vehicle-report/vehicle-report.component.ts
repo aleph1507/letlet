@@ -27,6 +27,8 @@ export class VehicleReportComponent implements OnInit {
   personsReportUrl = this.authService.baseUrl + '/api/visits/vehiclereport';
   gotRowData: boolean = false;
 
+  showSpinner : boolean = true;
+
   xlsx_report;
 
   columns = ['Company Name', 'Vehicle Model', 'Vehicle Plate', 'Entered Through Gate',
@@ -115,6 +117,7 @@ export class VehicleReportComponent implements OnInit {
   }
 
   getReps(picker = null, event: MatDatepickerInputEvent<Date> = null) {
+    this.showSpinner = true;
     var month : string = '';
     var day : string = '';
 
@@ -166,6 +169,7 @@ export class VehicleReportComponent implements OnInit {
           }
           this.xlsx_report = data;
           this.gridOptions.api.setRowData(data);
+          this.showSpinner = false;
         });
     }
 

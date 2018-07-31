@@ -20,6 +20,8 @@ export class BadgesComponent implements OnInit {
   length: number;
   pageSize: number;
   badges : Badge[];
+
+  showSpinner: boolean = true;
   // pageSizeOptions = [5, 10, 25, 100];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -49,6 +51,7 @@ export class BadgesComponent implements OnInit {
   }
 
   refresh() {
+    this.showSpinner = true;
     this.badgesService.getBadges(this.currentPage).subscribe((data : Badge[]) => {
       this.badges = data;
       this.dataSource = new MatTableDataSource<Badge>(this.badges);
@@ -56,6 +59,7 @@ export class BadgesComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.pageSize = 10;
       this.changeDetectorRefs.detectChanges();
+      this.showSpinner = false;
     });
   }
 

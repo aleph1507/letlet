@@ -31,6 +31,8 @@ export class PersonReportComponent implements OnInit {
   personsReportUrl = this.authService.baseUrl + '/api/visits/personreport';
   gotRowData: boolean = false;
 
+  showSpinner: boolean = true;
+
   xlsx_report;
 
   columns = ['Company Name', 'Person', 'Entered Through Gate', 'Entry Approved By',
@@ -140,6 +142,7 @@ export class PersonReportComponent implements OnInit {
   // }
 
   getReps(picker = null, event: MatDatepickerInputEvent<Date> = null) {
+    this.showSpinner = true;
     var month : string = '';
     var day : string = '';
 
@@ -196,6 +199,8 @@ export class PersonReportComponent implements OnInit {
             console.log('xlsx_report: ', this.xlsx_report);
             // console.log('this.xlsx_report', this.xlsx_report);
             this.gridOptions.api.setRowData(data);
+
+            this.showSpinner = false;
           // }
           // this.personsReport = data;
           // this.rowData = this.personsReport;

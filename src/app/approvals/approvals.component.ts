@@ -34,6 +34,8 @@ export class ApprovalsComponent implements OnInit {
   companiesAutoCtrl: FormControl = new FormControl();
   companies_auto: Company[] = [];
 
+  showApprovalsSpinner: boolean = true;
+
   // companies = ['AMC', 'BBC', 'TAV', 'DrinkerLab'];
   // companies = this.resourcesService.companies.getCompaniesNames();
   // fCompany: FormControl = new FormControl();
@@ -61,6 +63,7 @@ export class ApprovalsComponent implements OnInit {
     this.showApprovals = this.approvalsService.showApprovals;
 
     this.route.url.subscribe((u) => {
+      this.showApprovalsSpinner = true;
       let activatedCategory = +this.route.snapshot.params.selectedradio;
       switch(activatedCategory){
         case 1:
@@ -166,6 +169,7 @@ export class ApprovalsComponent implements OnInit {
           this.approvalRequests = data;
           this.dataSource = new
             MatTableDataSource<ApprovalRequest>(this.approvalRequests);
+          this.showApprovalsSpinner = false;
         });
     }
 

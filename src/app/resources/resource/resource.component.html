@@ -1,4 +1,6 @@
-<div class="container">
+<app-spinner *ngIf="showSpinner" class="resourceSpinner mat-elevation-z8"></app-spinner>
+
+<div *ngIf="!showSpinner" class="container">
   <div id="header">
     <h2>{{categoryTitle | titlecase}}</h2>
     <button mat-mini-fab color="primary" class="add-resource-btn" (click)="addResource(category)">+

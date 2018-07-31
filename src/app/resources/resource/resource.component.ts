@@ -53,6 +53,8 @@ export class ResourceComponent implements OnInit {
   companies_auto: Company[] = [];
   companies: Company[] = [];
 
+  showSpinner : boolean = false;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private resourcesService: ResourcesService,
@@ -76,6 +78,7 @@ export class ResourceComponent implements OnInit {
             });
         });
     this.paramsSub = this.route.params.subscribe(params => {
+      this.showSpinner = true;
       this.category = params['category'];
       console.log('category: ', this.category);
       switch(this.category){
@@ -88,6 +91,7 @@ export class ResourceComponent implements OnInit {
               this.resourcesService.visitorBadges.visitorBadges = data;
               this.dataSource = new
                 MatTableDataSource<VisitorBadge>(this.resourcesService.visitorBadges.visitorBadges);
+                this.showSpinner = false;
             });
 
           //192.168.100.4:84/api/visitorbadges
@@ -102,6 +106,7 @@ export class ResourceComponent implements OnInit {
               this.resourcesService.visitorVehicleBadges.visitorVehicleBadges = data;
               this.dataSource = new
                 MatTableDataSource<VisitorVehicleBadge>(this.resourcesService.visitorVehicleBadges.visitorVehicleBadges);
+                this.showSpinner = false;
             })
           this.displayedColumns = ['code', 'name', 'edit'];
           break;
@@ -113,6 +118,7 @@ export class ResourceComponent implements OnInit {
               this.resourcesService.companies.companies = data;
               this.dataSource = new
                 MatTableDataSource<Company>(this.resourcesService.companies.companies);
+                this.showSpinner = false;
             })
           this.displayedColumns = ['name', 'id'];
           break;
@@ -124,6 +130,7 @@ export class ResourceComponent implements OnInit {
               this.resourcesService.vehicles.vehicles = data;
               this.dataSource = new
                 MatTableDataSource<resourceVehicle>(this.resourcesService.vehicles.vehicles);
+                this.showSpinner = false;
             })
           this.displayedColumns = ['company', 'model', 'plate', 'edit'];
           break;
@@ -139,6 +146,7 @@ export class ResourceComponent implements OnInit {
               this.dataSource.paginator = this.paginator;
               this.pageSize = 10;
               console.log('data: ', data);
+              this.showSpinner = false;
             })
           // this.dataSource = new MatTableDataSource<Employee>(this.resourcesService.employees.getAllEmployees());
 
@@ -162,7 +170,8 @@ export class ResourceComponent implements OnInit {
               this.resourcesService.reasons.reasons = data;
               this.dataSource = new
                 MatTableDataSource<Reason>(this.resourcesService.reasons.reasons);
-            })
+                this.showSpinner = false;
+              })
             this.displayedColumns = ['name', 'edit'];
           break;
         case 'gates':
@@ -172,8 +181,9 @@ export class ResourceComponent implements OnInit {
             .subscribe((data) => {
               this.resourcesService.gates.gates = data;
               this.dataSource = new
-                MatTableDataSource<Gate>(this.resourcesService.gates.gates);
-            })
+              MatTableDataSource<Gate>(this.resourcesService.gates.gates);
+                this.showSpinner = false;
+              })
           this.displayedColumns = ['name', 'edit'];
           break;
         case 'occupations':
@@ -190,8 +200,9 @@ export class ResourceComponent implements OnInit {
               console.log('zones: ' + data);
               this.resourcesService.airportZones.airportZones = data;
               this.dataSource = new
-                MatTableDataSource<AirportZone>(this.resourcesService.airportZones.airportZones);
-            })
+              MatTableDataSource<AirportZone>(this.resourcesService.airportZones.airportZones);
+                this.showSpinner = false;
+              })
           // this.dataSource = new MatTableDataSource<AirportZone>(this.resourcesService.airportZones.getAllAirportZones());
           this.displayedColumns = ['code', 'name', 'edit'];
           break;
@@ -316,6 +327,7 @@ export class ResourceComponent implements OnInit {
   }
 
   prevPageEmp(page: number) {
+    this.showSpinner = true;
     // console.log('vo prev page');
     if(this.currentPage > 1){
       this.currentPage--;
@@ -325,11 +337,13 @@ export class ResourceComponent implements OnInit {
           // console.log('this.badges : ' + this.badges);
           this.dataSource = new MatTableDataSource<Employee>(this.employees);
           this.nextDisabled = false;
+          this.showSpinner = false;
       });
     }
   }
 
   prevPageComp(page: number) {
+    this.showSpinner = true;
     // console.log('vo prev page');
     if(this.currentPageComp > 1){
       this.currentPageComp--;
@@ -339,11 +353,13 @@ export class ResourceComponent implements OnInit {
           // console.log('this.badges : ' + this.badges);
           this.dataSource = new MatTableDataSource<Company>(this.companies);
           this.nextDisabledComp = false;
+          this.showSpinner = false;
       });
     }
   }
 
   nextPageEmp(page: number) {
+    this.showSpinner = true;
     // console.log('vo next page');
     this.resourcesService.employees.getEmployeesPage(this.currentPage+1).subscribe((data : Employee[]) => {
       // console.log('vo next subscription data: ' + data);
@@ -355,10 +371,12 @@ export class ResourceComponent implements OnInit {
       } else {
         this.nextDisabled = true;
       }
+      this.showSpinner = false;
     });
   }
 
   nextPageComp(page: number) {
+    this.showSpinner = true;
     // console.log('vo next page');
     this.resourcesService.companies.getCompaniesPage(this.currentPageComp+1).subscribe((data : Company[]) => {
       // console.log('vo next subscription data: ' + data);
@@ -370,6 +388,7 @@ export class ResourceComponent implements OnInit {
       } else {
         this.nextDisabledComp = true;
       }
+      this.showSpinner = false;
     });
   }
 
@@ -401,6 +420,7 @@ export class ResourceComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
+    this.showSpinner = true;
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
     if(this.category == 'employees'){
@@ -418,6 +438,7 @@ export class ResourceComponent implements OnInit {
                 });
             }
           }
+          this.showSpinner = false;
         });
     } else if(this.category == 'companies') {
       this.resourcesService.companies.filterCompanies(filterValue)
@@ -434,9 +455,11 @@ export class ResourceComponent implements OnInit {
                 });
             }
           }
+          this.showSpinner = false;
         })
     } else {
       this.dataSource.filter = filterValue;
+      this.showSpinner = false;
     }
   }
 }

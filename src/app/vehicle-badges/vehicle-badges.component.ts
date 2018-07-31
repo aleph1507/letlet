@@ -27,6 +27,8 @@ export class VehicleBadgesComponent implements OnInit, AfterViewInit {
               public dialog: MatDialog,
               private changeDetectorRefs: ChangeDetectorRef) { }
 
+  showSpinner: boolean = true;
+
   ngOnInit() {
   }
 
@@ -35,6 +37,7 @@ export class VehicleBadgesComponent implements OnInit, AfterViewInit {
   }
 
   refresh() {
+    this.showSpinner = true;
     this.vehicleBadgesService.getVehicleBadges(this.currentPage).subscribe((data : VehicleBadge[]) => {
       this.vehicleBadges = data;
       this.dataSource = new MatTableDataSource<VehicleBadge>(this.vehicleBadges);
@@ -42,10 +45,12 @@ export class VehicleBadgesComponent implements OnInit, AfterViewInit {
       this.dataSource.paginator = this.paginator;
       this.pageSize = 10;
       this.changeDetectorRefs.detectChanges();
+      this.showSpinner = false;
     });
   }
 
   prevPage(page: number) {
+    this.showSpinner = true;
     // console.log('vo prev page');
     if(this.currentPage > 1){
       this.currentPage--;
@@ -55,11 +60,13 @@ export class VehicleBadgesComponent implements OnInit, AfterViewInit {
           // console.log('this.badges : ' + this.badges);
           this.dataSource = new MatTableDataSource<VehicleBadge>(this.vehicleBadges);
           this.nextDisabled = false;
+          this.showSpinner = false;
       });
     }
   }
 
   nextPage(page: number) {
+    this.showSpinner = true;
     // console.log('vo next page');
     this.vehicleBadgesService.getVehicleBadges(this.currentPage+1).subscribe((data : VehicleBadge[]) => {
       // console.log('vo next subscription data: ' + data);
@@ -71,6 +78,7 @@ export class VehicleBadgesComponent implements OnInit, AfterViewInit {
       } else {
         this.nextDisabled = true;
       }
+      this.showSpinner = false;
     });
   }
 

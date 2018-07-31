@@ -63,6 +63,7 @@ import { MyDateAdapter, MY_DATE_FORMATS } from './shared/DateAdapter';
 import { AsptonormaldatePipe } from './shared/pipes/asptonormaldate.pipe';
 import { BadgesConfirmShredComponent } from './badges/badges-create/badges-confirm-shred/badges-confirm-shred.component';
 import { ShreddingReportComponent } from './reports/shredding-report/shredding-report.component';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
 
 
 @NgModule({
@@ -103,7 +104,8 @@ import { ShreddingReportComponent } from './reports/shredding-report/shredding-r
     VehicleStopListComponent,
     AsptonormaldatePipe,
     BadgesConfirmShredComponent,
-    ShreddingReportComponent
+    ShreddingReportComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -113,7 +115,7 @@ import { ShreddingReportComponent } from './reports/shredding-report/shredding-r
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
-    AgGridModule.withComponents([])
+    AgGridModule.withComponents([]),
   ],
   entryComponents: [
     DialogPersonComponent,
