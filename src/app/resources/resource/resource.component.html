@@ -1,6 +1,6 @@
 <app-spinner *ngIf="showSpinner" class="resourceSpinner mat-elevation-z8"></app-spinner>
 
-<div *ngIf="!showSpinner" class="container">
+<div [style.visibility]="(showSpinner && !filterSpinner) ? 'hidden' : 'visible'" class="container">
   <div id="header">
     <h2>{{categoryTitle | titlecase}}</h2>
     <button mat-mini-fab color="primary" class="add-resource-btn" (click)="addResource(category)">+
@@ -132,7 +132,7 @@
           <ng-container matColumnDef="name">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
             <mat-cell *matCellDef="let occ"> {{occ.name}} </mat-cell>
-          </ng-container>
+          </ng-container>t
 
 
           <ng-container matColumnDef="edit">
@@ -188,7 +188,7 @@
 
           <ng-container matColumnDef="code">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Code </mat-header-cell>
-            <mat-cell *matCellDef="let reason"> {{reason.code}} </mat-cell>
+            <mat-cell *matCellDef="let reasotn"> {{reason.code}} </mat-cell>
           </ng-container> -->
 
           <ng-container matColumnDef="name">
@@ -265,7 +265,7 @@
         <div *ngIf="category=='vehicles'" class="vehicles-resource" id="vehicles-resource">
           <ng-container matColumnDef="company">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Company </mat-header-cell>
-            <mat-cell *matCellDef="let vehicle"> {{vehicle.company.name}} </mat-cell>
+            <mat-cell *matCellDef="let vehicle"> {{vehicle.company == null ? vehicle.companyName : vehicle.company.name}} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="model">
@@ -315,6 +315,11 @@
         </mat-row>
       </mat-table>
 
+      <div class="employees-pagination">
+        <button (click)="prevPageVehicles()" [disabled]="currentPageVehicles <=1" class="prev-btn" mat-raised-button>&laquo; Previous Page</button>
+        <button (click)="nextPageVehicles()" [disabled]="nextDisabledVehicles" class="next-btn" mat-raised-button>Next Page &raquo;</button>
+      </div>
+
       <div *ngIf="category=='employees'" class="employees-pagination">
         <form class="employee-form">
           <mat-form-field class="employee-field">
@@ -326,8 +331,8 @@
             </mat-autocomplete>
           </mat-form-field>
         </form>
-        <button (click)="prevPageEmp()" [disabled]="currentPage <=1" class="prev-btn" mat-raised-button>< Previous Page</button>
-        <button (click)="nextPageEmp()" [disabled]="nextDisabled" class="next-btn" mat-raised-button>Next Page ></button>
+        <button (click)="prevPageEmp()" [disabled]="currentPage <=1" class="prev-btn" mat-raised-button>&laquo; Previous Page</button>
+        <button (click)="nextPageEmp()" [disabled]="nextDisabled" class="next-btn" mat-raised-button>Next Page &raquo;</button>
       </div>
 
       <div *ngIf="category=='companies'" class="companies-pagination">

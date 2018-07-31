@@ -22,6 +22,7 @@ import { VisitorVehicleBadge } from '../../models/VisitorVehicleBadge';
 import { VisitorVehicleBadgeModalComponent } from './visitor-vehicle-badge-modal/visitor-vehicle-badge-modal.component';
 import { DialogResourceVehicleComponent } from './dialog-vehicle/dialog-vehicle.component';
 import { FormControl } from '@angular/forms';
+import { Vehicle } from '../../models/Vehicle.model';
 // import { EmployeesDataSource } from './data_sources/EmployeesDataSource';
 
 @Component({
@@ -30,6 +31,9 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./resource.component.css']
 })
 export class ResourceComponent implements OnInit {
+  filterSpinner: boolean;
+  vehicles: Vehicle[];
+  lengthVehicles: any;
 
   // companies = this.resourcesService.companies();
   dataSource;
@@ -39,6 +43,7 @@ export class ResourceComponent implements OnInit {
   categoryTitle;
   currentPage = 1;
   currentPageComp = 1;
+  currentPageVehicles = 1;
   employees: Employee[] = [];
   employees_auto: Employee[] = [];
   prev_employees: Employee[] = [];
@@ -48,6 +53,8 @@ export class ResourceComponent implements OnInit {
   prevDisabled = true;
   nextDisabledComp = false;
   prevDisabledComp = true;
+  nextDisabledVehicles = false;
+  prevDisabledVehicles = true;
   companiesAutoCtrl: FormControl = new FormControl();
   employeeAutoCtrl: FormControl = new FormControl();
   companies_auto: Company[] = [];
@@ -125,13 +132,20 @@ export class ResourceComponent implements OnInit {
         case 'vehicles':
           this.category = 'vehicles';
           this.categoryTitle = this.category;
-          this.resourcesService.vehicles.getAllVehicles()
-            .subscribe((data : resourceVehicle[]) => {
-              this.resourcesService.vehicles.vehicles = data;
-              this.dataSource = new
-                MatTableDataSource<resourceVehicle>(this.resourcesService.vehicles.vehicles);
-                this.showSpinner = false;
-            })
+          this.resourcesService.vehicles.getVehiclesPage(this.currentPageVehicles)
+            .subscribe((data: Vehicle[]) => {
+              this.vehicles = data;
+              this.dataSource = new MatTableDataSource<Vehicle>(this.vehicles);
+              // this.lengthVehicles = vehicles.length;
+              this.showSpinner = false;
+            });
+          // this.resourcesService.vehicles.getAllVehicles()
+          //   .subscribe((data : resourceVehicle[]) => {
+          //     this.resourcesService.vehicles.vehicles = data;
+          //     this.dataSource = new
+          //       MatTableDataSource<resourceVehicle>(this.resourcesService.vehicles.vehicles);
+          //       this.showSpinner = false;
+          //   });
           this.displayedColumns = ['company', 'model', 'plate', 'edit'];
           break;
         case 'employees':
@@ -375,6 +389,23 @@ export class ResourceComponent implements OnInit {
     });
   }
 
+  nextPageVehicles(page: number) {
+    this.showSpinner = true;
+    // console.log('vo next page');
+    this.resourcesService.vehicles.getVehiclesPage(this.currentPage+1).subscribe((data : Vehicle[]) => {
+      // console.log('vo next subscription data: ' + data);
+      if(data){
+        this.currentPageVehicles++;
+        this.vehicles = data;
+        // console.log('this.badges : ' + this.badges);
+        this.dataSource = new MatTableDataSource<Vehicle>(this.vehicles);
+      } else {
+        this.nextDisabledVehicles = true;
+      }
+      this.showSpinner = false;
+    });
+  }
+
   nextPageComp(page: number) {
     this.showSpinner = true;
     // console.log('vo next page');
@@ -420,7 +451,8 @@ export class ResourceComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    this.showSpinner = true;
+    // this.showSpinner = true;
+    // this.filterSpinner = true;
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
     if(this.category == 'employees'){
@@ -453,6 +485,24 @@ export class ResourceComponent implements OnInit {
                   this.companies = data;
                   this.dataSource = new MatTableDataSource<Company>(this.companies);
                 });
+            }
+          }
+          this.showSpinner = false;
+        })
+    } else if(this.category == 'vehicles') {
+      console.log('filterValue vehicles: ', filterValue);
+      this.resourcesService.vehicles.filterVehicles(filterValue)
+        .subscribe((data: Vehicle[]) => {
+          if(data){
+            if(filterValue != ''){
+              this.vehicles = data;
+              this.dataSource = new MatTableDataSource<Vehicle>(this.vehicles);
+            } else {
+              this.resourcesService.vehicles.getVehiclesPage(1)
+                .subscribe((data: Vehicle[]) => {
+                  this.vehicles = data;
+                  this.dataSource = new MatTableDataSource<Vehicle>(this.vehicles);
+                })
             }
           }
           this.showSpinner = false;

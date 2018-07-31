@@ -5,6 +5,7 @@ import { resourceVehicle } from '../../models/resourceVehicle';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { VehicleBadgesService } from '../../services/vehicle-badges.service';
 import { ResourcesService } from '../../services/resources.service';
+import { Vehicle } from '../../models/Vehicle.model';
 
 @Component({
   selector: 'app-vehicle-badges-create',
@@ -43,7 +44,7 @@ export class VehicleBadgesCreateComponent implements OnInit {
 
     this.vehicleAutoCtrl.valueChanges
       .subscribe(d => {
-        this.resourcesService.vehicles.filterVehicles(d)
+        this.resourcesService.vehicles.filterResVehicles(d)
           .subscribe((data: resourceVehicle[]) => {
             // console.log('resourceVehicle: ', data);
             this.vehicles_auto = data;

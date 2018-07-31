@@ -676,7 +676,20 @@ class Vehicles {
     this.headers = ho;
   }
 
-  filterVehicles(filter = null) : Observable<resourceVehicle[]>{
+  getVehiclesPage(page = null) : Observable<Vehicle[]>{
+    if(page == null)
+      return this.http.get<Vehicle[]>(this.vehiclesUrl);
+
+    return this.http.get<Vehicle[]>(this.vehiclesUrl + '/page/' + page);
+  }
+
+  filterVehicles(filter = null) : Observable<Vehicle[]>{
+    return this.http.get<Vehicle[]>(this.vehiclesUrl + '/search/?token=' + filter, {
+      headers: this.headers
+    });
+  }
+
+  filterResVehicles(filter = null) : Observable<resourceVehicle[]>{
     return this.http.get<resourceVehicle[]>(this.vehiclesUrl + '/search/?token=' + filter);
   }
 
