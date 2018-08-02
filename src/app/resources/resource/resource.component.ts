@@ -348,7 +348,13 @@ export class ResourceComponent implements OnInit {
   }
 
   deleteGate(id = null) {
-
+    let cDelete = confirm("Are you sure");
+    if(cDelete){
+      this.resourcesService.gates.deleteGate(id)
+        .subscribe(data => {
+          this.applyFilter('');
+        });
+    }
   }
 
   editReason(id = null){
@@ -363,7 +369,13 @@ export class ResourceComponent implements OnInit {
   }
 
   deleteReason(id = null) {
-
+    let cDelete = confirm("Are you sure");
+    if(cDelete){
+      this.resourcesService.reasons.deleteReason(id)
+        .subscribe(data => {
+          this.applyFilter('');
+        });
+    }
   }
 
   editEmployee(id = null){
@@ -379,7 +391,13 @@ export class ResourceComponent implements OnInit {
   }
 
   deleteEmployee(id = null) {
-
+    let cDelete = confirm("Are you sure");
+    if(cDelete){
+      this.resourcesService.employees.deleteEmployee(id)
+        .subscribe(data => {
+          this.applyFilter('');
+        });
+    }
   }
 
   prevPageEmp(page: number) {
@@ -415,7 +433,13 @@ export class ResourceComponent implements OnInit {
   }
 
   deleteCompany(id = null) {
-
+    let cDelete = confirm("Are you sure");
+    if(cDelete){
+      this.resourcesService.companies.deleteCompany(id)
+        .subscribe(data => {
+          this.applyFilter('');
+        });
+    }
   }
 
   nextPageEmp(page: number) {
@@ -497,7 +521,13 @@ export class ResourceComponent implements OnInit {
   }
 
   deleteVehicle(id = null) {
-
+    let cDelete = confirm("Are you sure");
+    if(cDelete){
+      this.resourcesService.vehicles.deleteVehicle(id)
+        .subscribe(data => {
+          this.applyFilter('');
+        });
+    }
   }
 
   applyFilter(filterValue: string) {
