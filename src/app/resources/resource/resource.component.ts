@@ -102,7 +102,7 @@ export class ResourceComponent implements OnInit {
             });
 
           //192.168.100.4:84/api/visitorbadges
-          this.displayedColumns = ['code', 'name', 'barcode', 'edit'];
+          this.displayedColumns = ['code', 'name', 'barcode', 'edit', 'delete'];
           break;
         case 'visitors-vehicle-badges':
           // console.log('VO VISITOR VEHICLE BADGES');
@@ -115,7 +115,7 @@ export class ResourceComponent implements OnInit {
                 MatTableDataSource<VisitorVehicleBadge>(this.resourcesService.visitorVehicleBadges.visitorVehicleBadges);
                 this.showSpinner = false;
             })
-          this.displayedColumns = ['code', 'name', 'edit'];
+          this.displayedColumns = ['code', 'name', 'edit', 'delete'];
           break;
         case 'companies':
           this.category = 'companies';
@@ -127,7 +127,7 @@ export class ResourceComponent implements OnInit {
                 MatTableDataSource<Company>(this.resourcesService.companies.companies);
                 this.showSpinner = false;
             })
-          this.displayedColumns = ['name', 'id'];
+          this.displayedColumns = ['name', 'id', 'delete'];
           break;
         case 'vehicles':
           this.category = 'vehicles';
@@ -146,7 +146,7 @@ export class ResourceComponent implements OnInit {
           //       MatTableDataSource<resourceVehicle>(this.resourcesService.vehicles.vehicles);
           //       this.showSpinner = false;
           //   });
-          this.displayedColumns = ['company', 'model', 'plate', 'edit'];
+          this.displayedColumns = ['company', 'model', 'plate', 'edit', 'delete'];
           break;
         case 'employees':
           this.category = 'employees';
@@ -174,7 +174,7 @@ export class ResourceComponent implements OnInit {
           //       MatTableDataSource<Employee>(this.resourcesService.employees.employees);
           //       this.dataSource.paginator = this.paginator;
           //   });
-          this.displayedColumns = ['name', 'surname', 'company', 'edit'];
+          this.displayedColumns = ['name', 'surname', 'company', 'edit', 'delete'];
           break;
         case 'reasons':
           this.category = 'reasons';
@@ -186,7 +186,7 @@ export class ResourceComponent implements OnInit {
                 MatTableDataSource<Reason>(this.resourcesService.reasons.reasons);
                 this.showSpinner = false;
               })
-            this.displayedColumns = ['name', 'edit'];
+            this.displayedColumns = ['name', 'edit', 'delete'];
           break;
         case 'gates':
           this.category = 'gates';
@@ -198,13 +198,13 @@ export class ResourceComponent implements OnInit {
               MatTableDataSource<Gate>(this.resourcesService.gates.gates);
                 this.showSpinner = false;
               })
-          this.displayedColumns = ['name', 'edit'];
+          this.displayedColumns = ['name', 'edit', 'delete'];
           break;
         case 'occupations':
           this.category = 'occupations';
           this.categoryTitle = this.category;
           // this.dataSource = new MatTableDataSource<Occupation>(this.resourcesService.occupations.getAllOccupations());
-          this.displayedColumns = ['id', 'code', 'name', 'edit'];
+          this.displayedColumns = ['id', 'code', 'name', 'edit', 'delete'];
           break;
         case 'zones':
           this.category = 'zones';
@@ -218,7 +218,7 @@ export class ResourceComponent implements OnInit {
                 this.showSpinner = false;
               })
           // this.dataSource = new MatTableDataSource<AirportZone>(this.resourcesService.airportZones.getAllAirportZones());
-          this.displayedColumns = ['code', 'name', 'edit'];
+          this.displayedColumns = ['code', 'name', 'edit', 'delete'];
           break;
       }
     });
@@ -232,7 +232,7 @@ export class ResourceComponent implements OnInit {
         this.editVisitorsBadge();
         break;
       case 'visitors-vehicle-badges':
-        this.editVisitorVehicleBadge();
+        this.editVisitorVehiclesBadge();
         break;
       case 'companies':
         this.editCompany(null);
@@ -262,7 +262,7 @@ export class ResourceComponent implements OnInit {
     return e ? e.name + ' ' + e.surname : undefined;
   }
 
-  editVisitorVehicleBadge(id = null){
+  editVisitorVehiclesBadge(id = null){
     let dialogRef = this.dialog.open(VisitorVehicleBadgeModalComponent, {
       width: '40%',
       data: id
@@ -271,6 +271,16 @@ export class ResourceComponent implements OnInit {
     dialogRef.afterClosed().subscribe(a => {
       this.applyFilter('');
     });
+  }
+
+  deleteVisitorVehicleBadge(id = null) {
+    let cDelete = confirm("Are you sure");
+    if(cDelete){
+      this.resourcesService.visitorVehicleBadges.deleteVisitorVehicleBadge(id)
+        .subscribe(data => {
+          this.applyFilter('');
+        });
+    }
   }
 
   editVisitorsBadge(id = null){
@@ -284,6 +294,16 @@ export class ResourceComponent implements OnInit {
     });
   }
 
+  deleteVisitorsBadge(id = null) {
+    let cDelete = confirm("Are you sure");
+    if(cDelete){
+      this.resourcesService.visitorBadges.deleteVisitorBadge(id)
+        .subscribe(data => {
+          this.applyFilter('');
+        });
+    }
+  }
+
   editZone(id = null) {
     let dialogRef = this.dialog.open(AirportZoneModalComponent, {
       width: '40%',
@@ -293,6 +313,16 @@ export class ResourceComponent implements OnInit {
     dialogRef.afterClosed().subscribe(a => {
       this.applyFilter('');
     });
+  }
+
+  deleteZone(id = null){
+    let cDelete = confirm("Are you sure");
+    if(cDelete){
+      this.resourcesService.airportZones.deleteAirportZone(id)
+        .subscribe(data => {
+          this.applyFilter('');
+        });
+    }
   }
 
   // editOccupation(id = null) {
@@ -317,6 +347,10 @@ export class ResourceComponent implements OnInit {
     });
   }
 
+  deleteGate(id = null) {
+
+  }
+
   editReason(id = null){
     let dialogRef = this.dialog.open(ReasonModalComponent, {
       width: '40%',
@@ -326,6 +360,10 @@ export class ResourceComponent implements OnInit {
     dialogRef.afterClosed().subscribe(a => {
       this.applyFilter('');
     });
+  }
+
+  deleteReason(id = null) {
+
   }
 
   editEmployee(id = null){
@@ -338,6 +376,10 @@ export class ResourceComponent implements OnInit {
     dialogRef.afterClosed().subscribe(a => {
       this.applyFilter('');
     });
+  }
+
+  deleteEmployee(id = null) {
+
   }
 
   prevPageEmp(page: number) {
@@ -370,6 +412,10 @@ export class ResourceComponent implements OnInit {
           this.showSpinner = false;
       });
     }
+  }
+
+  deleteCompany(id = null) {
+
   }
 
   nextPageEmp(page: number) {
@@ -448,6 +494,10 @@ export class ResourceComponent implements OnInit {
       console.log('after edit resService.vehicles: ', this.resourcesService.vehicles.getAllVehicles());
       this.applyFilter('');
     });
+  }
+
+  deleteVehicle(id = null) {
+
   }
 
   applyFilter(filterValue: string) {

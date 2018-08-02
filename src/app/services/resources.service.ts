@@ -94,6 +94,10 @@ class VisitorVehicleBadges {
     return this.http.patch(this.visitorVehicleBadgesUrl + '/' + id, vvb, { headers: this.headers });
   }
 
+  deleteVisitorVehicleBadge(id: number) {
+    return this.http.delete(this.visitorVehicleBadgesUrl + '/' + id);
+  }
+
   switchVisitorVehicleBadge(visitorVehicleBadge: VisitorVehicleBadge, id: number){
     for(let i = 0; i<this.visitorVehicleBadges.length; i++){
       if(this.visitorVehicleBadges[i].id == id){
@@ -180,6 +184,10 @@ class VisitorBadges {
 
   updateVisitorBadge(vb: VisitorBadge, id: string){
     return this.http.patch(this.visitorsBadgesUrl + '/' + id, vb, { headers: this.headers });
+  }
+
+  deleteVisitorBadge(id: number) {
+    return this.http.delete(this.visitorsBadgesUrl + '/' + id);
   }
 
   // editVisitorBadge(visitorBadge: VisitorBadge, id: string){
@@ -281,6 +289,10 @@ class AirportZones {
     return this.http.patch(this.airportZonesUrl + '/' + id, airportZone, { headers: this.headers });
   }
 
+  deleteAirportZone(id: number) {
+    return this.http.delete(this.airportZonesUrl + '/' + id);
+  }
+
   // updateAirportZone(airportZone: AirportZone, id: string){
   //   const httpOptions = {
   //     headers: new HttpHeaders({
@@ -374,6 +386,10 @@ class Occupations {
       .subscribe(data => console.log(data));
   }
 
+  deleteOccuparion(id: number) {
+    return this.http.delete(this.occupationsUrl + '/' + id);
+  }
+
   switchOccupation(occupation: Occupation, id: string){
     for(let i = 0; i<this.occupations.length; i++){
       if(this.occupations[i].id == id){
@@ -453,6 +469,10 @@ class Gates {
     return this.http.patch(this.gatesUrl + '/' + id, gate, { headers: this.headers });
   }
 
+  deleteGate(id: number) {
+    return this.http.delete(this.gatesUrl + '/' + id);
+  }
+
   switchGate(gate: Gate, id: number){
     for(let i = 0; i<this.gates.length; i++){
       if(this.gates[i].id == id){
@@ -530,6 +550,10 @@ class Reasons {
   updateReason(reason: Reason, id: number){
     console.log('vo updateReason');
     return this.http.patch(this.reasonsUrl + '/' + id, reason, { headers: this.headers });
+  }
+
+  deleteReason(id: number) {
+    return this.http.delete(this.reasonsUrl + '/' + id);
   }
 
   switchReason(reason: Reason, id: number){
@@ -624,6 +648,10 @@ class Employees {
     return this.http.post(this.employeesUrl, employee, { headers: this.headers });
   }
 
+  deleteEmployee(id: number) {
+    return this.http.delete(this.employeesUrl + '/' + id);
+  }
+
   pushEmployee(employee: Employee){
     this.employees.push(employee);
   }
@@ -707,6 +735,10 @@ class Vehicles {
     return this.http.get<resourceVehicle>(this.vehiclesUrl + '/' + index, { headers: this.headers });
   }
 
+  deleteVehicle(id: number) {
+    return this.http.delete(this.vehiclesUrl + '/' + id);
+  }
+
   // getVehicleByIndex(index: number) {
   //   return this.vehicles[index];
   // }
@@ -742,7 +774,7 @@ class Vehicles {
   //   return this.vehicles[index];
   // }
 
-  deleteVehicle(index: number) {
+  removeVehicle(index: number) {
     this.vehicles.splice(index, 1);
   }
 
@@ -784,6 +816,10 @@ class Companies {
       return this.http.get<Company[]>(this.companiesUrl);
 
     return this.http.get<Company[]>(this.companiesUrl + '/page/' + page);
+  }
+
+  deleteCompany(id: number) {
+    return this.http.delete(this.companiesUrl + '/' + id);
   }
 
   // getCompanies() {
