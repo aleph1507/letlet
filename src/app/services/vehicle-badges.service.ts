@@ -25,6 +25,14 @@ export class VehicleBadgesService {
     return this.http.get<VehicleBadge[]>(this.vehicleBadgesUrl + '/page/' + page);
   }
 
+  deactivate(id, deactivateReason) {
+    return this.http.post<boolean>(this.vehicleBadgesUrl + '/deactivate/' + id, { queryParams: {'deactivateReason': deactivateReason}});
+  }
+
+  activate(id){
+    return this.http.post<boolean>(this.vehicleBadgesUrl + '/activate/' + id, {});
+  }
+
   getVehicleBadgeById(id: number): Observable<VehicleBadge> {
     return this.http.get<VehicleBadge>(this.vehicleBadgesUrl + '/' + id);
   }

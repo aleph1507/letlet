@@ -6,6 +6,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { VehicleBadgesService } from '../../services/vehicle-badges.service';
 import { ResourcesService } from '../../services/resources.service';
 import { Vehicle } from '../../models/Vehicle.model';
+import { SnackbarService } from '../../services/snackbar.service';
 
 @Component({
   selector: 'app-vehicle-badges-create',
@@ -22,11 +23,14 @@ export class VehicleBadgesCreateComponent implements OnInit {
   vehicles_auto: resourceVehicle[] = [];
   vehicleBadgeForm: FormGroup;
   do_patch = true;
+  deactivated : boolean = false;
+  deactivateReason : string = '';
 
   constructor(public dialogRef: MatDialogRef<VehicleBadgesCreateComponent>,
               @Inject(MAT_DIALOG_DATA) public data: VehicleBadge,
               private vehicleBadgeService: VehicleBadgesService,
-              private resourcesService: ResourcesService) { }
+              private resourcesService: ResourcesService,
+              private snackbarService: SnackbarService) { }
 
   ngOnInit() {
     // console.log('data: ', this.data);
@@ -86,9 +90,26 @@ export class VehicleBadgesCreateComponent implements OnInit {
     }
   }
 
+  deactivate(id){
+    this.deactivateReason = prompt('Please enter the deactivation reason:');
+    if(this.deactivateReason == null || this.deactivateReason == ''){
+      console.log('deactivate canceled');
+    } else {
+      this.vehicleBadgeService.deactivate(id, this.deactivateReason)
+        .subscribe(data => {
+          if(data) {
+            this.vehicleBadge.deactivated = true;
+            this.snackbarService.successSnackBar("Деактивирањето беше успешно");
+          } else {
+            this.snackbarService.failSnackBar("Се случи грешка при дективирањето");
+          }
+        });
+    }
+  }
+
   parseDate(dE: Date){
     let parsedDE = dE.getFullYear() + '-';
-    dE.getMonth() < 10 ? parsedDE += '0' + +dE.getMonth() : parsedDE += dE.getMonth();
+    dE.getMonth() < 10 ? parsedDE += '0' + (+dE.getMonth()+1).toString() : parsedDE += (+dE.getMonth()+1).toString();
     dE.getDate() < 10 ? parsedDE += '-0' + dE.getDate() : parsedDE += '-' + dE.getDate();
     return parsedDE;
   }

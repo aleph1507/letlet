@@ -204,8 +204,6 @@ export class BadgesCreateComponent implements OnInit {
   }
 
   deactivate(id) {
-    this.badge.deactivated = true;
-    this.deactivated = true;
     this.deactivateReason = prompt('Please enter the deactivation reason:');
     if(this.deactivateReason == null || this.deactivateReason == ''){
       console.log('deactivate canceled');
@@ -213,6 +211,8 @@ export class BadgesCreateComponent implements OnInit {
       this.badgesService.deactivate(this.badge.id, this.deactivateReason)
         .subscribe(data => {
           if(data){
+            this.badge.deactivated = true;
+            this.deactivated = true;
             // this.snackbarService.msg = 'Успешно деактивиран';
             this.snackbarService.successSnackBar("Успешно деактивиран");
           } else {
