@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { startWith, map } from 'rxjs/operators';
 import { DialogPersonComponent } from './dialog-person/dialog-person.component';
 import { DialogVehicleComponent } from './dialog-vehicle/dialog-vehicle.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/merge';
@@ -18,6 +18,7 @@ import { ResourcesService } from '../services/resources.service';
 import { DatePipe } from '@angular/common';
 import { Company } from '../models/Company';
 import { DomSanitizer } from '@angular/platform-browser';
+import { SuccessToastComponent } from '../shared/success-toast/success-toast.component';
 // import { Location } from '@angular/common';
 
 @Component({
@@ -81,6 +82,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
               private datePipe: DatePipe,
               private router: Router,
               private sanitizer: DomSanitizer,
+              public snackBar: MatSnackBar,
             ) { }
 
   ngOnInit() {
@@ -401,6 +403,12 @@ export class RequesterComponent implements OnInit, OnDestroy {
     }
   }
 
+  successSnackBar() {
+    this.snackBar.openFromComponent(SuccessToastComponent, {
+      duration: 1500,
+    });
+  }
+
   onSubmit() {
     if(this.requesterForm.valid) {
       if(this.editMode){
@@ -439,7 +447,10 @@ export class RequesterComponent implements OnInit, OnDestroy {
           this.pdf2src,
           this.personPay,
           this.vehiclePay
-        );
+        ).subscribe((data: Requester) => {
+          this.requesterService.requests.push(data);
+          this.router.navigate(['/approvals', 1], { queryParams: {'sb': 's'} });
+        });
         // this.router.navigate(['/approvals', 1]);
       }
     }

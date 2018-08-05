@@ -64,6 +64,8 @@ import { AsptonormaldatePipe } from './shared/pipes/asptonormaldate.pipe';
 import { BadgesConfirmShredComponent } from './badges/badges-create/badges-confirm-shred/badges-confirm-shred.component';
 import { ShreddingReportComponent } from './reports/shredding-report/shredding-report.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { SuccessToastComponent } from './shared/success-toast/success-toast.component';
+import { SnackbarService } from './services/snackbar.service';
 
 
 @NgModule({
@@ -105,7 +107,8 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
     AsptonormaldatePipe,
     BadgesConfirmShredComponent,
     ShreddingReportComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    SuccessToastComponent
   ],
   imports: [
     BrowserModule,
@@ -135,12 +138,13 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
     EnterVehicleModalComponent,
     ExitVehicleModalComponent,
     VehicleBadgesCreateComponent,
-    BadgesConfirmShredComponent
+    BadgesConfirmShredComponent,
+    SuccessToastComponent
   ],
   providers: [RequesterService, AuthService, ApprovalsService,
               StopListService, ResourcesService, BadgesService,
               DatePipe, GatesService, ReportsService, VehicleBadgesService,
-              VslService,
+              VslService, SnackbarService,
               { provide: DateAdapter, useClass: MyDateAdapter },
               { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
               {

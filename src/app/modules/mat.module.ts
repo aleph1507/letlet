@@ -9,7 +9,7 @@ import { MatButtonModule, MatFormFieldModule,
     MatNativeDateModule, MatDialogModule,
     MatDividerModule, MatTableModule, MatListModule,
     MatRadioModule, MatSortModule, MatPaginatorModule,
-    MatSelectModule, MatCheckboxModule, MatSnackBarModule,
+    MatSelectModule, MatCheckboxModule, MatSnackBarModule
     } from '@angular/material';
 @NgModule({
   exports: [MatButtonModule, MatFormFieldModule,

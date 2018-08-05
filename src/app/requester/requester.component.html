@@ -113,13 +113,13 @@
       <div *ngIf="editMode" class="download-pdfs">
         <!-- <a [href]="sanitizeURL(pdfToBlob(this.request.pdf1))" target="_blank"> -->
         <a [href]="sanitizeURL(pdfToBlob(this.request.pdf1))" target="_blank">
-          <div class="pdf-upload">
+          <div class="pdf-upload" style="margin-bottom: 10%;">
             <button type="button" mat-raised-button>
               Download PDF<mat-icon>keyboard_arrow_down</mat-icon>
             </button>
           </div>
         </a>
-        <div *ngIf="this.request.pdf2 != null" class="pdf-upload" style="margin-top:3%;">
+        <div *ngIf="this.request.pdf2 != null" class="pdf-upload" style="margin-top:10%;">
           <a [href]="sanitizeURL(pdfToBlob(this.request.pdf2))" target="_blank">
             <button type="button" style="margin-bottom: 5em;" mat-raised-button>
               Download Additional PDF<mat-icon>keyboard_arrow_down</mat-icon>

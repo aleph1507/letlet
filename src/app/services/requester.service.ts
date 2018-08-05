@@ -134,12 +134,15 @@ export class RequesterService {
     this.persons = [];
     this.vehicles = [];
 
+
     // this.requests.push(request);
-    this.http.post(this.requestUrl, request, this.httpOptions)
-      .subscribe((data : Requester) => {
-        this.requests.push(data);
-        this.router.navigate(['/approvals', 1]);
-      });
+
+    return this.http.post(this.requestUrl, request, this.httpOptions);
+    // this.http.post(this.requestUrl, request, this.httpOptions)
+    //   .subscribe((data : Requester) => {
+    //     this.requests.push(data);
+    //     this.router.navigate(['/approvals', 1]);
+    //   });
   }
 
   approveRequest(id: number) : Observable<boolean>{

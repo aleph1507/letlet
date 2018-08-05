@@ -12,6 +12,7 @@ import { ApprovalRequest } from '../models/approvalRequest';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { Company } from '../models/Company';
+import { SnackbarService } from '../services/snackbar.service';
 
 @Component({
   selector: 'app-approvals',
@@ -47,7 +48,8 @@ export class ApprovalsComponent implements OnInit {
   constructor(private approvalsService: ApprovalsService,
               private resourcesService: ResourcesService,
               private route: ActivatedRoute,
-              private authService: AuthService) { }
+              private authService: AuthService,
+              private snackbarService: SnackbarService) { }
 
   toDate : Date;
   fromDate : Date;
@@ -79,6 +81,26 @@ export class ApprovalsComponent implements OnInit {
           this.category = 3;
           break;
       }
+      this.route.queryParamMap.subscribe(params => {
+        console.log("params.sb: ", params.get('sb'));
+        if(params.get('sb') == 's'){
+          // setTimeout(() => {
+            this.snackbarService.successSnackBar("Успешно!");
+          // });
+        }
+      });
+      // this.route.queryParams.filter(params => {
+      //   console.log('vo params 1');
+      //   params.sb
+      //   .subscribe(params => {
+      //     console.log('vo params');
+      //     console.log(params)
+      //   });
+      // });
+      // let sb = this.route.snapshot.queryParamMap.get('sb');
+      // if(sb == 's'){
+      //   this.snackbarService.successSnackBar();
+      // }
       this.getAR();
     });
 

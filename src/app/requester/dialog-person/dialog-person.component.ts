@@ -33,50 +33,85 @@ export class DialogPersonComponent implements OnInit {
 
     if(this.data !== null){
       this.person = this.data.person;
-      this.img1src = this.data.person.image1;
-      this.img2src = this.data.person.image2;
-    }
+  //     this.personForm = new FormGroup({
+  //       'name': new FormControl(this.person.nameEn, {
+  //         validators: [Validators.required],
+  //         // updateOn: 'change'
+  //       }),
+  //       'nameCyrilic': new FormControl(this.person.surname, {
+  //         validators: [Validators.required],
+  //         // updateOn: 'change'
+  //       }),
+  //       'surname': new FormControl(this.person.surnameEn, {
+  //         validators: Validators.required,
+  //         // updateOn: 'change'
+  //       }),
+  //       'surnameCyrilic': new FormControl(this.person.surname, {
+  //         validators: Validators.required,
+  //         // updateOn: 'change'
+  //       })
+  //     })
+  //   } else {
+  //   this.personForm = new FormGroup({
+  //     'name': new FormControl(this.person.nameEn, {
+  //       validators: [Validators.required],
+  //       // updateOn: 'change'
+  //     }),
+  //     'nameCyrilic': new FormControl(this.person.surname, {
+  //       validators: [Validators.required],
+  //       // updateOn: 'change'
+  //     }),
+  //     'surname': new FormControl(this.person.surnameEn, {
+  //       validators: Validators.required,
+  //       // updateOn: 'change'
+  //     }),
+  //     'surnameCyrilic': new FormControl(this.person.surname, {
+  //       validators: Validators.required,
+  //       // updateOn: 'change'
+  //     })
+  //   })
+  }
 
     this.personForm = new FormGroup({
       'name': new FormControl(this.person.nameEn, {
         validators: [Validators.required],
-        updateOn: 'change'
+        // updateOn: 'change'
       }),
       'nameCyrilic': new FormControl(this.person.surname, {
         validators: [Validators.required],
-        updateOn: 'change'
+        // updateOn: 'change'
       }),
       'surname': new FormControl(this.person.surnameEn, {
         validators: Validators.required,
-        updateOn: 'change'
+        // updateOn: 'change'
       }),
       'surnameCyrilic': new FormControl(this.person.surname, {
         validators: Validators.required,
-        updateOn: 'change'
+        // updateOn: 'change'
       }),
-      'image1': new FormControl(null, {
-        updateOn: 'change'
-      }),
-      'image2': new FormControl(null, {
-        updateOn: 'change'
-      })
+      // 'image1': new FormControl(null, {
+      //   updateOn: 'change'
+      // }),
+      // 'image2': new FormControl(null, {
+      //   updateOn: 'change'
+      // })
     })
   }
 
-  previewImage(event){
-    let elem = event.target || event.srcElement || event.currentTarget;
-    if(elem.files.length > 0){
-      let reader = new FileReader();
-      reader.onload = (event:any) => {
-        if(elem.attributes.formcontrolname.value == "image1")
-          this.img1src = event.target.result;
-        else
-          this.img2src = event.target.result;
-      }
-      reader.readAsDataURL(event.target.files[0]);
-      this.cd.markForCheck();
-    }
-  }
+  // previewImage(event){
+  //   let elem = event.target || event.srcElement || event.currentTarget;
+  //   if(elem.files.length > 0){
+  //     let reader = new FileReader();
+  //     reader.onload = (event:any) => {
+  //       if(elem.attributes.formcontrolname.value == "image1")
+  //         this.img1src = event.target.result;
+  //       else
+  //         this.img2src = event.target.result;
+  //     }
+  //     reader.readAsDataURL(event.target.files[0]);
+  //     this.cd.markForCheck();
+  //   }
+  // }
 
   latinOnly(event) {
     var regex = /[^a-z\s]/gi;
@@ -94,8 +129,8 @@ export class DialogPersonComponent implements OnInit {
     this.person.name = this.personForm.controls['nameCyrilic'].value;
     this.person.surnameEn = this.personForm.controls['surname'].value;
     this.person.surname = this.personForm.controls['surnameCyrilic'].value;
-    this.person.image1 = this.img1src;
-    this.person.image2 = this.img2src;
+    // this.person.image1 = this.img1src;
+    // this.person.image2 = this.img2src;
     this.data === null ? this.requesterService.addPerson(this.person) : this.requesterService.editPerson(this.data.i, this.person);
     // this.requesterService
     this.thisDialogRef.close();
