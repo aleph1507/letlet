@@ -7,6 +7,7 @@ import { ResourcesService } from '../../services/resources.service';
 import { Employee } from '../../models/Employee';
 import { AirportZone } from '../../models/AirportZone';
 import { lengthValidator } from '../../customValidators/lengthValidator.directive';
+import { SnackbarService } from '../../services/snackbar.service';
 // import { BadgesConfirmShredComponent } from './badges-confirm-shred/badges-confirm-shred.component';
 
 
@@ -28,16 +29,20 @@ export class BadgesCreateComponent implements OnInit {
   employeeAutoCtrl: FormControl = new FormControl();
   employees_auto: Employee[] = [];
   do_patch = true;
+  deactivated: boolean = false;
+  deactivateReason: string = '';
 
   constructor(public dialogRef: MatDialogRef<BadgesCreateComponent>,
               @Inject(MAT_DIALOG_DATA) public data: Badge,
               private badgesService: BadgesService,
               private resourcesService: ResourcesService,
-              public confirmDialog: MatDialog) { }
+              public confirmDialog: MatDialog,
+              public snackbarService: SnackbarService) { }
 
   ngOnInit() {
     if(this.data != null){
       this.badge = this.data;
+      this.deactivated = this.data.deactivated ? this.data.deactivated : false;
       console.log('data: ', this.data);
     }
 
@@ -69,7 +74,7 @@ export class BadgesCreateComponent implements OnInit {
 
   parseDate(dE: Date){
     let parsedDE = dE.getFullYear() + '-';
-    dE.getMonth() < 10 ? parsedDE += '0' + dE.getMonth() : parsedDE += dE.getMonth();
+    dE.getMonth() < 10 ? parsedDE += '0' + (+dE.getMonth()+1).toString() : parsedDE += (+dE.getMonth()+1).toString();
     dE.getDate() < 10 ? parsedDE += '-0' + dE.getDate() : parsedDE += '-' + dE.getDate();
     return parsedDE;
   }
@@ -196,6 +201,42 @@ export class BadgesCreateComponent implements OnInit {
     // let confirmShredDialogRef = this.confirmDialog.open(BadgesConfirmShredComponent, {
     //   data: id
     // });
+  }
+
+  deactivate(id) {
+    this.badge.deactivated = true;
+    this.deactivated = true;
+    this.deactivateReason = prompt('Please enter the deactivation reason:');
+    if(this.deactivateReason == null || this.deactivateReason == ''){
+      console.log('deactivate canceled');
+    } else {
+      this.badgesService.deactivate(this.badge.id, this.deactivateReason)
+        .subscribe(data => {
+          if(data){
+            // this.snackbarService.msg = 'Успешно деактивиран';
+            this.snackbarService.successSnackBar("Успешно деактивиран");
+          } else {
+            this.snackbarService.failSnackBar("Се случи грешка при деактивирањето");
+          }
+        });
+    }
+  }
+
+  activate(id){
+    let confirmActivate = confirm('Are you sure you want to activate the badge?');
+    if(confirmActivate){
+      this.badgesService.activate(id)
+        .subscribe(data => {
+          if(data){
+            this.badge.deactivated = false;
+            this.deactivated = false;
+            this.deactivateReason = '';
+            this.snackbarService.successSnackBar("Успешно активиран");
+          } else {
+            this.snackbarService.failSnackBar("Се случи грешка при активирањето");
+          }
+        });
+    }
   }
 
   onCancel(): void {

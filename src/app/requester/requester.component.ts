@@ -19,6 +19,7 @@ import { DatePipe } from '@angular/common';
 import { Company } from '../models/Company';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SuccessToastComponent } from '../shared/success-toast/success-toast.component';
+import { SnackbarService } from '../services/snackbar.service';
 // import { Location } from '@angular/common';
 
 @Component({
@@ -83,6 +84,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
               private router: Router,
               private sanitizer: DomSanitizer,
               public snackBar: MatSnackBar,
+              public snackbarService: SnackbarService
             ) { }
 
   ngOnInit() {
@@ -314,7 +316,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
     this.requesterService.approveRequest(id).subscribe(
       (data: boolean) => {
         data ? console.log('Request Approved') : console.log('Request not approved');
-        this.router.navigate(['/approvals', 3]);
+        data ? this.router.navigate(['/approvals', 3], { queryParams: {'sb': 's'} }) : this.router.navigate(['/approvals', 3], { queryParams: {'sb': 's'} });
+        // this.router.navigate(['/approvals', 3]);
       }
     );
   }
@@ -323,7 +326,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
     this.requesterService.declineRequest(id).subscribe(
       (data: boolean) => {
         data ? console.log('Request Declined') : console.log('Request not declined');
-        this.router.navigate(['/approvals', 2]);
+        data ? this.router.navigate(['/approvals', 2], { queryParams: {'sb': 's'} }) : this.router.navigate(['/approvals', 2], { queryParams: {'sb': 's'} });
+        // this.router.navigate(['/approvals', 2]);
       }
     );
   }
@@ -397,8 +401,14 @@ export class RequesterComponent implements OnInit, OnDestroy {
         console.log('requester component edit request: ', request);
         // this.request.pdf1 = this.pdf1src;
         // this.request.pdf2 = this.pdf2src;
-        this.requesterService.editRequest(request);
-        this.router.navigate(['/approvals']);
+        let o_request = request;
+        this.requesterService.editRequest(request).subscribe((data: Requester) => {
+          this.requesterService.switchRequest(o_request, data);
+          // this.router.navigate(['/approvals']);
+          this.snackbarService.msg = 'Промените се зачувани';
+          this.snackbarService.successSnackBar();
+        });
+
       }
     }
   }

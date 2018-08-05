@@ -32,11 +32,14 @@ export class VehicleBadgesCreateComponent implements OnInit {
     // console.log('data: ', this.data);
     if(this.data != null){
       this.vehicleBadge = this.data;
+      this.vehicleBadge.returned = this.data.returned;
+      this.returned = this.data.returned;
+      console.log('vb: ', this.vehicleBadge);
       // console.log('this.vehicleBadge: ' + this.vehicleBadge);
       this.vehicleBadgeForm  = this.createVehicleBadgeForm();
       this.vehicleAutoCtrl.setValue(this.vehicleBadge.vehicle);
-      this.vehicleBadge.return = this.vehicleBadge.return;
-      this.vehicleBadgeForm.controls['return'].setValue(this.vehicleBadge.return);
+      this.vehicleBadge.returned = this.vehicleBadge.returned;
+      this.vehicleBadgeForm.controls['return'].setValue(this.vehicleBadge.returned);
       // console.log('this.vehicleBadge: ', this.vehicleBadge);
     } else {
       this.vehicleBadgeForm = this.createVehicleBadgeForm();
@@ -53,16 +56,21 @@ export class VehicleBadgesCreateComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('vo submit');
     if(!this.do_patch)
       return;
+    console.log('posle if do patch');
     let dExpire = new Date(this.vehicleBadgeForm.controls['expireDate'].value);
-    let dShredding = new Date(this.vehicleBadgeForm.controls['shreddingDate'].value);
+    // if(this.vehicleBadgeForm.controls['shreddigDate'])
+    // let dShredding = new Date(this.vehicleBadgeForm.controls['shreddingDate'].value);
     this.vehicleBadge.id = this.data == null ? null : this.data.id;
     this.vehicleBadge.permitNumber = this.vehicleBadgeForm.controls['permitNumber'].value;
-    this.vehicleBadge.return = this.returned;
+    this.vehicleBadge.returned = this.returned;
     this.vehicleBadge.expireDate = this.parseDate(dExpire);
     this.vehicleBadge.vehicle = this.vehicleAutoCtrl.value;
-    this.vehicleBadge.shreddigDate = this.parseDate(dShredding);
+    if(this.data == null)
+      this.vehicleBadge.shreddigDate = null;
+    // this.vehicleBadge.shreddigDate = this.parseDate(dShredding);
     if(this.data == null) {
       this.vehicleBadgeService.addVehicleBadge(this.vehicleBadge)
         .subscribe((data: VehicleBadge) => {
@@ -80,7 +88,7 @@ export class VehicleBadgesCreateComponent implements OnInit {
 
   parseDate(dE: Date){
     let parsedDE = dE.getFullYear() + '-';
-    dE.getMonth() < 10 ? parsedDE += '0' + dE.getMonth() : parsedDE += dE.getMonth();
+    dE.getMonth() < 10 ? parsedDE += '0' + +dE.getMonth() : parsedDE += dE.getMonth();
     dE.getDate() < 10 ? parsedDE += '-0' + dE.getDate() : parsedDE += '-' + dE.getDate();
     return parsedDE;
   }
@@ -103,7 +111,7 @@ export class VehicleBadgesCreateComponent implements OnInit {
       'permitNumber': new FormControl(this.vehicleBadge.permitNumber, {
         validators: [Validators.required]
       }),
-      'return': new FormControl({value: this.vehicleBadge.return, disabled: true}, {
+      'return': new FormControl({value: this.vehicleBadge.returned, disabled: true}, {
 
       }),
       'expireDate': new FormControl(this.vehicleBadge.expireDate, {

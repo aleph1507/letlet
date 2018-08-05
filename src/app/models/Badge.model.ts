@@ -17,4 +17,6 @@ export class Badge {
   dateOfSecurityCheck: string;
   dateOfTraining: string;
   dateOfActivation: string;
+  deactivated: boolean;
+  deactivatedReadon: string;
 }

@@ -80,3 +80,8 @@ div.filter-panel {
   background-color: rgba(0, 222, 0, 0.7);
   color: #fff;
 }
+
+.snackbar-fail {
+  background-color: rgba(222, 0, 0, 0.7);
+  color: #fff;
+}

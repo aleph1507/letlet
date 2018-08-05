@@ -66,6 +66,7 @@ import { ShreddingReportComponent } from './reports/shredding-report/shredding-r
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { SuccessToastComponent } from './shared/success-toast/success-toast.component';
 import { SnackbarService } from './services/snackbar.service';
+import { FailToastComponent } from './shared/fail-toast/fail-toast.component';
 
 
 @NgModule({
@@ -108,7 +109,8 @@ import { SnackbarService } from './services/snackbar.service';
     BadgesConfirmShredComponent,
     ShreddingReportComponent,
     SpinnerComponent,
-    SuccessToastComponent
+    SuccessToastComponent,
+    FailToastComponent
   ],
   imports: [
     BrowserModule,
@@ -139,7 +141,8 @@ import { SnackbarService } from './services/snackbar.service';
     ExitVehicleModalComponent,
     VehicleBadgesCreateComponent,
     BadgesConfirmShredComponent,
-    SuccessToastComponent
+    SuccessToastComponent,
+    FailToastComponent
   ],
   providers: [RequesterService, AuthService, ApprovalsService,
               StopListService, ResourcesService, BadgesService,

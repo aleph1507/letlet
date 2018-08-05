@@ -28,15 +28,15 @@
     <mat-datepicker-toggle matSuffix [for]="shreddingDate"></mat-datepicker-toggle>
     <mat-datepicker #shreddingDate></mat-datepicker>
   </mat-form-field> -->
-  <button *ngIf="vehicleBadge.id" type="button" mat-raised-button
-    color="primary" [disabled]="vehicleBadge.shreddingDate" (click)="shredConfirm(vehicleBadge.id)">Shred Badge</button>
+  <br>
   <mat-checkbox
     class="chkReturned"
     color="primary"
     formControlName="return"
     [(ngModel)]="returned">Returned
   </mat-checkbox>
-
+  <button *ngIf="vehicleBadge.id" type="button" mat-raised-button
+    color="primary" [disabled]="vehicleBadge.shreddingDate" (click)="shredConfirm(vehicleBadge.id)">Shred Badge</button>
   <mat-dialog-actions>
     <button type="submit" [disabled]="!vehicleBadgeForm.valid" mat-raised-button >OK</button>
     <button type="button" mat-raised-button (click)="onCancel()">Cancel</button>

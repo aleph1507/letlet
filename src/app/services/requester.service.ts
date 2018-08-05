@@ -163,21 +163,30 @@ export class RequesterService {
   //   }
   // }
 
+  switchRequest(req0: Requester, req1: Requester) {
+    for(let i = 0; i<this.requests.length; i++){
+      if(this.requests[i].id == req0.id){
+        this.requests.splice(i, 1, req1);
+      }
+    }
+  }
+
   editRequest(req: Requester) {
     console.log('vo requester service editRequest req: ', req);
     // req.pdf1 = null;
     // req.pdf2 = null;
-    this.http.patch(this.requestUrl + '/' + req.id, req)
-      .subscribe((data : Requester) => {
-        for(let i = 0; i<this.requests.length; i++){
-          if(this.requests[i].id == req.id){
-            this.requests.splice(i, 1, data);
-          }
-        }
-        // this.requests.push(data);
-        // this.router.navigate(['/requester', req.id]);
-        // this._location.back()
-      });
+    return this.http.patch(this.requestUrl + '/' + req.id, req);
+    // this.http.patch(this.requestUrl + '/' + req.id, req)
+    //   .subscribe((data : Requester) => {
+    //     for(let i = 0; i<this.requests.length; i++){
+    //       if(this.requests[i].id == req.id){
+    //         this.requests.splice(i, 1, data);
+    //       }
+    //     }
+    //     // this.requests.push(data);
+    //     // this.router.navigate(['/requester', req.id]);
+    //     // this._location.back()
+    //   });
   }
 
   addPerson(person: Person){

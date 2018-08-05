@@ -74,8 +74,14 @@
     [(ngModel)]="returned">Returned
   </mat-checkbox>
 
-  <button mat-raised-button color="primary"
+  <button mat-raised-button type="button" color="primary"
     class="shred" *ngIf="data != null" (click)="shredConfirm(badge.id)">Shred Badge</button>
+
+  <button mat-raised-button type="button" color="accent"
+    class="shred" *ngIf="data != null && deactivated == false" (click)="deactivate(badge.id)">Deactivate</button>
+
+  <button mat-raised-button type="button" color="accent"
+    class="shred" *ngIf="data != null && deactivated == true" (click)="activate(badge.id)">Activate</button>
 
   <mat-dialog-actions>
     <button type="submit" [disabled]="!badgeForm.valid" mat-raised-button >OK</button>

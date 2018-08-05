@@ -42,6 +42,14 @@ export class BadgesService {
     return this.http.get<Badge[]>(this.badgesUrl + '/page/' + page, this.httpOptions);
   }
 
+  deactivate(id, deactivateReason) {
+    return this.http.post<boolean>(this.badgesUrl + '/deactivate/' + id, { queryParams: {'deactivateReason': deactivateReason}});
+  }
+
+  activate(id){
+    return this.http.post<boolean>(this.badgesUrl + '/activate/' + id, {});
+  }
+
   getBadgeById(id: number) : Observable<Badge>{
     // console.log('vo getBadgeById');
     return this.http.get<Badge>(this.badgesUrl + '/' + id, this.httpOptions);
