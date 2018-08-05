@@ -56,10 +56,10 @@ export class VehicleBadgesCreateComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('vo submit');
+    // console.log('vo submit');
     if(!this.do_patch)
       return;
-    console.log('posle if do patch');
+    // console.log('posle if do patch');
     let dExpire = new Date(this.vehicleBadgeForm.controls['expireDate'].value);
     // if(this.vehicleBadgeForm.controls['shreddigDate'])
     // let dShredding = new Date(this.vehicleBadgeForm.controls['shreddingDate'].value);
