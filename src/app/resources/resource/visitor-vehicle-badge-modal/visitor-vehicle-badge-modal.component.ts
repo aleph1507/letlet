@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ResourcesService } from '../../../services/resources.service';
 import { VisitorVehicleBadge } from '../../../models/VisitorVehicleBadge';
+import { SnackbarService } from '../../../services/snackbar.service';
 
 @Component({
   selector: 'app-visitor-vehicle-badge-modal',
@@ -17,7 +18,8 @@ export class VisitorVehicleBadgeModalComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<VisitorVehicleBadgeModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data,
-              private resourcesService: ResourcesService) { }
+              private resourcesService: ResourcesService,
+              private snackbarService: SnackbarService) { }
 
   ngOnInit() {
     if(this.data){
@@ -71,11 +73,13 @@ export class VisitorVehicleBadgeModalComponent implements OnInit {
       this.resourcesService.visitorVehicleBadges.updateVisitorVehicleBadge(this.vvb, this.oldID)
         .subscribe((data : VisitorVehicleBadge) => {
           this.resourcesService.visitorVehicleBadges.switchVisitorVehicleBadge(this.vvb, this.oldID);
+          this.snackbarService.successSnackBar("Visitor Vehicle Badge successfully updated");
         });
     } else {
       this.resourcesService.visitorVehicleBadges.addVisitorVehicleBadge(this.vvb)
         .subscribe((data : VisitorVehicleBadge) => {
           this.resourcesService.visitorVehicleBadges.pushVisitorVehicleBadge(data);
+          this.snackbarService.successSnackBar("Visitor Vehicle Badge successfully added");
         })
     }
 

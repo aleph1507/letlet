@@ -3,7 +3,7 @@ import { ResourcesService } from '../../services/resources.service';
 import { MatTableModule, MatSort, MatTableDataSource, MatDialog, MatPaginator } from '@angular/material';
 import { Company } from '../../models/Company';
 import { CompanyModalComponent } from './company-modal/company-modal.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { resourceVehicle } from '../../models/resourceVehicle';
 import { DialogVehicleComponent } from '../../requester/dialog-vehicle/dialog-vehicle.component';
 import { Employee } from '../../models/Employee';
@@ -23,6 +23,7 @@ import { VisitorVehicleBadgeModalComponent } from './visitor-vehicle-badge-modal
 import { DialogResourceVehicleComponent } from './dialog-vehicle/dialog-vehicle.component';
 import { FormControl } from '@angular/forms';
 import { Vehicle } from '../../models/Vehicle.model';
+import { SnackbarService } from '../../services/snackbar.service';
 // import { EmployeesDataSource } from './data_sources/EmployeesDataSource';
 
 @Component({
@@ -67,7 +68,9 @@ export class ResourceComponent implements OnInit {
   constructor(private resourcesService: ResourcesService,
               public dialog: MatDialog,
               private route: ActivatedRoute,
-              private changeDetectorRefs: ChangeDetectorRef) { }
+              private router: Router,
+              private changeDetectorRefs: ChangeDetectorRef,
+              private snackbarService: SnackbarService) { }
 
   ngOnInit() {
     this.employeeAutoCtrl.valueChanges
@@ -278,9 +281,13 @@ export class ResourceComponent implements OnInit {
     if(cDelete){
       this.resourcesService.visitorVehicleBadges.deleteVisitorVehicleBadge(id)
         .subscribe(data => {
+          this.snackbarService.successSnackBar("Visitor Vehicle Badge successfully deleted");
           this.applyFilter('');
         });
     }
+    this.applyFilter('');
+    this.changeDetectorRefs.detectChanges();
+    this.router.navigate(['/resources/visitors-vehicle-badges']);
   }
 
   editVisitorsBadge(id = null){
@@ -299,6 +306,7 @@ export class ResourceComponent implements OnInit {
     if(cDelete){
       this.resourcesService.visitorBadges.deleteVisitorBadge(id)
         .subscribe(data => {
+          this.snackbarService.successSnackBar("Visitor Badge successfully deleted");
           this.applyFilter('');
         });
     }
@@ -311,6 +319,7 @@ export class ResourceComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(a => {
+      this.changeDetectorRefs.detectChanges();
       this.applyFilter('');
     });
   }
@@ -320,6 +329,7 @@ export class ResourceComponent implements OnInit {
     if(cDelete){
       this.resourcesService.airportZones.deleteAirportZone(id)
         .subscribe(data => {
+          this.snackbarService.successSnackBar("Airport zone successfully deleted");
           this.applyFilter('');
         });
     }
@@ -352,6 +362,7 @@ export class ResourceComponent implements OnInit {
     if(cDelete){
       this.resourcesService.gates.deleteGate(id)
         .subscribe(data => {
+          this.snackbarService.successSnackBar("Gate successfully deleted");
           this.applyFilter('');
         });
     }
@@ -374,6 +385,7 @@ export class ResourceComponent implements OnInit {
       this.resourcesService.reasons.deleteReason(id)
         .subscribe(data => {
           this.applyFilter('');
+          this.snackbarService.successSnackBar("Reason successfully deleted");
         });
     }
   }
@@ -395,6 +407,7 @@ export class ResourceComponent implements OnInit {
     if(cDelete){
       this.resourcesService.employees.deleteEmployee(id)
         .subscribe(data => {
+          this.snackbarService.successSnackBar("Employee successfully deleted");
           this.applyFilter('');
         });
     }
@@ -437,6 +450,7 @@ export class ResourceComponent implements OnInit {
     if(cDelete){
       this.resourcesService.companies.deleteCompany(id)
         .subscribe(data => {
+          this.snackbarService.successSnackBar("Company successfully deleted");
           this.applyFilter('');
         });
     }
@@ -525,6 +539,7 @@ export class ResourceComponent implements OnInit {
     if(cDelete){
       this.resourcesService.vehicles.deleteVehicle(id)
         .subscribe(data => {
+          this.snackbarService.successSnackBar("Vehicle successfully deleted");
           this.applyFilter('');
         });
     }

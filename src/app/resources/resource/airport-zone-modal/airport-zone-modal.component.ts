@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ResourcesService } from '../../../services/resources.service';
 import { AirportZone } from '../../../models/AirportZone';
+import { SnackbarService } from '../../../services/snackbar.service';
 
 @Component({
   selector: 'app-airport-zone-modal',
@@ -17,7 +18,8 @@ export class AirportZoneModalComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<AirportZoneModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data,
-              private resourcesService: ResourcesService) { }
+              private resourcesService: ResourcesService,
+              private snackbarService: SnackbarService) { }
 
   ngOnInit() {
     if(this.data){
@@ -68,12 +70,14 @@ export class AirportZoneModalComponent implements OnInit {
       this.resourcesService.airportZones.editAirportZone(this.zone, this.oldID)
         .subscribe((data : AirportZone) => {
           this.resourcesService.airportZones.switchAirportZone(this.zone, this.oldID);
+          this.snackbarService.successSnackBar("Airport zone successfully updated");
         });
     } else {
       this.resourcesService.airportZones.addAirportZone(this.zone)
         .subscribe((data : AirportZone) => {
           // console.log(data);
           this.resourcesService.airportZones.pushAirportZone(data);
+          this.snackbarService.successSnackBar("Airport zone successfully added");
         });
     }
 

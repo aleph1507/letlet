@@ -99,9 +99,26 @@ export class VehicleBadgesCreateComponent implements OnInit {
         .subscribe(data => {
           if(data) {
             this.vehicleBadge.deactivated = true;
-            this.snackbarService.successSnackBar("Деактивирањето беше успешно");
+            this.snackbarService.successSnackBar("Successfully deactivated");
           } else {
-            this.snackbarService.failSnackBar("Се случи грешка при дективирањето");
+            this.snackbarService.failSnackBar("Deactivation error");
+          }
+        });
+    }
+  }
+
+  activate(id){
+    let confirmActivate = confirm('Are you sure you want to activate the vehicle\'s badge?');
+    if(confirmActivate){
+      this.vehicleBadgeService.activate(id)
+        .subscribe(data => {
+          if(data){
+            this.vehicleBadge.deactivated = false;
+            this.deactivated = false;
+            this.deactivateReason = '';
+            this.snackbarService.successSnackBar("Successfully activated");
+          } else {
+            this.snackbarService.failSnackBar("Activation error");
           }
         });
     }

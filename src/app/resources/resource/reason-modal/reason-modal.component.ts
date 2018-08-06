@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ResourcesService } from '../../../services/resources.service';
 import { Reason } from '../../../models/Reason';
+import { SnackbarService } from '../../../services/snackbar.service';
 
 
 @Component({
@@ -18,7 +19,8 @@ export class ReasonModalComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<ReasonModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data,
-              private resourcesService: ResourcesService) { }
+              private resourcesService: ResourcesService,
+              private snackbarService: SnackbarService) { }
 
   ngOnInit() {
     if(this.data){
@@ -51,13 +53,15 @@ export class ReasonModalComponent implements OnInit {
     if(this.data){
       this.resourcesService.reasons.updateReason(this.reason, this.oldID)
         .subscribe((data : Reason) => {
+          this.snackbarService.successSnackBar("Reason successfully updated");
           this.resourcesService.reasons.switchReason(data, this.oldID)
         });
     } else {
       this.resourcesService.reasons.addReason(this.reason)
         .subscribe((data : Reason) => {
           console.log('data: ' + data.id);
-          this.resourcesService.reasons.pushReason(data)
+          this.resourcesService.reasons.pushReason(data);
+          this.snackbarService.successSnackBar("Reason successfully added");
         });
     }
 

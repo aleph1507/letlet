@@ -8,12 +8,13 @@
   </mat-form-field>
   <mat-autocomplete #entEmp="matAutocomplete" [displayWith]="displayFn">
       <mat-option *ngFor="let e of employees" [value]="e" >
-        {{ e.name }}
+        {{ e.name }} {{e.surname}}
       </mat-option>
   </mat-autocomplete>
 
   <mat-checkbox
     [checked]="paid"
+    [disabled]="paid"
     (change)="onPaid($event)">Paid</mat-checkbox>
 
   <mat-form-field *ngIf="paid">
@@ -22,6 +23,8 @@
       formControlName="billNumber"
       >
   </mat-form-field>
+
+  <span class="lead" style="margin-left: 20%;">Charge {{nDays}} days</span>
 
   <mat-divider class="sm-form-divider-margins"></mat-divider>
   <mat-dialog-actions>

@@ -5,6 +5,7 @@ import { ResourcesService } from '../../../services/resources.service';
 import { Employee } from '../../../models/Employee';
 import { Company } from '../../../models/Company';
 import { HttpClient } from '@angular/common/http';
+import { SnackbarService } from '../../../services/snackbar.service';
 
 @Component({
   selector: 'app-employee-modal',
@@ -23,7 +24,8 @@ export class EmployeeModalComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<EmployeeModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: number,
-              private resourcesService: ResourcesService) { }
+              private resourcesService: ResourcesService,
+              private snackbarService: SnackbarService) { }
 
   ngOnInit() {
     // this.resourcesService.companies.getCompanies()
@@ -103,13 +105,15 @@ export class EmployeeModalComponent implements OnInit {
       // this.resourcesService.employees.addEmployee(this.employee);
       this.resourcesService.employees.updateEmployee(this.employee)
         .subscribe((data : Employee) => {
-          this.resourcesService.employees.switchEmployeeById(data)
+          this.resourcesService.employees.switchEmployeeById(data);
+          this.snackbarService.successSnackBar("Employee successfully updated");
         })
     }
     else
       this.resourcesService.employees.addEmployee(this.employee)
         .subscribe((data : Employee) => {
           this.resourcesService.employees.pushEmployee(data);
+          this.snackbarService.successSnackBar("Employee successfully added");
         });
 
     this.dialogRef.close();

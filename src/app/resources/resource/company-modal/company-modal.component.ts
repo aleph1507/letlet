@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ResourcesService } from '../../../services/resources.service';
 import { Company } from '../../../models/Company';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { SnackbarService } from '../../../services/snackbar.service';
 
 @Component({
   selector: 'app-company-modal',
@@ -22,7 +23,8 @@ export class CompanyModalComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<CompanyModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: {id: number},
-              private resourcesService: ResourcesService) { }
+              private resourcesService: ResourcesService,
+              private snackbarService: SnackbarService) { }
 
     ngOnInit() {
       if(this.data.id != null){
@@ -62,11 +64,14 @@ export class CompanyModalComponent implements OnInit {
         this.resourcesService.companies.editCompany(this.company)
           .subscribe((data : Company) => {
             this.resourcesService.companies.switchCompany(data)
+            this.snackbarService.successSnackBar("Company successfully updated");
           });
       } else {
         this.resourcesService.companies.addCompany(this.company)
           .subscribe((data : Company) => {
-            this.resourcesService.companies.pushCompany(data)
+            this.resourcesService.companies.pushCompany(data);
+            this.snackbarService.successSnackBar("Company successfully added");
+
           });
       }
       this.dialogRef.close();

@@ -13,6 +13,7 @@ import { ExitPersonModalComponent } from './exit-person-modal/exit-person-modal.
 import { EnterVehicleModalComponent } from './enter-vehicle-modal/enter-vehicle-modal.component';
 import { ExitVehicleModalComponent } from './exit-vehicle-modal/exit-vehicle-modal.component';
 import { VisitPerson } from '../../models/VisitPerson.model';
+import { SnackbarService } from '../../services/snackbar.service';
 
 @Component({
   selector: 'app-gate',
@@ -43,7 +44,8 @@ export class GateComponent implements OnInit {
               private authService: AuthService,
               private resourceService: ResourcesService,
               private route: ActivatedRoute,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog,
+              public snackbarService: SnackbarService) { }
 
   ngOnInit() {
     this.getExpectedPersons();
@@ -111,6 +113,9 @@ export class GateComponent implements OnInit {
         this.enteredPersons = a.personsInside;
         this.dataSourceEnteredPersons = new MatTableDataSource<EnteredPerson>(this.enteredPersons);
         this.spliceExpectedPersons(a.personId);
+        this.snackbarService.successSnackBar("Person's entry successfully recorded");
+      } else {
+        this.snackbarService.failSnackBar("Error in person's entry");
       }
       this.applyFilterExpectedPersons('');
       this.applyFilterEnteredPersons('');
@@ -128,6 +133,9 @@ export class GateComponent implements OnInit {
         this.expectedPersons = a.expectedPersons;
         this.dataSourceExpectedPersons = new MatTableDataSource<ExpectedPerson>(this.expectedPersons);
         this.spliceExitedPersons(a.id);
+        this.snackbarService.successSnackBar("Person's exit successfully recorded");
+      } else {
+        this.snackbarService.failSnackBar("Error in person's exit");
       }
       this.applyFilterEnteredPersons('');
       this.applyFilterExpectedPersons('');
@@ -145,6 +153,9 @@ export class GateComponent implements OnInit {
         this.enteredVehicles = a.vehiclesInside;
         this.dataSourceEnteredVehicles = new MatTableDataSource<EnteredVehicle>(this.enteredVehicles);
         this.spliceExpectedVehicles(a.vehicleId);
+        this.snackbarService.successSnackBar("Vehicle's entry successfully recorded");
+      } else {
+        this.snackbarService.failSnackBar("Error in vehicle's entry");
       }
       this.applyFilterExpectedVehicles('');
       this.applyFilterEnteredVehicles('');
@@ -162,6 +173,9 @@ export class GateComponent implements OnInit {
         this.expectedVehicles = a.expectedVehicles;
         this.dataSourceExpectedVehicles = new MatTableDataSource<ExpectedVehicle>(this.expectedVehicles);
         this.spliceExitedVehicles(a.id);
+        this.snackbarService.successSnackBar("Vehicle's exit successfully recorded");
+      } else {
+        this.snackbarService.failSnackBar("Error in vehicle's exit");
       }
       this.applyFilterEnteredVehicles('');
       this.applyFilterExpectedVehicles('');

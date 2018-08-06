@@ -408,7 +408,7 @@
         <button (click)="nextPageVehicles()" [disabled]="nextDisabledVehicles" class="next-btn" mat-raised-button>Next Page &raquo;</button>
       </div>
 
-      <div *ngIf="category=='employees'" class="employees-pagination">
+      <!-- <div *ngIf="category=='employees'" class="employees-pagination">
         <form class="employee-form">
           <mat-form-field class="employee-field">
             <input type="text" placeholder="Employee" [formControl]="employeeAutoCtrl" matInput [matAutocomplete]="emp_auto">
@@ -421,9 +421,9 @@
         </form>
         <button (click)="prevPageEmp()" [disabled]="currentPage <=1" class="prev-btn" mat-raised-button>&laquo; Previous Page</button>
         <button (click)="nextPageEmp()" [disabled]="nextDisabled" class="next-btn" mat-raised-button>Next Page &raquo;</button>
-      </div>
+      </div> -->
 
-      <div *ngIf="category=='companies'" class="companies-pagination">
+      <!-- <div *ngIf="category=='companies'" class="companies-pagination">
         <form class="company-form">
           <mat-form-field class="company-field">
             <input type="text" placeholder="Company" [formControl]="companiesAutoCtrl" matInput [matAutocomplete]="comp_auto">
@@ -436,7 +436,7 @@
         </form>
         <button (click)="prevPageComp()" [disabled]="currentPageComp <= 1" class="prev-btn" mat-raised-button>< Previous Page</button>
         <button (click)="nextPageComp()" [disabled]="nextDisabledComp" class="next-btn" mat-raised-button>Next Page ></button>
-      </div>
+      </div> -->
       <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
     </div>
   <!-- </div> -->

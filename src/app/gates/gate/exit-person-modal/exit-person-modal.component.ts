@@ -20,6 +20,8 @@ export class ExitPersonModalComponent implements OnInit {
   paid : boolean = false;
   billNumber : string = null;
   ExitPersonForm : FormGroup = null;
+  dateDifference;
+  nDays: number;
 
   constructor(private dialogRef: MatDialogRef<ExitPersonModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { ep: EnteredPerson, gid: number },
@@ -32,20 +34,34 @@ export class ExitPersonModalComponent implements OnInit {
         this.employees = emps;
       });
 
+    this.paid = this.data.ep.pay;
+
     this.ExitPersonForm = new FormGroup({
       'exitEmployee': new FormControl('',{
         validators: [Validators.required],
         updateOn: 'change'
       }),
-      'paid': new FormControl(''),
+      'paid': new FormControl(this.paid),
       'billNumber': new FormControl('', {
         updateOn: 'change'
       })
     });
+
+    if(this.paid){
+      this.ExitPersonForm.controls['paid'].disable();
+      this.ExitPersonForm.get('billNumber').setValidators([Validators.required]);
+    }
+
+    // console.log('data.ep: ', this.data.ep);
+    // console.log('Date: ', new Date());
+    // let d = new Date().toString();
+    // console.log('Date - data.ep.entryTime: ', Date.parse(d) - Date.parse(this.data.ep.entryTime.toString()));
+    this.nDays = Math.ceil((Date.parse(new Date().toString()) - Date.parse(this.data.ep.entryTime.toString())) / 1000 / 3600 / 24);
+    // console.log('nDays: ', nDays);
   }
 
   displayFn(e?: Employee) {
-    return e ? e.name : undefined;
+    return e ? e.name + ' ' + e.surname : undefined;
   }
 
   onPaid(event){

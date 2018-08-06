@@ -5,3 +5,5 @@ employees/companies dva filtri
 gates paid u entered, parametar, vehicle, persons
 entry time n*24 casa
 entered vehicle paid i account number
+
+ako e Pay true togash nemoze da prati request se dodeka ne vnese Bill Number i Ako vremeto od momentalno i Entered /24 chasa ako e poveke od eden da pishuva denovi za naplata n

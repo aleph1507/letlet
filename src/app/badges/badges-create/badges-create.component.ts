@@ -214,9 +214,9 @@ export class BadgesCreateComponent implements OnInit {
             this.badge.deactivated = true;
             this.deactivated = true;
             // this.snackbarService.msg = 'Успешно деактивиран';
-            this.snackbarService.successSnackBar("Успешно деактивиран");
+            this.snackbarService.successSnackBar("Successfully deactivated");
           } else {
-            this.snackbarService.failSnackBar("Се случи грешка при деактивирањето");
+            this.snackbarService.failSnackBar("Deactivation error");
           }
         });
     }
@@ -231,9 +231,9 @@ export class BadgesCreateComponent implements OnInit {
             this.badge.deactivated = false;
             this.deactivated = false;
             this.deactivateReason = '';
-            this.snackbarService.successSnackBar("Успешно активиран");
+            this.snackbarService.successSnackBar("Successfully activated");
           } else {
-            this.snackbarService.failSnackBar("Се случи грешка при активирањето");
+            this.snackbarService.failSnackBar("Activation error");
           }
         });
     }

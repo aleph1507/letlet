@@ -18,6 +18,9 @@ export class ExitVehicleModalComponent implements OnInit {
   employees : Employee[] = [];
   gid : number = null;
   ExitVehicleForm : FormGroup = null;
+  paid : boolean = false;
+  billNumber = null;
+  nDays:number;
 
   constructor(private dialogRef: MatDialogRef<ExitVehicleModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { ev: EnteredVehicle, gid: number },
@@ -35,16 +38,35 @@ export class ExitVehicleModalComponent implements OnInit {
         validators: [Validators.required],
         updateOn: 'change'
       }),
+      'paid': new FormControl(this.paid),
+      'billNumber': new FormControl('', {
+        updateOn: 'change'
+      })
     });
+
+    if(this.paid){
+      this.ExitVehicleForm.controls['paid'].disable();
+      this.ExitVehicleForm.get('billNumber').setValidators([Validators.required]);
+    }
+
+    this.nDays = Math.ceil((Date.parse(new Date().toString()) - Date.parse(this.data.ev.entryTime.toString())) / 1000 / 3600 / 24);
+    // console.log('nDays: ', this.nDays);
   }
 
   displayFn(e?: Employee) {
-    return e ? e.name : undefined;
+    return e ? e.name + ' ' + e.surname: undefined;
+  }
+
+  onPaid(event){
+    this.paid = !this.paid;
+    console.log('this.paid: ' + this.paid);
   }
 
   onSubmit() {
     console.log('vo submit')
     var ee = this.ExitVehicleForm.controls['exitEmployee'].value;
+    this.paid = this.ExitVehicleForm.controls['paid'].value;
+    this.billNumber = this.ExitVehicleForm.controls['billNumber'].value;
     console.log('this.data: ' + this.data);
     console.log('this.data.gid: ' + this.data.gid);
     console.log('this.data.ev: ' + this.data.ev);
@@ -53,6 +75,8 @@ export class ExitVehicleModalComponent implements OnInit {
       'exitGate': {
         'id': this.data.gid
       },
+      'paid': this.paid,
+      'billNumber': this.billNumber,
       'exitEmployee': {
         'id': ee.id
       },

@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ResourcesService } from '../../../services/resources.service';
 import { Gate } from '../../../models/Gate';
+import { SnackbarService } from '../../../services/snackbar.service';
 
 @Component({
   selector: 'app-gate-modal',
@@ -17,7 +18,8 @@ export class GateModalComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<GateModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data,
-              private resourcesService: ResourcesService) { }
+              private resourcesService: ResourcesService,
+              private snackbarService: SnackbarService) { }
 
   ngOnInit() {
     if(this.data){
@@ -59,11 +61,13 @@ export class GateModalComponent implements OnInit {
     if(this.data){
       this.resourcesService.gates.updateGate(this.gate, this.oldID)
         .subscribe((data : Gate) => {
+          this.snackbarService.successSnackBar("Gate successfully updated");
           this.resourcesService.gates.switchGate(this.gate, this.oldID);
         });
     } else {
       this.resourcesService.gates.addGate(this.gate)
         .subscribe((data : Gate) => {
+          this.snackbarService.successSnackBar("Gate successfully added");
           this.resourcesService.gates.pushGate(data);
         });
     }

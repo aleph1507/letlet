@@ -4,5 +4,7 @@ export interface EnteredPerson {
   company: string;
   enteredGate: string;
   approvedBy: string;
+  entryTime: Date;
   escortEmployee: string;
+  pay: boolean;
 }

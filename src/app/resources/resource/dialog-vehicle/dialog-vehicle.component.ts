@@ -7,6 +7,7 @@ import { ResourcesService } from '../../../services/resources.service';
 import { Company } from '../../../models/Company';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
+import { SnackbarService } from '../../../services/snackbar.service';
 
 @Component({
   selector: 'app-dialog-vehicle',
@@ -18,7 +19,8 @@ export class DialogResourceVehicleComponent implements OnInit {
   constructor(public thisDialogRef: MatDialogRef<DialogResourceVehicleComponent>,
               @Inject(MAT_DIALOG_DATA) public data: number,
               private requesterService: RequesterService,
-              private resourcesService: ResourcesService
+              private resourcesService: ResourcesService,
+              private snackbarService: SnackbarService
               ) { }
 
   resource: false;
@@ -112,10 +114,12 @@ export class DialogResourceVehicleComponent implements OnInit {
         this.resourcesService.vehicles.addVehicle(this.vehicle)
           .subscribe((data) => {
             console.log('data: ' + data);
-            this.resourcesService.vehicles.pushVehicle(data)
+            this.resourcesService.vehicles.pushVehicle(data);
+            this.snackbarService.successSnackBar("Vehicle successfully added");
           }) : this.resourcesService.vehicles.editVehicle(this.vehicle)
                 .subscribe((data : resourceVehicle) => {
-                  this.resourcesService.vehicles.switchVehicleById(this.vehicle)
+                  this.resourcesService.vehicles.switchVehicleById(this.vehicle);
+                  this.snackbarService.successSnackBar("Vehicle successfully updated");
                 });
       // console.log('post add (vModal) resources.vehicles: ', this.resourcesService.vehicles.getAllVehicles());
 
