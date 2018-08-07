@@ -1,11 +1,12 @@
 <form name="badgeForm" id="badgeForm" [formGroup]="badgeForm" (ngSubmit)="onSubmit()">
   <mat-form-field>
-    <input matInput type="text" pattern="[0-9]*" (keypress)="isNumber(event)" placeholder="cardSeriesNumber"
+    <input matInput type="text" pattern="[0-9]*"
+    (keypress)="isNumber($event)" placeholder="cardSeriesNumber"
     formControlName="cardSeriesNumber"
     autocomplete="off">
   </mat-form-field>
   <mat-form-field>
-    <input matInput type="text" (keypress)="isNumber(event)" placeholder="cardNumber"
+    <input matInput type="text" (keypress)="isNumber($event)" placeholder="cardNumber"
     formControlName="cardNumber"
     autocomplete="off">
   </mat-form-field>
@@ -52,7 +53,7 @@
     <mat-datepicker #dateOfActivation></mat-datepicker>
   </mat-form-field>
   <mat-form-field>
-    <input matInput type="text" pattern="[0-9]*" (keypress)="isNumber(event)" placeholder="Badge Number"
+    <input matInput type="text" pattern="[0-9]*" (keypress)="isNumber($event)" placeholder="Badge Number"
     formControlName="badgeNumber"
     class="input_lg"
     autocomplete="off">

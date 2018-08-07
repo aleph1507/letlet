@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private authService: AuthService) { }
   // private LOGO = require('../img/asec-logo.png');
-  private LOGO = 'assets/img/asec-logo.png';
+  public LOGO = 'assets/img/asec-logo.png';
 
   logIn() {
     // console.log("login.logIn");

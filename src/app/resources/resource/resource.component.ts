@@ -445,6 +445,23 @@ export class ResourceComponent implements OnInit {
     }
   }
 
+  prevPageVehicles() {
+    this.showSpinner = true;
+    // console.log('vo next page');
+    this.resourcesService.vehicles.getVehiclesPage(this.currentPage).subscribe((data : Vehicle[]) => {
+      // console.log('vo next subscription data: ' + data);
+      if(data){
+        this.currentPageVehicles--;
+        this.vehicles = data;
+        // console.log('this.badges : ' + this.badges);
+        this.dataSource = new MatTableDataSource<Vehicle>(this.vehicles);
+      } else {
+        this.nextDisabledVehicles = false;
+      }
+      this.showSpinner = false;
+    });
+  }
+
   deleteCompany(id = null) {
     let cDelete = confirm("Are you sure");
     if(cDelete){
@@ -473,7 +490,7 @@ export class ResourceComponent implements OnInit {
     });
   }
 
-  nextPageVehicles(page: number) {
+  nextPageVehicles() {
     this.showSpinner = true;
     // console.log('vo next page');
     this.resourcesService.vehicles.getVehiclesPage(this.currentPage+1).subscribe((data : Vehicle[]) => {

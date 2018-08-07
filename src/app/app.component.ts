@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
 
   // loggedIn = this.loginService.isLoggedIn();
 
-  constructor(private authService: AuthService,
+  constructor(public authService: AuthService,
               private router: Router){}
 
   ngOnInit(): void {

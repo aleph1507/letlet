@@ -1,6 +1,6 @@
 <form name="vehicleBadgeForm" id="vehicleBadgeForm" [formGroup]="vehicleBadgeForm" (ngSubmit)="onSubmit()">
   <mat-form-field>
-    <input matInput type="text" pattern="[0-9]*" (keypress)="isNumber(event)" placeholder="permitNumber"
+    <input matInput type="text" pattern="[0-9]*" (keypress)="isNumber($event)" placeholder="permitNumber"
     formControlName="permitNumber"
     autocomplete="off">
   </mat-form-field>
