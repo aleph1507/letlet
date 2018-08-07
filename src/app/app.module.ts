@@ -53,6 +53,7 @@ import { PersonReportComponent } from './reports/person-report/person-report.com
 import { VehicleReportComponent } from './reports/vehicle-report/vehicle-report.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/token.interceptor';
+import { FailInterceptor } from './interceptors/fail.interceptor';
 import { VehicleBadgesComponent } from './vehicle-badges/vehicle-badges.component';
 import { VehicleBadgesService } from './services/vehicle-badges.service';
 import { VehicleBadgesCreateComponent } from './vehicle-badges/vehicle-badges-create/vehicle-badges-create.component';
@@ -153,6 +154,11 @@ import { FailToastComponent } from './shared/fail-toast/fail-toast.component';
               {
                 provide: HTTP_INTERCEPTORS,
                 useClass: TokenInterceptor,
+                multi: true
+              },
+              {
+                provide: HTTP_INTERCEPTORS,
+                useClass: FailInterceptor,
                 multi: true
               }
             ],
