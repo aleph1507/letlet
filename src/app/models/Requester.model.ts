@@ -1,5 +1,6 @@
 import { Person } from './Person.model';
 import { Vehicle } from './Vehicle.model';
+import { Company } from './Company';
 // import { Company } from './Company';
 
 export class Requester {
@@ -8,6 +9,7 @@ export class Requester {
   description: string;
   descriptionEn: string;
   companyId: number;
+  company: Company;
   fromDate: Date;
   toDate: Date;
   numberOfEntries: number;

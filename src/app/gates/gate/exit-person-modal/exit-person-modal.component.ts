@@ -18,6 +18,7 @@ export class ExitPersonModalComponent implements OnInit {
   employees : Employee[] = [];
   gid : number = null;
   paid : boolean = false;
+  o_paid : boolean = false;
   billNumber : string = null;
   ExitPersonForm : FormGroup = null;
   dateDifference;
@@ -35,6 +36,7 @@ export class ExitPersonModalComponent implements OnInit {
       });
 
     this.paid = this.data.ep.pay;
+    this.o_paid = this.paid;
 
     this.ExitPersonForm = new FormGroup({
       'exitEmployee': new FormControl('',{
@@ -48,7 +50,8 @@ export class ExitPersonModalComponent implements OnInit {
     });
 
     if(this.paid){
-      this.ExitPersonForm.controls['paid'].disable();
+      if(this.o_paid)
+        this.ExitPersonForm.controls['paid'].disable();
       this.ExitPersonForm.get('billNumber').setValidators([Validators.required]);
     }
 

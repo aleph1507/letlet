@@ -98,7 +98,8 @@ export class ResourceComponent implements OnInit {
           // this.resourcesService.visitorBadges.getAllVisitorBadges();
           this.resourcesService.visitorBadges.getAllVisitorBadges()
             .subscribe((data : VisitorBadge[]) => {
-              this.resourcesService.visitorBadges.visitorBadges = data;
+              data == null ? this.resourcesService.visitorBadges.visitorBadges = [] :
+                 this.resourcesService.visitorBadges.visitorBadges = data;
               this.dataSource = new
                 MatTableDataSource<VisitorBadge>(this.resourcesService.visitorBadges.visitorBadges);
                 this.showSpinner = false;
@@ -113,7 +114,8 @@ export class ResourceComponent implements OnInit {
           this.categoryTitle = 'Visitors Vehicle Badges';
           this.resourcesService.visitorVehicleBadges.getAllVisitorVehicleBadges()
             .subscribe((data) => {
-              this.resourcesService.visitorVehicleBadges.visitorVehicleBadges = data;
+              data == null ? this.resourcesService.visitorVehicleBadges.visitorVehicleBadges = [] :
+                this.resourcesService.visitorVehicleBadges.visitorVehicleBadges = data;
               this.dataSource = new
                 MatTableDataSource<VisitorVehicleBadge>(this.resourcesService.visitorVehicleBadges.visitorVehicleBadges);
                 this.showSpinner = false;
@@ -125,7 +127,8 @@ export class ResourceComponent implements OnInit {
           this.categoryTitle = this.category;
           this.resourcesService.companies.getCompanies()
             .subscribe((data) => {
-              this.resourcesService.companies.companies = data;
+              data == null ? this.resourcesService.companies.companies = [] :
+                this.resourcesService.companies.companies = data;
               this.dataSource = new
                 MatTableDataSource<Company>(this.resourcesService.companies.companies);
                 this.showSpinner = false;
@@ -137,7 +140,8 @@ export class ResourceComponent implements OnInit {
           this.categoryTitle = this.category;
           this.resourcesService.vehicles.getVehiclesPage(this.currentPageVehicles)
             .subscribe((data: Vehicle[]) => {
-              this.vehicles = data;
+              data == null ? this.vehicles = [] :
+                this.vehicles = data;
               this.dataSource = new MatTableDataSource<Vehicle>(this.vehicles);
               // this.lengthVehicles = vehicles.length;
               this.showSpinner = false;
@@ -157,7 +161,8 @@ export class ResourceComponent implements OnInit {
 
           this.resourcesService.employees.getEmployeesPage(this.currentPage)
             .subscribe((data: Employee[]) => {
-              this.employees = data;
+              data == null ? this.employees = [] :
+                this.employees = data;
               this.dataSource = new MatTableDataSource<Employee>(this.employees);
               this.length = this.employees.length;
               this.dataSource.paginator = this.paginator;
@@ -179,24 +184,25 @@ export class ResourceComponent implements OnInit {
           //   });
           this.displayedColumns = ['name', 'surname', 'company', 'edit', 'delete'];
           break;
-        case 'reasons':
-          this.category = 'reasons';
-          this.categoryTitle = this.category;
-          this.resourcesService.reasons.getAllReasons()
-            .subscribe((data) => {
-              this.resourcesService.reasons.reasons = data;
-              this.dataSource = new
-                MatTableDataSource<Reason>(this.resourcesService.reasons.reasons);
-                this.showSpinner = false;
-              })
-            this.displayedColumns = ['name', 'edit', 'delete'];
-          break;
+        // case 'reasons':
+        //   this.category = 'reasons';
+        //   this.categoryTitle = this.category;
+        //   this.resourcesService.reasons.getAllReasons()
+        //     .subscribe((data) => {
+        //       this.resourcesService.reasons.reasons = data;
+        //       this.dataSource = new
+        //         MatTableDataSource<Reason>(this.resourcesService.reasons.reasons);
+        //         this.showSpinner = false;
+        //       })
+        //     this.displayedColumns = ['name', 'edit', 'delete'];
+        //   break;
         case 'gates':
           this.category = 'gates';
           this.categoryTitle = this.category;
           this.resourcesService.gates.getAllGates()
             .subscribe((data) => {
-              this.resourcesService.gates.gates = data;
+              data == null ? this.resourcesService.gates.gates = [] :
+                this.resourcesService.gates.gates = data;
               this.dataSource = new
               MatTableDataSource<Gate>(this.resourcesService.gates.gates);
                 this.showSpinner = false;
@@ -214,8 +220,8 @@ export class ResourceComponent implements OnInit {
           this.categoryTitle = this.category;
           this.resourcesService.airportZones.getAllAirportZones()
             .subscribe((data) => {
-              console.log('zones: ' + data);
-              this.resourcesService.airportZones.airportZones = data;
+              data == null ? this.resourcesService.airportZones.airportZones = [] :
+                this.resourcesService.airportZones.airportZones = data;
               this.dataSource = new
               MatTableDataSource<AirportZone>(this.resourcesService.airportZones.airportZones);
                 this.showSpinner = false;
@@ -246,9 +252,9 @@ export class ResourceComponent implements OnInit {
       case 'employees':
         this.editEmployee();
         break;
-      case 'reasons':
-        this.editReason();
-        break;
+      // case 'reasons':
+      //   this.editReason();
+      //   break;
       case 'gates':
         this.editGate();
         break;

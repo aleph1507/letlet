@@ -54,6 +54,7 @@ export class BadgesComponent implements OnInit {
     this.showSpinner = true;
     this.badgesService.getBadges(this.currentPage).subscribe((data : Badge[]) => {
       this.badges = data;
+      data == null ? this.badges = [] : this.badges = data;
       this.dataSource = new MatTableDataSource<Badge>(this.badges);
       this.length = this.badges.length;
       this.dataSource.paginator = this.paginator;

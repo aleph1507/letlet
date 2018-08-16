@@ -20,6 +20,7 @@ import { Company } from '../models/Company';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SuccessToastComponent } from '../shared/success-toast/success-toast.component';
 import { SnackbarService } from '../services/snackbar.service';
+import { AsptonormaldatePipe } from '../shared/pipes/asptonormaldate.pipe';
 // import { Location } from '@angular/common';
 
 @Component({
@@ -551,13 +552,13 @@ export class RequesterComponent implements OnInit, OnDestroy {
     let vehiclesTable = '<table style="text-align:center; width: 80%; margin: auto; border: 1px solid black; border-collapse: collapse; margin-top: 5%; margin-bottom: 5%;">';
     let personsTable = '<table style="text-align:center; width: 80%; margin: auto; border: 1px solid black; border-collapse: collapse; margin-top: 5%; margin-bottom: 5%;">';
     for(let i = 0; i<this.request.requestVehicleJson.length; i++){
-      vehiclesTable += '<tr><td style="border: 1px solid black; width: 50%;">' + this.request.requestVehicleJson[i].model + '</td>';
+      vehiclesTable += '<tr><td style="width:5%;">' + (i+1).toString() + '</td><td style="border: 1px solid black; width: 50%;">' + this.request.requestVehicleJson[i].model + '</td>';
       vehiclesTable += '<td style="border: 1px solid black; width: 50%;">' + this.request.requestVehicleJson[i].plate + '</td></tr>';
     }
     // console.log("pNumber : " + pNumber);
     let personsTD1 = '', personsTD2 = '';
     for(let i = 0; i<this.request.requestPersonJson.length; i++){
-      personsTable += '<tr><td style="border: 1px solid black; width: 50%;">' + this.request.requestPersonJson[i].name + ' ' +
+      personsTable += '<tr><td style="width:5%;">' + (i+1).toString() + '</td><td style="border: 1px solid black; width: 50%;">' + this.request.requestPersonJson[i].name + ' ' +
                       this.request.requestPersonJson[i].surname + '</td>';
       personsTable += '<td style="border: 1px solid black; width: 50%;">' + this.request.requestPersonJson[i].nameEn + ' ' +
                         this.request.requestPersonJson[i].surnameEn + '</td></tr>';
@@ -632,7 +633,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
               </td>
               <td>
                 <div style="margin-left:30%; display:block; border:2px solid black; height:2em; width:50%;"></div>
-                <span style="margin-left:30%; display:block; width: 100%;">Датум/Date: 30 / 04 / 2018</span>
+                <span style="margin-left:30%; display:block; width: 100%;">Датум/Date: ${new Date().getDate()}/${new Date().getMonth()}/${new Date().getFullYear()}</span>
               </td>
             </tr>
             <tr style="padding-bottom: 30px; display: block;">
@@ -650,22 +651,30 @@ export class RequesterComponent implements OnInit, OnDestroy {
             <tr style="padding-bottom: 15px; display: block;">
               <td colspan="2">
                 <p>
-                  ${this.request.description}
+                  Ве молиме да одобрите дозвола за влез на долунаведените лица од  ${this.request.company.name}
+                  кои ќе извршат ${this.request.description} од
+                  ${new AsptonormaldatePipe().transform(this.request.fromDate.toString()).replace(/-/g, '.')}-
+                  ${new AsptonormaldatePipe().transform(this.request.toDate.toString()).replace(/-/g, '.')}
                 </p>
               </td>
             </tr>
             <tr style="padding-bottom: 15px; display: block;">
               <td>
                 <p>
-                  ${this.request.descriptionEn}
+                  We kindly ask you to approve entrance permission for the following persons working at
+                  ${this.request.company.name} in order to perform ${this.request.descriptionEn}
+                  starting from
+                  ${new AsptonormaldatePipe().transform(this.request.fromDate.toString()).replace(/-/g, '.')}
+                  to
+                  ${new AsptonormaldatePipe().transform(this.request.toDate.toString()).replace(/-/g, '.')}
                 </p>
               </td>
             </tr>
           </table>
-          <h3>Персонал</h3>
+          <h3>Персонал / Persons</h3>
           ${personsTable}
 
-          <h3>${vozilaHeader}</h3>
+          <h3>${vozilaHeader} / Vehicles</h3>
           ${vehiclesTable}
           <div id="footer">
           <table>
@@ -691,8 +700,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
             </tr>
             <tr style="display:block;">
               <td colspan="2">
-                <span style="display:block; font-size: 0.7em; color:#222;"><span style="text-decoration:underline;">Прилог:</span> 6 Копии од лична карта</span>
-                <span style="display:block; font-size: 0.7em; color:#222;"><span style="text-decoration:underline;">Attachment:</span> 6 ID  Copy</span>
+                <span style="display:block; font-size: 0.7em; color:#222;"><span style="text-decoration:underline;">Подготвил:</span></span>
                 <span style="display:block; font-size: 0.7em; color:#222;">/м-р В.М/ M. Sc. V.M</span>
               </td>
             </tr>
@@ -934,7 +942,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
             <div class="fgroup fg1">
               <span>Назив на компанијата \ Company name</span>
               <div class="company-naziv">
-                ${this.reqCompany}
+                ${this.request.company.name}
               </div>
             </div>
             <div class="fgroup fg2">
@@ -948,7 +956,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
           <div class="req-desc">
             <p class="req-desc">Краток опис на причината за барањето / Short description for the reason of the request</p>
             <div class="req-desc-actual">
-              ${this.request.description}
+              ${this.request.description}<br><br>
+              ${this.request.descriptionEn}
             </div>
           </div>
 

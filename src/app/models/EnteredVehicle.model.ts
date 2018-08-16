@@ -6,5 +6,6 @@ export interface EnteredVehicle {
   enteredGate: string,
   escortEmployee: string,
   approvedBy: string,
-  entryTime: Date
+  entryTime: Date,
+  pay: boolean
 }

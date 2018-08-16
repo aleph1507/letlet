@@ -11,7 +11,7 @@ export class VehicleBadgesService {
 
   vehicleBadges: VehicleBadge[] = [];
 
-  public vehicleBadgesUrl = this.authService.baseUrl + 'api/vehiclebadges';
+  public vehicleBadgesUrl = this.authService.baseUrl + '/api/vehiclebadges';
 
   constructor(private authService: AuthService,
               private resourcesService: ResourcesService,

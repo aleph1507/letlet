@@ -40,6 +40,7 @@ export class VehicleBadgesComponent implements OnInit, AfterViewInit {
     this.showSpinner = true;
     this.vehicleBadgesService.getVehicleBadges(this.currentPage).subscribe((data : VehicleBadge[]) => {
       this.vehicleBadges = data;
+      data == null ? this.vehicleBadges = [] : this.vehicleBadges = data;
       this.dataSource = new MatTableDataSource<VehicleBadge>(this.vehicleBadges);
       this.length = this.vehicleBadges.length;
       this.dataSource.paginator = this.paginator;

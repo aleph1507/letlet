@@ -19,6 +19,7 @@ export class ExitVehicleModalComponent implements OnInit {
   gid : number = null;
   ExitVehicleForm : FormGroup = null;
   paid : boolean = false;
+  o_paid : boolean = false;
   billNumber = null;
   nDays:number;
 
@@ -33,6 +34,9 @@ export class ExitVehicleModalComponent implements OnInit {
         this.employees = emps;
       });
 
+      this.paid = this.data.ev.pay;
+      this.o_paid = this.paid;
+
     this.ExitVehicleForm = new FormGroup({
       'exitEmployee': new FormControl('',{
         validators: [Validators.required],
@@ -45,7 +49,8 @@ export class ExitVehicleModalComponent implements OnInit {
     });
 
     if(this.paid){
-      this.ExitVehicleForm.controls['paid'].disable();
+      if(this.o_paid)
+        this.ExitVehicleForm.controls['paid'].disable();
       this.ExitVehicleForm.get('billNumber').setValidators([Validators.required]);
     }
 
