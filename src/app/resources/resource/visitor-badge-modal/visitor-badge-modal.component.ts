@@ -29,10 +29,10 @@ export class VisitorBadgeModalComponent implements OnInit {
       //   validators: [Validators.required],
       //   updateOn: 'change'
       // }),
-      'code': new FormControl(this.vb ? this.vb.code : '', {
-        validators: [Validators.required],
-        updateOn: 'change'
-      }),
+      // 'code': new FormControl(this.vb ? this.vb.code : '', {
+      //   validators: [Validators.required],
+      //   updateOn: 'change'
+      // }),
       'name': new FormControl(this.vb ? this.vb.name : '', {
         validators: [Validators.required],
         updateOn: 'change'
@@ -56,10 +56,10 @@ export class VisitorBadgeModalComponent implements OnInit {
             //   validators: [Validators.required],
             //   updateOn: 'change'
             // }),
-            'code': new FormControl(this.vb ? this.vb.code : '', {
-              validators: [Validators.required],
-              updateOn: 'change'
-            }),
+            // 'code': new FormControl(this.vb ? this.vb.code : '', {
+            //   validators: [Validators.required],
+            //   updateOn: 'change'
+            // }),
             'name': new FormControl(this.vb ? this.vb.name : '', {
               validators: [Validators.required],
               updateOn: 'change'
@@ -81,7 +81,7 @@ export class VisitorBadgeModalComponent implements OnInit {
     console.log('oldID: ' + this.oldID);
     this.vb = {
       'id': this.oldID,
-      'code': this.vbForm.controls['code'].value,
+      // 'code': this.vbForm.controls['code'].value,
       'name': this.vbForm.controls['name'].value,
       'barcode': this.vbForm.controls['barcode'].value
     }

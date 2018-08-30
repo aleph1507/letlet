@@ -11,7 +11,7 @@ export class AuthService implements OnInit{
   public token: string = null;
   // url = 'http://192.168.100.4:84/token';
   // public baseUrl = 'http://viksadesign.ddns.net:84/';
-  public baseUrl = 'http://192.168.100.80:84';
+  public baseUrl = 'http://192.168.100.12:84';
   url = this.baseUrl + '/token';
   loggedIn : boolean;
   private loggedStatus : BehaviorSubject<boolean>;

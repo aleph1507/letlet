@@ -37,6 +37,10 @@ export class CompanyModalComponent implements OnInit {
               'name': new FormControl(this.company.name != null ? this.company.name : '', {
                 validators: [Validators.required],
                 updateOn: 'change'
+              }),
+              'nameEn': new FormControl(this.company.nameEn != null ? this.company.nameEn : '', {
+                validators: [Validators.required],
+                updateOn: 'change'
               })
             });
           });
@@ -52,6 +56,10 @@ export class CompanyModalComponent implements OnInit {
         'name': new FormControl(this.company ? this.company.name : '', {
           validators: [Validators.required],
           updateOn: 'change'
+        }),
+        'nameEn': new FormControl(this.company ? this.company.nameEn : '', {
+          validators: [Validators.required],
+          updateOn: 'change'
         })
       });
 
@@ -60,6 +68,7 @@ export class CompanyModalComponent implements OnInit {
     onSubmit() {
       console.log('edit_mode: ', this.edit_mode);
       this.company.name = this.companyForm.controls['name'].value;
+      this.company.nameEn = this.companyForm.controls['nameEn'].value;
       if(this.edit_mode){
         this.resourcesService.companies.editCompany(this.company)
           .subscribe((data : Company) => {

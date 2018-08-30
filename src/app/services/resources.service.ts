@@ -67,7 +67,7 @@ class VisitorVehicleBadges {
 
   getVisitorVehicleBadgeById(id: number){
     console.log('vo getVisitorVehicleBadgeById');
-    return this.http.get<VisitorBadge>(this.visitorVehicleBadgesUrl + '/' + id, { headers: this.headers }).
+    return this.http.get<VisitorVehicleBadge>(this.visitorVehicleBadgesUrl + '/' + id, { headers: this.headers }).
       pipe(
         retry(3),
       );

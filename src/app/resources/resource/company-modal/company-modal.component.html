@@ -6,6 +6,13 @@
       autocomplete="off" required>
   </mat-form-field>
 
+  <mat-form-field>
+    <input matInput name="companyNameEn"
+      id="companyNameEn" placeholder="English Name"
+      formControlName="nameEn"
+      autocomplete="off" required>
+  </mat-form-field>
+
   <mat-divider class="sm-form-divider-margins"></mat-divider>
   <mat-dialog-actions>
     <button type="submit" [disabled]="!companyForm.valid" mat-raised-button>OK</button>

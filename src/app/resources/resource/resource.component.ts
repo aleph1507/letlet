@@ -106,7 +106,7 @@ export class ResourceComponent implements OnInit {
             });
 
           //192.168.100.4:84/api/visitorbadges
-          this.displayedColumns = ['code', 'name', 'barcode', 'edit', 'delete'];
+          this.displayedColumns = ['name', 'barcode', 'edit', 'delete'];
           break;
         case 'visitors-vehicle-badges':
           // console.log('VO VISITOR VEHICLE BADGES');
@@ -133,7 +133,7 @@ export class ResourceComponent implements OnInit {
                 MatTableDataSource<Company>(this.resourcesService.companies.companies);
                 this.showSpinner = false;
             })
-          this.displayedColumns = ['name', 'id', 'delete'];
+          this.displayedColumns = ['name', 'nameEn', 'id', 'delete'];
           break;
         case 'vehicles':
           this.category = 'vehicles';

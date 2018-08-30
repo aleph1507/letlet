@@ -69,10 +69,10 @@
             <mat-cell *matCellDef="let vb"> {{vb.id}} </mat-cell>
           </ng-container> -->
 
-          <ng-container matColumnDef="code">
+          <!-- <ng-container matColumnDef="code">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Code </mat-header-cell>
             <mat-cell *matCellDef="let vb"> {{vb.code}} </mat-cell>
-          </ng-container>
+          </ng-container> -->
 
           <ng-container matColumnDef="name">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
@@ -353,6 +353,11 @@
           <ng-container matColumnDef="name">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
             <mat-cell *matCellDef="let comp"> {{comp.name}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="nameEn">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> English Name </mat-header-cell>
+            <mat-cell *matCellDef="let comp"> {{comp.nameEn}} </mat-cell>
           </ng-container>
 
 
