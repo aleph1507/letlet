@@ -278,6 +278,11 @@
             <mat-cell *matCellDef="let emp"> {{emp.company.name}} </mat-cell>
           </ng-container>
 
+          <ng-container matColumnDef="occupation">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Occupation </mat-header-cell>
+            <mat-cell *matCellDef="let emp"> {{emp.occupation}} </mat-cell>
+          </ng-container>
+
           <ng-container matColumnDef="edit">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
             <mat-cell *matCellDef="let emp">

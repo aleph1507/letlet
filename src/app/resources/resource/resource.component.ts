@@ -169,7 +169,7 @@ export class ResourceComponent implements OnInit {
               this.pageSize = 10;
               console.log('data: ', data);
               this.showSpinner = false;
-            })
+            });
           // this.dataSource = new MatTableDataSource<Employee>(this.resourcesService.employees.getAllEmployees());
 
           // let dataSource: EmployeesDataSource = new EmployeesDataSource(this.resourcesService.employees);
@@ -182,7 +182,7 @@ export class ResourceComponent implements OnInit {
           //       MatTableDataSource<Employee>(this.resourcesService.employees.employees);
           //       this.dataSource.paginator = this.paginator;
           //   });
-          this.displayedColumns = ['name', 'surname', 'company', 'edit', 'delete'];
+          this.displayedColumns = ['name', 'surname', 'company', 'occupation', 'edit', 'delete'];
           break;
         // case 'reasons':
         //   this.category = 'reasons';

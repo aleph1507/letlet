@@ -73,7 +73,7 @@ export class EnterPersonModalComponent implements OnInit {
   }
 
   displayFnVB(vb?: VisitorBadge) {
-    return vb ? vb.barcode + ' ' + vb.code : undefined;
+    return vb ? vb.barcode : undefined;
   }
 
   displayEmpFn(e?: Employee) {

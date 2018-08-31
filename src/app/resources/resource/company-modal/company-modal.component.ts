@@ -14,7 +14,8 @@ export class CompanyModalComponent implements OnInit {
 
   company: Company = {
     id: null,
-    name: null
+    name: null,
+    nameEn: null
   };
 
   edit_mode = false;
