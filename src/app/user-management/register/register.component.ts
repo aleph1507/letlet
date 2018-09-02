@@ -29,12 +29,16 @@ export class RegisterComponent implements OnInit {
       this.id = this.data.id;
     }
 
-    this.userService.getRoles()
-      .subscribe(roles =>{
-        console.log('roles: ', roles);
-      })
-      
     this.registerForm = this.createRegisterForm();
+
+    if(this.data!=null) {
+      this.registerForm.controls['password'].clearAsyncValidators();
+      this.registerForm.controls['confirmPassword'].clearAsyncValidators();
+      this.registerForm.controls['password'].clearValidators();
+      this.registerForm.controls['confirmPassword'].clearValidators();
+      this.registerForm.controls['password'].updateValueAndValidity();
+      this.registerForm.controls['confirmPassword'].updateValueAndValidity();
+    }
   }
 
   createRegisterForm(){
@@ -48,12 +52,12 @@ export class RegisterComponent implements OnInit {
       'userName': new FormControl(this.user ? this.user.userName : '',{
         validators: [Validators.required]
       }),
-      'email': new FormControl(this.user ? this.user.email : '',{
-        validators: [Validators.required, Validators.email]
-      }),
-      'level': new FormControl(this.user ? this.user.level : '',{
-        validators: [Validators.required]
-      }),
+      // 'email': new FormControl(this.user ? this.user.email : '',{
+      //   validators: [Validators.required, Validators.email]
+      // }),
+      // 'level': new FormControl(this.user ? this.user.level : '',{
+      //   validators: [Validators.required]
+      // }),
       'position': new FormControl(this.user ? this.user.position : '',{
         validators: [Validators.required]
       }),
@@ -67,7 +71,11 @@ export class RegisterComponent implements OnInit {
   }
 
   confirmPass(){
-    return this.pass.nativeElement.value == this.cpass.nativeElement.value && this.pass.nativeElement.value.length >= 6;
+    console.log(`this.data != null && (this.pass.nativeElement.value == this.cpass.nativeElement.value && this.pass.nativeElement.value.length >= 6):
+      ${this.data == null ? (this.pass.nativeElement.value == this.cpass.nativeElement.value && this.pass.nativeElement.value.length >= 6) : true}`);
+    // return false;
+    return this.data == null ? this.pass.nativeElement.value == this.cpass.nativeElement.value && this.pass.nativeElement.value.length >= 6 : true;
+    // return this.data == null && (this.pass.nativeElement.value == this.cpass.nativeElement.value && this.pass.nativeElement.value.length >= 6);
   }
 
   onSubmit() {
@@ -76,11 +84,13 @@ export class RegisterComponent implements OnInit {
     this.user.firstName = this.registerForm.controls['firstName'].value;
     this.user.lastName = this.registerForm.controls['lastName'].value;
     this.user.userName = this.registerForm.controls['userName'].value;
-    this.user.email = this.registerForm.controls['email'].value;
-    this.user.level = this.registerForm.controls['level'].value;
+    // this.user.email = this.registerForm.controls['email'].value;
+    // this.user.level = this.registerForm.controls['level'].value;
     this.user.position = this.registerForm.controls['position'].value;
-    this.user.password = this.registerForm.controls['password'].value;
-    this.user.confirmPassword = this.registerForm.controls['confirmPassword'].value;
+    if(this.data == null){
+      this.user.password = this.registerForm.controls['password'].value;
+      this.user.confirmPassword = this.registerForm.controls['confirmPassword'].value;
+    }
 
     if(this.data == null){
       this.userService.addUser(this.user)

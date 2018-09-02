@@ -1,4 +1,7 @@
 <form name="registerForm" id="registerForm" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div>
+    valid: {{registerForm.valid}}<br>
+  </div>
   <mat-form-field>
     <input matInput type="text"
     placeholder="First Name"
@@ -17,31 +20,31 @@
     formControlName="userName"
     autocomplete="off">
   </mat-form-field>
-  <mat-form-field>
+  <!-- <mat-form-field>
     <input matInput type="email"
     placeholder="Email"
     formControlName="email"
     autocomplete="off">
-  </mat-form-field>
-  <mat-form-field>
+  </mat-form-field> -->
+  <!-- <mat-form-field>
     <input matInput type="number"
     placeholder="Level"
     formControlName="level"
     autocomplete="off">
-  </mat-form-field>
+  </mat-form-field> -->
   <mat-form-field>
     <input matInput type="text"
     placeholder="Position"
     formControlName="position"
     autocomplete="off">
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field *ngIf="data == null">
     <input matInput #pass type="password"
     placeholder="Password"
     formControlName="password"
     autocomplete="off">
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field *ngIf="data == null">
     <input matInput #cpass type="password"
     placeholder="Confirm Password"
     formControlName="confirmPassword"

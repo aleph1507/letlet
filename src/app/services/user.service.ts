@@ -29,7 +29,7 @@ export class UserService {
   }
 
   editUser(user: User) {
-    return this.http.put(this.singleUser + '/' + user.id, user);
+    return this.http.post(this.singleUser + '/' + user.id, user);
   }
 
   getRoles() {
