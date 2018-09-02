@@ -97,12 +97,12 @@
           (click)="sidenav.close()">
           <mat-icon>dashboard</mat-icon><span>Resources</span>
         </button>
-        <button mat-raised-button
+        <button *ngIf="role === 'Admin'" mat-raised-button
           color="primary"
           class="sidenav-btn"
-          [routerLink]="['/requester']"
+          [routerLink]="['/user-management']"
           (click)="sidenav.close()">
-          <mat-icon>settings</mat-icon><span>Settings</span>
+          <mat-icon>settings</mat-icon><span>User Management</span>
         </button>
       </mat-sidenav>
       <mat-sidenav-content>

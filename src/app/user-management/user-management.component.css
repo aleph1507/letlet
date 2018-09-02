@@ -10,6 +10,19 @@
   width:90vw;
 }
 
+div#header {
+  display: flex;
+  justify-content: space-between;
+  align-items: space-between;
+  /* margin:1%; */
+  background: #fff;
+  width: 96%;
+  padding-left: 2em;
+  padding-right: 2em;
+  padding-top:0.5em;
+  margin-bottom: 2em;
+}
+
 .filter-panel {
   display:flex;
   flex-direction:row;

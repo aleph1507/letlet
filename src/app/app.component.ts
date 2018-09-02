@@ -12,6 +12,7 @@ export class AppComponent implements OnInit {
 
   title = 'ASEC';
   loggedIn : boolean = false;
+  role : string = this.authService.role();
 
   // loggedIn = this.loginService.isLoggedIn();
 
@@ -28,6 +29,8 @@ export class AppComponent implements OnInit {
       .subscribe((loggedIn : boolean) => {
         this.loggedIn = loggedIn;
       });
+
+      console.log('role: ', this.role);
     // this.loggedIn = this.authService.loggedIn;
   }
 

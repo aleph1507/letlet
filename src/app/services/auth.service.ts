@@ -105,8 +105,12 @@ export class AuthService implements OnInit{
         this.token = data.access_token;
         localStorage.setItem('token', this.token);
         this.loggedIn = true;
-        this.router.navigate(['/dashboard']);
         this.loggedStatus.next(this.loggedIn);
+        this.getRole()
+          .subscribe(role =>{
+            localStorage.setItem('role', role);
+          });
+        this.router.navigate(['/dashboard']);
       }
       else {
         this.loggedIn = false;
@@ -115,6 +119,15 @@ export class AuthService implements OnInit{
       }
       // console.log('TTTOKKKEEN::: ' + this.token);
     })
+  }
+
+  getRole() : Observable<string>{
+    localStorage.setItem('role', null);
+    return this.http.get<string>(this.baseUrl + '/api/account/user/roles');
+  }
+
+  role(){
+    return localStorage.getItem('role');
   }
 
   logOut(){

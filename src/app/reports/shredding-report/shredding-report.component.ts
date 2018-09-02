@@ -25,10 +25,12 @@ export class ShreddingReportComponent implements OnInit {
 
   personsReport : ShreddingReport[];
 
-  shreddingsReportUrl = this.authService.baseUrl + '/api/badges/shreddingreport';
+  shreddingsReportUrl = this.authService.baseUrl + '/api/badges/shreddingreport/';
   gotRowData: boolean = false;
 
   showSpinner : boolean  = true;
+  showReports = [];
+  category = 0;
 
   xlsx_report;
 
@@ -59,9 +61,15 @@ export class ShreddingReportComponent implements OnInit {
   ngOnInit() {
     // this.gridOptions.rowData = this.reportsService.getReports();
     // console.log('this.rowData: ' + this.gridOptions.rowData);
+    this.showReports = this.reportsService.showReports;
     this.toDate = new Date();
     this.fromDate = new Date();
     this.fromDate.setDate(this.fromDate.getDate() - 30);
+    this.getReps();
+  }
+
+  radioChange($event){
+    this.category = this.showReports.indexOf($event.value) + 1;
     this.getReps();
   }
 
@@ -181,7 +189,7 @@ export class ShreddingReportComponent implements OnInit {
     }
 
 
-    var rUrl = this.shreddingsReportUrl + '/' + this.fromString + '/' + this.toString;
+    var rUrl = this.shreddingsReportUrl + this.category + '/' + this.fromString + '/' + this.toString;
     console.log(`aUrl: ` + rUrl);
 
     if(this.fromString != null && this.toString != null){

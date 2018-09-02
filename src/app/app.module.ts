@@ -68,6 +68,9 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { SuccessToastComponent } from './shared/success-toast/success-toast.component';
 import { SnackbarService } from './services/snackbar.service';
 import { FailToastComponent } from './shared/fail-toast/fail-toast.component';
+import { UserManagementComponent } from './user-management/user-management.component';
+import { UserService } from './services/user.service';
+import { RegisterComponent } from './user-management/register/register.component';
 
 
 @NgModule({
@@ -111,7 +114,9 @@ import { FailToastComponent } from './shared/fail-toast/fail-toast.component';
     ShreddingReportComponent,
     SpinnerComponent,
     SuccessToastComponent,
-    FailToastComponent
+    FailToastComponent,
+    UserManagementComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -143,12 +148,13 @@ import { FailToastComponent } from './shared/fail-toast/fail-toast.component';
     VehicleBadgesCreateComponent,
     BadgesConfirmShredComponent,
     SuccessToastComponent,
-    FailToastComponent
+    FailToastComponent,
+    RegisterComponent
   ],
   providers: [RequesterService, AuthService, ApprovalsService,
               StopListService, ResourcesService, BadgesService,
               DatePipe, GatesService, ReportsService, VehicleBadgesService,
-              VslService, SnackbarService,
+              VslService, SnackbarService, UserService,
               { provide: DateAdapter, useClass: MyDateAdapter },
               { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
               {

@@ -14,7 +14,7 @@ import { BadgesCreateComponent } from './badges-create/badges-create.component';
 export class BadgesComponent implements OnInit {
 
   // displayedColumns = ['cardSeriesNumber', 'cardNumber', 'expireDate', 'active', 'returned', 'employeeId', 'employeeName', 'zones', 'dateOfSecurityCheck', 'dateOfTraining', 'dateOfActivation', 'edit'];
-  displayedColumns = ['badgeNumber', 'expireDate', 'active', 'employeeId', 'employeeName', 'zones', 'dateOfSecurityCheck', 'dateOfTraining', 'dateOfActivation', 'edit'];
+  displayedColumns = ['badgeNumber', 'expireDate', 'active', 'returned', 'employeeId', 'employeeName', 'zones', 'dateOfSecurityCheck', 'dateOfTraining', 'dateOfActivation', 'edit'];
   // dataSource: MatTableDataSource<Badge>(this.badgesService.getBadges());
   dataSource: MatTableDataSource<Badge>;
   length: number;

@@ -1,0 +1,39 @@
+<app-spinner *ngIf="showSpinner" class="shreddingSpinner"></app-spinner>
+
+
+<div [style.visibility]="showSpinner ? 'hidden' : 'visible'" class="container">
+  <div id="header">
+    <h2>Users</h2>
+    <button mat-fab color="primary" (click)="openDialog()">+</button>
+  </div>
+
+  <div class="users-table mat-elevation-z8">
+    <mat-table #usersTable [dataSource]="dataSource">
+      <ng-container matColumnDef="fullName">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let u"> {{u.fullName}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="userName">
+        <mat-header-cell *matHeaderCellDef> User Name </mat-header-cell>
+        <mat-cell *matCellDef="let u"> {{u.userName}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="position">
+        <mat-header-cell *matHeaderCellDef> Position </mat-header-cell>
+        <mat-cell *matCellDef="let u"> {{u.position}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="edit">
+        <mat-header-cell *matHeaderCellDef> Edit </mat-header-cell>
+        <mat-cell *matCellDef="let u">
+          <mat-icon matListIcon
+          (click)="openDialog(u.id)"
+          class="icon-control"
+          >border_color</mat-icon>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>
+</div>

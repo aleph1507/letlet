@@ -645,7 +645,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
             <tr style="padding-bottom: 30px; display: block;">
               <td colspan="2">
                 <span style="display:block;">Почитуван Г-дин. Илиевски, </span>
-                <span style="display:block;">Dear Mr. Илиевски</span>
+                <span style="display:block;">Dear Mr. Ilievski</span>
               </td>
             </tr>
             <tr style="padding-bottom: 15px; display: block;">

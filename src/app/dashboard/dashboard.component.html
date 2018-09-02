@@ -116,12 +116,12 @@
         </div>
       </a>
     </mat-card>
-    <mat-card class="dash-card">
-      <a [routerLink]="['/requester']">
+    <mat-card class="dash-card" *ngIf="authService.role() == 'Admin'">
+      <a [routerLink]="['/user-management']">
         <div class="card-content">
           <div class="card-text">
-            <mat-card-title>Settings</mat-card-title>
-            <mat-card-subtitle>system configuration</mat-card-subtitle>
+            <mat-card-title>User Management</mat-card-title>
+            <mat-card-subtitle>manage users</mat-card-subtitle>
           </div>
           <div class="card-icon">
             <mat-icon>settings</mat-icon>

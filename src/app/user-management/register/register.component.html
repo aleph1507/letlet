@@ -1,0 +1,56 @@
+<form name="registerForm" id="registerForm" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <input matInput type="text"
+    placeholder="First Name"
+    formControlName="firstName"
+    autocomplete="off">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text"
+    placeholder="Last Name"
+    formControlName="lastName"
+    autocomplete="off">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text"
+    placeholder="User Name"
+    formControlName="userName"
+    autocomplete="off">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="email"
+    placeholder="Email"
+    formControlName="email"
+    autocomplete="off">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="number"
+    placeholder="Level"
+    formControlName="level"
+    autocomplete="off">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text"
+    placeholder="Position"
+    formControlName="position"
+    autocomplete="off">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput #pass type="password"
+    placeholder="Password"
+    formControlName="password"
+    autocomplete="off">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput #cpass type="password"
+    placeholder="Confirm Password"
+    formControlName="confirmPassword"
+    autocomplete="off">
+  </mat-form-field>
+
+
+  <mat-dialog-actions>
+    <button type="submit" [disabled]="!registerForm.valid || !confirmPass()" mat-raised-button >OK</button>
+    <button type="button" mat-raised-button (click)="onCancel()">Cancel</button>
+  </mat-dialog-actions>
+</form>

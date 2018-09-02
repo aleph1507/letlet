@@ -13,6 +13,8 @@ export class ReportsService {
   personsReportUrl = this.authService.baseUrl + '/api/visits/personreport';
   vehicleReportUrl = this.authService.baseUrl + '/api/visits/vehiclereport';
 
+  showReports = ['All', 'Vehicles', 'Persons'];
+
   httpOptions = {
     headers: this.authService.getHeaders()
   }

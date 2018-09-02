@@ -1,23 +1,36 @@
 <app-spinner *ngIf="showSpinner" class="shreddingSpinner"></app-spinner>
 
+
 <div [style.visibility]="showSpinner ? 'hidden' : 'visible'" class="container">
   <div class="filter-panel">
-    <mat-form-field>
-    <input matInput [matDatepicker]="fromPicker"
-      (dateInput)="getReps('from', $event)"
-      [(ngModel)]="fromDate" placeholder="Date From">
-    <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
-    <mat-datepicker #fromPicker disabled="false"></mat-datepicker>
-    </mat-form-field>
-    <mat-form-field>
-    <input matInput [matDatepicker]="toPicker"
-      (dateInput)="getReps('to', $event)"
-      [(ngModel)]="toDate" placeholder="Date To">
-    <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
-    <mat-datepicker #toPicker disabled="false"></mat-datepicker>
-    </mat-form-field>
-    <button mat-raised-button color="primary" (click)="export_to_xlsx()">Export to Excel</button>
-    <button mat-raised-button color="primary" (click)="export_to_pdf()">Export to PDF</button>
+    <div>
+      <mat-form-field>
+      <input matInput [matDatepicker]="fromPicker"
+        (dateInput)="getReps('from', $event)"
+        [(ngModel)]="fromDate" placeholder="Date From">
+      <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+      <mat-datepicker #fromPicker disabled="false"></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+      <input matInput [matDatepicker]="toPicker"
+        (dateInput)="getReps('to', $event)"
+        [(ngModel)]="toDate" placeholder="Date To">
+      <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+      <mat-datepicker #toPicker disabled="false"></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="radio-div">
+      <mat-radio-group [(ngModel)]="selectedReports">
+        <mat-radio-button *ngFor="let sr of showReports"
+          color="primary" [value]="sr" (change)="radioChange($event)">
+          {{sr}}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div>
+      <button mat-raised-button color="primary" (click)="export_to_xlsx()">Export to Excel</button>
+      <button mat-raised-button color="primary" (click)="export_to_pdf()">Export to PDF</button>
+    </div>
   </div>
   <!-- *ngIf="gotRowData" -->
   <!--  -->
