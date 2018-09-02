@@ -393,7 +393,9 @@ export class RequesterComponent implements OnInit, OnDestroy {
         // this.request.companyId = this.requesterForm.controls['requesterCompany'].value;
         request.companyId = this.companiesAutoCtrl.value.id;
         request.fromDate = this.requesterForm.controls['requesterFromDate'].value;
+        request.fromDate.setDate(request.fromDate.getDate() + 1);
         request.toDate = this.requesterForm.controls['requesterToDate'].value;
+        request.toDate.setDate(request.toDate.getDate() + 1);
         request.numberOfEntries = this.requesterForm.controls['requesterNumOfEntries'].value;
         request.personPay = this.personPay;
         request.vehiclePay = this.vehiclePay;
@@ -433,7 +435,9 @@ export class RequesterComponent implements OnInit, OnDestroy {
         // this.request.companyId = this.requesterForm.controls['requesterCompany'].value;
         this.request.companyId = this.companiesAutoCtrl.value.id;
         this.request.fromDate = this.requesterForm.controls['requesterFromDate'].value;
+        this.request.fromDate.setDate(this.request.fromDate.getDate() + 1);
         this.request.toDate = this.requesterForm.controls['requesterToDate'].value;
+        this.request.toDate.setDate(this.request.toDate.getDate() + 1);
         this.request.numberOfEntries = this.requesterForm.controls['requesterNumOfEntries'].value;
         this.request.pdf1 = this.pdf1src;
         this.request.pdf2 = this.pdf2src;
@@ -444,6 +448,10 @@ export class RequesterComponent implements OnInit, OnDestroy {
       } else {
         // this.reqCompany = this.requesterForm.controls['requesterCompany'].value;
         this.reqCompany = this.companiesAutoCtrl.value;
+        let fromDate : Date = this.requesterForm.controls['requesterFromDate'].value;
+        fromDate.setDate(fromDate.getDate() + 1);
+        let toDate : Date = this.requesterForm.controls['requesterToDate'].value;
+        toDate.setDate(toDate.getDate() + 1);
         this.requesterService.pushRequest(
           null,
           this.requesterForm.controls['requesterName'].value,
@@ -451,8 +459,10 @@ export class RequesterComponent implements OnInit, OnDestroy {
           this.requesterForm.controls['requesterDescriptionEn'].value,
           // this.requesterForm.controls['requesterCompany'].value,
           this.companiesAutoCtrl.value,
-          this.requesterForm.controls['requesterFromDate'].value,
-          this.requesterForm.controls['requesterToDate'].value,
+          // this.requesterForm.controls['requesterFromDate'].value,
+          // this.requesterForm.controls['requesterToDate'].value,
+          fromDate,
+          toDate,
           this.requesterForm.controls['requesterNumOfEntries'].value,
           this.pdf1src,
           this.pdf2src,
