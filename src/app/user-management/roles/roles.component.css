@@ -1,0 +1,10 @@
+div {
+  display: block;
+}
+
+.checkbox-div {
+  display:flex;
+  width:90%;
+  justify-content: space-between;
+  margin: 10% 0;
+}

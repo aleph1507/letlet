@@ -4,6 +4,7 @@ import { UserService } from '../services/user.service';
 import { User } from '../models/User';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { RegisterComponent } from './register/register.component';
+import { RolesComponent } from './roles/roles.component';
 
 @Component({
   selector: 'app-user-management',
@@ -14,7 +15,7 @@ export class UserManagementComponent implements OnInit {
 
   showSpinner : boolean  = true;
   users : User[] = [];
-  displayedColumns = ['fullName', 'userName', 'position', 'edit'];
+  displayedColumns = ['fullName', 'userName', 'position', 'edit', 'changeRole'];
   dataSource : MatTableDataSource<User>
 
   constructor(private authService: AuthService,
@@ -69,6 +70,17 @@ export class UserManagementComponent implements OnInit {
         // data: { name: this.name, animal: this.animal }
       }).afterClosed().subscribe(result => {this.refresh()});
     }
+  }
+
+  openRoles(id = null){
+    let dialogRef;
+    this.userService.getUserById(id)
+      .subscribe((user: User) =>{
+        dialogRef = this.dialog.open(RolesComponent, {
+          width: '70%',
+          data: user
+        }).afterClosed().subscribe(result => this.refresh());
+      });
   }
 
 }

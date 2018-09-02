@@ -71,6 +71,7 @@ import { FailToastComponent } from './shared/fail-toast/fail-toast.component';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { UserService } from './services/user.service';
 import { RegisterComponent } from './user-management/register/register.component';
+import { RolesComponent } from './user-management/roles/roles.component';
 
 
 @NgModule({
@@ -116,7 +117,8 @@ import { RegisterComponent } from './user-management/register/register.component
     SuccessToastComponent,
     FailToastComponent,
     UserManagementComponent,
-    RegisterComponent
+    RegisterComponent,
+    RolesComponent
   ],
   imports: [
     BrowserModule,
@@ -149,7 +151,8 @@ import { RegisterComponent } from './user-management/register/register.component
     BadgesConfirmShredComponent,
     SuccessToastComponent,
     FailToastComponent,
-    RegisterComponent
+    RegisterComponent,
+    RolesComponent
   ],
   providers: [RequesterService, AuthService, ApprovalsService,
               StopListService, ResourcesService, BadgesService,

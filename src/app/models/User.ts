@@ -1,12 +1,12 @@
 export class User {
-  claims;
+  claims = [];
   email : string;
   emailConfirmed : boolean;
   fullName : string;
   id : string;
   level : number;
   position : string;
-  roles;
+  roles = [];
   url : string;
   userName: string;
   firstName : string;

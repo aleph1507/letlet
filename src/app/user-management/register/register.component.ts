@@ -29,6 +29,11 @@ export class RegisterComponent implements OnInit {
       this.id = this.data.id;
     }
 
+    this.userService.getRoles()
+      .subscribe(roles =>{
+        console.log('roles: ', roles);
+      })
+      
     this.registerForm = this.createRegisterForm();
   }
 

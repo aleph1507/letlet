@@ -32,6 +32,16 @@
         </mat-cell>
       </ng-container>
 
+      <ng-container matColumnDef="changeRole">
+        <mat-header-cell *matHeaderCellDef> Role </mat-header-cell>
+        <mat-cell *matCellDef="let u">
+          <mat-icon matListIcon
+          (click)="openRoles(u.id)"
+          class="icon-control"
+          >account_circle</mat-icon>
+        </mat-cell>
+      </ng-container>
+
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>

@@ -1,0 +1,14 @@
+<!-- <form name="rolesForm" id="rolesForm" [formGroup]="rolesForm" (ngSubmit)="onSubmit()">
+
+</form> -->
+<div>
+  <h4>User: <small>{{data.userName}}</small></h4>
+  <h4>Name: <small>{{data.fullName}}</small></h4>
+</div>
+<div class="checkbox-div">
+  <mat-checkbox *ngFor="let cb of chkboxes; let i = index" [(ngModel)]="chkboxes[i].checked">{{cb.name}}</mat-checkbox>
+</div>
+
+<div class="btn-div">
+  <button type="button" mat-raised-button name="send" (click)="setRoles()">Set Roles</button>
+</div>
