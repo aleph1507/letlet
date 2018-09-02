@@ -19,4 +19,5 @@ export class Badge {
   dateOfActivation: string;
   deactivated: boolean;
   deactivatedReadon: string;
+  payment: string;
 }

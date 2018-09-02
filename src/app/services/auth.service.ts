@@ -127,7 +127,14 @@ export class AuthService implements OnInit{
   }
 
   role(){
+    console.log('isAdmin: ', this.isAdmin());
     return localStorage.getItem('role');
+  }
+
+  isAdmin() {
+    let roles = localStorage.getItem('role');
+    return roles.indexOf('Admin') != -1 ? true : false;
+
   }
 
   logOut(){

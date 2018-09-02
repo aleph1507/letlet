@@ -14,6 +14,7 @@ export class AppComponent implements OnInit {
   loggedIn : boolean = false;
   role : string = this.authService.role();
 
+
   // loggedIn = this.loginService.isLoggedIn();
 
   constructor(public authService: AuthService,

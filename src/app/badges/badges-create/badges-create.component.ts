@@ -111,6 +111,7 @@ export class BadgesCreateComponent implements OnInit {
     this.badge.cardNumber = this.badgeForm.controls['cardNumber'].value;
     this.badge.badgeNumber = this.badgeForm.controls['badgeNumber'].value;
     this.badge.zones = addedZones;
+    this.badge.payment = this.badgeForm.controls['payment'].value;
     if(this.data == null){
       this.badgesService.addBadge(this.badge)
         .subscribe((data : Badge) => {
@@ -185,6 +186,7 @@ export class BadgesCreateComponent implements OnInit {
       'dateOfActivation': new FormControl(this.badge.dateOfActivation, {
         validators: Validators.required
       }),
+      'payment': new FormControl(this.badge.payment)
     })
   }
 

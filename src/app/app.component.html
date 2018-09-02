@@ -97,7 +97,7 @@
           (click)="sidenav.close()">
           <mat-icon>dashboard</mat-icon><span>Resources</span>
         </button>
-        <button *ngIf="role === 'Admin'" mat-raised-button
+        <button *ngIf="authService.isAdmin()" mat-raised-button
           color="primary"
           class="sidenav-btn"
           [routerLink]="['/user-management']"

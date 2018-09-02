@@ -116,7 +116,7 @@
         </div>
       </a>
     </mat-card>
-    <mat-card class="dash-card" *ngIf="authService.role() == 'Admin'">
+    <mat-card class="dash-card" *ngIf="authService.isAdmin()">
       <a [routerLink]="['/user-management']">
         <div class="card-content">
           <div class="card-text">

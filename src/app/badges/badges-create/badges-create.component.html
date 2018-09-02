@@ -53,6 +53,11 @@
     <mat-datepicker #dateOfActivation></mat-datepicker>
   </mat-form-field>
   <mat-form-field>
+    <input matInput type="text" placeholder="Payment"
+    formControlName="payment"
+    autocomplete="off">
+  </mat-form-field>
+  <mat-form-field>
     <input matInput type="text" pattern="[0-9]*" (keypress)="isNumber($event)" placeholder="Badge Number"
     formControlName="badgeNumber"
     class="input_lg"
