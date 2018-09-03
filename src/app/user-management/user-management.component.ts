@@ -5,6 +5,7 @@ import { User } from '../models/User';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { RegisterComponent } from './register/register.component';
 import { RolesComponent } from './roles/roles.component';
+import { ChangePasswordComponent } from '../change-password/change-password.component';
 
 @Component({
   selector: 'app-user-management',
@@ -15,7 +16,7 @@ export class UserManagementComponent implements OnInit {
 
   showSpinner : boolean  = true;
   users : User[] = [];
-  displayedColumns = ['fullName', 'userName', 'position', 'edit', 'changeRole'];
+  displayedColumns = ['fullName', 'userName', 'position', 'edit', 'changeRole', 'changePassword'];
   dataSource : MatTableDataSource<User>
 
   constructor(private authService: AuthService,
@@ -81,6 +82,13 @@ export class UserManagementComponent implements OnInit {
           data: user
         }).afterClosed().subscribe(result => this.refresh());
       });
+  }
+
+  changePassword(id = null){
+    let dialogRef = this.dialog.open(ChangePasswordComponent,{
+      width: '70%',
+      data: { uid: id }
+    }).afterClosed().subscribe(result => this.refresh());
   }
 
 }

@@ -30,11 +30,6 @@ export class ExitPersonModalComponent implements OnInit {
               private gatesService : GatesService) { }
 
   ngOnInit() {
-    this.resourcesService.employees.getAllEmployees()
-      .subscribe((emps : Employee[]) => {
-        this.employees = emps;
-      });
-
     this.paid = this.data.ep.pay;
     this.o_paid = this.paid;
 
@@ -49,6 +44,14 @@ export class ExitPersonModalComponent implements OnInit {
       })
     });
 
+    this.ExitPersonForm.controls['exitEmployee'].valueChanges
+      .subscribe(d => {
+        this.resourcesService.employees.filterEmployees(d)
+          .subscribe((data: Employee[]) => {
+            this.employees = data;
+          });
+      });
+
     if(this.paid){
       if(this.o_paid)
         this.ExitPersonForm.controls['paid'].disable();
@@ -61,6 +64,11 @@ export class ExitPersonModalComponent implements OnInit {
     // console.log('Date - data.ep.entryTime: ', Date.parse(d) - Date.parse(this.data.ep.entryTime.toString()));
     this.nDays = Math.ceil((Date.parse(new Date().toString()) - Date.parse(this.data.ep.entryTime.toString())) / 1000 / 3600 / 24);
     // console.log('nDays: ', nDays);
+  }
+
+  selectEmp() {
+    if(this.employees.length == 1)
+      this.ExitPersonForm.controls['exitEmployee'].setValue(this.employees[0]);
   }
 
   displayFn(e?: Employee) {

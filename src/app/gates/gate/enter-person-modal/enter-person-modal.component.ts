@@ -7,6 +7,9 @@ import { VisitorBadge } from '../../../models/VisitorBadge';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { GatesService } from '../../../services/gates.service';
 import { EnteredPerson } from '../../../models/EnteredPerson.model';
+import { Observable } from 'rxjs/Observable';
+import { startWith, map } from 'rxjs/operators';
+// import { map } from 'rxjs/operator/map';
 
 @Component({
   selector: 'app-enter-person-modal',
@@ -27,7 +30,9 @@ export class EnterPersonModalComponent implements OnInit {
       validators: [Validators.required],
       updateOn: 'change'
     })
-  });;
+  });
+
+  filteredVBs: Observable<VisitorBadge[]>;
 
   constructor(private dialogRef: MatDialogRef<EnterPersonModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: {gid: number, ep: ExpectedPerson },
@@ -47,25 +52,29 @@ export class EnterPersonModalComponent implements OnInit {
             this.employees = data;
           });
       });
-    // this.resourceService.employees.getAllEmployees()
-    //   .subscribe((emps: Employee[]) => {
-    //     this.employees = emps;
-    //     this.resourceService.visitorBadges.getAllVisitorBadges()
-    //       .subscribe((vbs : VisitorBadge[]) => {
-    //         this.visitorBadges = vbs;
-    //         this.EnterPersonForm = new FormGroup({
-    //           'entryEmployee': new FormControl('',{
-    //             validators: [Validators.required],
-    //             updateOn: 'change'
-    //           }),
-    //           'visitorBadge': new FormControl('', {
-    //             validators: [Validators.required],
-    //             updateOn: 'change'
-    //           })
-    //         });
-    //       });
-    //   });
-      // this.gid = this.data.gid;
+
+      // this.EnterPersonForm.controls['visitorBadge'].valueChanges
+      //   .subscribe(data => {
+      //
+      //   });
+      //
+      this.filteredVBs = this.EnterPersonForm.controls['visitorBadge'].valueChanges.pipe(
+        startWith<string | VisitorBadge>(),
+        map(value => typeof value === 'string' ? value : value.name),
+        map(name => name ? this._filterVBs(name) : this.visitorBadges.slice())
+      );
+  }
+
+  selectEmp() {
+    console.log('vo selectEmp, this.employees.length: ', this.employees.length);
+    if(this.employees.length == 1)
+      this.EnterPersonForm.controls['entryEmployee'].setValue(this.employees[0]);
+  }
+
+  private _filterVBs(name: string): VisitorBadge[] {
+    const filterValue = name.toLowerCase();
+
+    return this.visitorBadges.filter(vb => vb.barcode.toLowerCase().indexOf(filterValue) === 0);
   }
 
   displayFn(e?: Employee) {

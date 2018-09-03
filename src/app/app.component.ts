@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { LoginService } from './login.service';
 import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
+import { MatDialog } from '@angular/material';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +20,8 @@ export class AppComponent implements OnInit {
   // loggedIn = this.loginService.isLoggedIn();
 
   constructor(public authService: AuthService,
-              private router: Router){}
+              private router: Router,
+              public dialog: MatDialog){}
 
   ngOnInit(): void {
     // this.authService.init();
@@ -33,6 +36,12 @@ export class AppComponent implements OnInit {
 
       console.log('role: ', this.role);
     // this.loggedIn = this.authService.loggedIn;
+  }
+
+  changePassword() {
+    this.dialog.open(ChangePasswordComponent, {
+      width: '70%'
+    });
   }
 
   logOut() {

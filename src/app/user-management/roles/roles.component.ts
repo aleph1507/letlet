@@ -44,7 +44,11 @@ export class RolesComponent implements OnInit {
       if(this.chkboxes[i].checked == true) roles.push(this.chkboxes[i].name);
 
     this.userService.setRoles(this.data.id, roles)
-      .subscribe(data => console.log('setRoles: ', data));
+      .subscribe(data => {this.dialogRef.close()});
+  }
+
+  onCancel() {
+    this.dialogRef.close();
   }
 
 }

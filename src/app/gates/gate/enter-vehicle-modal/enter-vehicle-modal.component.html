@@ -1,6 +1,6 @@
 <form *ngIf="EnterVehicleForm != null" [formGroup]="EnterVehicleForm" (ngSubmit)="onSubmit()" novalidate>
   <mat-form-field>
-    <input matInput type="text"
+    <input matInput (keyup.enter)="selectEmp()" type="text"
       placeholder="Entry Employee"
       formControlName="entryEmployee"
       [matAutocomplete]="entEmp"
@@ -13,14 +13,14 @@
   </mat-autocomplete>
 
   <mat-form-field>
-    <input matInput type="text"
+    <input matInput (keyup.enter)="chooseFirstOption()" type="text"
       placeholder="Visitor Vehicle Badge"
       formControlName="visitorVehicleBadge"
       [matAutocomplete]="vvBadge"
       required>
   </mat-form-field>
   <mat-autocomplete #vvBadge="matAutocomplete" [displayWith]="displayFnVB">
-      <mat-option *ngFor="let v of visitorVehicleBadges" [value]="v" >
+      <mat-option *ngFor="let v of filteredVVBs | async" [value]="v" >
         {{ v.name }} {{ v.code }}
       </mat-option>
   </mat-autocomplete>
@@ -41,7 +41,7 @@
 
   <mat-divider class="sm-form-divider-margins"></mat-divider>
   <mat-dialog-actions>
-    <button type="submit" [disabled]="!EnterVehicleForm.valid" mat-raised-button>OK</button>
+    <button type="button" (click)="onSubmit()" (keydown.enter)="$event.preventDefault()" [disabled]="!EnterVehicleForm.valid" mat-raised-button>OK</button>
     <button type="button" mat-raised-button (click)="onCancel()">Cancel</button>
   </mat-dialog-actions>
 </form>

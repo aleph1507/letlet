@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA, MatAutocomplete } from '@angular/material';
 import { ExpectedVehicle } from '../../../models/ExpectedVehicle.model';
 import { ResourcesService } from '../../../services/resources.service';
 import { GatesService } from '../../../services/gates.service';
@@ -8,6 +8,8 @@ import { VisitorVehicleBadge } from '../../../models/VisitorVehicleBadge';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Company } from '../../../models/Company';
 import { EnteredVehicle } from '../../../models/EnteredVehicle.model';
+import { Observable } from 'rxjs/Observable';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-enter-vehicle-modal',
@@ -31,10 +33,18 @@ export class EnterVehicleModalComponent implements OnInit {
 });;
   companies : Company[] = [];
 
+   @ViewChild('vvBadge') vvBadgeAutoComplete: MatAutocomplete;
+
+  filteredVVBs: Observable<VisitorVehicleBadge[]>;
+
   constructor(private dialogRef: MatDialogRef<EnterVehicleModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: {gid: number, exv: ExpectedVehicle },
               private resourceService: ResourcesService,
               private gatesService: GatesService) { }
+
+  chooseFirstOption(): void {
+    this.vvBadgeAutoComplete.options.first.select();
+  }
 
   ngOnInit() {
     this.resourceService.visitorVehicleBadges.getAllVisitorVehicleBadges()
@@ -53,29 +63,34 @@ export class EnterVehicleModalComponent implements OnInit {
             this.employees = data;
           });
       });
-    // this.resourceService.employees.getAllEmployees()
-    //   .subscribe((emps: Employee[]) => {
-    //     this.employees = emps;
-    //     this.resourceService.visitorVehicleBadges.getAllVisitorVehicleBadges()
-    //       .subscribe((vvbs : VisitorVehicleBadge[]) => {
-    //           this.resourceService.companies.getCompanies()
-    //             .subscribe((comps : Company[]) => {
-    //                 this.companies = comps;
-    //                 this.visitorVehicleBadges = vvbs;
-    //                 this.EnterVehicleForm = new FormGroup({
-    //                   'entryEmployee': new FormControl('',{
-    //                     validators: [Validators.required],
-    //                     updateOn: 'change'
-    //                   }),
-    //                   'visitorVehicleBadge': new FormControl('', {
-    //                     validators: [Validators.required],
-    //                     updateOn: 'change'
-    //                   })
-    //             });
-    //
-    //         });
-    //       });
-    //   });
+
+      this.filteredVVBs = this.EnterVehicleForm.controls['visitorVehicleBadge'].valueChanges.pipe(
+        startWith<string | VisitorVehicleBadge>(),
+        map(value => typeof value === 'string' ? value : value.name),
+        map(name => name ? this._filterVVBs(name) : this.visitorVehicleBadges.slice())
+      );
+  }
+
+  private _filterVVBs(name: string): VisitorVehicleBadge[] {
+    const filterValue = name.toLowerCase();
+
+    return this.visitorVehicleBadges.filter(vb => vb.code.toString().toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  selectEmp() {
+    console.log('vo selectEmp, this.employees.length: ', this.employees.length);
+    if(this.employees.length == 1)
+      this.EnterVehicleForm.controls['entryEmployee'].setValue(this.employees[0]);
+  }
+
+  selectVVB() {
+    this.filteredVVBs.subscribe(fVVBs => {
+      console.log('fVVBs: ', fVVBs);
+      if(fVVBs.length == 1)
+        this.EnterVehicleForm.controls['visitorVehicleBadge'].setValue(fVVBs);
+    });
+    // if(this.employees.length == 1)
+    //   this.EnterVehicleForm.controls['entryEmployee'].setValue(this.employees[0]);
   }
 
   displayFnCompany(c?: Company) {

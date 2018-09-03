@@ -72,6 +72,7 @@ import { UserManagementComponent } from './user-management/user-management.compo
 import { UserService } from './services/user.service';
 import { RegisterComponent } from './user-management/register/register.component';
 import { RolesComponent } from './user-management/roles/roles.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 
 @NgModule({
@@ -118,7 +119,8 @@ import { RolesComponent } from './user-management/roles/roles.component';
     FailToastComponent,
     UserManagementComponent,
     RegisterComponent,
-    RolesComponent
+    RolesComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -152,7 +154,8 @@ import { RolesComponent } from './user-management/roles/roles.component';
     SuccessToastComponent,
     FailToastComponent,
     RegisterComponent,
-    RolesComponent
+    RolesComponent,
+    ChangePasswordComponent
   ],
   providers: [RequesterService, AuthService, ApprovalsService,
               StopListService, ResourcesService, BadgesService,

@@ -11,7 +11,10 @@ export class UserService {
   private createUserUrl = this.authService.baseUrl + '/api/account/create'
   private singleUser = this.authService.baseUrl + '/api/account/user';
   private rolesUrl = this.authService.baseUrl + '/api/roles';
-  private setRolesUrl = this.authService.baseUrl + '/api/account/user/{id}/roles ';
+  private setRolesUrl = this.authService.baseUrl + '/api/account/user/{id}/roles';
+  private changeOwnPasswordUrl = this.authService.baseUrl + '/api/account/user/userchangepassword';
+  private changeUserPasswordUrl = this.authService.baseUrl + '/api/account/user/changepassword';
+  // /api/account/changepassword/{userId}
 
   constructor(private authService: AuthService,
               private http: HttpClient) { }
@@ -38,6 +41,20 @@ export class UserService {
 
   setRoles(uid: string, roles: Array<string>) {
     return this.http.put(this.authService.baseUrl + '/api/account/user/' + uid + '/roles', roles);
+  }
+
+  // /api/account/userchangepassword
+  // oldPassword, newPassword, confirmNewPassword
+
+  // /api/account/user/changepassword/{userId}
+  // newPassword, confirmNewPassword
+
+  changeOwnPassword(pass: {oldPassword, newPassword, confirmNewPassword}) {
+    return this.http.put(this.changeOwnPasswordUrl, pass);
+  }
+
+  changeUserPassword(uid, pass: {newPassword, confirmNewPassword}){
+    return this.http.put(this.changeUserPasswordUrl + '/' + uid, pass);
   }
 
 }

@@ -1,6 +1,6 @@
 <form *ngIf="ExitPersonForm != null" [formGroup]="ExitPersonForm" (ngSubmit)="onSubmit()" novalidate>
   <mat-form-field>
-    <input matInput type="text"
+    <input matInput (keyup.enter)="selectEmp()" type="text"
       placeholder="Exit Employee"
       formControlName="exitEmployee"
       [matAutocomplete]="entEmp"
@@ -28,7 +28,7 @@
 
   <mat-divider class="sm-form-divider-margins"></mat-divider>
   <mat-dialog-actions>
-    <button type="submit" [disabled]="!ExitPersonForm.valid" mat-raised-button>OK</button>
+    <button type="button" (click)="onSubmit()" (keydown.enter)="$event.preventDefault()" [disabled]="!ExitPersonForm.valid" mat-raised-button>OK</button>
     <button type="button" mat-raised-button (click)="onCancel()">Cancel</button>
   </mat-dialog-actions>
 </form>

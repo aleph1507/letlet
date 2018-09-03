@@ -1,12 +1,12 @@
 <form *ngIf="EnterPersonForm != null" [formGroup]="EnterPersonForm" (ngSubmit)="onSubmit()" novalidate>
   <mat-form-field>
-    <input matInput type="text"
+    <input matInput (keyup.enter)="selectEmp()" type="text"
       placeholder="Entry Employee"
       formControlName="entryEmployee"
       [matAutocomplete]="entEmp"
       required>
   </mat-form-field>
-  <mat-autocomplete #entEmp="matAutocomplete" [displayWith]="displayEmpFn">
+  <mat-autocomplete #entEmp="matAutocomplete"  [displayWith]="displayEmpFn">
       <mat-option *ngFor="let e of employees" [value]="e" >
         {{ e.name }} {{e.surname}}
       </mat-option>
@@ -18,16 +18,17 @@
       formControlName="visitorBadge"
       [matAutocomplete]="vBadge"
       required>
+      <mat-autocomplete autoActiveFirstOption #vBadge="matAutocomplete" [displayWith]="displayFnVB">
+          <mat-option *ngFor="let v of filteredVBs | async" [value]="v" >
+            {{ v.barcode }}
+          </mat-option>
+      </mat-autocomplete>
   </mat-form-field>
-  <mat-autocomplete #vBadge="matAutocomplete" [displayWith]="displayFnVB">
-      <mat-option *ngFor="let v of visitorBadges" [value]="v" >
-        {{ v.barcode }} {{ v.code }}
-      </mat-option>
-  </mat-autocomplete>
+
 
   <mat-divider class="sm-form-divider-margins"></mat-divider>
   <mat-dialog-actions>
-    <button type="submit" [disabled]="!EnterPersonForm.valid" mat-raised-button>OK</button>
+    <button type="button" (click)="onSubmit()" (keydown.enter)="$event.preventDefault()" [disabled]="!EnterPersonForm.valid" mat-raised-button>OK</button>
     <button type="button" mat-raised-button (click)="onCancel()">Cancel</button>
   </mat-dialog-actions>
 </form>
