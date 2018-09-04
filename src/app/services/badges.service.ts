@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ResourcesService } from './resources.service';
 import { Badge } from '../models/Badge.model';
 import { DatePipe } from '@angular/common';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { retry } from 'rxjs/operator/retry';
 import { AuthService } from './auth.service';
@@ -43,7 +43,9 @@ export class BadgesService {
   }
 
   deactivate(id, deactivateReason) {
-    return this.http.post<boolean>(this.badgesUrl + '/deactivate/' + id, {'deactivateReason': deactivateReason});
+    let params = new HttpParams()
+      .set('deactivateReason', deactivateReason);
+    return this.http.post<boolean>(this.badgesUrl + '/deactivate/' + id + '?deactivateReason='+deactivateReason, {});
   }
 
   activate(id){
