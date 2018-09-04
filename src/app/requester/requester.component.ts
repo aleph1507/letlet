@@ -386,26 +386,39 @@ export class RequesterComponent implements OnInit, OnDestroy {
             this.reqCompany = data;
           });
 
-        let request: Requester = this.request;
-        request.requesterName = this.requesterForm.controls['requesterName'].value;
-        request.description = this.requesterForm.controls['requesterDescription'].value;
-        request.descriptionEn = this.requesterForm.controls['requesterDescriptionEn'].value;
+        let fd : string = this.requesterForm.controls['requesterFromDate'].value;
+        let fromDate = new Date(fd);
+        console.log('typeof fromDate: ', typeof fromDate);
+        console.log('fromDate: ', fromDate);
+        // fromDate.setDate(fromDate.getDate() + 1);
+        let td : string = this.requesterForm.controls['requesterToDate'].value;
+        let toDate = new Date(td);
+        // toDate = this.datePipe.transform(toDate, 'dd/MM/yyyy').toDate();
+        // toDate.setDate(toDate.getDate() + 1);
+        // let request: Requester = this.request;
+        this.request.requesterName = this.requesterForm.controls['requesterName'].value;
+        this.request.description = this.requesterForm.controls['requesterDescription'].value;
+        this.request.descriptionEn = this.requesterForm.controls['requesterDescriptionEn'].value;
         // this.request.companyId = this.requesterForm.controls['requesterCompany'].value;
-        request.companyId = this.companiesAutoCtrl.value.id;
-        request.fromDate = this.requesterForm.controls['requesterFromDate'].value;
-        request.fromDate.setDate(request.fromDate.getDate() + 1);
-        request.toDate = this.requesterForm.controls['requesterToDate'].value;
-        request.toDate.setDate(request.toDate.getDate() + 1);
-        request.numberOfEntries = this.requesterForm.controls['requesterNumOfEntries'].value;
-        request.personPay = this.personPay;
-        request.vehiclePay = this.vehiclePay;
-        request.pdf1 = null;
-        request.pdf2 = null;
-        console.log('requester component edit request: ', request);
+        this.request.companyId = this.companiesAutoCtrl.value.id;
+        this.request.fromDate = fromDate;
+        // this.request.fromDate = this.requesterForm.controls['requesterFromDate'].value;
+        // this.request.fromDate.setDate(this.request.fromDate.getDate() + 1);
+        // this.request.toDate = this.requesterForm.controls['requesterToDate'].value;
+        // this.request.toDate.setDate(this.request.toDate.getDate() + 1);
+        this.request.toDate = toDate;
+        this.request.numberOfEntries = this.requesterForm.controls['requesterNumOfEntries'].value;
+        this.request.personPay = this.personPay;
+        this.request.vehiclePay = this.vehiclePay;
+        if(this.pdf1src != null)
+          this.request.pdf1 = this.pdf1src;
+        if(this.pdf2src != null)
+          this.request.pdf2 = null;
+        console.log('requester component edit request: ', this.request);
         // this.request.pdf1 = this.pdf1src;
         // this.request.pdf2 = this.pdf2src;
-        let o_request = request;
-        this.requesterService.editRequest(request).subscribe((data: Requester) => {
+        let o_request = this.request;
+        this.requesterService.editRequest(this.request).subscribe((data: Requester) => {
           this.requesterService.switchRequest(o_request, data);
           // this.router.navigate(['/approvals']);
           this.snackbarService.msg = 'Промените се зачувани';
@@ -429,6 +442,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
           .subscribe((data : Company) => {
             this.reqCompany = data;
           });
+        console.log('editMode');
         this.request.requesterName = this.requesterForm.controls['requesterName'].value;
         this.request.description = this.requesterForm.controls['requesterDescription'].value;
         this.request.descriptionEn = this.requesterForm.controls['requesterDescriptionEn'].value;
