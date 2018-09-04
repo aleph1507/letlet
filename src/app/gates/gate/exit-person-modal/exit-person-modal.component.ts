@@ -58,12 +58,7 @@ export class ExitPersonModalComponent implements OnInit {
       this.ExitPersonForm.get('billNumber').setValidators([Validators.required]);
     }
 
-    // console.log('data.ep: ', this.data.ep);
-    // console.log('Date: ', new Date());
-    // let d = new Date().toString();
-    // console.log('Date - data.ep.entryTime: ', Date.parse(d) - Date.parse(this.data.ep.entryTime.toString()));
     this.nDays = Math.ceil((Date.parse(new Date().toString()) - Date.parse(this.data.ep.entryTime.toString())) / 1000 / 3600 / 24);
-    // console.log('nDays: ', nDays);
   }
 
   selectEmp() {
@@ -81,6 +76,7 @@ export class ExitPersonModalComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('vo onSubmit()');
     var ee = this.ExitPersonForm.controls['exitEmployee'].value;
     this.billNumber = this.ExitPersonForm.controls['billNumber'].value;
     let exitPerson = {

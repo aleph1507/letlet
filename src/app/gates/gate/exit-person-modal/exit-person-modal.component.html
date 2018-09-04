@@ -13,6 +13,7 @@
   </mat-autocomplete>
 
   <mat-checkbox
+    *ngIf="paid"
     [checked]="paid"
     [disabled]="paid"
     (change)="onPaid($event)">Paid</mat-checkbox>

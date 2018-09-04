@@ -65,7 +65,7 @@ export class BadgesCreateComponent implements OnInit {
           }
         }
       });
-      this.badgeForm.controls['returned'].disable();
+      // this.badgeForm.controls['returned'].disable();
   }
 
   checkZone(i){
