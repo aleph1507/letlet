@@ -149,7 +149,7 @@ export class VehicleBadgesCreateComponent implements OnInit {
       'permitNumber': new FormControl(this.vehicleBadge.permitNumber, {
         validators: [Validators.required]
       }),
-      'return': new FormControl({value: this.vehicleBadge.returned, disabled: true}, {
+      'return': new FormControl({value: this.vehicleBadge.returned}, {
 
       }),
       'expireDate': new FormControl(this.vehicleBadge.expireDate, {

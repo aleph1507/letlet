@@ -26,7 +26,7 @@ export class VehicleBadgesService {
   }
 
   deactivate(id, deactivateReason) {
-    return this.http.post<boolean>(this.vehicleBadgesUrl + '/deactivate/' + id, { queryParams: {'deactivateReason': deactivateReason}});
+    return this.http.post<boolean>(this.vehicleBadgesUrl + '/deactivate/' + id + '?deactivateReason='+deactivateReason, { });
   }
 
   activate(id){
