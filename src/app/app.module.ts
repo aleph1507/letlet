@@ -62,6 +62,7 @@ import { VslService } from './services/vsl.service';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { MyDateAdapter, MY_DATE_FORMATS } from './shared/DateAdapter';
 import { AsptonormaldatePipe } from './shared/pipes/asptonormaldate.pipe';
+import { AsptonormaldatetimePipe } from './shared/pipes/asptonormaldatetime.pipe';
 import { BadgesConfirmShredComponent } from './badges/badges-create/badges-confirm-shred/badges-confirm-shred.component';
 import { ShreddingReportComponent } from './reports/shredding-report/shredding-report.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
@@ -112,6 +113,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     VehicleBadgesCreateComponent,
     VehicleStopListComponent,
     AsptonormaldatePipe,
+    AsptonormaldatetimePipe,
     BadgesConfirmShredComponent,
     ShreddingReportComponent,
     SpinnerComponent,

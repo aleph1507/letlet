@@ -11,7 +11,7 @@ export class AuthService implements OnInit{
   public token: string = null;
   // url = 'http://192.168.100.4:84/token';
   // public baseUrl = 'http://viksadesign.ddns.net:84/';
-  public baseUrl = 'http://192.168.100.80:84';
+  public baseUrl = 'http://localhost:63602/';
   url = this.baseUrl + '/token';
   loggedIn : boolean;
   private loggedStatus : BehaviorSubject<boolean>;
@@ -128,18 +128,20 @@ export class AuthService implements OnInit{
   }
 
   role(){
-    console.log('isAdmin: ', this.isAdmin());
+    // console.log('isAdmin: ', this.isAdmin());
     return localStorage.getItem('role');
   }
 
   isAdmin() {
     let roles = localStorage.getItem('role');
-    return roles.indexOf('Admin') != -1 ? true : false;
+    // console.log('isAdmin.roles: ', roles);
+    return roles != null ? (roles.indexOf('Admin') != -1 ? true : false) : false;
 
   }
 
   logOut(){
     localStorage.setItem('token', null);
+    localStorage.setItem('role', null);
     this.token = null;
     this.loggedIn = false;
     this.loggedStatus.next(this.loggedIn);

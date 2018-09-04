@@ -8,6 +8,7 @@ import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import * as pdfMake from 'pdfmake/build/pdfmake.js';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
+import {AsptonormaldatetimePipe} from '../../shared/pipes/asptonormaldatetime.pipe';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -43,6 +44,8 @@ export class PersonReportComponent implements OnInit {
   public gridOptions: GridOptions = <GridOptions>{
     rowData: [],
     columnDefs: [
+      {headerName: 'Entry At', field: 'entryDateTime'},
+      {headerName: 'Exit AT', field: 'exitDateTime'},
       {headerName: 'Company Name', field: 'companyName'},
       {headerName: 'Person', field: 'personVisited'},
       {headerName: 'Entered Through Gate', field: 'enteredOnGate'},
@@ -192,7 +195,10 @@ export class PersonReportComponent implements OnInit {
       this.reportsService.getReports(rUrl)
         .subscribe((data : PersonReport[]) => {
           // this.gridOptions.onGridReady = function() {
+          //  let asp_to_normal_datetime_pipe = new AsptonormaldatetimePipe();
             for(let i = 0; i<data.length; i++){
+              // data[i].entryDateTime = asp_to_normal_datetime_pipe.transform(data[i].exitDateTime);
+              // data[i].exitDateTime = asp_to_normal_datetime_pipe.transform(data[i].exitDateTime);
               data[i].timeOnAirSide = data[i].timeOnAirSide.split('.')[0];
             }
             this.xlsx_report = data;
