@@ -150,7 +150,7 @@ export class ApprovalsComponent implements OnInit {
     var day : string = '';
 
     if(event == null) {
-      this.fromDate.getMonth() >= 10 ?
+      this.fromDate.getMonth() >= 9 ?
         month = '-' + (this.fromDate.getMonth() + 1).toString() : month = '-0' + (this.fromDate.getMonth()+1).toString();
 
       this.fromDate.getDate() >= 10 ?
@@ -158,7 +158,7 @@ export class ApprovalsComponent implements OnInit {
 
       this.fromString = this.fromDate.getFullYear() + month + day;
 
-      this.toDate.getMonth() >= 10 ?
+      this.toDate.getMonth() >= 9 ?
         month = '-' + (this.toDate.getMonth() + 1).toString() : month = '-0' + (this.toDate.getMonth()+1).toString();
 
       this.toDate.getDate() >= 10 ?
@@ -167,7 +167,7 @@ export class ApprovalsComponent implements OnInit {
       this.toString = this.toDate.getFullYear() + month + day;
 
     } else {
-      event.value.getMonth() >= 10 ?
+      event.value.getMonth() >= 9 ?
         month = '-' + (event.value.getMonth() + 1).toString() : month = '-0' + (event.value.getMonth() + 1).toString();
 
       // event.value.get
