@@ -33,6 +33,8 @@ export class ShreddingReportComponent implements OnInit {
   showReports = [];
   category = 0;
 
+  selectedReports;
+
   xlsx_report;
 
   columns = ['Shredding Date', 'Type Of Card', 'Details', 'Card Number',

@@ -572,7 +572,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
   printRequest(): void {
     // console.log("printRequest");
     let pNumber = this.request.requestPersonJson.length;
-    let vozilaHeader = this.request.requestVehicleJson.length > 0 ? 'Возила' : '';
+    let vozilaHeader = this.request.requestVehicleJson.length > 0 ? 'Возила / Vehicles' : '';
     let vehiclesTable = '<table style="text-align:center; width: 80%; margin: auto; border: 1px solid black; border-collapse: collapse; margin-top: 5%; margin-bottom: 5%;">';
     let personsTable = '<table style="text-align:center; width: 80%; margin: auto; border: 1px solid black; border-collapse: collapse; margin-top: 5%; margin-bottom: 5%;">';
     for(let i = 0; i<this.request.requestVehicleJson.length; i++){
@@ -686,7 +686,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
               <td>
                 <p>
                   We kindly ask you to approve entrance permission for the following persons working at
-                  ${this.request.company.name} in order to perform ${this.request.descriptionEn}
+                  ${this.request.company.nameEn} in order to perform ${this.request.descriptionEn}
                   starting from
                   ${new AsptonormaldatePipe().transform(this.request.fromDate.toString()).replace(/-/g, '.')}
                   to
@@ -698,10 +698,10 @@ export class RequesterComponent implements OnInit, OnDestroy {
           <h3>Персонал / Persons</h3>
           ${personsTable}
 
-          <h3>${vozilaHeader} / Vehicles</h3>
+          <h3>${vozilaHeader}</h3>
           ${vehiclesTable}
           <div id="footer">
-          <table>
+          <table style="width:90%;">
             <tr style="padding-bottom: 1em; display: block;">
               <td>
                 <span style="display:block;">Со почит,</span>
@@ -709,13 +709,14 @@ export class RequesterComponent implements OnInit, OnDestroy {
               </td>
             </tr>
             <tr style="padding-bottom: 30px; display: block;">
-              <td>
-                <span style="display:block;">Александар Јаковлевски/ Aleksandar Jakovlevski</span>
+              <td style="width:50%; font-size: 0.9em;">
+                <span style="display:block;">Александар Јаковлевски / Aleksandar Jakovlevski</span>
                 <span style="display:block;">Менаџер на Оддел за Обезбедување</span>
                 <span style="display:block;">Security Manager</span>
                 <span style="display:block;">ТАВ Македонија Дооел/TAV Macedonia Dooel</span>
               </td>
-              <td>
+              <td></td>
+              <td style="width:50%; font-size: 0.9em;">
                 <span style="display:block;">Јигит Лацин / Yigit Lacin</span>
                 <span style="display:block;">Координатор на Аеродроми</span>
                 <span style="display:block;">Airports Coordinator</span>
@@ -964,9 +965,9 @@ export class RequesterComponent implements OnInit, OnDestroy {
 
           <div class="info-div">
             <div class="fgroup fg1">
-              <span>Назив на компанијата \ Company name</span>
+              <span>Назив на компанијата / Company name</span>
               <div class="company-naziv">
-                ${this.request.company.name}
+                ${this.request.company.name} / ${this.request.company.nameEn}
               </div>
             </div>
             <div class="fgroup fg2">
