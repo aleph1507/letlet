@@ -17,6 +17,8 @@ import { VehicleBadgesComponent } from '../vehicle-badges/vehicle-badges.compone
 import { VehicleStopListComponent } from '../vehicle-stop-list/vehicle-stop-list.component';
 import { ShreddingReportComponent } from '../reports/shredding-report/shredding-report.component';
 import { UserManagementComponent } from '../user-management/user-management.component';
+import { BadgereportComponent } from '../reports/badgereport/badgereport.component';
+import { VehiclebadgereportComponent } from '../reports/vehiclebadgereport/vehiclebadgereport.component';
 
 const appRoutes: Routes = [
    { path: '', component: DashboardComponent, pathMatch: 'full' },
@@ -39,7 +41,9 @@ const appRoutes: Routes = [
    { path: 'reports/shreddingReport', component: ShreddingReportComponent, pathMatch: 'full'},
    { path: 'vehicle-badges', component: VehicleBadgesComponent, pathMatch: 'full' },
    { path: 'vehicles-stop-list', component: VehicleStopListComponent, pathMatch: 'full' },
-   { path: 'user-management', component: UserManagementComponent, pathMatch: 'full'}
+   { path: 'user-management', component: UserManagementComponent, pathMatch: 'full'},
+   { path: 'reports/badgereport', component: BadgereportComponent, pathMatch: 'full' },
+   { path: 'reports/vehiclebadgereport', component: VehiclebadgereportComponent, pathMatch: 'full' },
 ];
 
 @NgModule({

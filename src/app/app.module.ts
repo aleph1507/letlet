@@ -74,6 +74,8 @@ import { UserService } from './services/user.service';
 import { RegisterComponent } from './user-management/register/register.component';
 import { RolesComponent } from './user-management/roles/roles.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { BadgereportComponent } from './reports/badgereport/badgereport.component';
+import { VehiclebadgereportComponent } from './reports/vehiclebadgereport/vehiclebadgereport.component';
 
 
 @NgModule({
@@ -122,7 +124,9 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     UserManagementComponent,
     RegisterComponent,
     RolesComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    BadgereportComponent,
+    VehiclebadgereportComponent
   ],
   imports: [
     BrowserModule,

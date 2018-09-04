@@ -3,6 +3,8 @@ export interface VehicleReport {
   vehicleModel: string;
   plateNumber: string;
   enteredOnGate: string;
+  entryDateTime: string;
+  exitDateTime: string;
   approvedEnterFrom: string;
   entryEscortedBy: string;
   exitedOnGate: string;

@@ -1,0 +1,26 @@
+<app-spinner *ngIf="showSpinner" class="vehicleSpinner mat-elevation-z8"></app-spinner>
+
+<div [style.visibility]="showSpinner ? 'hidden' : 'visible'" class="container">
+  <div class="filter-panel">
+    <button mat-raised-button color="primary" (click)="export_to_xlsx()">Export to Excel</button>
+    <button mat-raised-button color="primary" (click)="export_to_pdf()">Export to PDF</button>
+    <div class="category">
+      <mat-radio-group [(ngModel)]="category">
+        <mat-radio-button *ngFor="let c of categories"
+          color="primary" [value]="categories.indexOf(c)" [checked] (change)="radioChange($event)">
+          {{c}}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+  <!-- *ngIf="gotRowData" -->
+  <!--  -->
+  <!-- [gridOptions]="gridOptions" -->
+  <ag-grid-angular
+    #agGrid
+    style="width: 90vw; height: 70vh;"
+    class="ag-theme-balham"
+    [gridOptions]="gridOptions"
+  >
+  </ag-grid-angular>
+</div>

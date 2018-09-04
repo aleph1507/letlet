@@ -42,6 +42,7 @@ export class EnterPersonModalComponent implements OnInit {
   ngOnInit() {
     this.resourceService.visitorBadges.getAllVisitorBadges()
       .subscribe((vbs: VisitorBadge[]) => {
+        console.log('vo get visitorBadges subscribtion');
         this.visitorBadges = vbs;
       });
 

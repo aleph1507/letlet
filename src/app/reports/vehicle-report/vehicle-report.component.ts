@@ -31,13 +31,15 @@ export class VehicleReportComponent implements OnInit {
 
   xlsx_report;
 
-  columns = ['Company Name', 'Vehicle Model', 'Vehicle Plate', 'Entered Through Gate',
+  columns = ['Entry Date and Time', 'Exit Date and Time', 'Company Name', 'Vehicle Model', 'Vehicle Plate', 'Entered Through Gate',
      'Entry Approved By', 'Entry Escorted By', 'Exited Through Gate', 'Exit Approved By',
      'Exit Escorted By', 'Days On Air Side', 'Time On Air Side'];
 
   public gridOptions: GridOptions = <GridOptions>{
     rowData: [],
     columnDefs: [
+      {headerName: 'Entry At', field: 'entryDateTime'},
+      {headerName: 'Exit At', field: 'exitDateTime'},
       {headerName: 'Company Name', field: 'companyName'},
       {headerName: 'Vehicle Model', field: 'vehicleModel'},
       {headerName: 'Vehicle Plate', field: 'plateNumber'},
@@ -86,7 +88,7 @@ export class VehicleReportComponent implements OnInit {
     body.push(this.columns);
     let tmp = [];
     for(let i = 0; i<this.xlsx_report.length; i++){
-      tmp.push(this.xlsx_report[i].companyName, this.xlsx_report[i].vehicleModel, this.xlsx_report[i].plateNumber,
+      tmp.push(this.xlsx_report[i].entryDateTime, this.xlsx_report[i].exitDateTime, this.xlsx_report[i].companyName, this.xlsx_report[i].vehicleModel, this.xlsx_report[i].plateNumber,
                this.xlsx_report[i].enteredOnGate, this.xlsx_report[i].approvedEnterFrom,
                this.xlsx_report[i].entryEscortedBy, this.xlsx_report[i].exitedOnGate,
                this.xlsx_report[i].approvedExitFrom, this.xlsx_report[i].exitEscortedBy,
@@ -106,7 +108,7 @@ export class VehicleReportComponent implements OnInit {
           // alignment: 'center',
           table: {
             headerRows: 1,
-            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
 
             body: body
           }
