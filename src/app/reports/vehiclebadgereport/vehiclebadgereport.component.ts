@@ -7,6 +7,8 @@ import * as XLSX from 'xlsx';
 import * as pdfMake from 'pdfmake/build/pdfmake.js';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
 import { ActivatedRoute } from '@angular/router';
+import { AsptonormaldatePipe } from '../../shared/pipes/asptonormaldate.pipe';
+import { DatePipe } from '@angular/common';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -58,7 +60,9 @@ export class VehiclebadgereportComponent implements OnInit {
 
   constructor(private reportsService: ReportsService,
               private authService: AuthService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private atndp: AsptonormaldatePipe,
+              private datePipe: DatePipe) { }
 
   ngOnInit() {
     if (this.gridOptions.api) {
@@ -109,10 +113,13 @@ export class VehiclebadgereportComponent implements OnInit {
   export_to_pdf() {
     let body = [];
     body.push(this.columns);
-    let tmp = [];
+    let tmp = [], DOA:Date, DSC:Date, DOT:Date, DE:Date, DS:Date;
     for(let i = 0; i<this.xlsx_report.length; i++){
-      tmp.push(this.xlsx_report[i].permitNumber, this.xlsx_report[i].expireDate.toString(), this.xlsx_report[i].payment, this.xlsx_report[i].returned, this.xlsx_report[i].deactivated,
-               this.xlsx_report[i].deactivateReason, this.xlsx_report[i].shreddingDate.toString(),
+      DE = this.xlsx_report[i].expireDate ? this.xlsx_report[i].expireDate.toString() : null;
+      DS = this.xlsx_report[i].shreddingDate ? this.xlsx_report[i].shreddingDate.toString() : null;
+
+      tmp.push(this.xlsx_report[i].permitNumber, DE, this.xlsx_report[i].payment, this.xlsx_report[i].returned, this.xlsx_report[i].deactivated,
+               this.xlsx_report[i].deactivateReason, DS,
                this.xlsx_report[i].vehicleModel, this.xlsx_report[i].vehiclePlate,
                this.xlsx_report[i].companyName, this.xlsx_report[i].companyNameEn);
       body.push(tmp);
@@ -145,11 +152,16 @@ export class VehiclebadgereportComponent implements OnInit {
     var month : string = '';
     var day : string = '';
 
+
     var rUrl = this.vehicleBadgesReportUrl + '/' + c.toString();
 
     this.reportsService.getVehicleBadgesReports(rUrl)
       .subscribe((data : VehicleBadgeReport[]) => {
         console.log('vo subscribtion, data: ', data);
+        for(let i = 0; i<data.length; i++) {
+          if(data[i].expireDate) data[i].expireDate = this.atndp.transform(data[i].expireDate.toString());
+          if(data[i].shreddingDate != null) data[i].shreddingDate = this.atndp.transform(data[i].shreddingDate.toString());
+        }
         this.xlsx_report = data;
         if(this.gridOptions.api)
           this.loadRowData();

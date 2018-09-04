@@ -62,7 +62,7 @@ import { VslService } from './services/vsl.service';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { MyDateAdapter, MY_DATE_FORMATS } from './shared/DateAdapter';
 import { AsptonormaldatePipe } from './shared/pipes/asptonormaldate.pipe';
-import { AsptonormaldatetimePipe } from './shared/pipes/asptonormaldatetime.pipe';
+// import { AsptonormaldatetimePipe } from './shared/pipes/asptonormaldatetime.pipe';
 import { BadgesConfirmShredComponent } from './badges/badges-create/badges-confirm-shred/badges-confirm-shred.component';
 import { ShreddingReportComponent } from './reports/shredding-report/shredding-report.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
@@ -115,7 +115,7 @@ import { VehiclebadgereportComponent } from './reports/vehiclebadgereport/vehicl
     VehicleBadgesCreateComponent,
     VehicleStopListComponent,
     AsptonormaldatePipe,
-    AsptonormaldatetimePipe,
+    // AsptonormaldatetimePipe,
     BadgesConfirmShredComponent,
     ShreddingReportComponent,
     SpinnerComponent,
@@ -166,7 +166,7 @@ import { VehiclebadgereportComponent } from './reports/vehiclebadgereport/vehicl
   providers: [RequesterService, AuthService, ApprovalsService,
               StopListService, ResourcesService, BadgesService,
               DatePipe, GatesService, ReportsService, VehicleBadgesService,
-              VslService, SnackbarService, UserService,
+              VslService, SnackbarService, UserService, AsptonormaldatePipe,
               { provide: DateAdapter, useClass: MyDateAdapter },
               { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
               {

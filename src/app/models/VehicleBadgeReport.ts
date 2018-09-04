@@ -1,11 +1,11 @@
 export class VehicleBadgeReport {
   permitNumber: string;
-  expireDate: Date;
+  expireDate: Date | string;
   payment: string;
   returned: boolean;
   deactivated: boolean;
   deactivateReason: string;
-  shreddingDate: Date;
+  shreddingDate: Date | string;
   vehicleModel: string;
   vehiclePlate: string;
   companyName: string;

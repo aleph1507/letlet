@@ -7,6 +7,7 @@ import * as XLSX from 'xlsx';
 import * as pdfMake from 'pdfmake/build/pdfmake.js';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
 import { ActivatedRoute } from '@angular/router';
+import { AsptonormaldatePipe } from '../../shared/pipes/asptonormaldate.pipe';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -65,7 +66,8 @@ export class BadgereportComponent implements OnInit {
 
   constructor(private reportsService: ReportsService,
               private authService: AuthService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private atndp: AsptonormaldatePipe) { }
 
   ngOnInit() {
 
@@ -103,22 +105,27 @@ export class BadgereportComponent implements OnInit {
   export_to_pdf() {
     let body = [];
     body.push(this.columns);
-    let tmp = [];
+    let tmp = [], DOA: Date, DSC: Date, DOT: Date, DE: Date, DS: Date;
 
     for(let i = 0; i<this.xlsx_report.length; i++){
+      DOA = this.xlsx_report[i].dateOfActivation ? this.xlsx_report[i].dateOfActivation.toString() : null;
+      DSC = this.xlsx_report[i].dateOfSecurityCheck ? this.xlsx_report[i].dateOfSecurityCheck.toString() : null;
+      DOT = this.xlsx_report[i].dateOfTraining ? this.xlsx_report[i].dateOfTraining.toString() : null;
+      DE = this.xlsx_report[i].expireDate ? this.xlsx_report[i].expireDate.toString() : null;
+      DS = this.xlsx_report[i].shreddingDate ? this.xlsx_report[i].shreddingDate.toString() : null;
       tmp.push(this.xlsx_report[i].badgeNumber, this.xlsx_report[i].employeeName, this.xlsx_report[i].employeeSurname, this.xlsx_report[i].occupation,
                this.xlsx_report[i].companyName, this.xlsx_report[i].companyNameEn, this.xlsx_report[i].cardSeriesNumber,
-               this.xlsx_report[i].cardNumber, this.xlsx_report[i].dateOfActivation.toString(), this.xlsx_report[i].dateOfSecurityCheck.toString(),
-               this.xlsx_report[i].dateOfTraining.toString(), this.xlsx_report[i].expireDate.toString(), this.xlsx_report[i].payment,
-               this.xlsx_report[i].returned, this.xlsx_report[i].deactivated, this.xlsx_report[i].deactivateReason, this.xlsx_report[i].shreddingDate.toString());
+               this.xlsx_report[i].cardNumber, DOA, DSC,
+               DOT, DE, this.xlsx_report[i].payment,
+               this.xlsx_report[i].returned, this.xlsx_report[i].deactivated, this.xlsx_report[i].deactivateReason, DS);
       body.push(tmp);
       tmp = [];
     }
     let docDefinition = {
 
     extend: 'pdfHtml5',
-    // orientation: 'landscape',//landscape give you more space
-    pageSize: 'A3',//A0 is the largest A5 smallest(A0,A1,A2,A3,legal,A4,A5,letter))
+    orientation: 'landscape',//landscape give you more space
+    pageSize: 'A1',//A0 is the largest A5 smallest(A0,A1,A2,A3,legal,A4,A5,letter))
     alignment: 'center',
 
     content: [
@@ -145,7 +152,13 @@ export class BadgereportComponent implements OnInit {
 
     this.reportsService.getBadgesReports(rUrl)
       .subscribe((data : BadgeReport[]) => {
-        console.log('vo subscribtion, data: ', data);
+        for(let i = 0; i<data.length; i++){
+          if(data[i].expireDate) data[i].expireDate = this.atndp.transform(data[i].expireDate.toString());
+          if(data[i].shreddingDate != null) data[i].shreddingDate = this.atndp.transform(data[i].shreddingDate.toString());
+          if(data[i].dateOfActivation != null) data[i].dateOfActivation = this.atndp.transform(data[i].dateOfActivation.toString());
+          if(data[i].dateOfSecurityCheck != null) data[i].dateOfSecurityCheck = this.atndp.transform(data[i].dateOfSecurityCheck.toString());
+          if(data[i].dateOfTraining != null) data[i].dateOfTraining = this.atndp.transform(data[i].dateOfTraining.toString());
+        }
         this.xlsx_report = data;
         if(this.gridOptions.api)
           this.loadRowData();

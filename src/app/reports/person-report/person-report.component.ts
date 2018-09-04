@@ -8,7 +8,7 @@ import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import * as pdfMake from 'pdfmake/build/pdfmake.js';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
-import {AsptonormaldatetimePipe} from '../../shared/pipes/asptonormaldatetime.pipe';
+// import {AsptonormaldatetimePipe} from '../../shared/pipes/asptonormaldatetime.pipe';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({

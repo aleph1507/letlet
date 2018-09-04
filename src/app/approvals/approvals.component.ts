@@ -207,12 +207,12 @@ export class ApprovalsComponent implements OnInit {
 
   }
 
-  nextPage($event){
+  nextPage(){
     this.page++;
     this.getAR();
   }
 
-  prevPage($event){
+  prevPage(){
     if(this.page > 1) {
       this.page--;
       this.nextDisabled = false;

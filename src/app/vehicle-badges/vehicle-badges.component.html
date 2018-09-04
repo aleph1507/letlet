@@ -25,6 +25,7 @@
       <ng-container matColumnDef="expireDate">
         <mat-header-cell *matHeaderCellDef> Expire Date </mat-header-cell>
         <mat-cell *matCellDef="let b"> {{b.expireDate | asptonormaldate }} </mat-cell>
+        <!-- <mat-cell *matCellDef="let b"> {{b.expireDate | date:'dd/mm/yyyy' }} </mat-cell> -->
       </ng-container>
       <ng-container matColumnDef="return">
         <mat-header-cell *matHeaderCellDef> Return </mat-header-cell>

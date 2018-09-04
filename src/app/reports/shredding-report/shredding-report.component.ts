@@ -8,6 +8,7 @@ import * as XLSX from 'xlsx';
 import * as pdfMake from 'pdfmake/build/pdfmake.js';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
 import { MatDatepickerInputEvent } from '@angular/material';
+import { AsptonormaldatePipe } from '../../shared/pipes/asptonormaldate.pipe';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 
@@ -56,7 +57,8 @@ export class ShreddingReportComponent implements OnInit {
   // rowData = [];
 
   constructor(private reportsService: ReportsService,
-              private authService: AuthService) { }
+              private authService: AuthService,
+              private atndp: AsptonormaldatePipe) { }
 
   ngOnInit() {
     // this.gridOptions.rowData = this.reportsService.getReports();
@@ -198,6 +200,7 @@ export class ShreddingReportComponent implements OnInit {
           // this.gridOptions.onGridReady = function() {
             for(let i = 0; i<data.length; i++){
               data[i].shreddingDate = data[i].shreddingDate.split('.')[0];
+              if(data[i].shreddingDate != null) data[i].shreddingDate = this.atndp.transform(data[i].shreddingDate.toString());
             }
             this.xlsx_report = data;
             console.log('xlsx_report: ', this.xlsx_report);
