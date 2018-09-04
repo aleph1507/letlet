@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA, MatAutocompleteTrigger } from '@angular/material';
 import { Employee } from '../../../models/Employee';
 import { ResourcesService } from '../../../services/resources.service';
 import { GatesService } from '../../../services/gates.service';
@@ -24,6 +24,9 @@ export class ExitPersonModalComponent implements OnInit {
   dateDifference;
   nDays: number;
 
+  @ViewChild(MatAutocompleteTrigger) entEmp: MatAutocompleteTrigger;
+
+
   constructor(private dialogRef: MatDialogRef<ExitPersonModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { ep: EnteredPerson, gid: number },
               private resourcesService : ResourcesService,
@@ -46,24 +49,30 @@ export class ExitPersonModalComponent implements OnInit {
 
     this.ExitPersonForm.controls['exitEmployee'].valueChanges
       .subscribe(d => {
-        this.resourcesService.employees.filterEmployees(d)
+        if(typeof d == 'string'){
+          this.resourcesService.employees.filterEntryEmployees(d)
           .subscribe((data: Employee[]) => {
             this.employees = data;
           });
+        }
       });
 
     if(this.paid){
-      if(this.o_paid)
+      if(this.o_paid){
         this.ExitPersonForm.controls['paid'].disable();
+      }
       this.ExitPersonForm.get('billNumber').setValidators([Validators.required]);
     }
 
     this.nDays = Math.ceil((Date.parse(new Date().toString()) - Date.parse(this.data.ep.entryTime.toString())) / 1000 / 3600 / 24);
   }
 
-  selectEmp() {
-    if(this.employees.length == 1)
+  selectEmp($event) {
+    $event.stopPropagation();
+    if(this.employees.length == 1){
       this.ExitPersonForm.controls['exitEmployee'].setValue(this.employees[0]);
+      this.entEmp.closePanel();
+    }
   }
 
   displayFn(e?: Employee) {
@@ -78,7 +87,7 @@ export class ExitPersonModalComponent implements OnInit {
   onSubmit() {
     console.log('vo onSubmit()');
     var ee = this.ExitPersonForm.controls['exitEmployee'].value;
-    this.billNumber = this.ExitPersonForm.controls['billNumber'].value;
+    this.billNumber = this.o_paid ? null : this.ExitPersonForm.controls['billNumber'].value;
     let exitPerson = {
       'id': this.data.ep.id,
       'exitGate': {

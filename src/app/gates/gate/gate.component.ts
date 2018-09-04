@@ -40,6 +40,8 @@ export class GateComponent implements OnInit {
 
   loadings: boolean[] = [false, false, false, false];
 
+  interval;
+
   constructor(private gatesService: GatesService,
               private authService: AuthService,
               private resourceService: ResourcesService,
@@ -48,6 +50,13 @@ export class GateComponent implements OnInit {
               public snackbarService: SnackbarService) { }
 
   ngOnInit() {
+    this.refreshData();
+    this.interval = setInterval(() => {
+        this.refreshData();
+    }, 1000 * 60 * 10);
+  }
+
+  refreshData() {
     this.getExpectedPersons();
     this.getEnteredPersons();
     this.getEnteredVehicles();

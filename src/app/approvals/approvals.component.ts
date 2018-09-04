@@ -56,6 +56,7 @@ export class ApprovalsComponent implements OnInit {
   fromString : string = null;
   toString : string = null;
   category = 1;
+  nextDisabled:boolean = false;
 
   ngOnInit() {
     this.toDate = new Date();
@@ -142,6 +143,8 @@ export class ApprovalsComponent implements OnInit {
 
   radioChange($event){
     this.category = this.showApprovals.indexOf($event.value) + 1;
+    this.page = 1;
+    this.nextDisabled = false;
     this.getAR();
   }
 
@@ -185,21 +188,36 @@ export class ApprovalsComponent implements OnInit {
     var aUrl = this.approvalsUrl + this.category + '/' + this.fromString + '/' + this.toString + '/' + this.page
       + cSegment;
 
+    // console.log('aUrl: ', aUrl);
+
     if(this.fromString != null && this.toString != null){
       this.approvalsService.getRequests(aUrl)
         .subscribe((data : ApprovalRequest[]) => {
-          this.approvalRequests = data;
-          this.dataSource = new
+          if(data.length > 0){
+            this.approvalRequests = data;
+            this.dataSource = new
             MatTableDataSource<ApprovalRequest>(this.approvalRequests);
-          this.showApprovalsSpinner = false;
+            this.showApprovalsSpinner = false;
+          } else {
+            this.nextDisabled = true;
+            this.page--;
+          }
         });
     }
 
   }
 
-  // filterCompanies(name: string) {
-  //   return this.companies.filter(company =>
-  //     company.toLowerCase().indexOf(name.toLowerCase()) === 0);
-  // }
+  nextPage($event){
+    this.page++;
+    this.getAR();
+  }
+
+  prevPage($event){
+    if(this.page > 1) {
+      this.page--;
+      this.nextDisabled = false;
+      this.getAR();
+    }
+  }
 
 }

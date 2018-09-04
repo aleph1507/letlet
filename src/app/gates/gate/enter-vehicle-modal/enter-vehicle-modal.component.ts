@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatAutocomplete } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatAutocomplete, MatAutocompleteTrigger } from '@angular/material';
 import { ExpectedVehicle } from '../../../models/ExpectedVehicle.model';
 import { ResourcesService } from '../../../services/resources.service';
 import { GatesService } from '../../../services/gates.service';
@@ -34,6 +34,7 @@ export class EnterVehicleModalComponent implements OnInit {
   companies : Company[] = [];
 
    @ViewChild('vvBadge') vvBadgeAutoComplete: MatAutocomplete;
+   @ViewChild(MatAutocompleteTrigger) entEmp: MatAutocompleteTrigger;
 
   filteredVVBs: Observable<VisitorVehicleBadge[]>;
 
@@ -58,10 +59,12 @@ export class EnterVehicleModalComponent implements OnInit {
 
     this.EnterVehicleForm.controls['entryEmployee'].valueChanges
       .subscribe(d => {
-        this.resourceService.employees.filterEmployees(d)
+        if(typeof d == 'string'){
+          this.resourceService.employees.filterEntryEmployees(d)
           .subscribe((data: Employee[]) => {
             this.employees = data;
           });
+        }
       });
 
       this.filteredVVBs = this.EnterVehicleForm.controls['visitorVehicleBadge'].valueChanges.pipe(
@@ -78,14 +81,14 @@ export class EnterVehicleModalComponent implements OnInit {
   }
 
   selectEmp() {
-    console.log('vo selectEmp, this.employees.length: ', this.employees.length);
-    if(this.employees.length == 1)
+    if(this.employees.length == 1){
       this.EnterVehicleForm.controls['entryEmployee'].setValue(this.employees[0]);
+      this.entEmp.closePanel();
+    }
   }
 
   selectVVB() {
     this.filteredVVBs.subscribe(fVVBs => {
-      console.log('fVVBs: ', fVVBs);
       if(fVVBs.length == 1)
         this.EnterVehicleForm.controls['visitorVehicleBadge'].setValue(fVVBs);
     });

@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA, MatAutocompleteTrigger } from '@angular/material';
 import { EnteredVehicle } from '../../../models/EnteredVehicle.model';
 import { ResourcesService } from '../../../services/resources.service';
 import { GatesService } from '../../../services/gates.service';
@@ -13,6 +13,8 @@ import { ExpectedVehicle } from '../../../models/ExpectedVehicle.model';
   styleUrls: ['./exit-vehicle-modal.component.css']
 })
 export class ExitVehicleModalComponent implements OnInit {
+
+  @ViewChild(MatAutocompleteTrigger) entEmp: MatAutocompleteTrigger;
 
   id: number = null;
   employees : Employee[] = [];
@@ -46,10 +48,14 @@ export class ExitVehicleModalComponent implements OnInit {
 
     this.ExitVehicleForm.controls['exitEmployee'].valueChanges
       .subscribe(d => {
-        this.resourcesService.employees.filterEmployees(d)
-          .subscribe((data: Employee[]) => {
-            this.employees = data;
-          });
+        console.log('typeof d: ', typeof d);
+        if(typeof d === 'string') {
+          this.resourcesService.employees.filterEntryEmployees(d)
+            .subscribe((data: Employee[]) => {
+              this.employees = data;
+            });
+        }
+        console.log('d: ', d);
       });
 
     if(this.paid){
@@ -63,8 +69,10 @@ export class ExitVehicleModalComponent implements OnInit {
   }
 
   selectEmp() {
-    if(this.employees.length == 1)
+    if(this.employees.length == 1){
       this.ExitVehicleForm.controls['exitEmployee'].setValue(this.employees[0]);
+      this.entEmp.closePanel();
+    }
   }
 
   displayFn(e?: Employee) {

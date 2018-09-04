@@ -104,11 +104,11 @@ export class RequesterComponent implements OnInit, OnDestroy {
         .subscribe(d => {
           this.resources.companies.filterCompanies(d)
             .subscribe((data: Company[]) => {
-              console.log('companies: ', data);
+              // console.log('companies: ', data);
               this.companies_auto = data;
               this.companyOk = this.companiesAutoCtrl.value == null ? false :
                 (this.companiesAutoCtrl.value.id == undefined ? false : true);
-              console.log('this.companyOk: ', this.companyOk);
+              // console.log('this.companyOk: ', this.companyOk);
               // if(this.companiesAutoCtrl.value && this.companiesAutoCtrl.value.id)
               //   this.getAR();
             });
@@ -176,8 +176,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
                 this.companiesAutoCtrl.setValue(c);
                 // this.companiesAutoCtrl.disable();
 
-                console.log('this.requesterForm pre-map: ' + this.requesterForm);
-                console.log('this.request.requesterName pre-map: ' + this.request.requesterName);
+                // console.log('this.requesterForm pre-map: ' + this.requesterForm);
+                // console.log('this.request.requesterName pre-map: ' + this.request.requesterName);
 
                 this.requesterForm = new FormGroup({
                   // 'requesterName': new FormControl({value : this.request.requesterName, enabled: true}, { //disabled: true

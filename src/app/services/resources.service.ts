@@ -644,6 +644,12 @@ class Employees {
     });
   }
 
+  filterEntryEmployees(filter = null) : Observable<Employee[]>{
+    return this.http.get<Employee[]>(this.employeesUrl + '/entrysearch/?token=' + filter, {
+      headers: this.headers
+    });
+  }
+
   addEmployee(employee: Employee){
     return this.http.post(this.employeesUrl, employee, { headers: this.headers });
   }

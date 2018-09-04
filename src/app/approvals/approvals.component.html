@@ -100,4 +100,8 @@
     <mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
       [ngClass]="{'green-row': approvalRequests[i].approved == true }"></mat-row>
   </mat-table>
+  <div class="approvals-pagination">
+    <button (click)="prevPage()" [disabled]="page <=1" class="prev-btn" mat-raised-button>&laquo; Previous Page</button>
+    <button (click)="nextPage()" [disabled]="nextDisabled" class="next-btn" mat-raised-button>Next Page &raquo;</button>
+  </div>
 </div>

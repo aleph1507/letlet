@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA, MatAutocompleteTrigger } from '@angular/material';
 import { ExpectedPerson } from '../../../models/ExpectedPerson.model';
 import { ResourcesService } from '../../../services/resources.service';
 import { Employee } from '../../../models/Employee';
@@ -32,6 +32,8 @@ export class EnterPersonModalComponent implements OnInit {
     })
   });
 
+  @ViewChild(MatAutocompleteTrigger) entEmp: MatAutocompleteTrigger;
+
   filteredVBs: Observable<VisitorBadge[]>;
 
   constructor(private dialogRef: MatDialogRef<EnterPersonModalComponent>,
@@ -48,10 +50,12 @@ export class EnterPersonModalComponent implements OnInit {
 
     this.EnterPersonForm.controls['entryEmployee'].valueChanges
       .subscribe(d => {
-        this.resourceService.employees.filterEmployees(d)
+        if(typeof d == 'string'){
+          this.resourceService.employees.filterEntryEmployees(d)
           .subscribe((data: Employee[]) => {
             this.employees = data;
           });
+        }
       });
 
       // this.EnterPersonForm.controls['visitorBadge'].valueChanges
@@ -67,9 +71,9 @@ export class EnterPersonModalComponent implements OnInit {
   }
 
   selectEmp() {
-    console.log('vo selectEmp, this.employees.length: ', this.employees.length);
     if(this.employees.length == 1)
       this.EnterPersonForm.controls['entryEmployee'].setValue(this.employees[0]);
+      this.entEmp.closePanel();
   }
 
   private _filterVBs(name: string): VisitorBadge[] {
