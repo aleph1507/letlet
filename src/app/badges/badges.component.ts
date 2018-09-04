@@ -20,6 +20,7 @@ export class BadgesComponent implements OnInit {
   length: number;
   pageSize: number;
   badges : Badge[];
+  returned: boolean;
 
   showSpinner: boolean = true;
   // pageSizeOptions = [5, 10, 25, 100];

@@ -42,9 +42,12 @@ export class BadgesCreateComponent implements OnInit {
   ngOnInit() {
     if(this.data != null){
       this.badge = this.data;
+      this.returned = this.data.returned;
       this.deactivated = this.data.deactivated ? this.data.deactivated : false;
       console.log('data: ', this.data);
     }
+
+    console.log('this.returned: ', this.returned);
 
     this.badgeForm = this.createBadgeForm();
 
