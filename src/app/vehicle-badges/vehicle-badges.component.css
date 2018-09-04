@@ -6,6 +6,10 @@
   background-color: rgba(180,180,200, 0.55);
 }
 
+.gray-row {
+  background-color: lightgrey;
+}
+
 div#header {
   display: flex;
   justify-content: space-between;

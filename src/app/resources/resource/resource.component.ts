@@ -289,6 +289,7 @@ export class ResourceComponent implements OnInit {
         .subscribe(data => {
           this.snackbarService.successSnackBar("Visitor Vehicle Badge successfully deleted");
           this.applyFilter('');
+          this.changeDetectorRefs.detectChanges();
         });
     }
     this.applyFilter('');
