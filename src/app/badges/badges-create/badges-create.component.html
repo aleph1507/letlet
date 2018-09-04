@@ -70,7 +70,7 @@
       color="primary"
       *ngFor="let z of zones; let i = index;"
       [checked]="zonesBool[i]"
-      (change)="checkZone(i)">{{z.code}}</mat-checkbox>
+      (change)="checkZone(i)">{{z.name}}</mat-checkbox>
   </div>
 
   <mat-checkbox

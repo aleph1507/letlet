@@ -43,7 +43,7 @@ export class BadgesService {
   }
 
   deactivate(id, deactivateReason) {
-    return this.http.post<boolean>(this.badgesUrl + '/deactivate/' + id, { queryParams: {'deactivateReason': deactivateReason}});
+    return this.http.post<boolean>(this.badgesUrl + '/deactivate/' + id, {'deactivateReason': deactivateReason});
   }
 
   activate(id){
