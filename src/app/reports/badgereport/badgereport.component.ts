@@ -23,7 +23,7 @@ export class BadgereportComponent implements OnInit {
   category: number = 0;
   categories = ['Active', 'All'];
 
-  badgesReportUrl = this.authService.baseUrl + '/api/visits/badgereport';
+  badgesReportUrl = this.authService.baseUrl + '/api/badges/badgereport';
 
   xlsx_report = null;
 

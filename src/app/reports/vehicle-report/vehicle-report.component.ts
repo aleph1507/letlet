@@ -24,7 +24,7 @@ export class VehicleReportComponent implements OnInit {
 
   personsReport : VehicleReport[];
 
-  personsReportUrl = this.authService.baseUrl + '/api/visits/vehiclereport';
+  personsReportUrl = this.authService.baseUrl + '/api/badges/vehiclereport';
   gotRowData: boolean = false;
 
   showSpinner : boolean = true;

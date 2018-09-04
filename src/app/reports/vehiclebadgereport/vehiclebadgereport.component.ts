@@ -23,7 +23,7 @@ export class VehiclebadgereportComponent implements OnInit {
   category: number = 0;
   categories = ['Active', 'All'];
 
-  vehicleBadgesReportUrl = this.authService.baseUrl + '/api/visits/vehiclereport';
+  vehicleBadgesReportUrl = this.authService.baseUrl + '/api/badges/vehiclebadgereport';
 
   xlsx_report = null;
 
