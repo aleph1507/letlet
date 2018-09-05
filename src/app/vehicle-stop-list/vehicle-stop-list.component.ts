@@ -34,6 +34,7 @@ export class VehicleStopListComponent implements OnInit {
       {headerName: 'Vehicle Plate', field: 'plate'},
       {headerName: 'Vehicle Company', field: 'companyName'},
       {headerName: 'Expire Date', field: 'expireDate'},
+      {headerName: 'Reason', field: 'deactivateReason'}
     ],
     enableCellChangeFlash: true,
     refreshCells: true,

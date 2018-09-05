@@ -52,6 +52,7 @@ export class StopListComponent implements OnInit {
       {headerName: 'Card Number', field: 'cardNumber'},
       {headerName: 'Badge Number', field: 'badgeNumber'},
       {headerName: 'Expire Date', field: 'expireDate'},
+      {headerName: 'Reason', field: 'deactivateReason'}
     ],
     enableCellChangeFlash: true,
     refreshCells: true,

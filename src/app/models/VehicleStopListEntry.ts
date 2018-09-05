@@ -4,4 +4,5 @@ export interface VehicleStopListEntry {
   "companyName": string;
   "permitNumber": number;
   "expireDate": Date;
+  "deactivateReason": string;
 }

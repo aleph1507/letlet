@@ -5,6 +5,7 @@ export interface StopListEntry {
   "cardNumber": string;
   "badgeNumber": string;
   "expireDate": string;
+  "deactivateReason": string;
 }
 
 // export enum Status {
