@@ -3,6 +3,7 @@ export interface StopListEntry {
   "companyName": string;
   "cardSeriesNumber": string;
   "cardNumber": string;
+  "badgeNumber": string;
   "expireDate": string;
 }
 

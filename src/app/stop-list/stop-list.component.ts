@@ -41,7 +41,7 @@ export class StopListComponent implements OnInit {
   // ];
 
   xlsx_report;
-  columns = ['Employee Name', 'Company Name', 'Card Series Number', 'Card Number', 'Expire Date'];
+  columns = ['Employee Name', 'Company Name', 'Card Series Number', 'Card Number', 'Badge number', 'Expire Date'];
 
   public gridOptions: GridOptions = <GridOptions>{
     rowData: [],
@@ -50,6 +50,7 @@ export class StopListComponent implements OnInit {
       {headerName: 'Company Name', field: 'companyName'},
       {headerName: 'Card Series Number', field: 'cardSeriesNumber'},
       {headerName: 'Card Number', field: 'cardNumber'},
+      {headerName: 'Badge Number', field: 'badgeNumber'},
       {headerName: 'Expire Date', field: 'expireDate'},
     ],
     enableCellChangeFlash: true,
