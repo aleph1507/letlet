@@ -4,6 +4,7 @@
       placeholder="Entry Employee"
       formControlName="entryEmployee"
       [matAutocomplete]="entEmp"
+      #empInput
       required>
   </mat-form-field>
   <mat-autocomplete #entEmp="matAutocomplete"  [displayWith]="displayEmpFn">
@@ -17,9 +18,11 @@
       placeholder="Visitor Badge"
       formControlName="visitorBadge"
       [matAutocomplete]="vBadge"
+      (keyup.backspace)="EnterPersonForm.controls['visitorBadge'].setValue('')"
+      #VBInput
       required>
       <mat-autocomplete autoActiveFirstOption #vBadge="matAutocomplete" [displayWith]="displayFnVB">
-          <mat-option *ngFor="let v of filteredVBs | async" [value]="v" >
+          <mat-option *ngFor="let v of filteredVBs" [value]="v" >
             {{ v.barcode }}
           </mat-option>
       </mat-autocomplete>
@@ -28,7 +31,7 @@
 
   <mat-divider class="sm-form-divider-margins"></mat-divider>
   <mat-dialog-actions>
-    <button type="button" (click)="onSubmit()" (keydown.enter)="$event.preventDefault()" [disabled]="!EnterPersonForm.valid" mat-raised-button>OK</button>
+    <button type="button" #sBtn (click)="onSubmit()" (keydown.enter)="$event.preventDefault()" [disabled]="!EnterPersonForm.valid" mat-raised-button>OK</button>
     <button type="button" mat-raised-button (click)="onCancel()">Cancel</button>
   </mat-dialog-actions>
 </form>

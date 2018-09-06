@@ -185,6 +185,8 @@ export class ApprovalsComponent implements OnInit {
     let cSegment = (this.companiesAutoCtrl.value == null ? '' :
       (this.companiesAutoCtrl.value.id == undefined ? '' : '?companyId=' + this.companiesAutoCtrl.value.id));
 
+    if(this.page == 0) this.page = 1;
+
     var aUrl = this.approvalsUrl + this.category + '/' + this.fromString + '/' + this.toString + '/' + this.page
       + cSegment;
 
@@ -193,15 +195,15 @@ export class ApprovalsComponent implements OnInit {
     if(this.fromString != null && this.toString != null){
       this.approvalsService.getRequests(aUrl)
         .subscribe((data : ApprovalRequest[]) => {
-          if(data.length > 0){
+          // if(data.length > 0){
             this.approvalRequests = data;
             this.dataSource = new
             MatTableDataSource<ApprovalRequest>(this.approvalRequests);
             this.showApprovalsSpinner = false;
-          } else {
-            this.nextDisabled = true;
-            this.page--;
-          }
+          // } else {
+          //   this.nextDisabled = true;
+          //   this.page--;
+          // }
         });
     }
 

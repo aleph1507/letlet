@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatAutocompleteTrigger } from '@angular/material';
 import { ExpectedPerson } from '../../../models/ExpectedPerson.model';
 import { ResourcesService } from '../../../services/resources.service';
@@ -33,8 +33,14 @@ export class EnterPersonModalComponent implements OnInit {
   });
 
   @ViewChild(MatAutocompleteTrigger) entEmp: MatAutocompleteTrigger;
+  @ViewChild(MatAutocompleteTrigger) vBadge: MatAutocompleteTrigger;
 
-  filteredVBs: Observable<VisitorBadge[]>;
+  @ViewChild('empInput') empInput: ElementRef;
+  @ViewChild('VBInput') VBInput: ElementRef;
+  @ViewChild('sBtn') sBtn: ElementRef;
+
+  // filteredVBs: Observable<VisitorBadge[]>;
+  filteredVBs: VisitorBadge[];
 
   constructor(private dialogRef: MatDialogRef<EnterPersonModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: {gid: number, ep: ExpectedPerson },
@@ -49,7 +55,7 @@ export class EnterPersonModalComponent implements OnInit {
       });
 
     this.EnterPersonForm.controls['entryEmployee'].valueChanges
-      .debounceTime(300)
+      .debounceTime(400)
       .distinctUntilChanged()
       .subscribe(d => {
         // console.log(`typeof d: ${typeof d}\nd: ${d}`);
@@ -59,6 +65,12 @@ export class EnterPersonModalComponent implements OnInit {
             this.employees = data;
             if(data.length == 1){
               this.selectEmp();
+              this.VBInput.nativeElement.focus();
+              // console.log('typeof controls.visitorBadge: ', typeof this.EnterPersonForm.controls['visitorBadge'].value);
+              // console.log('sBtn: ', this.sBtn);
+              // typeof this.EnterPersonForm.controls['visitorBadge'].value == 'string' ?
+              //   this.VBInput.nativeElement.focus() :
+              //   this.sBtn.nativeElement.focus();
             }
           });
         }
@@ -69,11 +81,27 @@ export class EnterPersonModalComponent implements OnInit {
       //
       //   });
       //
-      this.filteredVBs = this.EnterPersonForm.controls['visitorBadge'].valueChanges.pipe(
+      // this.filteredVBs = this.EnterPersonForm.controls['visitorBadge'].valueChanges.pipe(
+      //   startWith<string | VisitorBadge>(),
+      //   map(value => typeof value === 'string' ? value : value.name),
+      //   map(name => name ? this._filterVBs(name) : this.visitorBadges.slice())
+      // );
+
+      this.EnterPersonForm.controls['visitorBadge'].valueChanges
+        .debounceTime(400)
+        .distinctUntilChanged()
+        .pipe(
         startWith<string | VisitorBadge>(),
         map(value => typeof value === 'string' ? value : value.name),
         map(name => name ? this._filterVBs(name) : this.visitorBadges.slice())
-      );
+      ).subscribe(data =>{
+        this.filteredVBs = data;
+        if(this.filteredVBs.length == 1){
+            this.EnterPersonForm.controls['visitorBadge'].setValue(this.filteredVBs[0]);
+            this.empInput.nativeElement.focus();
+            this.vBadge.closePanel();
+        }
+      });
   }
 
   selectEmp() {
@@ -102,9 +130,6 @@ export class EnterPersonModalComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('vo onSubmit');
-    console.log(`this.EnterPersonForm.controls['visitorBadge'].value: ${this.EnterPersonForm.controls['visitorBadge'].value}`);
-    console.log(`this.EnterPersonForm.controls['entryEmployee'].value: ${this.EnterPersonForm.controls['entryEmployee'].value}`);
     let vb = this.EnterPersonForm.controls['visitorBadge'].value;
     let ee = this.EnterPersonForm.controls['entryEmployee'].value;
     let ePerson = {

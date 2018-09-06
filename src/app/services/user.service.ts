@@ -43,6 +43,10 @@ export class UserService {
     return this.http.put(this.authService.baseUrl + '/api/account/user/' + uid + '/roles', roles);
   }
 
+  getUsername() {
+    return localStorage.getItem('username');
+  }
+
   // /api/account/userchangepassword
   // oldPassword, newPassword, confirmNewPassword
 

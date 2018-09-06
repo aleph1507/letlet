@@ -36,7 +36,8 @@ export class EnterVehicleModalComponent implements OnInit {
    @ViewChild('vvBadge') vvBadgeAutoComplete: MatAutocomplete;
    @ViewChild(MatAutocompleteTrigger) entEmp: MatAutocompleteTrigger;
 
-  filteredVVBs: Observable<VisitorVehicleBadge[]>;
+  // filteredVVBs: Observable<VisitorVehicleBadge[]>;
+  filteredVVBs: VisitorVehicleBadge[];
 
   constructor(private dialogRef: MatDialogRef<EnterVehicleModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: {gid: number, exv: ExpectedVehicle },
@@ -44,7 +45,9 @@ export class EnterVehicleModalComponent implements OnInit {
               private gatesService: GatesService) { }
 
   chooseFirstOption(): void {
-    this.vvBadgeAutoComplete.options.first.select();
+    if((this.vvBadgeAutoComplete.options.first != undefined) &&
+        (this.vvBadgeAutoComplete.options.first != null))
+          this.vvBadgeAutoComplete.options.first.select();
   }
 
   ngOnInit() {
@@ -72,11 +75,25 @@ export class EnterVehicleModalComponent implements OnInit {
         }
       });
 
-      this.filteredVVBs = this.EnterVehicleForm.controls['visitorVehicleBadge'].valueChanges.pipe(
+      // this.filteredVVBs = this.EnterVehicleForm.controls['visitorVehicleBadge'].valueChanges.pipe(
+      //   startWith<string | VisitorVehicleBadge>(),
+      //   map(value => typeof value === 'string' ? value : value.name),
+      //   map(name => name ? this._filterVVBs(name) : this.visitorVehicleBadges.slice())
+      // );
+
+      this.EnterVehicleForm.controls['visitorVehicleBadge'].valueChanges
+        .debounceTime(300)
+        .distinctUntilChanged()
+        .pipe(
         startWith<string | VisitorVehicleBadge>(),
         map(value => typeof value === 'string' ? value : value.name),
         map(name => name ? this._filterVVBs(name) : this.visitorVehicleBadges.slice())
-      );
+      ).subscribe(data => {
+        this.filteredVVBs = data;
+        if(data.length == 1){
+          this.EnterVehicleForm.controls['visitorVehicleBadge'].setValue(this.filteredVVBs[0]);
+        }
+      });
   }
 
   private _filterVVBs(name: string): VisitorVehicleBadge[] {
@@ -92,14 +109,14 @@ export class EnterVehicleModalComponent implements OnInit {
     }
   }
 
-  selectVVB() {
-    this.filteredVVBs.subscribe(fVVBs => {
-      if(fVVBs.length == 1)
-        this.EnterVehicleForm.controls['visitorVehicleBadge'].setValue(fVVBs);
-    });
-    // if(this.employees.length == 1)
-    //   this.EnterVehicleForm.controls['entryEmployee'].setValue(this.employees[0]);
-  }
+  // selectVVB() {
+  //   this.filteredVVBs.subscribe(fVVBs => {
+  //     if(fVVBs.length == 1)
+  //       this.EnterVehicleForm.controls['visitorVehicleBadge'].setValue(fVVBs);
+  //   });
+  //   // if(this.employees.length == 1)
+  //   //   this.EnterVehicleForm.controls['entryEmployee'].setValue(this.employees[0]);
+  // }
 
   displayFnCompany(c?: Company) {
     return c ? c.name : undefined;

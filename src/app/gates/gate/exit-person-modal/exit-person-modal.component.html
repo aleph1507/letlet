@@ -2,6 +2,7 @@
   <mat-form-field>
     <input matInput (keyup.enter)="selectEmp()" type="text"
       placeholder="Exit Employee"
+      (keydown.enter)="$event.preventDefault()"
       formControlName="exitEmployee"
       [matAutocomplete]="entEmp"
       required>

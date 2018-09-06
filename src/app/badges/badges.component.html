@@ -84,7 +84,8 @@
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
+      [ngClass]="{'gray-row': badges[i].returned == true || badges[i].deactivated == true }"></mat-row>
     </mat-table>
 
     <button (click)="prevPage()" [disabled]="currentPage <=1" mat-raised-button>< Previous Page</button>

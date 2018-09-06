@@ -26,6 +26,10 @@ export class AuthService implements OnInit{
   //   })
   // }
 
+  username: string = '';
+  fullname: string = '';
+  lastPasswordChangedDate: Date;
+
   headers = new HttpHeaders({
     'Content-Type': 'application/x-www-form-urlencoded',
     'Accept': 'application/json'
@@ -86,8 +90,6 @@ export class AuthService implements OnInit{
     return localStorage.getItem('token');
   }
 
-
-
   // logIn(username: string = 'Admin', password:string = 'admin1', gt = "password", cid = "AsecClient") {
   logIn(username: string, password:string, gt = "password", cid = "AsecClient") {
     // console.log("username: ", username);
@@ -112,6 +114,13 @@ export class AuthService implements OnInit{
           .subscribe(role =>{
             localStorage.setItem('role', role);
           });
+        this.http.get(this.baseUrl + '/api/account/user/' + username)
+          .subscribe(data =>{
+            // if(data['fullname'])
+            localStorage.setItem('fullname', data['fullName'].toString());
+            this.lastPasswordChangedDate = data['lastPasswordChangedDate'];
+          });
+        localStorage.setItem('username', username);
         this.router.navigate(['/dashboard']);
       }
       else {
@@ -121,6 +130,14 @@ export class AuthService implements OnInit{
       }
       // console.log('TTTOKKKEEN::: ' + this.token);
     })
+  }
+
+  getLastPasswordChangedDate(){
+    return this.lastPasswordChangedDate;
+  }
+
+  getFullname(){
+    return localStorage.getItem('fullname');
   }
 
   getRole() : Observable<string>{
@@ -143,6 +160,7 @@ export class AuthService implements OnInit{
   logOut(){
     localStorage.setItem('token', null);
     localStorage.setItem('role', null);
+    localStorage.setItem('username', null);
     this.token = null;
     this.loggedIn = false;
     this.loggedStatus.next(this.loggedIn);

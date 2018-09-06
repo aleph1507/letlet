@@ -17,10 +17,11 @@
       placeholder="Visitor Vehicle Badge"
       formControlName="visitorVehicleBadge"
       [matAutocomplete]="vvBadge"
+      (keyup.backspace)="EnterVehicleForm.controls['visitorVehicleBadge'].setValue('')"
       required>
   </mat-form-field>
   <mat-autocomplete #vvBadge="matAutocomplete" [displayWith]="displayFnVB">
-      <mat-option *ngFor="let v of filteredVVBs | async" [value]="v" >
+      <mat-option *ngFor="let v of filteredVVBs" [value]="v" >
         {{ v.name }} {{ v.code }}
       </mat-option>
   </mat-autocomplete>

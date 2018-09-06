@@ -10,7 +10,8 @@
         <span class="mid-spacer">
           <mat-icon class="white">airplanemode_active</mat-icon>Skopje International Airport</span>
         <span class="tb-spacer-max"></span>
-        <button type="button" mat-icon-button [matMenuTriggerFor]="userMenu">
+        <button type="button" style="position:relative; left:-7.6rem;" mat-icon-button [matMenuTriggerFor]="userMenu">
+          <span style="font-size: 1.3em;">{{authService.getFullname()}}</span>
           <mat-icon class="white">more_vert</mat-icon>
         </button>
     </mat-toolbar>

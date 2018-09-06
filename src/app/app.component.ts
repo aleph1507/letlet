@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { MatDialog } from '@angular/material';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +22,8 @@ export class AppComponent implements OnInit {
 
   constructor(public authService: AuthService,
               private router: Router,
-              public dialog: MatDialog){}
+              public dialog: MatDialog,
+              public userService: UserService){}
 
   ngOnInit(): void {
     // this.authService.init();
@@ -35,6 +37,9 @@ export class AppComponent implements OnInit {
       });
 
       console.log('role: ', this.role);
+
+      console.log('authService.getFullname: ', this.authService.getFullname());
+      this.checkPasswordExpiry();
     // this.loggedIn = this.authService.loggedIn;
   }
 
@@ -42,6 +47,14 @@ export class AppComponent implements OnInit {
     this.dialog.open(ChangePasswordComponent, {
       width: '70%'
     });
+  }
+
+  checkPasswordExpiry() {
+    console.log('typeof this.authService.getLastPasswordChangedDate(): ', typeof this.authService.getLastPasswordChangedDate());
+    console.log('this.authService.getLastPasswordChangedDate()', this.authService.getLastPasswordChangedDate());
+    let lastPasswordChangedDate = new Date(this.authService.getLastPasswordChangedDate());
+    console.log('typeof lastPasswordChangedDate: ', typeof lastPasswordChangedDate);
+    console.log('lastPasswordChangedDate: ', lastPasswordChangedDate);
   }
 
   logOut() {

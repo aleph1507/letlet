@@ -151,12 +151,12 @@ export class BadgesCreateComponent implements OnInit {
   createBadgeForm() {
     return new FormGroup({
       'cardSeriesNumber': new FormControl(this.badge.cardSeriesNumber, {
-        validators: [Validators.required,
-                    lengthValidator(3)]
+        validators: [Validators.required]
+                    // lengthValidator(3)]
       }),
       'cardNumber': new FormControl(this.badge.cardNumber, {
-        validators: [Validators.required,
-                      lengthValidator(5)]
+        validators: [Validators.required]
+                      // lengthValidator(5)]
       }),
       'expireDate': new FormControl(this.badge.expireDate, {
         validators: Validators.required
