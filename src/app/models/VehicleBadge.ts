@@ -9,4 +9,5 @@ export class VehicleBadge {
   shreddigDate: string;
   deactivated: boolean;
   deactivatedReason: string;
+  payment: string;
 }

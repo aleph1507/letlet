@@ -72,6 +72,7 @@ export class VehicleBadgesCreateComponent implements OnInit {
     this.vehicleBadge.returned = this.returned;
     this.vehicleBadge.expireDate = this.parseDate(dExpire);
     this.vehicleBadge.vehicle = this.vehicleAutoCtrl.value;
+    this.vehicleBadge.payment = this.vehicleBadgeForm.controls['payment'].value;
     if(this.data == null)
       this.vehicleBadge.shreddigDate = null;
     // this.vehicleBadge.shreddigDate = this.parseDate(dShredding);
@@ -155,6 +156,9 @@ export class VehicleBadgesCreateComponent implements OnInit {
       'expireDate': new FormControl(this.vehicleBadge.expireDate, {
         validators: [Validators.required]
       }),
+      'payment': new FormControl(this.vehicleBadge.payment, {
+
+      })
       // 'shreddingDate': new FormControl(this.vehicleBadge.shreddigDate, {
       //   // validators: [Validators.required]
       // })
