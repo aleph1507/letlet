@@ -5,6 +5,7 @@ import { AuthService } from './services/auth.service';
 import { MatDialog } from '@angular/material';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { UserService } from './services/user.service';
+import { SnackbarService } from './services/snackbar.service';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +24,8 @@ export class AppComponent implements OnInit {
   constructor(public authService: AuthService,
               private router: Router,
               public dialog: MatDialog,
-              public userService: UserService){}
+              public userService: UserService,
+              public snackbarService: SnackbarService){}
 
   ngOnInit(): void {
     // this.authService.init();
@@ -50,11 +52,21 @@ export class AppComponent implements OnInit {
   }
 
   checkPasswordExpiry() {
-    console.log('typeof this.authService.getLastPasswordChangedDate(): ', typeof this.authService.getLastPasswordChangedDate());
-    console.log('this.authService.getLastPasswordChangedDate()', this.authService.getLastPasswordChangedDate());
-    let lastPasswordChangedDate = new Date(this.authService.getLastPasswordChangedDate());
-    console.log('typeof lastPasswordChangedDate: ', typeof lastPasswordChangedDate);
-    console.log('lastPasswordChangedDate: ', lastPasswordChangedDate);
+    let warnLastDays = 15, passwordLifeSpan = 45;
+    this.authService.passwordStatus()
+      .subscribe(pcd => {
+        let passChDate = new Date(pcd), currentDate = new Date();
+        let passDateDiff = Math.ceil((currentDate.getTime() - passChDate.getTime()) / (1000 * 60 * 60 * 24));
+        if((passwordLifeSpan - passDateDiff) <= warnLastDays){
+          let msg = 'You have ' + (warnLastDays - (passDateDiff % 15)) + ' day to change your password before it expires';
+          this.snackbarService.failSnackBar(msg);
+        }
+      });
+    // console.log('typeof this.authService.getLastPasswordChangedDate(): ', typeof this.authService.getLastPasswordChangedDate());
+    // console.log('this.authService.getLastPasswordChangedDate()', this.authService.getLastPasswordChangedDate());
+    // let lastPasswordChangedDate = new Date(this.authService.getLastPasswordChangedDate());
+    // console.log('typeof lastPasswordChangedDate: ', typeof lastPasswordChangedDate);
+    // console.log('lastPasswordChangedDate: ', lastPasswordChangedDate);
   }
 
   logOut() {

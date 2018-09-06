@@ -28,7 +28,8 @@ export class AuthService implements OnInit{
 
   username: string = '';
   fullname: string = '';
-  lastPasswordChangedDate: Date;
+  lastPasswordChangedDate: string = '';
+  passChangedDate: BehaviorSubject<string>;
 
   headers = new HttpHeaders({
     'Content-Type': 'application/x-www-form-urlencoded',
@@ -38,6 +39,7 @@ export class AuthService implements OnInit{
   constructor(private http: HttpClient,
               private router: Router) {
                 this.loggedStatus = new BehaviorSubject<boolean>(this.loggedIn);
+                this.passChangedDate = new BehaviorSubject<string>(this.lastPasswordChangedDate);
                 if(localStorage.getItem('token') != 'null'){
                   this.loggedIn = true;
                   this.loggedStatus.next(this.loggedIn);
@@ -62,6 +64,10 @@ export class AuthService implements OnInit{
 
   loggedInStatus() : Observable<boolean>{
     return this.loggedStatus.asObservable();
+  }
+
+  passwordStatus() : Observable<string>{
+    return this.passChangedDate.asObservable();
   }
 
   getHeaders() {
@@ -119,6 +125,7 @@ export class AuthService implements OnInit{
             // if(data['fullname'])
             localStorage.setItem('fullname', data['fullName'].toString());
             this.lastPasswordChangedDate = data['lastPasswordChangedDate'];
+            this.passChangedDate.next(this.lastPasswordChangedDate);
           });
         localStorage.setItem('username', username);
         this.router.navigate(['/dashboard']);
@@ -133,6 +140,7 @@ export class AuthService implements OnInit{
   }
 
   getLastPasswordChangedDate(){
+    console.log('authService: this.lastPasswordChangedDate: ', this.lastPasswordChangedDate);
     return this.lastPasswordChangedDate;
   }
 
