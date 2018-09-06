@@ -58,11 +58,16 @@ export class EnterVehicleModalComponent implements OnInit {
         });
 
     this.EnterVehicleForm.controls['entryEmployee'].valueChanges
+      .debounceTime(300)
+      .distinctUntilChanged()
       .subscribe(d => {
-        if(typeof d == 'string'){
+        if(typeof d == 'string' && d != ''){
           this.resourceService.employees.filterEntryEmployees(d)
           .subscribe((data: Employee[]) => {
             this.employees = data;
+            if(data.length == 1){
+              this.selectEmp();
+            }
           });
         }
       });

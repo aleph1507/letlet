@@ -48,11 +48,16 @@ export class ExitPersonModalComponent implements OnInit {
     });
 
     this.ExitPersonForm.controls['exitEmployee'].valueChanges
+      .debounceTime(300)
+      .distinctUntilChanged()
       .subscribe(d => {
-        if(typeof d == 'string'){
+        if(typeof d == 'string'  && d != ''){
           this.resourcesService.employees.filterEntryEmployees(d)
           .subscribe((data: Employee[]) => {
             this.employees = data;
+            if(data.length == 1){
+              this.selectEmp();
+            }
           });
         }
       });
@@ -67,8 +72,7 @@ export class ExitPersonModalComponent implements OnInit {
     this.nDays = Math.ceil((Date.parse(new Date().toString()) - Date.parse(this.data.ep.entryTime.toString())) / 1000 / 3600 / 24);
   }
 
-  selectEmp($event) {
-    $event.stopPropagation();
+  selectEmp() {
     if(this.employees.length == 1){
       this.ExitPersonForm.controls['exitEmployee'].setValue(this.employees[0]);
       this.entEmp.closePanel();

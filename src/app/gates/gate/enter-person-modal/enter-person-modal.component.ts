@@ -49,11 +49,17 @@ export class EnterPersonModalComponent implements OnInit {
       });
 
     this.EnterPersonForm.controls['entryEmployee'].valueChanges
+      .debounceTime(300)
+      .distinctUntilChanged()
       .subscribe(d => {
-        if(typeof d == 'string'){
+        // console.log(`typeof d: ${typeof d}\nd: ${d}`);
+        if(typeof d == 'string' && d != ''){
           this.resourceService.employees.filterEntryEmployees(d)
           .subscribe((data: Employee[]) => {
             this.employees = data;
+            if(data.length == 1){
+              this.selectEmp();
+            }
           });
         }
       });
@@ -71,9 +77,10 @@ export class EnterPersonModalComponent implements OnInit {
   }
 
   selectEmp() {
-    if(this.employees.length == 1)
+    if(this.employees.length == 1){
       this.EnterPersonForm.controls['entryEmployee'].setValue(this.employees[0]);
       this.entEmp.closePanel();
+    }
   }
 
   private _filterVBs(name: string): VisitorBadge[] {
@@ -95,6 +102,9 @@ export class EnterPersonModalComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('vo onSubmit');
+    console.log(`this.EnterPersonForm.controls['visitorBadge'].value: ${this.EnterPersonForm.controls['visitorBadge'].value}`);
+    console.log(`this.EnterPersonForm.controls['entryEmployee'].value: ${this.EnterPersonForm.controls['entryEmployee'].value}`);
     let vb = this.EnterPersonForm.controls['visitorBadge'].value;
     let ee = this.EnterPersonForm.controls['entryEmployee'].value;
     let ePerson = {
