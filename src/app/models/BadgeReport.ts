@@ -1,4 +1,5 @@
 export class BadgeReport {
+  index: Number;
   badgeNumber: string;
   cardSeriesNumber: string;
   cardNumber: string;

@@ -86,7 +86,7 @@ export class ApprovalsComponent implements OnInit {
         console.log("params.sb: ", params.get('sb'));
         if(params.get('sb') == 's'){
           // setTimeout(() => {
-            this.snackbarService.successSnackBar("Успешно!");
+            this.snackbarService.successSnackBar("Success!");
           // });
         }
       });

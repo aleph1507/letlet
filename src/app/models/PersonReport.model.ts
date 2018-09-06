@@ -1,4 +1,5 @@
 export interface PersonReport {
+  index: Number;
   companyName: string;
   personVisited: string;
   enteredOnGate: string;

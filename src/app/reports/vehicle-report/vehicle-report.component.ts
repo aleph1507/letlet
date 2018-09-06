@@ -24,6 +24,8 @@ export class VehicleReportComponent implements OnInit {
 
   personsReport : VehicleReport[];
 
+  rowCount = '';
+
   personsReportUrl = this.authService.baseUrl + '/api/visits/vehiclereport';
   gotRowData: boolean = false;
 
@@ -38,6 +40,7 @@ export class VehicleReportComponent implements OnInit {
   public gridOptions: GridOptions = <GridOptions>{
     rowData: [],
     columnDefs: [
+      {headerName: 'Index', field: 'index'},
       {headerName: 'Entry At', field: 'entryDateTime'},
       {headerName: 'Exit At', field: 'exitDateTime'},
       {headerName: 'Company Name', field: 'companyName'},
@@ -166,7 +169,9 @@ export class VehicleReportComponent implements OnInit {
     if(this.fromString != null && this.toString != null){
       this.reportsService.getVehicleReports(rUrl)
         .subscribe((data : VehicleReport[]) => {
+          this.rowCount = 'Number of reports: ' + data.length.toString();
           for(let i = 0; i<data.length; i++){
+            data[i].index = i+1;
             data[i].timeOnAirSide = data[i].timeOnAirSide.split('.')[0];
           }
           this.xlsx_report = data;

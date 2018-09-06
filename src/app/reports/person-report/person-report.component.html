@@ -18,10 +18,13 @@
     </mat-form-field>
     <button mat-raised-button color="primary" (click)="export_to_xlsx()">Export to Excel</button>
     <button mat-raised-button color="primary" (click)="export_to_pdf()">Export to PDF</button>
+    <br>
+    {{rowCount}}
   </div>
   <!-- *ngIf="gotRowData" -->
   <!--  -->
   <!-- [gridOptions]="gridOptions" -->
+
   <ag-grid-angular
     #agGrid
     style="width: 90vw; height: 70vh;"

@@ -19,7 +19,7 @@
       <mat-datepicker #toPicker disabled="false"></mat-datepicker>
       </mat-form-field>
     </div>
-    <div class="radio-div">
+    <div class="radio-div" style="position:relative; left:-5%;">
       <mat-radio-group [(ngModel)]="selectedReports">
         <mat-radio-button *ngFor="let sr of showReports"
           color="primary" [value]="sr" (change)="radioChange($event)">
@@ -31,7 +31,9 @@
       <button mat-raised-button color="primary" (click)="export_to_xlsx()">Export to Excel</button>
       <button mat-raised-button color="primary" (click)="export_to_pdf()">Export to PDF</button>
     </div>
+    <p style="width:100%;">{{rowCount}}</p>
   </div>
+
   <!-- *ngIf="gotRowData" -->
   <!--  -->
   <!-- [gridOptions]="gridOptions" -->

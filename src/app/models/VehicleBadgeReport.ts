@@ -1,4 +1,5 @@
 export class VehicleBadgeReport {
+  index: Number;
   permitNumber: string;
   expireDate: Date | string;
   payment: string;

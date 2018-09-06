@@ -29,6 +29,8 @@ export class PersonReportComponent implements OnInit {
 
   personsReport : PersonReport[];
 
+  rowCount = '';
+
   personsReportUrl = this.authService.baseUrl + '/api/visits/personreport';
   gotRowData: boolean = false;
 
@@ -44,6 +46,7 @@ export class PersonReportComponent implements OnInit {
   public gridOptions: GridOptions = <GridOptions>{
     rowData: [],
     columnDefs: [
+      {headerName: 'Index', field: 'index'},
       {headerName: 'Entry At', field: 'entryDateTime'},
       {headerName: 'Exit At', field: 'exitDateTime'},
       {headerName: 'Company Name', field: 'companyName'},
@@ -194,9 +197,11 @@ export class PersonReportComponent implements OnInit {
     if(this.fromString != null && this.toString != null){
       this.reportsService.getReports(rUrl)
         .subscribe((data : PersonReport[]) => {
+            this.rowCount = 'Number of reports: ' + data.length.toString();
           // this.gridOptions.onGridReady = function() {
           //  let asp_to_normal_datetime_pipe = new AsptonormaldatetimePipe();
             for(let i = 0; i<data.length; i++){
+              data[i].index = i+1;
               // data[i].entryDateTime = asp_to_normal_datetime_pipe.transform(data[i].exitDateTime);
               // data[i].exitDateTime = asp_to_normal_datetime_pipe.transform(data[i].exitDateTime);
               data[i].timeOnAirSide = data[i].timeOnAirSide.split('.')[0];

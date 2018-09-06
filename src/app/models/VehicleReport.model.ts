@@ -1,4 +1,5 @@
 export interface VehicleReport {
+  index: Number;
   companyName: string;
   vehicleModel: string;
   plateNumber: string;

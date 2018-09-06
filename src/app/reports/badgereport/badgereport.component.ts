@@ -24,6 +24,8 @@ export class BadgereportComponent implements OnInit {
   category: number = 0;
   categories = ['Active', 'All'];
 
+  rowCount = '';
+
   badgesReportUrl = this.authService.baseUrl + '/api/badges/badgereport';
 
   xlsx_report = null;
@@ -36,6 +38,7 @@ export class BadgereportComponent implements OnInit {
    public gridOptions: GridOptions = <GridOptions>{
      rowData: [],
      columnDefs: [
+       {headerName: 'Index', field: 'index'},
        {headerName: 'Badge Number', field: 'badgeNumber'},
        {headerName: 'Employee Name', field: 'employeeName'},
        {headerName: 'Employee Surname', field: 'employeeSurname'},
@@ -152,7 +155,9 @@ export class BadgereportComponent implements OnInit {
 
     this.reportsService.getBadgesReports(rUrl)
       .subscribe((data : BadgeReport[]) => {
+        this.rowCount = 'Number of reports: ' + data.length.toString();
         for(let i = 0; i<data.length; i++){
+          data[i].index = i+1;
           if(data[i].expireDate) data[i].expireDate = this.atndp.transform(data[i].expireDate.toString());
           if(data[i].shreddingDate != null) data[i].shreddingDate = this.atndp.transform(data[i].shreddingDate.toString());
           if(data[i].dateOfActivation != null) data[i].dateOfActivation = this.atndp.transform(data[i].dateOfActivation.toString());

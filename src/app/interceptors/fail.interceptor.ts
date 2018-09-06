@@ -17,7 +17,8 @@ export class FailInterceptor implements HttpInterceptor {
 
     return next.handle(req)
       .catch((error, caught) => {
-        this.snackbarService.failSnackBar("Се случи грешка");
+        // console.log('ERROR: ', error.error);
+        this.snackbarService.failSnackBar(`An error has occurred: ${error.error.error_description}`);
         return Observable.throw(error);
       });
 

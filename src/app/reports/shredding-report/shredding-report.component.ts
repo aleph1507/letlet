@@ -26,6 +26,8 @@ export class ShreddingReportComponent implements OnInit {
 
   personsReport : ShreddingReport[];
 
+  rowCount = '';
+
   shreddingsReportUrl = this.authService.baseUrl + '/api/badges/shreddingreport/';
   gotRowData: boolean = false;
 
@@ -44,6 +46,7 @@ export class ShreddingReportComponent implements OnInit {
   public gridOptions: GridOptions = <GridOptions>{
     rowData: [],
     columnDefs: [
+      {headerName: 'Index', field: 'index'},
       {headerName: 'Shredding Date', field: 'shreddingDate'},
       {headerName: 'Type Of Card', field: 'typeOfCard'},
       {headerName: 'Details', field: 'details'},
@@ -199,8 +202,10 @@ export class ShreddingReportComponent implements OnInit {
     if(this.fromString != null && this.toString != null){
       this.reportsService.getShreddingsReports(rUrl)
         .subscribe((data : ShreddingReport[]) => {
+          this.rowCount = 'Number of reports: ' + data.length.toString();
           // this.gridOptions.onGridReady = function() {
             for(let i = 0; i<data.length; i++){
+              data[i].index = i+1;
               data[i].shreddingDate = data[i].shreddingDate.split('.')[0];
               if(data[i].shreddingDate != null) data[i].shreddingDate = this.atndp.transform(data[i].shreddingDate.toString());
             }

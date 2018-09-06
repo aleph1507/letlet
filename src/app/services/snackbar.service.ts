@@ -6,7 +6,7 @@ import { FailToastComponent } from '../shared/fail-toast/fail-toast.component';
 @Injectable()
 export class SnackbarService {
 
-  constructor(public snackBar: MatSnackBar) { this.msg = "Успешно!"; }
+  constructor(public snackBar: MatSnackBar) { this.msg = "Success!"; }
 
   msg: string = "";
 
@@ -14,7 +14,7 @@ export class SnackbarService {
     return this.msg;
   }
 
-  successSnackBar(msg = "Успешно!") {
+  successSnackBar(msg = "Success!") {
     this.msg = msg;
     setTimeout(() => {
       const config = new MatSnackBarConfig();
@@ -25,7 +25,7 @@ export class SnackbarService {
     });
   }
 
-  failSnackBar(msg = "Се случи грешка"){
+  failSnackBar(msg = "An error has occurred"){
     this.msg = msg;
     setTimeout(() => {
       const config = new MatSnackBarConfig();
