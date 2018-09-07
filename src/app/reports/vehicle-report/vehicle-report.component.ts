@@ -169,7 +169,7 @@ export class VehicleReportComponent implements OnInit {
     if(this.fromString != null && this.toString != null){
       this.reportsService.getVehicleReports(rUrl)
         .subscribe((data : VehicleReport[]) => {
-          this.rowCount = 'Number of reports: ' + data.length.toString();
+          this.rowCount = 'Number of rows: ' + data.length.toString();
           for(let i = 0; i<data.length; i++){
             data[i].index = i+1;
             data[i].timeOnAirSide = data[i].timeOnAirSide.split('.')[0];

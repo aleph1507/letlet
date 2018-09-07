@@ -163,7 +163,7 @@ export class VehiclebadgereportComponent implements OnInit {
         console.log('vo subscribtion, data: ', data);
         for(let i = 0; i<data.length; i++) {
           data[i].index = i+1;
-          this.rowCount = 'Number of reports: ' + data.length.toString();
+          this.rowCount = 'Number of rows: ' + data.length.toString();
           if(data[i].expireDate) data[i].expireDate = this.atndp.transform(data[i].expireDate.toString());
           if(data[i].shreddingDate != null) data[i].shreddingDate = this.atndp.transform(data[i].shreddingDate.toString());
         }

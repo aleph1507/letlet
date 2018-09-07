@@ -202,7 +202,7 @@ export class ShreddingReportComponent implements OnInit {
     if(this.fromString != null && this.toString != null){
       this.reportsService.getShreddingsReports(rUrl)
         .subscribe((data : ShreddingReport[]) => {
-          this.rowCount = 'Number of reports: ' + data.length.toString();
+          this.rowCount = 'Number of rows: ' + data.length.toString();
           // this.gridOptions.onGridReady = function() {
             for(let i = 0; i<data.length; i++){
               data[i].index = i+1;

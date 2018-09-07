@@ -155,7 +155,7 @@ export class BadgereportComponent implements OnInit {
 
     this.reportsService.getBadgesReports(rUrl)
       .subscribe((data : BadgeReport[]) => {
-        this.rowCount = 'Number of reports: ' + data.length.toString();
+        this.rowCount = 'Number of rows: ' + data.length.toString();
         for(let i = 0; i<data.length; i++){
           data[i].index = i+1;
           if(data[i].expireDate) data[i].expireDate = this.atndp.transform(data[i].expireDate.toString());

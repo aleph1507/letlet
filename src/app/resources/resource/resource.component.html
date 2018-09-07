@@ -394,9 +394,19 @@
         </mat-row>
       </mat-table>
 
-      <div class="employees-pagination">
+      <div *ngIf="category=='vehicles'" class="employees-pagination">
         <button (click)="prevPageVehicles()" [disabled]="currentPageVehicles <=1" class="prev-btn" mat-raised-button>&laquo; Previous Page</button>
         <button (click)="nextPageVehicles()" [disabled]="nextDisabledVehicles" class="next-btn" mat-raised-button>Next Page &raquo;</button>
+      </div>
+
+      <div *ngIf="category=='companies'" class="employees-pagination">
+        <button (click)="prevPageComp()" [disabled]="currentPageComp <= 1" class="prev-btn" mat-raised-button>< Previous Page</button>
+        <button (click)="nextPageComp()" [disabled]="nextDisabledComp" class="next-btn" mat-raised-button>Next Page ></button>
+      </div>
+
+      <div *ngIf="category=='employees'" class="employees-pagination">
+        <button (click)="prevPageEmp()" [disabled]="currentPageComp <= 1" class="prev-btn" mat-raised-button>< Previous Page</button>
+        <button (click)="nextPageEmp()" [disabled]="nextDisabledComp" class="next-btn" mat-raised-button>Next Page ></button>
       </div>
 
       <!-- <div *ngIf="category=='employees'" class="employees-pagination">

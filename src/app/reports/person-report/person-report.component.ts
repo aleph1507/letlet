@@ -197,7 +197,7 @@ export class PersonReportComponent implements OnInit {
     if(this.fromString != null && this.toString != null){
       this.reportsService.getReports(rUrl)
         .subscribe((data : PersonReport[]) => {
-            this.rowCount = 'Number of reports: ' + data.length.toString();
+            this.rowCount = 'Number of rows: ' + data.length.toString();
           // this.gridOptions.onGridReady = function() {
           //  let asp_to_normal_datetime_pipe = new AsptonormaldatetimePipe();
             for(let i = 0; i<data.length; i++){
