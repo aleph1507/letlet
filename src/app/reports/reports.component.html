@@ -1,5 +1,5 @@
 <div class="dashboard">
-  <mat-card class="dash-card">
+  <mat-card class="dash-card" *ngIf="authService.isOperator()">
     <a [routerLink]="['personReport']">
       <div class="card-content">
         <div class="card-text">
@@ -12,7 +12,7 @@
       </div>
     </a>
   </mat-card>
-  <mat-card class="dash-card">
+  <mat-card class="dash-card" *ngIf="authService.isOperator()">
     <a [routerLink]="['vehicleReport']">
       <div class="card-content">
         <div class="card-text">
@@ -25,7 +25,7 @@
       </div>
     </a>
   </mat-card>
-  <mat-card class="dash-card">
+  <mat-card class="dash-card" *ngIf="authService.isPowerUser()">
     <a [routerLink]="['shreddingReport']">
       <div class="card-content">
         <div class="card-text">
@@ -38,7 +38,7 @@
       </div>
     </a>
   </mat-card>
-  <mat-card class="dash-card">
+  <mat-card class="dash-card" *ngIf="authService.isPowerUser()">
     <a [routerLink]="['badgereport']">
       <div class="card-content">
         <div class="card-text">
@@ -51,7 +51,7 @@
       </div>
     </a>
   </mat-card>
-  <mat-card class="dash-card">
+  <mat-card class="dash-card" *ngIf="authService.isPowerUser()">
     <a [routerLink]="['vehiclebadgereport']">
       <div class="card-content">
         <div class="card-text">

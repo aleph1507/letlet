@@ -43,6 +43,7 @@
           <mat-icon>note_add</mat-icon><span>Create Request</span>
         </button>
         <button mat-raised-button
+          *ngIf="authService.isPowerUser()"
           color="primary"
           class="sidenav-btn"
           [routerLink]="['/approvals']"
@@ -50,6 +51,7 @@
           <mat-icon>assignment</mat-icon><span>Approvals</span>
         </button>
         <button mat-raised-button
+          *ngIf="authService.isOperator()"
           color="primary"
           class="sidenav-btn"
           [routerLink]="['/gates']"
@@ -57,6 +59,7 @@
           <mat-icon>transfer_within_a_station</mat-icon><span>Select Gate</span>
         </button>
         <button mat-raised-button
+          *ngIf="authService.isPowerUser()"
           color="primary"
           class="sidenav-btn"
           [routerLink]="['/badges']"
@@ -64,6 +67,7 @@
           <mat-icon>assignment_ind</mat-icon><span>Badges</span>
         </button>
         <button mat-raised-button
+          *ngIf="authService.isPowerUser()"
           color="primary"
           class="sidenav-btn"
           [routerLink]="['/vehicle-badges']"
@@ -71,6 +75,7 @@
           <mat-icon>assignment_ind</mat-icon><span>Vehicle Badges</span>
         </button>
         <button mat-raised-button
+          *ngIf="authService.isOperator()"
           color="primary"
           class="sidenav-btn"
           [routerLink]="['/stop-list']"
@@ -78,6 +83,7 @@
           <mat-icon>warning</mat-icon><span>Stop List</span>
         </button>
         <button mat-raised-button
+          *ngIf="authService.isOperator()"
           color="primary"
           class="sidenav-btn"
           [routerLink]="['/vehicles-stop-list']"
@@ -85,6 +91,7 @@
           <mat-icon>warning</mat-icon><span>Vehicles Stop List</span>
         </button>
         <button mat-raised-button
+          *ngIf="authService.isOperator() || authService.isPowerUser()"
           color="primary"
           class="sidenav-btn"
           [routerLink]="['/reports']"
@@ -92,6 +99,7 @@
           <mat-icon>assessment</mat-icon><span>Reports</span>
         </button>
         <button mat-raised-button
+          *ngIf="authService.isPowerUser()"
           color="primary"
           class="sidenav-btn"
           [routerLink]="['/resources']"

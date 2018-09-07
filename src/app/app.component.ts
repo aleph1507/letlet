@@ -52,13 +52,13 @@ export class AppComponent implements OnInit {
   }
 
   checkPasswordExpiry() {
-    let warnLastDays = 15, passwordLifeSpan = 45;
+    let warnLastDays = 7, passwordLifeSpan = 45;
     this.authService.passwordStatus()
       .subscribe(pcd => {
         let passChDate = new Date(pcd), currentDate = new Date();
         let passDateDiff = Math.ceil((currentDate.getTime() - passChDate.getTime()) / (1000 * 60 * 60 * 24));
         if((passwordLifeSpan - passDateDiff) <= warnLastDays){
-          let msg = 'You have ' + (warnLastDays - (passDateDiff % 15)) + ' day to change your password before it expires';
+          let msg = 'You have ' + (warnLastDays - (passDateDiff % warnLastDays)) + ' days to change your password before it expires';
           this.snackbarService.failSnackBar(msg);
         }
       });

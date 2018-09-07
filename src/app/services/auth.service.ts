@@ -120,7 +120,8 @@ export class AuthService implements OnInit{
           .subscribe(role =>{
             localStorage.setItem('role', role);
           });
-        this.http.get(this.baseUrl + '/api/account/user/' + username)
+        // this.http.get(this.baseUrl + '/api/account/user/' + username)
+        this.http.get(this.baseUrl + '/api/account/user/info')
           .subscribe(data =>{
             // if(data['fullname'])
             localStorage.setItem('fullname', data['fullName'].toString());
@@ -162,7 +163,24 @@ export class AuthService implements OnInit{
     let roles = localStorage.getItem('role');
     // console.log('isAdmin.roles: ', roles);
     return roles != null ? (roles.indexOf('Admin') != -1 ? true : false) : false;
+  }
 
+  isOperator(){
+    let roles = localStorage.getItem('role');
+    // console.log('isAdmin.roles: ', roles);
+    return roles != null ? (roles.indexOf('Operator') != -1 ? true : false) : false;
+  }
+
+  isUser() {
+    let roles = localStorage.getItem('role');
+    // console.log('isAdmin.roles: ', roles);
+    return roles != null ? (roles.indexOf('User') != -1 ? true : false) : false;
+  }
+
+  isPowerUser() {
+    let roles = localStorage.getItem('role');
+    // console.log('isAdmin.roles: ', roles);
+    return roles != null ? (roles.indexOf('PowerUser') != -1 ? true : false) : false;
   }
 
   logOut(){

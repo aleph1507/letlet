@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GridOptions } from 'ag-grid';
+import { AuthService } from '../services/auth.service';
 
 
 @Component({
@@ -9,7 +10,7 @@ import { GridOptions } from 'ag-grid';
 })
 export class ReportsComponent implements OnInit {
 
-  constructor() { }
+  constructor(public authService: AuthService) { }
 
   ngOnInit() {
   }
