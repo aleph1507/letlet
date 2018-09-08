@@ -41,11 +41,12 @@ export class StopListComponent implements OnInit {
   // ];
 
   xlsx_report;
-  columns = ['Employee Name', 'Company Name', 'Card Series Number', 'Card Number', 'Badge number', 'Expire Date'];
+  columns = ['Index', 'Employee Name', 'Company Name', 'Card Series Number', 'Card Number', 'Badge number', 'Expire Date'];
 
   public gridOptions: GridOptions = <GridOptions>{
     rowData: [],
     columnDefs: [
+      {headerName: 'Index', field: 'index'},
       {headerName: 'Employee Name', field: 'employeeName'},
       {headerName: 'Company Name', field: 'companyName'},
       {headerName: 'Card Series Number', field: 'cardSeriesNumber'},
@@ -60,9 +61,16 @@ export class StopListComponent implements OnInit {
     enableSorting: true,
   };
 
+  numRows: Number = 0;
+  nRowsDisplay: string = '';
+
   export_to_xlsx() {
+    let tmpX = this.xlsx_report;
+    for(let i = 0; i<tmpX.length; i++){
+      delete tmpX[i].index;
+    }
     const workBook = XLSX.utils.book_new();
-    const workSheet = XLSX.utils.json_to_sheet(this.xlsx_report);
+    const workSheet = XLSX.utils.json_to_sheet(tmpX);
 
     let wscols = [];
 
@@ -83,8 +91,8 @@ export class StopListComponent implements OnInit {
     body.push(this.columns);
     let tmp = [];
     for(let i = 0; i<this.xlsx_report.length; i++){
-      tmp.push(this.xlsx_report[i].employeeName, this.xlsx_report[i].companyName, this.xlsx_report[i].cardSeriesNumber,
-              this.xlsx_report[i].cardNumber, this.xlsx_report[i].expireDate);
+      tmp.push(this.xlsx_report[i].index, this.xlsx_report[i].employeeName, this.xlsx_report[i].companyName, this.xlsx_report[i].cardSeriesNumber,
+              this.xlsx_report[i].cardNumber, this.xlsx_report[i].badgeNumber, this.xlsx_report[i].expireDate);
       body.push(tmp);
       tmp = [];
     }
@@ -94,7 +102,7 @@ export class StopListComponent implements OnInit {
         {
           table: {
             headerRows: 1,
-            widths: ['*', 'auto', 100, '*', '*'],
+            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
 
             body: body
           }
@@ -114,9 +122,12 @@ export class StopListComponent implements OnInit {
   ngOnInit() {
     this.slService.getStopListEntries()
       .subscribe((data : StopListEntry[]) => {
+        this.numRows = data.length;
+        this.nRowsDisplay = 'Number of rows: ' + this.numRows;
         this.xlsx_report = data;
         let atndPipe = new AsptonormaldatePipe();
         for(let i = 0; i<this.xlsx_report.length; i++){
+          this.xlsx_report[i].index = i+1;
           this.xlsx_report[i].expireDate = atndPipe.transform(this.xlsx_report[i].expireDate);
         }
         this.gridOptions.api.setRowData(data);

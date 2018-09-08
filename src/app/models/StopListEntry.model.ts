@@ -1,4 +1,5 @@
 export interface StopListEntry {
+  "index": Number;
   "employeeName": string;
   "companyName": string;
   "cardSeriesNumber": string;

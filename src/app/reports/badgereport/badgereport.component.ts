@@ -91,8 +91,12 @@ export class BadgereportComponent implements OnInit {
   }
 
   export_to_xlsx() {
+    let tmpX = this.xlsx_report;
+    for(let i = 0; i<tmpX.length; i++){
+      delete tmpX[i].index;
+    }
     const workBook = XLSX.utils.book_new();
-    const workSheet = XLSX.utils.json_to_sheet(this.xlsx_report);
+    const workSheet = XLSX.utils.json_to_sheet(tmpX);
 
     let wscols = [];
 
