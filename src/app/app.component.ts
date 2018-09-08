@@ -45,21 +45,23 @@ export class AppComponent implements OnInit {
     // this.loggedIn = this.authService.loggedIn;
   }
 
-  changePassword() {
+  changePassword(data = null) {
     this.dialog.open(ChangePasswordComponent, {
+      data: {msg: data, onLogIn: true},
       width: '70%'
     });
   }
 
   checkPasswordExpiry() {
-    let warnLastDays = 7, passwordLifeSpan = 45;
+    let warnLastDays = 7, passwordLifeSpan = 6;
     this.authService.passwordStatus()
       .subscribe(pcd => {
         let passChDate = new Date(pcd), currentDate = new Date();
         let passDateDiff = Math.ceil((currentDate.getTime() - passChDate.getTime()) / (1000 * 60 * 60 * 24));
         if((passwordLifeSpan - passDateDiff) <= warnLastDays){
           let msg = 'You have ' + (warnLastDays - (passDateDiff % warnLastDays)) + ' days to change your password before it expires';
-          this.snackbarService.failSnackBar(msg);
+          // this.snackbarService.failSnackBar(msg);
+          this.changePassword(msg);
         }
       });
     // console.log('typeof this.authService.getLastPasswordChangedDate(): ', typeof this.authService.getLastPasswordChangedDate());

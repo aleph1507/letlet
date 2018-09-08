@@ -51,7 +51,7 @@ export class ChangePasswordComponent implements OnInit {
   onSubmit() {
     let newPassword = this.changePasswordForm.controls['newPassword'].value;
     let confirmNewPassword = this.changePasswordForm.controls['confirmNewPassword'].value;
-    if(!this.data){
+    if(!this.data || (this.data && this.data.onLogIn)){
       let oldPassword = this.changePasswordForm.controls['oldPassword'].value;
       this.userService.changeOwnPassword({oldPassword, newPassword, confirmNewPassword})
         .subscribe(data => {
