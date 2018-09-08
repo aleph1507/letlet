@@ -127,6 +127,10 @@ export class RequesterComponent implements OnInit, OnDestroy {
         validators: Validators.required,
         updateOn: 'change'
       }),
+      'contactName': new FormControl(this.request.contactName, {}),
+      'contactPhone': new FormControl(this.request.contactPhone, {
+        validators: Validators.required,
+      }),
       'requesterDescription': new FormControl(this.request.description, {
         updateOn: 'change'
       }),
@@ -188,6 +192,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
                   // 'requesterDescription': new FormControl({value: this.request.description}, { //disabled: true
                   //   updateOn: 'change'
                   // }),
+                  'contactName': new FormControl(this.request.contactName),
+                  'contactPhone': new FormControl(this.request.contactPhone),
                   'requesterDescription': new FormControl(this.request.description),
                   // 'requesterDescriptionEn': new FormControl({value: this.request.descriptionEn}, { //disabled: true
                   //   updateOn: 'change'
@@ -220,8 +226,6 @@ export class RequesterComponent implements OnInit, OnDestroy {
                 });
                 this.requesterForm.getRawValue();
               });
-              console.log('this.requesterForm post-map: ' + this.requesterForm);
-              console.log('this.request.requesterName post-map: ' + this.request.requesterName);
               this.request.approved ? this.showDeclineBtn = true : this.showApproveBtn = true;
               this.showRequestSpinner = false;
           })
@@ -246,6 +250,17 @@ export class RequesterComponent implements OnInit, OnDestroy {
       //     map(company => this.filterCompanies(company))
       //   );
     // this.requesterForm.controls['requesterCompany']
+  }
+
+  cyrilicOnly(event) {
+    // var regex = /[^а-з\s]/gi;
+    var regex = /[^АБВГДЃЕЖЗЅИЈКЛЉМНЊОПРСТЌУФХЦЧЏШабвгдѓежзѕијклљмнњопрстќуфхцчџш\s]/g;
+    event.target.value = event.target.value.replace(regex, '');
+  }
+
+  latinOnly(event) {
+    var regex = /[^a-z\s]/gi;
+    event.target.value = event.target.value.replace(regex, '');
   }
 
    b64toBlob(b64Data, contentType = 'application/pdf', sliceSize = 512) {
@@ -397,6 +412,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
         // toDate.setDate(toDate.getDate() + 1);
         // let request: Requester = this.request;
         this.request.requesterName = this.requesterForm.controls['requesterName'].value;
+        this.request.contactName = this.requesterForm.controls['contactName'].value;
+        this.request.contactPhone = this.requesterForm.controls['contactPhone'].value;
         this.request.description = this.requesterForm.controls['requesterDescription'].value;
         this.request.descriptionEn = this.requesterForm.controls['requesterDescriptionEn'].value;
         // this.request.companyId = this.requesterForm.controls['requesterCompany'].value;
@@ -444,6 +461,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
           });
         console.log('editMode');
         this.request.requesterName = this.requesterForm.controls['requesterName'].value;
+        this.request.contactName = this.requesterForm.controls['contactName'].value;
+        this.request.contactPhone = this.requesterForm.controls['contactPhone'].value;
         this.request.description = this.requesterForm.controls['requesterDescription'].value;
         this.request.descriptionEn = this.requesterForm.controls['requesterDescriptionEn'].value;
         // this.request.companyId = this.requesterForm.controls['requesterCompany'].value;
@@ -469,6 +488,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
         this.requesterService.pushRequest(
           null,
           this.requesterForm.controls['requesterName'].value,
+          this.requesterForm.controls['contactName'].value,
+          this.requesterForm.controls['contactPhone'].value,
           this.requesterForm.controls['requesterDescription'].value,
           this.requesterForm.controls['requesterDescriptionEn'].value,
           // this.requesterForm.controls['requesterCompany'].value,

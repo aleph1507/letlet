@@ -6,6 +6,8 @@ import { Company } from './Company';
 export class Requester {
   id: number;
   requesterName: string;
+  contactName: string;
+  contactPhone: string;
   description: string;
   descriptionEn: string;
   companyId: number;

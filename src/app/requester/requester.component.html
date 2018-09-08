@@ -12,10 +12,30 @@
           required>
       </mat-form-field>
       <mat-form-field class="requester-field">
+        <input matInput
+          placeholder="Contact Name"
+          id="contactName"
+          name="contactName"
+          formControlName="contactName"
+          autocomplete="off"
+          required>
+      </mat-form-field>
+      <mat-form-field class="requester-field">
+        <input matInput
+          placeholder="Contact Phone"
+          id="contactPhone"
+          name="contactPhone"
+          formControlName="contactPhone"
+          autocomplete="off"
+          type="number"
+          required>
+      </mat-form-field>
+      <mat-form-field class="requester-field">
         <textarea name="requesterDescription"
           id="requesterDescription"
           matInput placeholder="Description"
           formControlName="requesterDescription"
+          (keyup)="cyrilicOnly($event)"
           autocomplete="off"
         ></textarea>
       </mat-form-field>
@@ -24,6 +44,7 @@
           id="requesterDescriptionEn"
           matInput placeholder="Description in English"
           formControlName="requesterDescriptionEn"
+          (keyup)="latinOnly($event)"
           autocomplete="off"
         ></textarea>
       </mat-form-field>
