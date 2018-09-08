@@ -53,7 +53,7 @@ export class AppComponent implements OnInit {
   }
 
   checkPasswordExpiry() {
-    let warnLastDays = 7, passwordLifeSpan = 6;
+    let warnLastDays = 7, passwordLifeSpan = 45;
     this.authService.passwordStatus()
       .subscribe(pcd => {
         let passChDate = new Date(pcd), currentDate = new Date();
