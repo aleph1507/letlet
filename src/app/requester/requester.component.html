@@ -4,7 +4,7 @@
     <form class="requester-form" id="requester-form" (ngSubmit)="onSubmit()" [formGroup]="requesterForm" novalidate>
       <mat-form-field class="requester-field">
         <input matInput
-          placeholder="Requester Name"
+          placeholder="Requester Name / Барател"
           id="requesterName"
           name="requesterName"
           formControlName="requesterName"
@@ -13,16 +13,17 @@
       </mat-form-field>
       <mat-form-field class="requester-field">
         <input matInput
-          placeholder="Contact Name"
-          id="contactName"
-          name="contactName"
-          formControlName="contactName"
+          placeholder="Email / Е-пошта"
+          id="contactEmail"
+          name="contactEmail"
+          formControlName="contactEmail"
           autocomplete="off"
+          type="email"
           required>
       </mat-form-field>
       <mat-form-field class="requester-field">
         <input matInput
-          placeholder="Contact Phone"
+          placeholder="Contact Phone / Телефонски број"
           id="contactPhone"
           name="contactPhone"
           formControlName="contactPhone"
@@ -33,7 +34,7 @@
       <mat-form-field class="requester-field">
         <textarea name="requesterDescription"
           id="requesterDescription"
-          matInput placeholder="Description"
+          matInput placeholder="Description / Опис на барањето *"
           formControlName="requesterDescription"
           (keyup)="cyrilicOnly($event)"
           autocomplete="off"
@@ -42,7 +43,7 @@
       <mat-form-field class="requester-field">
         <textarea name="requesterDescriptionEn"
           id="requesterDescriptionEn"
-          matInput placeholder="Description in English"
+          matInput placeholder="Description in English / Опис на барањето на англиски јазик *"
           formControlName="requesterDescriptionEn"
           (keyup)="latinOnly($event)"
           autocomplete="off"
@@ -74,7 +75,7 @@
           </mat-option>
       </mat-autocomplete> -->
       <mat-form-field class="company-field">
-        <input type="text" placeholder="Company" [formControl]="companiesAutoCtrl" matInput [matAutocomplete]="comp_auto">
+        <input type="text" placeholder="Company / Компанија *" [formControl]="companiesAutoCtrl" matInput [matAutocomplete]="comp_auto">
         <mat-autocomplete #comp_auto="matAutocomplete" [displayWith]="displayFn">
           <mat-option *ngFor="let comp of companies_auto" [value]="comp">
             {{ comp.name }}
@@ -82,20 +83,20 @@
         </mat-autocomplete>
       </mat-form-field>
       <mat-form-field>
-        <input matInput [matDatepicker]="fromPicker" placeholder="From date"
+        <input matInput [matDatepicker]="fromPicker" placeholder="From date / Од датум"
         formControlName="requesterFromDate" required>
         <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
         <mat-datepicker #fromPicker></mat-datepicker>
       </mat-form-field>
       <mat-form-field>
-        <input matInput [matDatepicker]="toPicker" placeholder="To date"
+        <input matInput [matDatepicker]="toPicker" placeholder="To date / До датум"
         formControlName="requesterToDate" required>
         <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
         <mat-datepicker #toPicker></mat-datepicker>
       </mat-form-field>
       <mat-form-field>
-        <mat-select placeholder="Number of entries" formControlName="requesterNumOfEntries"
-          name="requesterNumOfEntries" id="requesterNumOfEntries" autocomplete="off" required>
+        <mat-select placeholder="Number of entries / Број на посети" formControlName="requesterNumOfEntries"
+          class="wide-select" name="requesterNumOfEntries" id="requesterNumOfEntries" autocomplete="off" required>
           <!-- <mat-option></mat-option> -->
           <mat-option *ngFor="let e of nEntries" selected [value]="e.value">
             {{e.name}}
@@ -114,8 +115,10 @@
       </mat-form-field> -->
       <div *ngIf="!editMode" class="upload-pdfs">
         <div class="pdf-upload">
+          You can merge multiple PDFs <a href="https://lightpdf.com/merge-pdf">here</a><br>
+          За спојување на повеќе PDF датотеки, Ве молиме искористете го следниов <a href="https://lightpdf.com/merge-pdf">сервис</a><br>
           <button type="button" mat-raised-button (click)="pdfUpload1.click()">
-            Attach PDF<mat-icon>keyboard_arrow_up</mat-icon>
+            Attach PDF / Прикачи документ<mat-icon>keyboard_arrow_up</mat-icon>
             <input type="file" hidden #pdfUpload1
             accept="application/pdf"
             (change)="savePdf($event)" name="pdf1" id="pdf1" formControlName="pdf1">
@@ -123,7 +126,7 @@
         </div>
         <div class="pdf-upload" style="margin-top:3%;">
           <button type="button" mat-raised-button (click)="pdfUpload2.click()">
-            Attach BSR<mat-icon>keyboard_arrow_up</mat-icon>
+            Attach BSR / Прикачи BSR<mat-icon>keyboard_arrow_up</mat-icon>
             <input type="file" hidden #pdfUpload2
             accept="application/pdf"
             (change)="savePdf($event)" name="pdf2" id="pdf2" formControlName="pdf2">
@@ -143,18 +146,18 @@
         <div *ngIf="this.request.pdf2 != null" class="pdf-upload" style="margin-top:10%;">
           <a [href]="sanitizeURL(pdfToBlob(this.request.pdf2))" target="_blank">
             <button type="button" style="margin-bottom: 5em;" mat-raised-button>
-              Download Additional PDF<mat-icon>keyboard_arrow_down</mat-icon>
+              Download BSR<mat-icon>keyboard_arrow_down</mat-icon>
             </button>
           </a>
         </div>
         <button mat-raised-button type="button"
           style="margin:1rem; margin-top: 0;" (click)="printRequest()">
-          Print Request PDF 1 <mat-icon class="icon-control">print</mat-icon>
+          Print PDF<mat-icon class="icon-control">print</mat-icon>
         </button>
         <br>
         <button mat-raised-button type="button"
           style="margin:1rem;" (click)="printRequest2()">
-          Print Request PDF 2 <mat-icon class="icon-control">print</mat-icon>
+          Print BSR<mat-icon class="icon-control">print</mat-icon>
         </button>
         <div style="display:block;">
           <mat-checkbox

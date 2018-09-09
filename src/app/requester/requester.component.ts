@@ -127,7 +127,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
         validators: Validators.required,
         updateOn: 'change'
       }),
-      'contactName': new FormControl(this.request.contactName, {}),
+      'contactEmail': new FormControl(this.request.contactEmail, {}),
       'contactPhone': new FormControl(this.request.contactPhone, {
         validators: Validators.required,
       }),
@@ -192,7 +192,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
                   // 'requesterDescription': new FormControl({value: this.request.description}, { //disabled: true
                   //   updateOn: 'change'
                   // }),
-                  'contactName': new FormControl(this.request.contactName),
+                  'contactEmail': new FormControl(this.request.contactEmail),
                   'contactPhone': new FormControl(this.request.contactPhone),
                   'requesterDescription': new FormControl(this.request.description),
                   // 'requesterDescriptionEn': new FormControl({value: this.request.descriptionEn}, { //disabled: true
@@ -412,7 +412,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
         // toDate.setDate(toDate.getDate() + 1);
         // let request: Requester = this.request;
         this.request.requesterName = this.requesterForm.controls['requesterName'].value;
-        this.request.contactName = this.requesterForm.controls['contactName'].value;
+        this.request.contactEmail = this.requesterForm.controls['contactEmail'].value;
         this.request.contactPhone = this.requesterForm.controls['contactPhone'].value;
         this.request.description = this.requesterForm.controls['requesterDescription'].value;
         this.request.descriptionEn = this.requesterForm.controls['requesterDescriptionEn'].value;
@@ -461,7 +461,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
           });
         console.log('editMode');
         this.request.requesterName = this.requesterForm.controls['requesterName'].value;
-        this.request.contactName = this.requesterForm.controls['contactName'].value;
+        this.request.contactEmail = this.requesterForm.controls['contactEmail'].value;
         this.request.contactPhone = this.requesterForm.controls['contactPhone'].value;
         this.request.description = this.requesterForm.controls['requesterDescription'].value;
         this.request.descriptionEn = this.requesterForm.controls['requesterDescriptionEn'].value;
@@ -488,7 +488,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
         this.requesterService.pushRequest(
           null,
           this.requesterForm.controls['requesterName'].value,
-          this.requesterForm.controls['contactName'].value,
+          this.requesterForm.controls['contactEmail'].value,
           this.requesterForm.controls['contactPhone'].value,
           this.requesterForm.controls['requesterDescription'].value,
           this.requesterForm.controls['requesterDescriptionEn'].value,
