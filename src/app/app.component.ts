@@ -28,9 +28,17 @@ export class AppComponent implements OnInit {
               public snackbarService: SnackbarService){}
 
   ngOnInit(): void {
-    // this.authService.init();
+
+      localStorage.setItem('token', null);
+      localStorage.setItem('role', null);
+      localStorage.setItem('username', null);
+      localStorage.setItem('fullname', null);
+      this.authService.token = null;
+      this.authService.loggedIn = false;
+      this.authService.loggedStatus.next(this.loggedIn);
+      this.router.navigate(['/login']);
     console.log('this.authService.getToken(): ', this.authService.getToken());
-    if(this.authService.getToken() == 'null'){
+    if(this.authService.getToken() === null){
       this.router.navigate(['/login']);
     }
 

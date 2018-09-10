@@ -1,5 +1,5 @@
 <div class="dashboard">
-    <mat-card class="dash-card">
+    <mat-card class="dash-card" *ngIf="authService.isUser()">
       <a [routerLink]="['/requester']">
         <div class="card-content">
           <div class="card-text">
