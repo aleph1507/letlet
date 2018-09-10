@@ -79,7 +79,11 @@ export class AuthService implements OnInit{
         'Accept': 'application/json'
       })
     } else  {
-      return null;
+      return new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'client_id': "AsecClient"
+      });
     }
   }
 
@@ -109,6 +113,11 @@ export class AuthService implements OnInit{
       .set('client_id', cid);
 
     localStorage.setItem('token', null);
+    localStorage.setItem('role', null);
+    localStorage.setItem('username', null);
+    localStorage.setItem('fullname', null);
+    console.log('body.toString: ', body.toString());
+    console.log('this.headers: ', this.headers);
     this.http.post<LoginResponse>(this.url, body.toString(),
     { headers: this.headers }).subscribe(data => {
       if(data.access_token){

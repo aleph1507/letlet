@@ -25,6 +25,12 @@ export class TokenInterceptor implements HttpInterceptor {
             }
           });
         } else {
+          // req = req.clone({
+          //   setHeaders: {
+          //     'Content-Type': 'application/json',
+          //     'Accept': 'application/json'
+          //   }
+          // });
           return next.handle(req);
         }
       }
