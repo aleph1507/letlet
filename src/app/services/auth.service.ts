@@ -114,22 +114,25 @@ export class AuthService implements OnInit{
       if(data.access_token){
         this.token = data.access_token;
         localStorage.setItem('token', this.token);
-        this.loggedIn = true;
-        this.loggedStatus.next(this.loggedIn);
-        this.getRole()
-          .subscribe(role =>{
-            localStorage.setItem('role', role);
-          });
-        // this.http.get(this.baseUrl + '/api/account/user/' + username)
-        this.http.get(this.baseUrl + '/api/account/user/info')
-          .subscribe(data =>{
-            // if(data['fullname'])
-            localStorage.setItem('fullname', data['fullName'].toString());
-            this.lastPasswordChangedDate = data['lastPasswordChangedDate'];
-            this.passChangedDate.next(this.lastPasswordChangedDate);
-          });
-        localStorage.setItem('username', username);
-        this.router.navigate(['/dashboard']);
+        if(this.token != null){
+          this.loggedIn = true;
+          this.loggedStatus.next(this.loggedIn);
+          this.getRole()
+            .subscribe(role =>{
+              localStorage.setItem('role', role);
+            });
+          // this.http.get(this.baseUrl + '/api/account/user/' + username)
+          this.http.get(this.baseUrl + '/api/account/user/info')
+            .subscribe(data =>{
+              // if(data['fullname'])
+              localStorage.setItem('fullname', data['fullName'].toString());
+              this.lastPasswordChangedDate = data['lastPasswordChangedDate'];
+              this.passChangedDate.next(this.lastPasswordChangedDate);
+            });
+          localStorage.setItem('username', username);
+          this.router.navigate(['/dashboard']);
+        }
+
       }
       else {
         this.loggedIn = false;
@@ -187,6 +190,7 @@ export class AuthService implements OnInit{
     localStorage.setItem('token', null);
     localStorage.setItem('role', null);
     localStorage.setItem('username', null);
+    localStorage.setItem('fullname', null);
     this.token = null;
     this.loggedIn = false;
     this.loggedStatus.next(this.loggedIn);
