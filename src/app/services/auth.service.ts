@@ -14,7 +14,7 @@ export class AuthService implements OnInit{
   // public baseUrl = 'http://localhost:63602/';
   public baseUrl = 'http://192.168.100.80:84';
   url = this.baseUrl + '/token';
-  loggedIn : boolean;
+  loggedIn : boolean = false;
   private loggedStatus : BehaviorSubject<boolean>;
 
 
