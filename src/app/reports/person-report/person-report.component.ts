@@ -8,7 +8,6 @@ import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import * as pdfMake from 'pdfmake/build/pdfmake.js';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
-// import {AsptonormaldatetimePipe} from '../../shared/pipes/asptonormaldatetime.pipe';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -17,9 +16,6 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
   styleUrls: ['./person-report.component.css']
 })
 export class PersonReportComponent implements OnInit {
-
-  // EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-  // EXCEL_EXTENSION = '.xlsx';
 
   toDate : Date;
   fromDate : Date;
@@ -66,14 +62,10 @@ export class PersonReportComponent implements OnInit {
     enableSorting: true,
   };
 
-  // rowData = [];
-
   constructor(private reportsService: ReportsService,
               private authService: AuthService) { }
 
   ngOnInit() {
-    // this.gridOptions.rowData = this.reportsService.getReports();
-    // console.log('this.rowData: ' + this.gridOptions.rowData);
     this.toDate = new Date();
     this.fromDate = new Date();
     this.fromDate.setDate(this.fromDate.getDate() - 30);
@@ -98,12 +90,7 @@ export class PersonReportComponent implements OnInit {
     XLSX.writeFile(workBook, 'PersonsReport.xlsx');
   }
 
-  // columns = ['Company Name', 'Person', 'Entered Through Gate', 'Entry Approved By',
-  //    'Entry Escorted By', 'Exited Through Gate', 'Exit Approved By', 'Exit Escorted By',
-  //    'Time On Air Side'];
-
      export_to_pdf() {
-       // console.log('this.xlsx_report: ', this.xlsx_report);
        let body = [];
        body.push(this.columns);
        let tmp = [];
@@ -116,21 +103,17 @@ export class PersonReportComponent implements OnInit {
          body.push(tmp);
          tmp = [];
        }
-       // console.log('body: ', body);
        let docDefinition = {
 
        extend: 'pdfHtml5',
-       // orientation: 'landscape',//landscape give you more space
-       pageSize: 'A3',//A0 is the largest A5 smallest(A0,A1,A2,A3,legal,A4,A5,letter))
+       pageSize: 'A3',
        alignment: 'center',
 
        content: [
            {
-             // alignment: 'center',
              table: {
                headerRows: 1,
                widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
-
                body: body
              }
            }
@@ -139,25 +122,12 @@ export class PersonReportComponent implements OnInit {
       pdfMake.createPdf(docDefinition).download('PersonsReport.pdf');
      }
 
-  // export_to_xlsx(){
-  //   /* generate worksheet */
-  //   const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(this.xlsx_report);
-  //
-  //   /* generate workbook and add the worksheet */
-  //   const wb: XLSX.WorkBook = XLSX.utils.book_new();
-  //   XLSX.utils.book_append_sheet(wb, ws, 'personsReport');
-  //
-  //   /* save to file */
-  //   XLSX.writeFile(wb, 'personsReport.xlsx');
-  // }
-
   getReps(picker = null, event: MatDatepickerInputEvent<Date> = null) {
     this.showSpinner = true;
     var month : string = '';
     var day : string = '';
 
     if(event == null) {
-      // console.log('vo event == null');
       this.fromDate.getMonth() >= 10 ?
         month = '-' + (this.fromDate.getMonth() + 1).toString() : month = '-0' + (this.fromDate.getMonth()+1).toString();
 
@@ -175,7 +145,6 @@ export class PersonReportComponent implements OnInit {
       this.toString = this.toDate.getFullYear() + month + day;
 
     } else {
-      // console.log('event.value: ' + event.value);
       var date = null;
       if(picker == 'from'){
         date = this.fromDate;
@@ -185,7 +154,6 @@ export class PersonReportComponent implements OnInit {
       date.getMonth() >= 10 ?
         month = '-' + (date.getMonth() + 1).toString() : month = '-0' + (date.getMonth() + 1).toString();
 
-      // event.value.get
       date.getDate() >= 10 ?
         day = '-' + (date.getDate()).toString() : day = '-0' + (date.getDate()).toString();
 
@@ -196,34 +164,19 @@ export class PersonReportComponent implements OnInit {
 
 
     var rUrl = this.personsReportUrl + '/' + this.fromString + '/' + this.toString;
-    console.log(`aUrl: ` + rUrl);
 
     if(this.fromString != null && this.toString != null){
       this.reportsService.getReports(rUrl)
         .subscribe((data : PersonReport[]) => {
             this.rowCount = 'Number of rows: ' + data.length.toString();
-          // this.gridOptions.onGridReady = function() {
-          //  let asp_to_normal_datetime_pipe = new AsptonormaldatetimePipe();
             for(let i = 0; i<data.length; i++){
               data[i].index = i+1;
-              // data[i].entryDateTime = asp_to_normal_datetime_pipe.transform(data[i].exitDateTime);
-              // data[i].exitDateTime = asp_to_normal_datetime_pipe.transform(data[i].exitDateTime);
               data[i].timeOnAirSide = data[i].timeOnAirSide.split('.')[0];
             }
             this.xlsx_report = data;
-            console.log('xlsx_report: ', this.xlsx_report);
-            // console.log('this.xlsx_report', this.xlsx_report);
             this.gridOptions.api.setRowData(data);
 
             this.showSpinner = false;
-          // }
-          // this.personsReport = data;
-          // this.rowData = this.personsReport;
-          // console.log('gridoptions row data: ' + this.rowData);
-          // this.gotRowData = true;
-          // this.dataSource = new
-          //   MatTableDataSource<ApprovalRequest>(this.approvalRequests);
-          // console.log(this.approvalRequests);
         });
     }
 

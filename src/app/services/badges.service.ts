@@ -14,21 +14,11 @@ export class BadgesService {
   companies = this.resources.companies.getCompaniesNames();
   badges: Badge[] = [];
 
-  // public badgesUrl = 'http://192.168.100.4:84/api/badges';
   public badgesUrl = this.authService.baseUrl + '/api/badges'; //shredding/id
-
 
   httpOptions = {
     headers: this.authService.getHeaders()
   }
-
-  // httpOptions = {
-  //   headers: new HttpHeaders({
-  //     'Content-Type':  'application/json',
-  //     'Authorization': 'Bearer ' + this.authService.getToken,
-  //     'Accept': 'application/json'
-  //   })
-  // }
 
   constructor(private resources: ResourcesService,
               public datePipe: DatePipe,
@@ -53,12 +43,10 @@ export class BadgesService {
   }
 
   getBadgeById(id: number) : Observable<Badge>{
-    // console.log('vo getBadgeById');
     return this.http.get<Badge>(this.badgesUrl + '/' + id, this.httpOptions);
   }
 
   addBadge(badge: Badge){
-    // console.log('vo addBadge()');
     return this.http.post(this.badgesUrl, badge, this.httpOptions);
   }
 
@@ -87,33 +75,5 @@ export class BadgesService {
   shredBadge(id: number){
     return this.http.post(this.badgesUrl + '/shredding/' + id, {});
   }
-
-  // getBadges(){
-  //   // console.log("badges: " + this.badges);
-  //   return this.badges;
-  // }
-
-  // getBadgesPage(from: number, to: number) {
-  //   return this.badges.slice(from, to);
-  // }
-
-  // seedBadges(n: number = 10) {
-  //   // console.log("vo seedBadges");
-  //   for(let i = 0; i<n; i++) {
-  //     let b = new Badge();
-  //     b.id = i;
-  //     b.company = this.companies[i % this.companies.length];
-  //     b.personName = 'name' + i.toString();
-  //     b.dateSecCheck = Date.now()
-  //     b.dateTraining = Date.now();
-  //     b.validTo = Date.now();
-  //     // b.zones = [(i+1)%this.resources.airportZones.getAllAirportZones().length,
-  //     //             (i+2)%this.resources.airportZones.getAllAirportZones().length,
-  //     //             (i+3)%this.resources.airportZones.getAllAirportZones().length]
-  //     this.badges.push(b);
-  //   }
-  // }
-
-
 
 }

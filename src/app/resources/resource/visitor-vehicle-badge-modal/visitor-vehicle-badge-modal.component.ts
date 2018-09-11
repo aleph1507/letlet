@@ -25,14 +25,9 @@ export class VisitorVehicleBadgeModalComponent implements OnInit {
     if(this.data){
       this.resourcesService.visitorVehicleBadges.getVisitorVehicleBadgeById(this.data)
         .subscribe((vvb : VisitorVehicleBadge) => {
-          console.log('vvb.name : ' + vvb.name);
           this.vvb = vvb;
           this.oldID = this.data;
           this.vvbForm = new FormGroup({
-            // 'id': new FormControl(this.vvb ? this.vvb.id : '', {
-            //   validators: [Validators.required],
-            //   updateOn: 'change'
-            // }),
             'code': new FormControl(this.vvb ? this.vvb.code : '', {
               validators: [Validators.required],
               updateOn: 'change'
@@ -43,14 +38,9 @@ export class VisitorVehicleBadgeModalComponent implements OnInit {
             })
           });
         });
-      // this.oldID = this.data;
     }
 
     this.vvbForm = new FormGroup({
-      // 'id': new FormControl(this.vvb ? this.vvb.id : '', {
-      //   validators: [Validators.required],
-      //   updateOn: 'change'
-      // }),
       'code': new FormControl(this.vvb ? this.vvb.code : '', {
         validators: [Validators.required],
         updateOn: 'change'
@@ -65,7 +55,6 @@ export class VisitorVehicleBadgeModalComponent implements OnInit {
   onSubmit() {
     this.vvb = {
       id: this.oldID,
-      // id: this.vvbForm.controls['id'].value,
       code: this.vvbForm.controls['code'].value,
       name: this.vvbForm.controls['name'].value
     }

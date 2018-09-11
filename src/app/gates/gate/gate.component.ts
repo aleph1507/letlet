@@ -27,7 +27,6 @@ export class GateComponent implements OnInit {
   enteredVehicles : EnteredVehicle[] = [];
   expectedPersons : ExpectedPerson[] = [];
   expectedVehicles : ExpectedVehicle[] = [];
-  // gore levo entered
   dataSourceExpectedPersons;
   dataSourceEnteredPersons;
   dataSourceExpectedVehicles;
@@ -97,7 +96,6 @@ export class GateComponent implements OnInit {
     this.gatesService.getAllEnteredVehicles()
       .subscribe((data : EnteredVehicle[]) => {
         this.enteredVehicles = data;
-        console.log('this.enteredvehicles: ' + this.enteredVehicles);
         this.dataSourceEnteredVehicles = new MatTableDataSource<EnteredVehicle>(this.enteredVehicles);
         this.loadings[3] = true;
       });

@@ -33,7 +33,6 @@ export class CompanyModalComponent implements OnInit {
           .subscribe((data : Company) => {
             this.company = data;
             this.edit_mode = true;
-            // console.log('data: ' + data.name);
             this.companyForm = new FormGroup({
               'name': new FormControl(this.company.name != null ? this.company.name : '', {
                 validators: [Validators.required],
@@ -50,10 +49,6 @@ export class CompanyModalComponent implements OnInit {
       }
 
       this.companyForm = new FormGroup({
-        // 'id': new FormControl(this.company.id, {
-        //   validators: [Validators.required],
-        //   updateOn: 'change'
-        // }),
         'name': new FormControl(this.company ? this.company.name : '', {
           validators: [Validators.required],
           updateOn: 'change'
@@ -67,7 +62,6 @@ export class CompanyModalComponent implements OnInit {
     }
 
     onSubmit() {
-      console.log('edit_mode: ', this.edit_mode);
       this.company.name = this.companyForm.controls['name'].value;
       this.company.nameEn = this.companyForm.controls['nameEn'].value;
       if(this.edit_mode){

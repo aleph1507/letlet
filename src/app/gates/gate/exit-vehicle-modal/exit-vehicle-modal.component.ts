@@ -59,7 +59,6 @@ export class ExitVehicleModalComponent implements OnInit {
               }
             });
         }
-        console.log('d: ', d);
       });
 
     if(this.paid){
@@ -69,7 +68,6 @@ export class ExitVehicleModalComponent implements OnInit {
     }
 
     this.nDays = Math.ceil((Date.parse(new Date().toString()) - Date.parse(this.data.ev.entryTime.toString())) / 1000 / 3600 / 24);
-    // console.log('nDays: ', this.nDays);
   }
 
   selectEmp() {
@@ -85,17 +83,12 @@ export class ExitVehicleModalComponent implements OnInit {
 
   onPaid(event){
     this.paid = !this.paid;
-    console.log('this.paid: ' + this.paid);
   }
 
   onSubmit() {
-    console.log('vo submit')
     var ee = this.ExitVehicleForm.controls['exitEmployee'].value;
     this.paid = this.ExitVehicleForm.controls['paid'].value;
     this.billNumber = this.ExitVehicleForm.controls['billNumber'].value;
-    console.log('this.data: ' + this.data);
-    console.log('this.data.gid: ' + this.data.gid);
-    console.log('this.data.ev: ' + this.data.ev);
     let exitVehicle = {
       'id': this.data.ev.id,
       'exitGate': {
@@ -110,11 +103,8 @@ export class ExitVehicleModalComponent implements OnInit {
 
     this.gatesService.postVehicleExit(exitVehicle)
       .subscribe((res) => {
-        console.log('vo postVehicleExit subscription');
-        console.log('res: ' + res);
           this.gatesService.getAllExpectedVehicles()
             .subscribe((res: ExpectedVehicle[]) => {
-              console.log('vo getAllExpectedVehicles subscription')
               this.dialogRef.close({id: this.data.ev.id, expectedVehicles: res});
             })
       });

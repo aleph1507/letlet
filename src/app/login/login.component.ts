@@ -17,8 +17,6 @@ export class LoginComponent implements OnInit {
   public LOGO = 'assets/img/asec-logo.png';
 
   logIn() {
-    // console.log("login.logIn");
-    // this.loginService.logIn();
     this.authService.logIn(this.loginForm.controls['username'].value, this.loginForm.controls['password'].value);
   }
 
@@ -37,11 +35,3 @@ export class LoginComponent implements OnInit {
   }
 
 }
-
-
-/*
-
-#e3e3e37d - box shadow
-#ffffffd4 - transparency
-
-*/

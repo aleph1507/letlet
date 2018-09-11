@@ -25,21 +25,6 @@
         {{ v.name }} {{ v.code }}
       </mat-option>
   </mat-autocomplete>
-
-  <!-- <mat-form-field>
-    <input matInput type="text" name='company'
-    id="company" placeholder="Company"
-    formControlName="company"
-    [matAutocomplete]="comp"
-    required>
-  </mat-form-field>
-
-  <mat-autocomplete #comp="matAutocomplete" [displayWith]="displayFnCompany">
-      <mat-option *ngFor="let c of companies" [value]="c" >
-        {{ c.name }}
-      </mat-option>
-  </mat-autocomplete> -->
-
   <mat-divider class="sm-form-divider-margins"></mat-divider>
   <mat-dialog-actions>
     <button type="button" (click)="onSubmit()" (keydown.enter)="$event.preventDefault()" [disabled]="!EnterVehicleForm.valid" mat-raised-button>OK</button>

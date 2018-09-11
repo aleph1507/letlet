@@ -24,8 +24,6 @@ export class GatesService {
   enterAVehicleUrl = this.authService.baseUrl + '/api/visits/vehicle/enter/';
   exitAVehicleUrl = this.authService.baseUrl + '/api/visits/vehicle/exit/';
 
-  // headers : HttpHeaders = this.authService.getHeaders();
-
   httpOptions = {
     headers: this.authService.getHeaders()
   }
@@ -68,12 +66,5 @@ export class GatesService {
   postVehicleExit(exitVehicle) {
     return this.http.post(this.exitAVehicleUrl, exitVehicle, this.httpOptions);
   }
-
-
-  // getPerson(id=5) : Observable<VisitPerson>{
-  //   id = 5;
-  //   return this.http.get<VisitPerson>(this.getPersonUrl + id, this.httpOptions);
-  // }
-
 
 }

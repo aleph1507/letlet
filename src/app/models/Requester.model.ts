@@ -22,5 +22,4 @@ export class Requester {
   pdf2: Blob;
   personPay: boolean;
   vehiclePay: boolean;
-  // date: number;
 }

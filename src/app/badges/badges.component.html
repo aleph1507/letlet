@@ -1,12 +1,3 @@
-<!-- <ag-grid-angular
-  style="width: 100%; height: 100%;"
-  class="ag-theme-balham"
-  [enableSorting]="true"
-  [enableFilter]="true"
-  [rowData]="rowData"
-  [columnDefs]="columnDefs"
->
-</ag-grid-angular> -->
 <app-spinner *ngIf="showSpinner" class="badgeSpinner mat-elevation-z8"></app-spinner>
 <div *ngIf="!showSpinner" class="container">
   <div id="header">
@@ -14,24 +5,11 @@
     <button mat-fab color="primary" (click)="openDialog()">+</button>
   </div>
   <div class="badges-table mat-elevation-z8">
-    <!-- <div class="filter-header">
-      <mat-form-field>
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-      </mat-form-field>
-    </div> -->
     <mat-table #badgesTable [dataSource]="dataSource">
       <ng-container matColumnDef="badgeNumber">
         <mat-header-cell *matHeaderCellDef> Badge Number </mat-header-cell>
         <mat-cell *matCellDef="let b"> {{b.badgeNumber}} </mat-cell>
       </ng-container>
-      <!-- <ng-container matColumnDef="cardSeriesNumber">
-        <mat-header-cell *matHeaderCellDef> Card Series Number </mat-header-cell>
-        <mat-cell *matCellDef="let b"> {{b.cardSeriesNumber}} </mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="cardNumber">
-        <mat-header-cell *matHeaderCellDef> Card Number </mat-header-cell>
-        <mat-cell *matCellDef="let b"> {{b.cardNumber}} </mat-cell>
-      </ng-container> -->
       <ng-container matColumnDef="expireDate">
         <mat-header-cell *matHeaderCellDef> Expire Date </mat-header-cell>
         <mat-cell *matCellDef="let b"> {{b.expireDate | date:'short'}} </mat-cell>
@@ -55,7 +33,6 @@
       <ng-container matColumnDef="zones">
         <mat-header-cell *matHeaderCellDef> Zones </mat-header-cell>
         <mat-cell *matCellDef="let b"> {{getZoneCodes(b.zones)}} </mat-cell>
-        <!-- <mat-cell *matCellDef="let b">{{}}</mat-cell> -->
       </ng-container>
       <ng-container matColumnDef="dateOfSecurityCheck">
         <mat-header-cell *matHeaderCellDef> Date of Security Check </mat-header-cell>
@@ -69,10 +46,6 @@
         <mat-header-cell *matHeaderCellDef> Date of Activation </mat-header-cell>
         <mat-cell *matCellDef="let b"> {{b.dateOfActivation | asptonormaldate}} </mat-cell>
       </ng-container>
-      <!-- <ng-container matColumnDef="id">
-        <mat-header-cell *matHeaderCellDef> Edit </mat-header-cell>
-        <mat-cell *matCellDef="let b"> <a [routerLink]="['/badges/edit', b.id]"><mat-icon>mode_edit</mat-icon></a> </mat-cell>
-      </ng-container> -->
       <ng-container matColumnDef="edit">
         <mat-header-cell *matHeaderCellDef> Edit </mat-header-cell>
         <mat-cell *matCellDef="let b">
@@ -90,16 +63,6 @@
 
     <button (click)="prevPage()" [disabled]="currentPage <=1" mat-raised-button>< Previous Page</button>
     <button (click)="nextPage()" [disabled]="nextDisabled" mat-raised-button>Next Page ></button>
-
-
-    <!-- <mat-paginator #paginator
-                   [pageSize]="10"
-                   [pageSizeOptions]="[5, 10, 20]"
-                   [showFirstLastButtons]="true"
-                   [pageIndex]="currentPage"
-                   (page)="pageEvent = getPage($event)">
-    </mat-paginator> -->
-
   </div>
 
 </div>

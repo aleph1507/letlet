@@ -26,16 +26,3 @@ mat-header-row, mat-row {
 .container {
   width: 90vw;
 }
-
-/*
-mat-header-cell {
-  min-width:11vw;
-}
-
-mat-cell {
-  min-width:11vw;
-}
-
-.cell-container {
-  min-width:11vw;
-} */

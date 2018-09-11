@@ -9,7 +9,6 @@ import { GatesService } from '../../../services/gates.service';
 import { EnteredPerson } from '../../../models/EnteredPerson.model';
 import { Observable } from 'rxjs/Observable';
 import { startWith, map } from 'rxjs/operators';
-// import { map } from 'rxjs/operator/map';
 
 @Component({
   selector: 'app-enter-person-modal',
@@ -39,7 +38,6 @@ export class EnterPersonModalComponent implements OnInit {
   @ViewChild('VBInput') VBInput: ElementRef;
   @ViewChild('sBtn') sBtn: ElementRef;
 
-  // filteredVBs: Observable<VisitorBadge[]>;
   filteredVBs: VisitorBadge[];
 
   constructor(private dialogRef: MatDialogRef<EnterPersonModalComponent>,
@@ -50,7 +48,6 @@ export class EnterPersonModalComponent implements OnInit {
   ngOnInit() {
     this.resourceService.visitorBadges.getAllVisitorBadges()
       .subscribe((vbs: VisitorBadge[]) => {
-        console.log('vo get visitorBadges subscribtion');
         this.visitorBadges = vbs;
       });
 
@@ -58,7 +55,6 @@ export class EnterPersonModalComponent implements OnInit {
       .debounceTime(400)
       .distinctUntilChanged()
       .subscribe(d => {
-        // console.log(`typeof d: ${typeof d}\nd: ${d}`);
         if(typeof d == 'string' && d != ''){
           this.resourceService.employees.filterEntryEmployees(d)
           .subscribe((data: Employee[]) => {
@@ -66,26 +62,10 @@ export class EnterPersonModalComponent implements OnInit {
             if(data.length == 1){
               this.selectEmp();
               this.VBInput.nativeElement.focus();
-              // console.log('typeof controls.visitorBadge: ', typeof this.EnterPersonForm.controls['visitorBadge'].value);
-              // console.log('sBtn: ', this.sBtn);
-              // typeof this.EnterPersonForm.controls['visitorBadge'].value == 'string' ?
-              //   this.VBInput.nativeElement.focus() :
-              //   this.sBtn.nativeElement.focus();
             }
           });
         }
       });
-
-      // this.EnterPersonForm.controls['visitorBadge'].valueChanges
-      //   .subscribe(data => {
-      //
-      //   });
-      //
-      // this.filteredVBs = this.EnterPersonForm.controls['visitorBadge'].valueChanges.pipe(
-      //   startWith<string | VisitorBadge>(),
-      //   map(value => typeof value === 'string' ? value : value.name),
-      //   map(name => name ? this._filterVBs(name) : this.visitorBadges.slice())
-      // );
 
       this.EnterPersonForm.controls['visitorBadge'].valueChanges
         .debounceTime(400)

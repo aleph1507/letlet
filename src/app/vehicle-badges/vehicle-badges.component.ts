@@ -52,13 +52,10 @@ export class VehicleBadgesComponent implements OnInit, AfterViewInit {
 
   prevPage(page: number) {
     this.showSpinner = true;
-    // console.log('vo prev page');
     if(this.currentPage > 1){
       this.currentPage--;
       this.vehicleBadgesService.getVehicleBadges(this.currentPage).subscribe((data : VehicleBadge[]) => {
-        // console.log('vo prev subscription data: ' + data);
           this.vehicleBadges = data;
-          // console.log('this.badges : ' + this.badges);
           this.dataSource = new MatTableDataSource<VehicleBadge>(this.vehicleBadges);
           this.nextDisabled = false;
           this.showSpinner = false;
@@ -68,13 +65,10 @@ export class VehicleBadgesComponent implements OnInit, AfterViewInit {
 
   nextPage(page: number) {
     this.showSpinner = true;
-    // console.log('vo next page');
     this.vehicleBadgesService.getVehicleBadges(this.currentPage+1).subscribe((data : VehicleBadge[]) => {
-      // console.log('vo next subscription data: ' + data);
       if(data){
         this.currentPage++;
         this.vehicleBadges = data;
-        // console.log('this.badges : ' + this.badges);
         this.dataSource = new MatTableDataSource<VehicleBadge>(this.vehicleBadges);
       } else {
         this.nextDisabled = true;
@@ -97,7 +91,6 @@ export class VehicleBadgesComponent implements OnInit, AfterViewInit {
         dialogRef = this.dialog.open(VehicleBadgesCreateComponent, {
         width: '70%',
         data: null
-        // data: { name: this.name, animal: this.animal }
       }).afterClosed().subscribe(result => {this.refresh()});
     }
   }

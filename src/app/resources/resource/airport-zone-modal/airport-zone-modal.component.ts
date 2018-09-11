@@ -28,10 +28,6 @@ export class AirportZoneModalComponent implements OnInit {
           this.zone = data;
           this.oldID = this.data;
           this.zoneForm = new FormGroup({
-            // 'id': new FormControl(this.zone ? this.zone.id : '', {
-            //   validators: [Validators.required],
-            //   updateOn: 'change'
-            // }),
             'code': new FormControl(this.zone ? this.zone.code : '', {
               validators: [Validators.required],
               updateOn: 'change'
@@ -45,10 +41,6 @@ export class AirportZoneModalComponent implements OnInit {
     }
 
     this.zoneForm = new FormGroup({
-      // 'id': new FormControl(this.zone ? this.zone.id : '', {
-      //   validators: [Validators.required],
-      //   updateOn: 'change'
-      // }),
       'code': new FormControl(this.zone ? this.zone.code : '', {
         validators: [Validators.required],
         updateOn: 'change'
@@ -75,7 +67,6 @@ export class AirportZoneModalComponent implements OnInit {
     } else {
       this.resourcesService.airportZones.addAirportZone(this.zone)
         .subscribe((data : AirportZone) => {
-          // console.log(data);
           this.resourcesService.airportZones.pushAirportZone(data);
           this.snackbarService.successSnackBar("Airport zone successfully added");
         });

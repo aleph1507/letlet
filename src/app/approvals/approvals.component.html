@@ -26,20 +26,6 @@
       </mat-radio-group>
     </div>
     <div class="filter-companies">
-      <!-- <mat-form-field>
-        <button mat-button matSuffix mat-icon-button aria-label="Clear">
-          <mat-icon>search</mat-icon>
-        </button>
-        <input matInput
-          [formControl]="fCompany"
-          [matAutocomplete]="companyAuto"
-          placeholder="Company">
-          <mat-autocomplete #companyAuto="matAutocomplete">
-            <mat-option *ngFor="let company of filteredCompanies | async" [value]="company">
-              {{ company }}
-            </mat-option>
-          </mat-autocomplete>
-      </mat-form-field> -->
       <mat-form-field class="company-field">
         <input type="text" placeholder="Company" [formControl]="companiesAutoCtrl" matInput [matAutocomplete]="comp_auto">
         <mat-autocomplete #comp_auto="matAutocomplete" [displayWith]="displayFn">
@@ -83,7 +69,6 @@
 
     <ng-container matColumnDef="approvedDate">
       <mat-header-cell *matHeaderCellDef>Approved Date</mat-header-cell>
-      <!-- <mat-cell *matCellDef="let req">{{ req.approvedDate }}</mat-cell> -->
       <mat-cell *matCellDef="let req">{{ req.approvedDate | asptonormaldate }}</mat-cell>
     </ng-container>
 

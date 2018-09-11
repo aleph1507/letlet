@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { StopListService } from '../services/stop-list.service';
 import { StopListEntry } from '../models/StopListEntry.model';
-// import { MatTableDataSource, MatSort } from '@angular/material';
 import { GridOptions } from 'ag-grid';
 import * as XLSX from 'xlsx';
 import * as pdfMake from 'pdfmake/build/pdfmake.js';
@@ -16,30 +15,6 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
   styleUrls: ['./stop-list.component.css']
 })
 export class StopListComponent implements OnInit {
-
-  // slEntries: StopListEntry[];
-  // displayedColumns = [
-  //   'name', 'surname', 'jobTitle', 'ID', 'validityDate', 'backgroundValidityCheck',
-  //   'approvedAreas', 'dateOfIssue', 'status', 'secAwareDOT', 'proximityCardNo',
-  //   'code', 'airport'
-  // ];
-
-  // columnDefs = [
-  //   {headerName: 'Name', field: 'name'},
-  //   {headerName: 'Surname', field: 'surname'},
-  //   {headerName: 'Job Title', field: 'jobTitle'},
-  //   {headerName: 'ID Number', field: 'ID'},
-  //   {headerName: 'Validity Date', field: 'validityDate'},
-  //   {headerName: 'Background Validity Check', field: 'backgroundValidityCheck'},
-  //   {headerName: 'Approved Areas', field: 'approvedAreas'},
-  //   {headerName: 'Date Of Issue', field: 'dateOfIssue'},
-  //   {headerName: 'Status', field: 'status'},
-  //   {headerName: 'Security Awareness Date Of Training', field: 'secAwareDOT'},
-  //   {headerName: 'Proximity Card No', field: 'proximityCardNo'},
-  //   {headerName: 'Code', field: 'code'},
-  //   {headerName: 'Airport', field: 'airport'}
-  // ];
-
   xlsx_report;
   columns = ['Index', 'Employee Name', 'Company Name', 'Card Series Number', 'Card Number', 'Badge number', 'Expire Date'];
 
@@ -83,10 +58,7 @@ export class StopListComponent implements OnInit {
     XLSX.writeFile(workBook, 'StopList.xlsx');
   }
 
-  // columns = ['Employee Name', 'Company Name', 'Card Series Number', 'Card Number', 'Expire Date'];
-
   export_to_pdf() {
-    // console.log('this.xlsx_report: ', this.xlsx_report);
     let body = [];
     body.push(this.columns);
     let tmp = [];
@@ -96,14 +68,12 @@ export class StopListComponent implements OnInit {
       body.push(tmp);
       tmp = [];
     }
-    // console.log('body: ', body);
     let docDefinition = {
       content: [
         {
           table: {
             headerRows: 1,
             widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
-
             body: body
           }
         }
@@ -111,11 +81,6 @@ export class StopListComponent implements OnInit {
     }
    pdfMake.createPdf(docDefinition).download('StopList.pdf');
   }
-  // rowData = [];
-
-  // @ViewChild(MatSort) sort: MatSort;
-
-  // slDataSource;
 
   constructor(private slService: StopListService) { }
 
@@ -132,17 +97,5 @@ export class StopListComponent implements OnInit {
         }
         this.gridOptions.api.setRowData(data);
       });
-    // this.slEntries = this.slService.getStopListEntries();
-    // this.slDataSource = new MatTableDataSource(this.slEntries);
-    // this.slDataSource.sort = this.sort;
-    // this.gridOptions.rowData = this.slService.getStopListEntries();
-    // console.log('this.rowData: ' + this.rowData);
   }
-
-  // applyFilter(filterValue: string) {
-    // filterValue = filterValue.trim();
-    // filterValue = filterValue.toLowerCase();
-    // this.slDataSource.filter = filterValue;
-  // }
-
 }

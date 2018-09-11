@@ -11,25 +11,21 @@
 
       <mat-table [dataSource]="dataSourceEnteredPersons" class="mat-elevation-z8">
 
-        <!-- Position Column -->
         <ng-container matColumnDef="name">
           <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
           <mat-cell *matCellDef="let enteredp"> {{enteredp.name}} </mat-cell>
         </ng-container>
 
-        <!-- Name Column -->
         <ng-container matColumnDef="company">
           <mat-header-cell *matHeaderCellDef> Company </mat-header-cell>
           <mat-cell *matCellDef="let enteredp"> {{enteredp.company}} </mat-cell>
         </ng-container>
 
-        <!-- Weight Column -->
         <ng-container matColumnDef="enteredGate">
           <mat-header-cell *matHeaderCellDef> Entered At Gate </mat-header-cell>
           <mat-cell *matCellDef="let enteredp"> {{enteredp.enteredGate}} </mat-cell>
         </ng-container>
 
-        <!-- Symbol Column -->
         <ng-container matColumnDef="escortEmployee">
           <mat-header-cell *matHeaderCellDef> Escort Employee </mat-header-cell>
           <mat-cell *matCellDef="let enteredp">{{enteredp.escortEmployee}}</mat-cell>
@@ -65,19 +61,16 @@
 
       <mat-table [dataSource]="dataSourceEnteredVehicles" class="mat-elevation-z8">
 
-        <!-- Position Column -->
         <ng-container matColumnDef="model">
           <mat-header-cell *matHeaderCellDef> Model </mat-header-cell>
           <mat-cell *matCellDef="let enteredv"> {{enteredv.model}} </mat-cell>
         </ng-container>
 
-        <!-- Name Column -->
         <ng-container matColumnDef="plate">
           <mat-header-cell *matHeaderCellDef> Plate </mat-header-cell>
           <mat-cell *matCellDef="let enteredv"> {{enteredv.plate}} </mat-cell>
         </ng-container>
 
-        <!-- Weight Column -->
         <ng-container matColumnDef="company">
           <mat-header-cell *matHeaderCellDef> Company </mat-header-cell>
           <mat-cell *matCellDef="let enteredv"> {{enteredv.company}} </mat-cell>
@@ -88,7 +81,6 @@
           <mat-cell *matCellDef="let enteredv">{{enteredv.escortEmployee}}</mat-cell>
         </ng-container>
 
-        <!-- Symbol Column -->
         <ng-container matColumnDef="escortEmployee">
           <mat-header-cell *matHeaderCellDef> Escort Employee </mat-header-cell>
           <mat-cell *matCellDef="let enteredv">{{enteredv.escortEmployee}}</mat-cell>
@@ -125,25 +117,21 @@
 
       <mat-table [dataSource]="dataSourceExpectedPersons" class="mat-elevation-z8">
 
-        <!-- Position Column -->
         <ng-container matColumnDef="nameEn">
           <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
           <mat-cell *matCellDef="let ep"> {{ep.nameEn}} </mat-cell>
         </ng-container>
 
-        <!-- Name Column -->
         <ng-container matColumnDef="surnameEn">
           <mat-header-cell *matHeaderCellDef> Surname </mat-header-cell>
           <mat-cell *matCellDef="let ep"> {{ep.surnameEn}} </mat-cell>
         </ng-container>
 
-        <!-- Weight Column -->
         <ng-container matColumnDef="companyName">
           <mat-header-cell *matHeaderCellDef> Company </mat-header-cell>
           <mat-cell *matCellDef="let ep"> {{ep.companyName}} </mat-cell>
         </ng-container>
 
-        <!-- Symbol Column -->
         <ng-container matColumnDef="enter">
           <mat-header-cell *matHeaderCellDef> Enter </mat-header-cell>
           <mat-cell *matCellDef="let ep">
@@ -168,25 +156,21 @@
 
       <mat-table [dataSource]="dataSourceExpectedVehicles" class="mat-elevation-z8">
 
-        <!-- Position Column -->
         <ng-container matColumnDef="model">
           <mat-header-cell *matHeaderCellDef> Model </mat-header-cell>
           <mat-cell *matCellDef="let ev"> {{ev.model}} </mat-cell>
         </ng-container>
 
-        <!-- Name Column -->
         <ng-container matColumnDef="plate">
           <mat-header-cell *matHeaderCellDef> Plate </mat-header-cell>
           <mat-cell *matCellDef="let ev"> {{ev.plate}} </mat-cell>
         </ng-container>
 
-        <!-- Weight Column -->
         <ng-container matColumnDef="companyName">
           <mat-header-cell *matHeaderCellDef> Company </mat-header-cell>
           <mat-cell *matCellDef="let ev"> {{ev.companyName}} </mat-cell>
         </ng-container>
 
-        <!-- Symbol Column -->
         <ng-container matColumnDef="enter">
           <mat-header-cell *matHeaderCellDef> Enter </mat-header-cell>
           <mat-cell *matCellDef="let ev">

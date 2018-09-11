@@ -16,13 +16,6 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 export class VehicleStopListComponent implements OnInit {
 
   xlsx_report;
-  // columns = [
-  //     {title: 'Permit Number', dataKey: 'permitNumber'},
-  //     {title: 'Vehicle Model', dataKey: 'model'},
-  //     {title: 'Vehicle Plate', dataKey: 'plate'},
-  //     {title: 'Vehicle Company', dataKey: 'companyName'},
-  //     {title: 'Expire Date', dataKey: 'expireDate'}
-  //   ];
 
   columns = ['Index', 'Permit Number', 'Vehicle Model', 'Vehicle Plate', 'Vehicle Company', 'Expire Date', 'Reason'];
 
@@ -81,7 +74,6 @@ export class VehicleStopListComponent implements OnInit {
     XLSX.utils.book_append_sheet(workBook, workSheet, 'VehiclesStopList');
     XLSX.writeFile(workBook, 'VehiclesStopList.xlsx');
   }
-  // columns = ['Permit Number', 'Vehicle Model', 'Vehicle Plate', 'Vehicle Company', 'Expire Date'];
 
   export_to_pdf() {
     let body = [];
@@ -106,12 +98,6 @@ export class VehicleStopListComponent implements OnInit {
       ]
     }
    pdfMake.createPdf(docDefinition).download('VehicleStopList.pdf');
-
-    // var doc = new jsPDF('p', 'pt');
-    // doc.autoTable(this.columns, this.xlsx_report);
-    //
-    // doc.save('VehicleStopList.pdf');
-    // doc.
   }
 
 }

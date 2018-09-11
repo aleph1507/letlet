@@ -20,7 +20,6 @@ export class EmployeeModalComponent implements OnInit {
   companies : Company[] = [];
   companiesAutoCtrl: FormControl = new FormControl();
   companies_auto: Company[] = [];
-  // company: FormControl = new FormControl();
 
   constructor(public dialogRef: MatDialogRef<EmployeeModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: number,
@@ -28,11 +27,6 @@ export class EmployeeModalComponent implements OnInit {
               private snackbarService: SnackbarService) { }
 
   ngOnInit() {
-    // this.resourcesService.companies.getCompanies()
-    //   .subscribe((data: Company[]) => {
-    //     this.companies = data;
-    //     console.log('companies: ' + this.companies);
-    //   });
       this.companiesAutoCtrl.valueChanges
         .subscribe(d => {
           this.resourcesService.companies.filterCompanies(d)
@@ -43,7 +37,6 @@ export class EmployeeModalComponent implements OnInit {
         });
 
     if(this.data){
-      console.log('data : ' + this.data);
       this.resourcesService.employees.getEmplyeeById(this.data)
         .subscribe((data : Employee) => {
           this.oldID = data.id;
@@ -62,17 +55,11 @@ export class EmployeeModalComponent implements OnInit {
               validators: [Validators.required],
               updateOn: 'change'
             }),
-            // 'company': new FormControl(this.employee ? this.employee.company : '', {
-            //   validators: Validators.required
-            // }),
           });
         });
     }
 
     this.employeeForm = new FormGroup({
-      // 'company': new FormControl(this.employee ? this.employee.company : '', {
-      //   validators: Validators.required
-      // }),
       'occupation': new FormControl(this.employee ? this.employee.occupation : '', {
         validators: [Validators.required],
         updateOn: 'change'
@@ -101,8 +88,6 @@ export class EmployeeModalComponent implements OnInit {
       occupation: this.employeeForm.controls['occupation'].value
     }
     if(this.data){
-      // this.resourcesService.employees.deleteEmployeeById(this.data.id);
-      // this.resourcesService.employees.addEmployee(this.employee);
       this.resourcesService.employees.updateEmployee(this.employee)
         .subscribe((data : Employee) => {
           this.resourcesService.employees.switchEmployeeById(data);

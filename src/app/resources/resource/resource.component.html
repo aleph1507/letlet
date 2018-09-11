@@ -22,11 +22,6 @@
 
         <!-- Visitor Vehicle Badges resource -->
         <div *ngIf="category=='visitors-vehicle-badges'" class="visitors-vehicle-badges-resource" id="visitors-vehicle-badges-resource">
-          <!-- <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-            <mat-cell *matCellDef="let vvb"> {{vvb.id}} </mat-cell>
-          </ng-container> -->
-
           <ng-container matColumnDef="code">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Code </mat-header-cell>
             <mat-cell *matCellDef="let vvb"> {{vvb.code}} </mat-cell>
@@ -64,16 +59,6 @@
 
         <!-- Visitor Badges resource -->
         <div *ngIf="category=='visitors-badges'" class="visitors-badges-resource" id="zones-resource">
-          <!-- <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-            <mat-cell *matCellDef="let vb"> {{vb.id}} </mat-cell>
-          </ng-container> -->
-
-          <!-- <ng-container matColumnDef="code">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Code </mat-header-cell>
-            <mat-cell *matCellDef="let vb"> {{vb.code}} </mat-cell>
-          </ng-container> -->
-
           <ng-container matColumnDef="name">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
             <mat-cell *matCellDef="let vb"> {{vb.name}} </mat-cell>
@@ -110,11 +95,6 @@
 
         <!-- Airport Zone resource -->
         <div *ngIf="category=='zones'" class="zones-resource" id="zones-resource">
-          <!-- <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-            <mat-cell *matCellDef="let zone"> {{zone.id}} </mat-cell>
-          </ng-container> -->
-
           <ng-container matColumnDef="code">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Code </mat-header-cell>
             <mat-cell *matCellDef="let zone"> {{zone.code}} </mat-cell>
@@ -150,49 +130,8 @@
         </div>
         <!-- ./Airport Zone resource -->
 
-        <!-- Occupations resource -->
-        <!-- <div *ngIf="category=='occupations'" class="occupations-resource" id="occupations-resource">
-          <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-            <mat-cell *matCellDef="let occ"> {{occ.id}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="code">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Code </mat-header-cell>
-            <mat-cell *matCellDef="let occ"> {{occ.code}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-            <mat-cell *matCellDef="let occ"> {{occ.name}} </mat-cell>
-          </ng-container>t
-
-
-          <ng-container matColumnDef="edit">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
-            <mat-cell *matCellDef="let occ">
-              <mat-icon matListIcon
-              (click)="editOccupation(occ.id)"
-              class="icon-control"
-              >mode_edit</mat-icon>
-            </mat-cell>
-          </ng-container>
-
-        </div> -->
-        <!-- ./Occupations resource -->
-
         <!-- Gates resource -->
         <div *ngIf="category=='gates'" class="gates-resource" id="gates-resource">
-          <!-- <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-            <mat-cell *matCellDef="let gate"> {{gate.id}} </mat-cell>
-          </ng-container> -->
-
-          <!-- <ng-container matColumnDef="code">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Code </mat-header-cell>
-            <mat-cell *matCellDef="let gate"> {{gate.code}} </mat-cell>
-          </ng-container> -->
-
           <ng-container matColumnDef="name">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
             <mat-cell *matCellDef="let gate"> {{gate.name}} </mat-cell>
@@ -223,46 +162,8 @@
         </div>
         <!-- ./Gates resource -->
 
-        <!-- Reasons resource -->
-        <!-- <div *ngIf="category=='reasons'" class="reasons-resource" id="reasons-resource">
-
-          <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-            <mat-cell *matCellDef="let reason"> {{reason.name}} </mat-cell>
-          </ng-container>
-
-
-          <ng-container matColumnDef="edit">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
-            <mat-cell *matCellDef="let reason">
-              <mat-icon matListIcon
-              (click)="editReason(reason.id)"
-              class="icon-control"
-              >border_color</mat-icon>
-            </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="delete">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Delete </mat-header-cell>
-            <mat-cell *matCellDef="let reason">
-              <mat-icon matListIcon
-                (click)="deleteReason(reason.id)"
-                class="icon-control">
-                delete
-              </mat-icon>
-            </mat-cell>
-          </ng-container>
-
-        </div> -->
-        <!-- ./Reason resource -->
-
         <!-- Employees resource -->
         <div *ngIf="category=='employees'" class="employees-resource" id="employees-resource">
-          <!-- <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-            <mat-cell *matCellDef="let emp"> {{emp.id}} </mat-cell>
-          </ng-container> -->
-
           <ng-container matColumnDef="name">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
             <mat-cell *matCellDef="let emp"> {{emp.name}} </mat-cell>
@@ -303,13 +204,6 @@
               </mat-icon>
             </mat-cell>
           </ng-container>
-          <!-- <mat-paginator [length]="length"
-              [pageSize]="pageSize"
-              [pageSizeOptions]="pageSizeOptions"
-              (page)="pageEvent = $event">
-          </mat-paginator> -->
-          <!-- <button (click)="prevPage()" [disabled]="currentPage <=1" mat-raised-button>< Previous Page</button>
-          <button (click)="nextPage()" [disabled]="nextDisabled" mat-raised-button>Next Page ></button> -->
         </div>
         <!-- ./Employees resource -->
 
@@ -408,38 +302,6 @@
         <button (click)="prevPageEmp()" [disabled]="currentPageComp <= 1" class="prev-btn" mat-raised-button>< Previous Page</button>
         <button (click)="nextPageEmp()" [disabled]="nextDisabledComp" class="next-btn" mat-raised-button>Next Page ></button>
       </div>
-
-      <!-- <div *ngIf="category=='employees'" class="employees-pagination">
-        <form class="employee-form">
-          <mat-form-field class="employee-field">
-            <input type="text" placeholder="Employee" [formControl]="employeeAutoCtrl" matInput [matAutocomplete]="emp_auto">
-            <mat-autocomplete #emp_auto="matAutocomplete" [displayWith]="displayEmpFn">
-              <mat-option *ngFor="let emp of employees_auto" [value]="emp">
-                {{ emp.name }} {{emp.surname}}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-        </form>
-        <button (click)="prevPageEmp()" [disabled]="currentPage <=1" class="prev-btn" mat-raised-button>&laquo; Previous Page</button>
-        <button (click)="nextPageEmp()" [disabled]="nextDisabled" class="next-btn" mat-raised-button>Next Page &raquo;</button>
-      </div> -->
-
-      <!-- <div *ngIf="category=='companies'" class="companies-pagination">
-        <form class="company-form">
-          <mat-form-field class="company-field">
-            <input type="text" placeholder="Company" [formControl]="companiesAutoCtrl" matInput [matAutocomplete]="comp_auto">
-            <mat-autocomplete #comp_auto="matAutocomplete">
-              <mat-option *ngFor="let comp of companies_auto" [value]="comp">
-                {{ comp.name }}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-        </form>
-        <button (click)="prevPageComp()" [disabled]="currentPageComp <= 1" class="prev-btn" mat-raised-button>< Previous Page</button>
-        <button (click)="nextPageComp()" [disabled]="nextDisabledComp" class="next-btn" mat-raised-button>Next Page ></button>
-      </div> -->
-      <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
     </div>
-  <!-- </div> -->
 
 </div>

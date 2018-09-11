@@ -42,12 +42,6 @@ export class DialogResourceVehicleComponent implements OnInit {
   companies: Company[];
 
   ngOnInit() {
-
-      // this.resourcesService.companies.getCompanies()
-      //   .subscribe((data) => {
-      //     this.companies = data;
-      //   });
-
       this.companiesAutoCtrl.valueChanges
         .subscribe(d => {
           this.resourcesService.companies.filterCompanies(d)
@@ -60,9 +54,6 @@ export class DialogResourceVehicleComponent implements OnInit {
         });
 
       this.vehicleForm = new FormGroup({
-        // 'company': new FormControl(this.vehicle.company ? this.vehicle.company : '', {
-        //   validators: Validators.required
-        // }),
         'model': new FormControl(this.vehicle.model, {
           validators: Validators.required
         }),
@@ -77,9 +68,6 @@ export class DialogResourceVehicleComponent implements OnInit {
             this.vehicle = res;
             this.companiesAutoCtrl.setValue(res.company);
             this.vehicleForm = new FormGroup({
-              // 'company': new FormControl(this.vehicle.company ? this.vehicle.company : '', {
-              //   validators: Validators.required
-              // }),
               'model': new FormControl(this.vehicle.model, {
                 validators: Validators.required
               }),
@@ -89,15 +77,6 @@ export class DialogResourceVehicleComponent implements OnInit {
             })
           })
       }
-
-      // if(this.data != null){
-      //   if(this.data.vehicle != null)
-      //     this.vehicle = this.data.vehicle;
-      // }
-      //
-      // this.resource = this.data.resource;
-
-
   }
 
   displayFn(c?: Company) {
@@ -105,7 +84,6 @@ export class DialogResourceVehicleComponent implements OnInit {
   }
 
   onSubmit(){
-    // this.vehicle.company = this.vehicleForm.controls['company'].value;
     this.vehicle.company = this.companiesAutoCtrl.value;
     this.vehicle.model = this.vehicleForm.controls['model'].value;
     this.vehicle.plate = this.vehicleForm.controls['plate'].value;
@@ -113,7 +91,6 @@ export class DialogResourceVehicleComponent implements OnInit {
       this.data == null ?
         this.resourcesService.vehicles.addVehicle(this.vehicle)
           .subscribe((data) => {
-            console.log('data: ' + data);
             this.resourcesService.vehicles.pushVehicle(data);
             this.snackbarService.successSnackBar("Vehicle successfully added");
           }) : this.resourcesService.vehicles.editVehicle(this.vehicle)
@@ -121,22 +98,10 @@ export class DialogResourceVehicleComponent implements OnInit {
                   this.resourcesService.vehicles.switchVehicleById(this.vehicle);
                   this.snackbarService.successSnackBar("Vehicle successfully updated");
                 });
-      // console.log('post add (vModal) resources.vehicles: ', this.resourcesService.vehicles.getAllVehicles());
-
-    // console.log('prev call add vehicles(vehicleModal): ', this.requesterService.getAllVehicles());
-    // this.data === null ? this.requesterService.addVehicle(this.vehicle) : this.requesterService.editVehicle(this.data.i, this.vehicle);
-    // console.log('post call add vehicles(vehicleModal): ', this.requesterService.getAllVehicles());
     this.thisDialogRef.close(this.vehicle);
   }
 
   onCancel(){
     this.thisDialogRef.close("Cancel");
   }
-
-  // okAble(){
-  //   return this.personForm.controls['name'].status === "VALID" &&
-  //     this.personForm.controls['surname'].status === "VALID" && this.img1src != ''
-  //     && this.img2src != '';
-  // }
-
 }

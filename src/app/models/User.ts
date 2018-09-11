@@ -14,13 +14,3 @@ export class User {
   password : string;
   confirmPassword : string;
 }
-
-// "FirstName": "Viktor";
-//
-// "LastName": "Nikolovski";
-//
-// "UserName": "Viktor";
-// "Position": "Software Engineer & Service Management Specialist";
-// "Password": "Masterkey#1";
-//
-// "ConfirmPassword": "Masterkey#1"

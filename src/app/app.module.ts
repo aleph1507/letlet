@@ -16,7 +16,6 @@ import { DialogPersonComponent } from './requester/dialog-person/dialog-person.c
 import { DialogVehicleComponent } from './requester/dialog-vehicle/dialog-vehicle.component';
 import { RequesterService } from './services/requester.service';
 import { LoginComponent } from './login/login.component';
-import { LoginService } from './login.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import { ApprovalsComponent } from './approvals/approvals.component';
@@ -62,7 +61,6 @@ import { VslService } from './services/vsl.service';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { MyDateAdapter, MY_DATE_FORMATS } from './shared/DateAdapter';
 import { AsptonormaldatePipe } from './shared/pipes/asptonormaldate.pipe';
-// import { AsptonormaldatetimePipe } from './shared/pipes/asptonormaldatetime.pipe';
 import { BadgesConfirmShredComponent } from './badges/badges-create/badges-confirm-shred/badges-confirm-shred.component';
 import { ShreddingReportComponent } from './reports/shredding-report/shredding-report.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
@@ -115,7 +113,6 @@ import { VehiclebadgereportComponent } from './reports/vehiclebadgereport/vehicl
     VehicleBadgesCreateComponent,
     VehicleStopListComponent,
     AsptonormaldatePipe,
-    // AsptonormaldatetimePipe,
     BadgesConfirmShredComponent,
     ShreddingReportComponent,
     SpinnerComponent,

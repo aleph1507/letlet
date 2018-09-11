@@ -5,7 +5,6 @@ export const MY_DATE_FORMATS = {
        dateInput: {month: 'short', year: 'numeric', day: 'numeric'}
    },
    display: {
-       // dateInput: { month: 'short', year: 'numeric', day: 'numeric' },
        dateInput: 'input',
        monthYearLabel: {year: 'numeric', month: 'short'},
        dateA11yLabel: {year: 'numeric', month: 'long', day: 'numeric'},

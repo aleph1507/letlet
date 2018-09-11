@@ -8,8 +8,6 @@ import { Employee } from '../../models/Employee';
 import { AirportZone } from '../../models/AirportZone';
 import { lengthValidator } from '../../customValidators/lengthValidator.directive';
 import { SnackbarService } from '../../services/snackbar.service';
-// import { BadgesConfirmShredComponent } from './badges-confirm-shred/badges-confirm-shred.component';
-
 
 @Component({
   selector: 'app-badges-create',
@@ -44,10 +42,7 @@ export class BadgesCreateComponent implements OnInit {
       this.badge = this.data;
       this.returned = this.data.returned;
       this.deactivated = this.data.deactivated ? this.data.deactivated : false;
-      console.log('data: ', this.data);
     }
-
-    console.log('this.returned: ', this.returned);
 
     this.badgeForm = this.createBadgeForm();
 
@@ -68,7 +63,6 @@ export class BadgesCreateComponent implements OnInit {
           }
         }
       });
-      // this.badgeForm.controls['returned'].disable();
   }
 
   checkZone(i){
@@ -81,14 +75,6 @@ export class BadgesCreateComponent implements OnInit {
     dE.getDate() < 10 ? parsedDE += '-0' + dE.getDate() : parsedDE += '-' + dE.getDate();
     return parsedDE;
   }
-
-  // validateLength(c: FormControl, l: number){
-  //   let n = c.value;
-  //   return n.length == l ? null : {
-  //     validateLength: {
-  //       valid: false
-  //     }}
-  // }
 
   onSubmit() {
     if(!this.do_patch)
@@ -128,7 +114,6 @@ export class BadgesCreateComponent implements OnInit {
           this.dialogRef.close();
         })
     }
-      // this.dialogRef.close();
   }
 
   displayFn(e?: Employee) {
@@ -165,21 +150,12 @@ export class BadgesCreateComponent implements OnInit {
         validators: [Validators.required,
                       lengthValidator(4)]
       }),
-      // 'active': new FormControl(this.badge.active, {
-      //   validators: Validators.required
-      // }),
       'returned': new FormControl(this.badge.returned, {
 
       }),
-      // 'employeeId': new FormControl(this.badge.employeeId, {
-      //   validators: Validators.required
-      // }),
       'employee': new FormControl(this.badge.employee, {
         validators: Validators.required
       }),
-      // 'zones': new FormControl(this.badge.zones, {
-      //   validators: Validators.required
-      // }),
       'dateOfSecurityCheck': new FormControl(this.badge.dateOfSecurityCheck, {
         validators: Validators.required
       }),
@@ -199,26 +175,21 @@ export class BadgesCreateComponent implements OnInit {
     if(cShred){
       this.badgesService.shredBadge(id)
         .subscribe(d => {
-          console.log(`Badge id: ${id} shredded, d: `, d);
         });
       this.dialogRef.close();
     }
-    // let confirmShredDialogRef = this.confirmDialog.open(BadgesConfirmShredComponent, {
-    //   data: id
-    // });
   }
 
   deactivate(id) {
     this.deactivateReason = prompt('Please enter the deactivation reason:');
     if(this.deactivateReason == null || this.deactivateReason == ''){
-      console.log('deactivate canceled');
+      // console.log('deactivate canceled');
     } else {
       this.badgesService.deactivate(this.badge.id, this.deactivateReason)
         .subscribe(data => {
           if(data){
             this.badge.deactivated = true;
             this.deactivated = true;
-            // this.snackbarService.msg = 'Успешно деактивиран';
             this.snackbarService.successSnackBar("Successfully deactivated");
           } else {
             this.snackbarService.failSnackBar("Deactivation error");

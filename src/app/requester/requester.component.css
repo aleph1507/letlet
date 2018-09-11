@@ -30,8 +30,6 @@ div.req-form-container {
   bottom:0;
   right: 50%;
   background: #fff;
-  /* height:100%; */
-  /* width:50%; */
 }
 
 div.requester-props-container {
@@ -57,8 +55,6 @@ div.list-row {
 }
 
 div.controls {
-  /* display: inline-flex; */
-  /* align-self: flex-end; */
   float:right;
 
 }
@@ -83,21 +79,9 @@ hoveredIconControl {
 div.requester-prop {
   display:flex;
   flex-direction: column;
-  /* justify-content: flex-end; */
-  /* align-items: flex-end; */
-  /* align-content: space-between; */
-
-  /* margin:2%; */
-
-  /* margin-right: 10%; */
-
   width: 40vw;
   height: 46%;
   padding:2%;
-
-  /* max-height: 20vh; */
-  /* overflow-y: auto; */
-  /* border: 2px solid black; */
 }
 
 
@@ -127,21 +111,6 @@ h2.req-prop-title {
   align-self: stretch;
 }
 
-#plusPerson {
-  /* margin-top: 70%;
-  margin-left: 89%;
-  align-self: flex-end; */
-  /* position: relative;
-  top: 80%;
-  left: 80%; */
-}
-
-#plusVehicle {
-  /* margin-top: 70%;
-  margin-left:89%;
-  align-self: flex-end; */
-}
-
 img.p-preview {
   max-width:150px;
   max-height:150px;
@@ -167,7 +136,6 @@ img.p-preview {
 }
 
 .main-send {
-  /* margin-top:5%; */
   width:30%;
   padding: 3%;
   position:absolute;
@@ -196,16 +164,3 @@ mat-list {
     top: 0;
   }
 }
-
-/* .download-pdfs {
-  margin-top: 10%;
-} */
-
-/* .cdk-overlay-container {
-  width: auto !important;
-  height: auto !important;
-}
-
-.cdk-overlay-backdrop, .cdk-global-overlay-wrapper, .cdk-overlay-pane {
-  position: fixed !important;
-} */

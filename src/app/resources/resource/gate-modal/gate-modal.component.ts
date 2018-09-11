@@ -28,10 +28,6 @@ export class GateModalComponent implements OnInit {
           this.gate = data;
           this.oldID = this.data;
           this.gateForm = new FormGroup({
-            // 'id': new FormControl(this.gate ? this.gate.id : '', {
-            //   validators: [Validators.required],
-            //   updateOn: 'change'
-            // }),
             'name': new FormControl(this.gate ? this.gate.name : '', {
               validators: [Validators.required],
               updateOn: 'change'
@@ -42,10 +38,6 @@ export class GateModalComponent implements OnInit {
     }
 
     this.gateForm = new FormGroup({
-      // 'id': new FormControl(this.gate ? this.gate.id : '', {
-      //   validators: [Validators.required],
-      //   updateOn: 'change'
-      // }),
       'name': new FormControl(this.gate ? this.gate.name : '', {
         validators: [Validators.required],
         updateOn: 'change'

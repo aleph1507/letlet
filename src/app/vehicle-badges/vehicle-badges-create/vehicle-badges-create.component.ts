@@ -33,18 +33,14 @@ export class VehicleBadgesCreateComponent implements OnInit {
               private snackbarService: SnackbarService) { }
 
   ngOnInit() {
-    // console.log('data: ', this.data);
     if(this.data != null){
       this.vehicleBadge = this.data;
       this.vehicleBadge.returned = this.data.returned;
       this.returned = this.data.returned;
-      console.log('vb: ', this.vehicleBadge);
-      // console.log('this.vehicleBadge: ' + this.vehicleBadge);
       this.vehicleBadgeForm  = this.createVehicleBadgeForm();
       this.vehicleAutoCtrl.setValue(this.vehicleBadge.vehicle);
       this.vehicleBadge.returned = this.vehicleBadge.returned;
       this.vehicleBadgeForm.controls['return'].setValue(this.vehicleBadge.returned);
-      // console.log('this.vehicleBadge: ', this.vehicleBadge);
     } else {
       this.vehicleBadgeForm = this.createVehicleBadgeForm();
     }
@@ -53,20 +49,15 @@ export class VehicleBadgesCreateComponent implements OnInit {
       .subscribe(d => {
         this.resourcesService.vehicles.filterResVehicles(d)
           .subscribe((data: resourceVehicle[]) => {
-            // console.log('resourceVehicle: ', data);
             this.vehicles_auto = data;
           });
       });
   }
 
   onSubmit() {
-    // console.log('vo submit');
     if(!this.do_patch)
       return;
-    // console.log('posle if do patch');
     let dExpire = new Date(this.vehicleBadgeForm.controls['expireDate'].value);
-    // if(this.vehicleBadgeForm.controls['shreddigDate'])
-    // let dShredding = new Date(this.vehicleBadgeForm.controls['shreddingDate'].value);
     this.vehicleBadge.id = this.data == null ? null : this.data.id;
     this.vehicleBadge.permitNumber = this.vehicleBadgeForm.controls['permitNumber'].value;
     this.vehicleBadge.returned = this.returned;
@@ -75,7 +66,6 @@ export class VehicleBadgesCreateComponent implements OnInit {
     this.vehicleBadge.payment = this.vehicleBadgeForm.controls['payment'].value;
     if(this.data == null)
       this.vehicleBadge.shreddigDate = null;
-    // this.vehicleBadge.shreddigDate = this.parseDate(dShredding);
     if(this.data == null) {
       this.vehicleBadgeService.addVehicleBadge(this.vehicleBadge)
         .subscribe((data: VehicleBadge) => {
@@ -94,7 +84,7 @@ export class VehicleBadgesCreateComponent implements OnInit {
   deactivate(id){
     this.deactivateReason = prompt('Please enter the deactivation reason:');
     if(this.deactivateReason == null || this.deactivateReason == ''){
-      console.log('deactivate canceled');
+      // console.log('deactivate canceled');
     } else {
       this.vehicleBadgeService.deactivate(id, this.deactivateReason)
         .subscribe(data => {
@@ -159,9 +149,6 @@ export class VehicleBadgesCreateComponent implements OnInit {
       'payment': new FormControl(this.vehicleBadge.payment, {
 
       })
-      // 'shreddingDate': new FormControl(this.vehicleBadge.shreddigDate, {
-      //   // validators: [Validators.required]
-      // })
     })
   }
 

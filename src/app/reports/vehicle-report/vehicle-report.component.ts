@@ -106,17 +106,14 @@ export class VehicleReportComponent implements OnInit {
     let docDefinition = {
 
     extend: 'pdfHtml5',
-    // orientation: 'landscape',//landscape give you more space
-    pageSize: 'A3',//A0 is the largest A5 smallest(A0,A1,A2,A3,legal,A4,A5,letter))
+    pageSize: 'A3',
     alignment: 'center',
 
     content: [
         {
-          // alignment: 'center',
           table: {
             headerRows: 1,
             widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
-
             body: body
           }
         }

@@ -59,7 +59,6 @@ export class ReasonModalComponent implements OnInit {
     } else {
       this.resourcesService.reasons.addReason(this.reason)
         .subscribe((data : Reason) => {
-          console.log('data: ' + data.id);
           this.resourcesService.reasons.pushReason(data);
           this.snackbarService.successSnackBar("Reason successfully added");
         });

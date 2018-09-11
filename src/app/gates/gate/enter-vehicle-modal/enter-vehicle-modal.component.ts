@@ -36,7 +36,6 @@ export class EnterVehicleModalComponent implements OnInit {
    @ViewChild('vvBadge') vvBadgeAutoComplete: MatAutocomplete;
    @ViewChild(MatAutocompleteTrigger) entEmp: MatAutocompleteTrigger;
 
-  // filteredVVBs: Observable<VisitorVehicleBadge[]>;
   filteredVVBs: VisitorVehicleBadge[];
 
   constructor(private dialogRef: MatDialogRef<EnterVehicleModalComponent>,
@@ -75,12 +74,6 @@ export class EnterVehicleModalComponent implements OnInit {
         }
       });
 
-      // this.filteredVVBs = this.EnterVehicleForm.controls['visitorVehicleBadge'].valueChanges.pipe(
-      //   startWith<string | VisitorVehicleBadge>(),
-      //   map(value => typeof value === 'string' ? value : value.name),
-      //   map(name => name ? this._filterVVBs(name) : this.visitorVehicleBadges.slice())
-      // );
-
       this.EnterVehicleForm.controls['visitorVehicleBadge'].valueChanges
         .debounceTime(300)
         .distinctUntilChanged()
@@ -108,15 +101,6 @@ export class EnterVehicleModalComponent implements OnInit {
       this.entEmp.closePanel();
     }
   }
-
-  // selectVVB() {
-  //   this.filteredVVBs.subscribe(fVVBs => {
-  //     if(fVVBs.length == 1)
-  //       this.EnterVehicleForm.controls['visitorVehicleBadge'].setValue(fVVBs);
-  //   });
-  //   // if(this.employees.length == 1)
-  //   //   this.EnterVehicleForm.controls['entryEmployee'].setValue(this.employees[0]);
-  // }
 
   displayFnCompany(c?: Company) {
     return c ? c.name : undefined;
@@ -157,7 +141,6 @@ export class EnterVehicleModalComponent implements OnInit {
 
     this.gatesService.postVehicleEnter(eVehicle)
       .subscribe((res) => {
-        console.log('res: ' + res);
         this.gatesService.getAllEnteredVehicles()
           .subscribe((data: EnteredVehicle[]) => {
             this.dialogRef.close({vehicleId: this.data.exv.vehicleRequestId, vehiclesInside: data});

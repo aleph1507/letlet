@@ -12,8 +12,6 @@ import { EmployeeModalComponent } from './employee-modal/employee-modal.componen
 import { ReasonModalComponent } from './reason-modal/reason-modal.component';
 import { Gate } from '../../models/Gate';
 import { GateModalComponent } from './gate-modal/gate-modal.component';
-// import { Occupation } from '../../models/Occupation';
-// import { OccupationModalComponent } from './occupation-modal/occupation-modal.component';
 import { AirportZone } from '../../models/AirportZone';
 import { AirportZoneModalComponent } from './airport-zone-modal/airport-zone-modal.component';
 import { VisitorBadge } from '../../models/VisitorBadge';
@@ -24,7 +22,6 @@ import { DialogResourceVehicleComponent } from './dialog-vehicle/dialog-vehicle.
 import { FormControl } from '@angular/forms';
 import { Vehicle } from '../../models/Vehicle.model';
 import { SnackbarService } from '../../services/snackbar.service';
-// import { EmployeesDataSource } from './data_sources/EmployeesDataSource';
 
 @Component({
   selector: 'app-resource',
@@ -36,7 +33,6 @@ export class ResourceComponent implements OnInit {
   vehicles: Vehicle[];
   lengthVehicles: any;
 
-  // companies = this.resourcesService.companies();
   dataSource;
   displayedColumns;
   paramsSub: any;
@@ -90,12 +86,10 @@ export class ResourceComponent implements OnInit {
     this.paramsSub = this.route.params.subscribe(params => {
       this.showSpinner = true;
       this.category = params['category'];
-      console.log('category: ', this.category);
       switch(this.category){
         case 'visitors-badges':
           this.category = 'visitors-badges';
           this.categoryTitle = 'Visitors Badges';
-          // this.resourcesService.visitorBadges.getAllVisitorBadges();
           this.resourcesService.visitorBadges.getAllVisitorBadges()
             .subscribe((data : VisitorBadge[]) => {
               data == null ? this.resourcesService.visitorBadges.visitorBadges = [] :
@@ -109,7 +103,6 @@ export class ResourceComponent implements OnInit {
           this.displayedColumns = ['name', 'barcode', 'edit', 'delete'];
           break;
         case 'visitors-vehicle-badges':
-          // console.log('VO VISITOR VEHICLE BADGES');
           this.category = 'visitors-vehicle-badges';
           this.categoryTitle = 'Visitors Vehicle Badges';
           this.resourcesService.visitorVehicleBadges.getAllVisitorVehicleBadges()
@@ -143,16 +136,8 @@ export class ResourceComponent implements OnInit {
               data == null ? this.vehicles = [] :
                 this.vehicles = data;
               this.dataSource = new MatTableDataSource<Vehicle>(this.vehicles);
-              // this.lengthVehicles = vehicles.length;
               this.showSpinner = false;
             });
-          // this.resourcesService.vehicles.getAllVehicles()
-          //   .subscribe((data : resourceVehicle[]) => {
-          //     this.resourcesService.vehicles.vehicles = data;
-          //     this.dataSource = new
-          //       MatTableDataSource<resourceVehicle>(this.resourcesService.vehicles.vehicles);
-          //       this.showSpinner = false;
-          //   });
           this.displayedColumns = ['company', 'model', 'plate', 'edit', 'delete'];
           break;
         case 'employees':
@@ -167,35 +152,10 @@ export class ResourceComponent implements OnInit {
               this.length = this.employees.length;
               this.dataSource.paginator = this.paginator;
               this.pageSize = 10;
-              console.log('data: ', data);
               this.showSpinner = false;
             });
-          // this.dataSource = new MatTableDataSource<Employee>(this.resourcesService.employees.getAllEmployees());
-
-          // let dataSource: EmployeesDataSource = new EmployeesDataSource(this.resourcesService.employees);
-          // this.dataSource.loadEmployees();
-
-          // this.resourcesService.employees.getAllEmployees()
-          //   .subscribe((data) => {
-          //     this.resourcesService.employees.employees = data;
-          //     this.dataSource = new
-          //       MatTableDataSource<Employee>(this.resourcesService.employees.employees);
-          //       this.dataSource.paginator = this.paginator;
-          //   });
           this.displayedColumns = ['name', 'surname', 'company', 'occupation', 'edit', 'delete'];
           break;
-        // case 'reasons':
-        //   this.category = 'reasons';
-        //   this.categoryTitle = this.category;
-        //   this.resourcesService.reasons.getAllReasons()
-        //     .subscribe((data) => {
-        //       this.resourcesService.reasons.reasons = data;
-        //       this.dataSource = new
-        //         MatTableDataSource<Reason>(this.resourcesService.reasons.reasons);
-        //         this.showSpinner = false;
-        //       })
-        //     this.displayedColumns = ['name', 'edit', 'delete'];
-        //   break;
         case 'gates':
           this.category = 'gates';
           this.categoryTitle = this.category;
@@ -212,7 +172,6 @@ export class ResourceComponent implements OnInit {
         case 'occupations':
           this.category = 'occupations';
           this.categoryTitle = this.category;
-          // this.dataSource = new MatTableDataSource<Occupation>(this.resourcesService.occupations.getAllOccupations());
           this.displayedColumns = ['id', 'code', 'name', 'edit', 'delete'];
           break;
         case 'zones':
@@ -226,7 +185,6 @@ export class ResourceComponent implements OnInit {
               MatTableDataSource<AirportZone>(this.resourcesService.airportZones.airportZones);
                 this.showSpinner = false;
               })
-          // this.dataSource = new MatTableDataSource<AirportZone>(this.resourcesService.airportZones.getAllAirportZones());
           this.displayedColumns = ['code', 'name', 'edit', 'delete'];
           break;
       }
@@ -235,7 +193,6 @@ export class ResourceComponent implements OnInit {
   }
 
   addResource(category) {
-    console.log('category: ', category);
     switch(category){
       case 'visitors-badges':
         this.editVisitorsBadge();
@@ -252,15 +209,9 @@ export class ResourceComponent implements OnInit {
       case 'employees':
         this.editEmployee();
         break;
-      // case 'reasons':
-      //   this.editReason();
-      //   break;
       case 'gates':
         this.editGate();
         break;
-      // case 'occupations':
-      //   this.editOccupation();
-      //   break;
       case 'zones':
         this.editZone();
         break;
@@ -342,17 +293,6 @@ export class ResourceComponent implements OnInit {
     }
   }
 
-  // editOccupation(id = null) {
-  //   let dialogRef = this.dialog.open(OccupationModalComponent, {
-  //     width: '40%',
-  //     data: id
-  //   });
-  //
-  //   dialogRef.afterClosed().subscribe(a => {
-  //     this.applyFilter('');
-  //   });
-  // }
-
   editGate(id = null) {
     let dialogRef = this.dialog.open(GateModalComponent, {
       width: '40%',
@@ -398,7 +338,6 @@ export class ResourceComponent implements OnInit {
   }
 
   editEmployee(id = null){
-    // let e: Employee = this.resourcesService.employees.getEmplyeeById(id);
     let dialogRef = this.dialog.open(EmployeeModalComponent, {
       width: '40%',
       data: id
@@ -422,13 +361,10 @@ export class ResourceComponent implements OnInit {
 
   prevPageEmp(page: number) {
     this.showSpinner = true;
-    // console.log('vo prev page');
     if(this.currentPage > 1){
       this.currentPage--;
       this.resourcesService.employees.getEmployeesPage(this.currentPage).subscribe((data : Employee[]) => {
-        // console.log('vo prev subscription data: ' + data);
           this.employees = data;
-          // console.log('this.badges : ' + this.badges);
           this.dataSource = new MatTableDataSource<Employee>(this.employees);
           this.nextDisabled = false;
           this.showSpinner = false;
@@ -438,13 +374,10 @@ export class ResourceComponent implements OnInit {
 
   prevPageComp(page: number) {
     this.showSpinner = true;
-    // console.log('vo prev page');
     if(this.currentPageComp > 1){
       this.currentPageComp--;
       this.resourcesService.companies.getCompaniesPage(this.currentPageComp).subscribe((data : Company[]) => {
-        // console.log('vo prev subscription data: ' + data);
           this.companies = data;
-          // console.log('this.badges : ' + this.badges);
           this.dataSource = new MatTableDataSource<Company>(this.companies);
           this.nextDisabledComp = false;
           this.showSpinner = false;
@@ -454,13 +387,10 @@ export class ResourceComponent implements OnInit {
 
   prevPageVehicles() {
     this.showSpinner = true;
-    // console.log('vo next page');
     this.resourcesService.vehicles.getVehiclesPage(this.currentPage).subscribe((data : Vehicle[]) => {
-      // console.log('vo next subscription data: ' + data);
       if(data){
         this.currentPageVehicles--;
         this.vehicles = data;
-        // console.log('this.badges : ' + this.badges);
         this.dataSource = new MatTableDataSource<Vehicle>(this.vehicles);
       } else {
         this.nextDisabledVehicles = false;
@@ -482,13 +412,10 @@ export class ResourceComponent implements OnInit {
 
   nextPageEmp(page: number) {
     this.showSpinner = true;
-    // console.log('vo next page');
     this.resourcesService.employees.getEmployeesPage(this.currentPage+1).subscribe((data : Employee[]) => {
-      // console.log('vo next subscription data: ' + data);
       if(data){
         this.currentPage++;
         this.employees = data;
-        // console.log('this.badges : ' + this.badges);
         this.dataSource = new MatTableDataSource<Employee>(this.employees);
       } else {
         this.nextDisabled = true;
@@ -499,13 +426,10 @@ export class ResourceComponent implements OnInit {
 
   nextPageVehicles() {
     this.showSpinner = true;
-    // console.log('vo next page');
     this.resourcesService.vehicles.getVehiclesPage(this.currentPage+1).subscribe((data : Vehicle[]) => {
-      // console.log('vo next subscription data: ' + data);
       if(data){
         this.currentPageVehicles++;
         this.vehicles = data;
-        // console.log('this.badges : ' + this.badges);
         this.dataSource = new MatTableDataSource<Vehicle>(this.vehicles);
       } else {
         this.nextDisabledVehicles = true;
@@ -516,13 +440,10 @@ export class ResourceComponent implements OnInit {
 
   nextPageComp(page: number) {
     this.showSpinner = true;
-    // console.log('vo next page');
     this.resourcesService.companies.getCompaniesPage(this.currentPageComp+1).subscribe((data : Company[]) => {
-      // console.log('vo next subscription data: ' + data);
       if(data){
         this.currentPageComp++;
         this.companies = data;
-        // console.log('this.badges : ' + this.badges);
         this.dataSource = new MatTableDataSource<Company>(this.companies);
       } else {
         this.nextDisabledComp = true;
@@ -543,17 +464,12 @@ export class ResourceComponent implements OnInit {
   }
 
   editVehicle(id: number = null){
-    // var v = null;
-    // this.resourcesService.vehicles.getVehicleByIndex(id);
-    // let data = v == null ? {resource: true} : {vehicle: v.vehicle, i: v.index, resource: true};
-
     let editVehicleDialogRef = this.dialog.open(DialogResourceVehicleComponent, {
       width: '45vw',
       data: id
     });
 
     editVehicleDialogRef.afterClosed().subscribe(a => {
-      console.log('after edit resService.vehicles: ', this.resourcesService.vehicles.getAllVehicles());
       this.applyFilter('');
     });
   }
@@ -570,8 +486,6 @@ export class ResourceComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    // this.showSpinner = true;
-    // this.filterSpinner = true;
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
     if(this.category == 'employees'){
@@ -609,7 +523,6 @@ export class ResourceComponent implements OnInit {
           this.showSpinner = false;
         })
     } else if(this.category == 'vehicles') {
-      console.log('filterValue vehicles: ', filterValue);
       this.resourcesService.vehicles.filterVehicles(filterValue)
         .subscribe((data: Vehicle[]) => {
           if(data){

@@ -55,13 +55,11 @@ export class ChangePasswordComponent implements OnInit {
       let oldPassword = this.changePasswordForm.controls['oldPassword'].value;
       this.userService.changeOwnPassword({oldPassword, newPassword, confirmNewPassword})
         .subscribe(data => {
-          console.log('data: ', data);
           this.dialogRef.close();
         });
     } else {
       this.userService.changeUserPassword(this.data.uid, {newPassword, confirmNewPassword})
         .subscribe(data =>{
-          console.log('data: ', data);
           this.dialogRef.close();
         });
     }

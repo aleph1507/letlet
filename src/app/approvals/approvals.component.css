@@ -6,14 +6,6 @@
   background-color: rgba(180,180,200, 0.55);
 }
 
-div.filter-panel {
-  /* display: flex;
-  justify-content: space-between;
-  align-items: baseline; */
-  /* display: inline-block; */
-  /* background: rgba(240,240,240,0.8); */
-}
-
 .green-row {
   background-color: lightgreen;
 }
@@ -28,13 +20,8 @@ div.filter-dates {
 }
 
 .show-approvals {
-  /* align-self: center; */
-  /* display:flex; */
   display:inline-block;
   width:38%;
-  /* justify-content: space-between; */
-  /* align-items:center; */
-  /* display:inline-block; */
 }
 
 .filter-companies {
@@ -46,6 +33,5 @@ div.filter-dates {
 .show-approvals mat-radio-group {
   display: flex;
   justify-content: space-around;
-  /* border: 1px solid black; */
   padding: 2vh 2vw;
 }

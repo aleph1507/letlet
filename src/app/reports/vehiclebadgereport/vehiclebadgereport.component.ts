@@ -56,7 +56,6 @@ export class VehiclebadgereportComponent implements OnInit {
      enableFilter: true,
      enableSorting: true,
      onGridReady: () => {
-         console.log('grid ready...');
          this.loadRowData();
      }
    };
@@ -71,26 +70,12 @@ export class VehiclebadgereportComponent implements OnInit {
     if (this.gridOptions.api) {
         this.gridOptions.api.setFilterModel(null);
     }
-    //
-    // this.route.queryParamMap.subscribe(params => {
-    //   console.log("params.filter: ", params.get('filter'));
-    //   if(params.get('filter') == 's'){
-    //     // setTimeout(() => {
-    //       this.snackbarService.successSnackBar("Успешно!");
-    //     // });
-    //   }
-    // });
-
-    // this.gridOptions.
     this.getReps();
   }
 
   radioChange($event){
-    console.log('event.value', $event.value);
     this.category = $event.value;
-    console.log('this.category: ', this.category);
     this.getReps(this.category);
-    // this.getAR();
   }
 
   loadRowData() {
@@ -135,17 +120,14 @@ export class VehiclebadgereportComponent implements OnInit {
     let docDefinition = {
 
     extend: 'pdfHtml5',
-    // orientation: 'landscape',//landscape give you more space
-    pageSize: 'A3',//A0 is the largest A5 smallest(A0,A1,A2,A3,legal,A4,A5,letter))
+    pageSize: 'A3',
     alignment: 'center',
 
     content: [
         {
-          // alignment: 'center',
           table: {
             headerRows: 1,
             widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
-
             body: body
           }
         }
@@ -164,7 +146,6 @@ export class VehiclebadgereportComponent implements OnInit {
 
     this.reportsService.getVehicleBadgesReports(rUrl)
       .subscribe((data : VehicleBadgeReport[]) => {
-        console.log('vo subscribtion, data: ', data);
         for(let i = 0; i<data.length; i++) {
           data[i].index = i+1;
           this.rowCount = 'Number of rows: ' + data.length.toString();

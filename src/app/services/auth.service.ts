@@ -9,22 +9,10 @@ import { Observable } from 'rxjs/Observable';
 export class AuthService implements OnInit{
 
   public token: string = null;
-  // url = 'http://192.168.100.82:84/token';
-  // public baseUrl = 'http://viksadesign.ddns.net:84/';
-  // public baseUrl = 'http://localhost:63602/';
   public baseUrl = 'http://192.168.100.80:84';
   url = this.baseUrl + '/token';
   loggedIn : boolean = false;
   public loggedStatus : BehaviorSubject<boolean>;
-
-
-  // httpOptions = {
-  //   headers: new HttpHeaders({
-  //     'Content-Type': 'application/json'
-  //     // 'Accept': 'application/json'
-  //     // 'Access-Control-Allow-Origin':'*'
-  //   })
-  // }
 
   username: string = '';
   fullname: string = '';
@@ -44,22 +32,10 @@ export class AuthService implements OnInit{
                   this.loggedIn = true;
                   this.loggedStatus.next(this.loggedIn);
                 }
-                // this.loggedIn = true;
-                // this.loggedStatus.next(this.loggedIn);
               }
 
   ngOnInit(): void {
 
-  }
-
-
-  init() {
-    // console.log('vo auth.init');
-    // this.getBaseUrl().subscribe((data : string) => {
-    //   this.baseUrl = data;
-    //   console.log('baseUrl: ' + this.baseUrl);
-    //   return this.baseUrl;
-    // });
   }
 
   loggedInStatus() : Observable<boolean>{
@@ -71,7 +47,6 @@ export class AuthService implements OnInit{
   }
 
   getHeaders() {
-    // console.log('vo getHeaders()')
     if(this.loggedIn){
       return new HttpHeaders({
         'Content-Type': 'application/json',
@@ -92,20 +67,10 @@ export class AuthService implements OnInit{
   }
 
   getToken() {
-    // if(this.token == null)
-    //   this.logIn();
-    // return this.token;
-    // console.log('getToken()');
-    // console.log('localStorage.getItem("token") :  ' + localStorage.getItem('token'));
     return localStorage.getItem('token');
   }
 
-  // logIn(username: string = 'Admin', password:string = 'admin1', gt = "password", cid = "AsecClient") {
   logIn(username: string, password:string, gt = "password", cid = "AsecClient") {
-    // console.log("username: ", username);
-    // console.log("password: ", password);
-    // console.log("gt: ", gt);
-    // console.log("cid: ", cid);
     const body = new HttpParams()
       .set('grant_type', gt)
       .set('username', username)
@@ -116,8 +81,6 @@ export class AuthService implements OnInit{
     localStorage.setItem('role', null);
     localStorage.setItem('username', null);
     localStorage.setItem('fullname', null);
-    console.log('body.toString: ', body.toString());
-    console.log('this.headers: ', this.headers);
     this.http.post<LoginResponse>(this.url, body.toString(),
     { headers: this.headers }).subscribe(data => {
       if(data.access_token){
@@ -130,10 +93,8 @@ export class AuthService implements OnInit{
             .subscribe(role =>{
               localStorage.setItem('role', role);
             });
-          // this.http.get(this.baseUrl + '/api/account/user/' + username)
           this.http.get(this.baseUrl + '/api/account/user/info')
             .subscribe(data =>{
-              // if(data['fullname'])
               localStorage.setItem('fullname', data['fullName'].toString());
               this.lastPasswordChangedDate = data['lastPasswordChangedDate'];
               this.passChangedDate.next(this.lastPasswordChangedDate);
@@ -148,12 +109,10 @@ export class AuthService implements OnInit{
         localStorage.setItem('token', null);
         this.token = null;
       }
-      // console.log('TTTOKKKEEN::: ' + this.token);
     })
   }
 
   getLastPasswordChangedDate(){
-    console.log('authService: this.lastPasswordChangedDate: ', this.lastPasswordChangedDate);
     return this.lastPasswordChangedDate;
   }
 
@@ -167,31 +126,26 @@ export class AuthService implements OnInit{
   }
 
   role(){
-    // console.log('isAdmin: ', this.isAdmin());
     return localStorage.getItem('role');
   }
 
   isAdmin() {
     let roles = localStorage.getItem('role');
-    // console.log('isAdmin.roles: ', roles);
     return roles != null ? (roles.indexOf('Admin') != -1 ? true : false) : false;
   }
 
   isOperator(){
     let roles = localStorage.getItem('role');
-    // console.log('isAdmin.roles: ', roles);
     return roles != null ? (roles.indexOf('Operator') != -1 ? true : false) : false;
   }
 
   isUser() {
     let roles = localStorage.getItem('role');
-    // console.log('isAdmin.roles: ', roles);
     return roles != null ? (roles.indexOf('User') != -1 ? true : false) : false;
   }
 
   isPowerUser() {
     let roles = localStorage.getItem('role');
-    // console.log('isAdmin.roles: ', roles);
     return roles != null ? (roles.indexOf('PowerUser') != -1 ? true : false) : false;
   }
 

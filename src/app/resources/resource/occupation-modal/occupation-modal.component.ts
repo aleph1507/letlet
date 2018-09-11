@@ -21,7 +21,6 @@ export class OccupationModalComponent implements OnInit {
 
   ngOnInit() {
     if(this.data){
-      // this.occupation = this.resourcesService.occupations.getOccupationById(this.data);
       this.oldID = this.data;
     }
 

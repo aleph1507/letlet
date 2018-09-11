@@ -25,14 +25,6 @@ export class VisitorBadgeModalComponent implements OnInit {
   ngOnInit() {
 
     this.vbForm = new FormGroup({
-      // 'id': new FormControl(this.vb ? this.vb.id : '', {
-      //   validators: [Validators.required],
-      //   updateOn: 'change'
-      // }),
-      // 'code': new FormControl(this.vb ? this.vb.code : '', {
-      //   validators: [Validators.required],
-      //   updateOn: 'change'
-      // }),
       'name': new FormControl(this.vb ? this.vb.name : '', {
         validators: [Validators.required],
         updateOn: 'change'
@@ -44,22 +36,11 @@ export class VisitorBadgeModalComponent implements OnInit {
     });
 
     if(this.data){
-      // this.vb = this.resourcesService.visitorBadges.getVisitorBadgeById(this.data).subscribe();
-      console.log('data - ' + this.data);
       this.resourcesService.visitorBadges.getVisitorBadgeById(this.data)
         .subscribe((vb : VisitorBadge) => {
           this.vb = vb;
           this.oldID = this.data;
-          // this.vb.id = vb.id;
           this.vbForm = new FormGroup({
-            // 'id': new FormControl(this.vb ? this.vb.id : '', {
-            //   validators: [Validators.required],
-            //   updateOn: 'change'
-            // }),
-            // 'code': new FormControl(this.vb ? this.vb.code : '', {
-            //   validators: [Validators.required],
-            //   updateOn: 'change'
-            // }),
             'name': new FormControl(this.vb ? this.vb.name : '', {
               validators: [Validators.required],
               updateOn: 'change'
@@ -70,15 +51,10 @@ export class VisitorBadgeModalComponent implements OnInit {
             })
           });
       });
-      // this.oldID = this.data;
      }
   }
 
   onSubmit() {
-    // console.log('this.vbForm.controls[code].value: ' + this.vbForm.controls['code'].value);
-    // console.log('this.vb: ' + this.vb);
-    // assigned_id = this.data ? this.data.id :
-    console.log('oldID: ' + this.oldID);
     this.vb = {
       'id': this.oldID,
       // 'code': this.vbForm.controls['code'].value,

@@ -66,8 +66,6 @@ export class ShreddingReportComponent implements OnInit {
               private atndp: AsptonormaldatePipe) { }
 
   ngOnInit() {
-    // this.gridOptions.rowData = this.reportsService.getReports();
-    // console.log('this.rowData: ' + this.gridOptions.rowData);
     this.showReports = this.reportsService.showReports;
     this.toDate = new Date();
     this.fromDate = new Date();
@@ -98,11 +96,6 @@ export class ShreddingReportComponent implements OnInit {
     XLSX.writeFile(workBook, 'ShreddingsReport.xlsx');
   }
 
-  // columns = ['Company Name', 'Person', 'Entered Through Gate', 'Entry Approved By',
-  //    'Entry Escorted By', 'Exited Through Gate', 'Exit Approved By', 'Exit Escorted By',
-  //    'Time On Air Side'];
-
-
   shredingDate: string;
   typeOfCard: string;
   details: string;
@@ -110,7 +103,6 @@ export class ShreddingReportComponent implements OnInit {
   shreddingBy: string;
 
      export_to_pdf() {
-       // console.log('this.xlsx_report: ', this.xlsx_report);
        let body = [];
        body.push(this.columns);
        let tmp = [];
@@ -121,21 +113,17 @@ export class ShreddingReportComponent implements OnInit {
          body.push(tmp);
          tmp = [];
        }
-       // console.log('body: ', body);
        let docDefinition = {
 
        extend: 'pdfHtml5',
-       // orientation: 'landscape',//landscape give you more space
-       pageSize: 'A3',//A0 is the largest A5 smallest(A0,A1,A2,A3,legal,A4,A5,letter))
+       pageSize: 'A3',
        alignment: 'center',
 
        content: [
            {
-             // alignment: 'center',
              table: {
                headerRows: 1,
                widths: ['auto', 'auto', 'auto', 'auto', 'auto'],
-
                body: body
              }
            }
@@ -144,25 +132,12 @@ export class ShreddingReportComponent implements OnInit {
       pdfMake.createPdf(docDefinition).download('ShreddingsReport.pdf');
      }
 
-  // export_to_xlsx(){
-  //   /* generate worksheet */
-  //   const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(this.xlsx_report);
-  //
-  //   /* generate workbook and add the worksheet */
-  //   const wb: XLSX.WorkBook = XLSX.utils.book_new();
-  //   XLSX.utils.book_append_sheet(wb, ws, 'personsReport');
-  //
-  //   /* save to file */
-  //   XLSX.writeFile(wb, 'personsReport.xlsx');
-  // }
-
   getReps(picker = null, event: MatDatepickerInputEvent<Date> = null) {
     this.showSpinner = true;
     var month : string = '';
     var day : string = '';
 
     if(event == null) {
-      // console.log('vo event == null');
       this.fromDate.getMonth() >= 10 ?
         month = '-' + (this.fromDate.getMonth() + 1).toString() : month = '-0' + (this.fromDate.getMonth()+1).toString();
 
@@ -180,7 +155,6 @@ export class ShreddingReportComponent implements OnInit {
       this.toString = this.toDate.getFullYear() + month + day;
 
     } else {
-      // console.log('event.value: ' + event.value);
       var date = null;
       if(picker == 'from'){
         date = this.fromDate;
@@ -190,7 +164,6 @@ export class ShreddingReportComponent implements OnInit {
       date.getMonth() >= 10 ?
         month = '-' + (date.getMonth() + 1).toString() : month = '-0' + (date.getMonth() + 1).toString();
 
-      // event.value.get
       date.getDate() >= 10 ?
         day = '-' + (date.getDate()).toString() : day = '-0' + (date.getDate()).toString();
 
@@ -201,7 +174,6 @@ export class ShreddingReportComponent implements OnInit {
 
 
     var rUrl = this.shreddingsReportUrl + this.category + '/' + this.fromString + '/' + this.toString;
-    console.log(`aUrl: ` + rUrl);
 
     if(this.fromString != null && this.toString != null){
       this.reportsService.getShreddingsReports(rUrl)
@@ -214,18 +186,8 @@ export class ShreddingReportComponent implements OnInit {
               if(data[i].shreddingDate != null) data[i].shreddingDate = this.atndp.transform(data[i].shreddingDate.toString());
             }
             this.xlsx_report = data;
-            console.log('xlsx_report: ', this.xlsx_report);
-            // console.log('this.xlsx_report', this.xlsx_report);
             this.gridOptions.api.setRowData(data);
             this.showSpinner = false;
-          // }
-          // this.personsReport = data;
-          // this.rowData = this.personsReport;
-          // console.log('gridoptions row data: ' + this.rowData);
-          // this.gotRowData = true;
-          // this.dataSource = new
-          //   MatTableDataSource<ApprovalRequest>(this.approvalRequests);
-          // console.log(this.approvalRequests);
         });
     }
 

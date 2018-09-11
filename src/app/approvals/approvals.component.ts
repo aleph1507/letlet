@@ -25,7 +25,6 @@ export class ApprovalsComponent implements OnInit {
   dataSource;
   displayedColumns = ['date', 'requesterName', 'requesterCompany', 'nPersons',
              'nVehicles', 'status', 'approvedDate', 'approvedFrom', 'reqID'];
-  // showApprovals = ['Unverified', 'All', 'Approved', 'Declined'];
   showApprovals = [];
   selectedApprovals = 'Not Approved';
   filteredCompanies: Observable<string[]>;
@@ -36,13 +35,6 @@ export class ApprovalsComponent implements OnInit {
   companies_auto: Company[] = [];
 
   showApprovalsSpinner: boolean = true;
-
-  // companies = ['AMC', 'BBC', 'TAV', 'DrinkerLab'];
-  // companies = this.resourcesService.companies.getCompaniesNames();
-  // fCompany: FormControl = new FormControl();
-
-  // approvalsUrl = 'http://192.168.100.4:84/api/requests/approvals/3/2018-01-01/2019-01-01';
-  // approvalsUrl = 'http://192.168.100.4:84/api/requests/approvals/';
   approvalsUrl = this.authService.baseUrl + '/api/requests/approvals/';
 
   constructor(private approvalsService: ApprovalsService,
@@ -62,7 +54,6 @@ export class ApprovalsComponent implements OnInit {
     this.toDate = new Date();
     this.fromDate = new Date();
     this.fromDate.setDate(this.fromDate.getDate() - 30);
-    // this.approvalRequests = this.approvalsService.formatRequests();
     this.showApprovals = this.approvalsService.showApprovals;
 
     this.route.url.subscribe((u) => {
@@ -83,25 +74,10 @@ export class ApprovalsComponent implements OnInit {
           break;
       }
       this.route.queryParamMap.subscribe(params => {
-        console.log("params.sb: ", params.get('sb'));
         if(params.get('sb') == 's'){
-          // setTimeout(() => {
             this.snackbarService.successSnackBar("Success!");
-          // });
         }
       });
-      // this.route.queryParams.filter(params => {
-      //   console.log('vo params 1');
-      //   params.sb
-      //   .subscribe(params => {
-      //     console.log('vo params');
-      //     console.log(params)
-      //   });
-      // });
-      // let sb = this.route.snapshot.queryParamMap.get('sb');
-      // if(sb == 's'){
-      //   this.snackbarService.successSnackBar();
-      // }
       this.getAR();
     });
 
@@ -116,14 +92,6 @@ export class ApprovalsComponent implements OnInit {
               this.getAR();
           });
       });
-
-    //
-    // this.filteredCompanies = this.fCompany.valueChanges
-    //   .pipe(
-    //     startWith(''),
-    //     map(company => this.filterCompanies(company))
-    //   );
-
     this.getAR();
   }
 
@@ -138,8 +106,6 @@ export class ApprovalsComponent implements OnInit {
   displayApprovedFrom(s, f) {
     return s == true ? f : '';
   }
-
-  // category = 3;
 
   radioChange($event){
     this.category = this.showApprovals.indexOf($event.value) + 1;
@@ -190,20 +156,13 @@ export class ApprovalsComponent implements OnInit {
     var aUrl = this.approvalsUrl + this.category + '/' + this.fromString + '/' + this.toString + '/' + this.page
       + cSegment;
 
-    // console.log('aUrl: ', aUrl);
-
     if(this.fromString != null && this.toString != null){
       this.approvalsService.getRequests(aUrl)
         .subscribe((data : ApprovalRequest[]) => {
-          // if(data.length > 0){
             this.approvalRequests = data;
             this.dataSource = new
             MatTableDataSource<ApprovalRequest>(this.approvalRequests);
             this.showApprovalsSpinner = false;
-          // } else {
-          //   this.nextDisabled = true;
-          //   this.page--;
-          // }
         });
     }
 

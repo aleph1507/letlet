@@ -85,11 +85,9 @@ export class ExitPersonModalComponent implements OnInit {
 
   onPaid(event){
     this.paid = !this.paid;
-    console.log('this.paid: ' + this.paid);
   }
 
   onSubmit() {
-    console.log('vo onSubmit()');
     var ee = this.ExitPersonForm.controls['exitEmployee'].value;
     this.billNumber = this.o_paid ? null : this.ExitPersonForm.controls['billNumber'].value;
     let exitPerson = {
@@ -106,7 +104,6 @@ export class ExitPersonModalComponent implements OnInit {
 
     this.gatesService.postPersonExit(exitPerson)
       .subscribe((res) => {
-        console.log('res: ' + res);
           this.gatesService.getAllExpectedPersons()
             .subscribe((res: ExpectedPerson[]) => {
               this.dialogRef.close({id: this.data.ep.id, expectedPersons: res});

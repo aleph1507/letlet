@@ -45,8 +45,6 @@ export class VehicleBadgesService {
     return this.http.patch(this.vehicleBadgesUrl + '/' + id, vehicleBadge);
   }
 
-  //vehiclebadges/shredding/id
-
   shredVehicleBadge(id: number){
     return this.http.post(this.vehicleBadgesUrl + '/shredding/' + id, {});
   }

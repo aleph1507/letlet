@@ -9,7 +9,6 @@ import { MAT_SNACK_BAR_DATA } from '@angular/material';
 })
 export class SuccessToastComponent implements OnInit {
 
-  // public msg = this.snackbarService.getMessage();
   public msg = '';
 
   constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) { }

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from './login.service';
 import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { MatDialog } from '@angular/material';
@@ -18,9 +17,6 @@ export class AppComponent implements OnInit {
   loggedIn : boolean = false;
   role : string = this.authService.role();
 
-
-  // loggedIn = this.loginService.isLoggedIn();
-
   constructor(public authService: AuthService,
               private router: Router,
               public dialog: MatDialog,
@@ -37,7 +33,6 @@ export class AppComponent implements OnInit {
       this.authService.loggedIn = false;
       this.authService.loggedStatus.next(this.loggedIn);
       this.router.navigate(['/login']);
-    console.log('this.authService.getToken(): ', this.authService.getToken());
     if(this.authService.getToken() === null){
       this.router.navigate(['/login']);
     }
@@ -47,11 +42,7 @@ export class AppComponent implements OnInit {
         this.loggedIn = loggedIn;
       });
 
-      console.log('role: ', this.role);
-
-      console.log('authService.getFullname: ', this.authService.getFullname());
       this.checkPasswordExpiry();
-    // this.loggedIn = this.authService.loggedIn;
   }
 
   changePassword(data = null) {
@@ -69,23 +60,12 @@ export class AppComponent implements OnInit {
         let passDateDiff = Math.ceil((currentDate.getTime() - passChDate.getTime()) / (1000 * 60 * 60 * 24));
         if((passwordLifeSpan - passDateDiff) <= warnLastDays){
           let msg = 'You have ' + (warnLastDays - (passDateDiff % warnLastDays)) + ' days to change your password before it expires';
-          // this.snackbarService.failSnackBar(msg);
           this.changePassword(msg);
         }
       });
-    // console.log('typeof this.authService.getLastPasswordChangedDate(): ', typeof this.authService.getLastPasswordChangedDate());
-    // console.log('this.authService.getLastPasswordChangedDate()', this.authService.getLastPasswordChangedDate());
-    // let lastPasswordChangedDate = new Date(this.authService.getLastPasswordChangedDate());
-    // console.log('typeof lastPasswordChangedDate: ', typeof lastPasswordChangedDate);
-    // console.log('lastPasswordChangedDate: ', lastPasswordChangedDate);
   }
 
   logOut() {
     this.authService.logOut();
-    // this.loginService.logOut();
-    // this.loggedIn = false;
-    // this.router.navigate(['/login']);
   }
-
-
 }

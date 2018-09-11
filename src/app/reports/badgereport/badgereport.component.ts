@@ -62,7 +62,6 @@ export class BadgereportComponent implements OnInit {
      enableFilter: true,
      enableSorting: true,
      onGridReady: () => {
-         console.log('grid ready...');
          this.loadRowData();
      }
    };
@@ -78,11 +77,8 @@ export class BadgereportComponent implements OnInit {
   }
 
   radioChange($event){
-    console.log('event.value', $event.value);
     this.category = $event.value;
-    console.log('this.category: ', this.category);
     this.getReps(this.category);
-    // this.getAR();
   }
 
   loadRowData() {
@@ -131,17 +127,15 @@ export class BadgereportComponent implements OnInit {
     let docDefinition = {
 
     extend: 'pdfHtml5',
-    orientation: 'landscape',//landscape give you more space
-    pageSize: 'A1',//A0 is the largest A5 smallest(A0,A1,A2,A3,legal,A4,A5,letter))
+    orientation: 'landscape',
+    pageSize: 'A1',
     alignment: 'center',
 
     content: [
         {
-          // alignment: 'center',
           table: {
             headerRows: 1,
             widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
-
             body: body
           }
         }

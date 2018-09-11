@@ -68,7 +68,6 @@ export class UserManagementComponent implements OnInit {
         dialogRef = this.dialog.open(RegisterComponent, {
         width: '70%',
         data: null
-        // data: { name: this.name, animal: this.animal }
       }).afterClosed().subscribe(result => {this.refresh()});
     }
   }

@@ -25,22 +25,10 @@ export class TokenInterceptor implements HttpInterceptor {
             }
           });
         } else {
-          // req = req.clone({
-          //   setHeaders: {
-          //     'Content-Type': 'application/json',
-          //     'Accept': 'application/json'
-          //   }
-          // });
           return next.handle(req);
         }
       }
     );
-
-
-
-    // request = req.clone({ xzJ1_h5kJPF
-    //   headers: req.headers.set qkYOFn12hS2y6kz
-    // }) astT1cT6O1eWjORxY
 
     return next.handle(req)
       .catch(error => {

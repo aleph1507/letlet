@@ -21,7 +21,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { SuccessToastComponent } from '../shared/success-toast/success-toast.component';
 import { SnackbarService } from '../services/snackbar.service';
 import { AsptonormaldatePipe } from '../shared/pipes/asptonormaldate.pipe';
-// import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-requester',
@@ -36,7 +35,6 @@ export class RequesterComponent implements OnInit, OnDestroy {
   errorString: string = '';
   missingImages: boolean;
 
-  // companies = this.resources.getCompanies();
   companies = [];
 
   displayedPersonColumns = ['name', 'surname'];
@@ -89,28 +87,13 @@ export class RequesterComponent implements OnInit, OnDestroy {
             ) { }
 
   ngOnInit() {
-
-    // console.log('pdf1');
-    // console.log(this.request.pdf1);
-
-    // this.resources.companies.getCompanies()
-    //   .subscribe((data : Company[]) => {
-        // console.log('companies[] data: ' + JSON.stringify(data));
-      //   this.companies = data;
-      // });
-      // .subscribe(data => this.companies = data);
-
       this.companiesAutoCtrl.valueChanges
         .subscribe(d => {
           this.resources.companies.filterCompanies(d)
             .subscribe((data: Company[]) => {
-              // console.log('companies: ', data);
               this.companies_auto = data;
               this.companyOk = this.companiesAutoCtrl.value == null ? false :
                 (this.companiesAutoCtrl.value.id == undefined ? false : true);
-              // console.log('this.companyOk: ', this.companyOk);
-              // if(this.companiesAutoCtrl.value && this.companiesAutoCtrl.value.id)
-              //   this.getAR();
             });
         });
 
@@ -121,7 +104,6 @@ export class RequesterComponent implements OnInit, OnDestroy {
 
     this.requesterService.setPersons([]);
     this.requesterService.setVehicles([]);
-    // console.log('this.router.url :  ' + this.router.url);
     this.requesterForm = new FormGroup({
       'requesterName': new FormControl(this.request.requesterName, {
         validators: Validators.required,
@@ -137,10 +119,6 @@ export class RequesterComponent implements OnInit, OnDestroy {
       'requesterDescriptionEn': new FormControl(this.request.descriptionEn, {
         updateOn: 'change'
       }),
-      // 'requesterCompany': new FormControl(this.request.companyId, {
-      //   validators: Validators.required,
-      //   updateOn: 'change'
-      // }),
       'requesterFromDate': new FormControl(this.request.fromDate, {
         validators: Validators.required,
         updateOn: 'change'
@@ -178,44 +156,14 @@ export class RequesterComponent implements OnInit, OnDestroy {
             this.resources.companies.getCompanyById(this.request.companyId)
               .subscribe((c : Company) => {
                 this.companiesAutoCtrl.setValue(c);
-                // this.companiesAutoCtrl.disable();
-
-                // console.log('this.requesterForm pre-map: ' + this.requesterForm);
-                // console.log('this.request.requesterName pre-map: ' + this.request.requesterName);
-
                 this.requesterForm = new FormGroup({
-                  // 'requesterName': new FormControl({value : this.request.requesterName, enabled: true}, { //disabled: true
-                  //   validators: Validators.required,
-                  //   updateOn: 'change'
-                  // }),
                   'requesterName': new FormControl(this.request.requesterName),
-                  // 'requesterDescription': new FormControl({value: this.request.description}, { //disabled: true
-                  //   updateOn: 'change'
-                  // }),
                   'contactEmail': new FormControl(this.request.contactEmail),
                   'contactPhone': new FormControl(this.request.contactPhone),
                   'requesterDescription': new FormControl(this.request.description),
-                  // 'requesterDescriptionEn': new FormControl({value: this.request.descriptionEn}, { //disabled: true
-                  //   updateOn: 'change'
-                  // }),
                   'requesterDescriptionEn': new FormControl(this.request.descriptionEn),
-                  // 'requesterCompany': new FormControl({value: c, disabled: true}, {
-                  //   validators: Validators.required,
-                  //   updateOn: 'change'
-                  // }),
-                  // 'requesterFromDate': new FormControl({value: this.request.fromDate}, { //disabled: true
-                  //   validators: Validators.required,
-                  //   updateOn: 'change'
-                  // }),
                   'requesterFromDate': new FormControl(this.request.fromDate),
-                  // 'requesterToDate': new FormControl({value: this.request.toDate}, { //disabled: true
-                  //   validators: Validators.required,
-                  //   updateOn: 'change'
-                  // }),
                   'requesterToDate': new FormControl(this.request.toDate),
-                  // 'requesterNumOfEntries': new FormControl({value: this.request.numberOfEntries}, { //disabled: true
-                  //   validators: [Validators.required]
-                  // }),
                   'requesterNumOfEntries': new FormControl(this.request.numberOfEntries),
                   'pdf1': new FormControl(null, {
                     updateOn: 'change'
@@ -230,30 +178,12 @@ export class RequesterComponent implements OnInit, OnDestroy {
               this.showRequestSpinner = false;
           })
       }
-      // if(params['id'] && this.requesterService.getRequest(+params['id']) !== undefined){
-      //   this.id = +params['id'];
-      //   this.editMode = true;
-      //   this.request = this.requesterService.getRequest(this.id);
-      //   this.requesterService.setPersons(this.request.requestPersonJson);
-      //   // this.requesterService.setVehicles(this.request.vehicles);
-      //   this.requesterService.setVehicles(this.request.requestVehicleJson);
-      // }
 
       this.todayDate = this.datePipe.transform(new Date(), 'dd/MM/yyyy');
     });
-
-    // console.log('this.request: ', this.request);
-
-      // this.filteredCompanies = this.requesterForm.controls['requesterCompany'].valueChanges
-      //   .pipe(
-      //     startWith(''),
-      //     map(company => this.filterCompanies(company))
-      //   );
-    // this.requesterForm.controls['requesterCompany']
   }
 
   cyrilicOnly(event) {
-    // var regex = /[^а-з\s]/gi;
     var regex = /[^АБВГДЃЕЖЗЅИЈКЛЉМНЊОПРСТЌУФХЦЧЏШабвгдѓежзѕијклљмнњопрстќуфхцчџш\s]/g;
     event.target.value = event.target.value.replace(regex, '');
   }
@@ -305,18 +235,12 @@ export class RequesterComponent implements OnInit, OnDestroy {
       let reader = new FileReader();
       reader.onload = (event:any) => {
         if(elem.attributes.formcontrolname.value == "pdf1"){
-          // this.pdf1src = event.target.files[0];
-          // this.pdf1filename = event.target.files[0].name;
-          // console.log('pdf1filename: ' + this.pdf1filename);
           this.pdf1src = event.target.result;
           this.pdf1filename = name;
-          // this.requesterForm.get('pdf1').setValue(this.pdf1src);
         }
         else{
-          // this.pdf2src = event.target.files[0];
           this.pdf2src = event.target.result;
           this.pdf2filename = name;
-          // this.requesterForm.get('pdf2').setValue(this.pdf2src);
         }
       }
       reader.readAsDataURL(event.target.files[0]);
@@ -331,9 +255,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
   approve(id: number){
     this.requesterService.approveRequest(id).subscribe(
       (data: boolean) => {
-        data ? console.log('Request Approved') : console.log('Request not approved');
         data ? this.router.navigate(['/approvals', 3], { queryParams: {'sb': 's'} }) : this.router.navigate(['/approvals', 3], { queryParams: {'sb': 's'} });
-        // this.router.navigate(['/approvals', 3]);
       }
     );
   }
@@ -341,14 +263,10 @@ export class RequesterComponent implements OnInit, OnDestroy {
   decline(id: number){
     this.requesterService.declineRequest(id).subscribe(
       (data: boolean) => {
-        data ? console.log('Request Declined') : console.log('Request not declined');
         data ? this.router.navigate(['/approvals', 2], { queryParams: {'sb': 's'} }) : this.router.navigate(['/approvals', 2], { queryParams: {'sb': 's'} });
-        // this.router.navigate(['/approvals', 2]);
       }
     );
   }
-
-  // isPersonsEmpty: boolean;
 
   imagesCheck() {
     if(!this.pdf1src){
@@ -361,14 +279,12 @@ export class RequesterComponent implements OnInit, OnDestroy {
   }
 
   checkPersons() {
-    // this.isPersonsEmpty = this.requesterService.isEmptyPersons();
     if(this.requesterService.isEmptyPersons())
       return true;
 
     let persons: Person[] = this.requesterService.getAllPersons();
 
     for(let i = 0; i<persons.length; i++){
-      // console.log(persons[i]);
       if(persons[i].image1 == '' || persons[i].image1 == null || persons[i].image1 == undefined ||
         persons[i].image2 == '' || persons[i].image2 == null || persons[i].image2 == undefined){
           this.errorString += `\nPerson ${persons[i].name} ${persons[i].surname} is missing images.`;
@@ -393,7 +309,6 @@ export class RequesterComponent implements OnInit, OnDestroy {
   }
 
   editRequest() {
-    console.log('vo requester component editRequest');
     if(this.requesterForm.valid) {
       if(this.editMode){
         this.resources.companies.getCompanyById(this.request.companyId)
@@ -403,26 +318,15 @@ export class RequesterComponent implements OnInit, OnDestroy {
 
         let fd : string = this.requesterForm.controls['requesterFromDate'].value;
         let fromDate = new Date(fd);
-        console.log('typeof fromDate: ', typeof fromDate);
-        console.log('fromDate: ', fromDate);
-        // fromDate.setDate(fromDate.getDate() + 1);
         let td : string = this.requesterForm.controls['requesterToDate'].value;
         let toDate = new Date(td);
-        // toDate = this.datePipe.transform(toDate, 'dd/MM/yyyy').toDate();
-        // toDate.setDate(toDate.getDate() + 1);
-        // let request: Requester = this.request;
         this.request.requesterName = this.requesterForm.controls['requesterName'].value;
         this.request.contactEmail = this.requesterForm.controls['contactEmail'].value;
         this.request.contactPhone = this.requesterForm.controls['contactPhone'].value;
         this.request.description = this.requesterForm.controls['requesterDescription'].value;
         this.request.descriptionEn = this.requesterForm.controls['requesterDescriptionEn'].value;
-        // this.request.companyId = this.requesterForm.controls['requesterCompany'].value;
         this.request.companyId = this.companiesAutoCtrl.value.id;
         this.request.fromDate = fromDate;
-        // this.request.fromDate = this.requesterForm.controls['requesterFromDate'].value;
-        // this.request.fromDate.setDate(this.request.fromDate.getDate() + 1);
-        // this.request.toDate = this.requesterForm.controls['requesterToDate'].value;
-        // this.request.toDate.setDate(this.request.toDate.getDate() + 1);
         this.request.toDate = toDate;
         this.request.numberOfEntries = this.requesterForm.controls['requesterNumOfEntries'].value;
         this.request.personPay = this.personPay;
@@ -431,13 +335,9 @@ export class RequesterComponent implements OnInit, OnDestroy {
           this.request.pdf1 = this.pdf1src;
         if(this.pdf2src != null)
           this.request.pdf2 = null;
-        console.log('requester component edit request: ', this.request);
-        // this.request.pdf1 = this.pdf1src;
-        // this.request.pdf2 = this.pdf2src;
         let o_request = this.request;
         this.requesterService.editRequest(this.request).subscribe((data: Requester) => {
           this.requesterService.switchRequest(o_request, data);
-          // this.router.navigate(['/approvals']);
           this.snackbarService.msg = 'Промените се зачувани';
           this.snackbarService.successSnackBar();
         });
@@ -459,13 +359,11 @@ export class RequesterComponent implements OnInit, OnDestroy {
           .subscribe((data : Company) => {
             this.reqCompany = data;
           });
-        console.log('editMode');
         this.request.requesterName = this.requesterForm.controls['requesterName'].value;
         this.request.contactEmail = this.requesterForm.controls['contactEmail'].value;
         this.request.contactPhone = this.requesterForm.controls['contactPhone'].value;
         this.request.description = this.requesterForm.controls['requesterDescription'].value;
         this.request.descriptionEn = this.requesterForm.controls['requesterDescriptionEn'].value;
-        // this.request.companyId = this.requesterForm.controls['requesterCompany'].value;
         this.request.companyId = this.companiesAutoCtrl.value.id;
         this.request.fromDate = this.requesterForm.controls['requesterFromDate'].value;
         this.request.fromDate.setDate(this.request.fromDate.getDate() + 1);
@@ -479,7 +377,6 @@ export class RequesterComponent implements OnInit, OnDestroy {
         this.requesterService.editRequest(this.request);
         this.router.navigate(['/approvals', 1]);
       } else {
-        // this.reqCompany = this.requesterForm.controls['requesterCompany'].value;
         this.reqCompany = this.companiesAutoCtrl.value;
         let fromDate : Date = this.requesterForm.controls['requesterFromDate'].value;
         fromDate.setDate(fromDate.getDate() + 1);
@@ -492,10 +389,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
           this.requesterForm.controls['contactPhone'].value,
           this.requesterForm.controls['requesterDescription'].value,
           this.requesterForm.controls['requesterDescriptionEn'].value,
-          // this.requesterForm.controls['requesterCompany'].value,
           this.companiesAutoCtrl.value,
-          // this.requesterForm.controls['requesterFromDate'].value,
-          // this.requesterForm.controls['requesterToDate'].value,
           fromDate,
           toDate,
           this.requesterForm.controls['requesterNumOfEntries'].value,
@@ -507,38 +401,9 @@ export class RequesterComponent implements OnInit, OnDestroy {
           this.requesterService.requests.push(data);
           this.router.navigate(['/approvals', 1], { queryParams: {'sb': 's'} });
         });
-        // this.router.navigate(['/approvals', 1]);
       }
     }
-    // this.requesterForm.reset();
-    // this.requesterForm.controls['requesterName'].setValue('');
-    // this.requesterForm.controls['requesterName'].markAsPristine();
-    // this.requesterForm.controls['requesterName'].markAsUntouched();
-    // this.requesterForm.controls['requesterDescription'].setValue('');
-    // this.requesterForm.controls['requesterDescription'].markAsPristine();
-    // this.requesterForm.controls['requesterDescription'].markAsUntouched();
-    // this.requesterForm.controls['requesterDescriptionEn'].setValue('');
-    // this.requesterForm.controls['requesterDescriptionEn'].markAsPristine();
-    // this.requesterForm.controls['requesterDescriptionEn'].markAsUntouched();
-    // // this.requesterForm.controls['requesterCompany'].setValue('');
-    // // this.requesterForm.controls['requesterCompany'].markAsPristine();
-    // // this.requesterForm.controls['requesterCompany'].markAsUntouched();
-    // this.requesterForm.controls['requesterFromDate'].setValue('');
-    // this.requesterForm.controls['requesterFromDate'].markAsPristine();
-    // this.requesterForm.controls['requesterFromDate'].markAsUntouched();
-    // this.requesterForm.controls['requesterToDate'].setValue('');
-    // this.requesterForm.controls['requesterToDate'].markAsPristine();
-    // this.requesterForm.controls['requesterToDate'].markAsUntouched();
-    // this.requesterForm.controls['requesterNumOfEntries'].setValue('');
-    // this.requesterForm.controls['requesterNumOfEntries'].markAsPristine();
-    // this.requesterForm.controls['requesterNumOfEntries'].markAsUntouched();
-    // this.router.navigate(['/approvals', 1]);
   }
-
-  // filterCompanies(name: string) {
-  //   return this.companies.filter(company =>
-  //     company.toLowerCase().indexOf(name.toLowerCase()) === 0);
-  // }
 
   intValidator(control: FormControl) {
     return isNaN(control.value) ? { "error": "NaN" } : null;
@@ -565,18 +430,14 @@ export class RequesterComponent implements OnInit, OnDestroy {
 
   editVehicle(index: number){
     let v = this.requesterService.getVehicleByIndex(index);
-    // let v = this.resources.vehicles.getVehicleByIndex(index);
     let editVehicleDialogRef = this.dialog.open(DialogVehicleComponent, {
       width: '45vw',
       data: {vehicle: v, i: index, resource: false}
     });
-
-    // console.log('posle edit vehicles: ', this.requesterService.getAllVehicles());
   }
 
   deleteVehicle(index: number) {
     this.requesterService.deleteVehicle(index);
-    // this.resources.vehicles.deleteVehicle(index);
   }
 
   openVehicleDialog() {
@@ -586,12 +447,10 @@ export class RequesterComponent implements OnInit, OnDestroy {
     });
 
     vehicleDialogRef.afterClosed().subscribe(a => {
-      // console.log('posle add vehicles: ', this.requesterService.getAllVehicles());
     });
   }
 
   printRequest(): void {
-    // console.log("printRequest");
     let pNumber = this.request.requestPersonJson.length;
     let vozilaHeader = this.request.requestVehicleJson.length > 0 ? 'Возила / Vehicles' : '';
     let vehiclesTable = '<table style="text-align:center; width: 80%; margin: auto; border: 1px solid black; border-collapse: collapse; margin-top: 5%; margin-bottom: 5%;">';
@@ -600,49 +459,14 @@ export class RequesterComponent implements OnInit, OnDestroy {
       vehiclesTable += '<tr><td style="width:5%;">' + (i+1).toString() + '</td><td style="border: 1px solid black; width: 50%;">' + this.request.requestVehicleJson[i].model + '</td>';
       vehiclesTable += '<td style="border: 1px solid black; width: 50%;">' + this.request.requestVehicleJson[i].plate + '</td></tr>';
     }
-    // console.log("pNumber : " + pNumber);
     let personsTD1 = '', personsTD2 = '';
     for(let i = 0; i<this.request.requestPersonJson.length; i++){
       personsTable += '<tr><td style="width:5%;">' + (i+1).toString() + '</td><td style="border: 1px solid black; width: 50%;">' + this.request.requestPersonJson[i].name + ' ' +
                       this.request.requestPersonJson[i].surname + '</td>';
       personsTable += '<td style="border: 1px solid black; width: 50%;">' + this.request.requestPersonJson[i].nameEn + ' ' +
                         this.request.requestPersonJson[i].surnameEn + '</td></tr>';
-
-      // console.log("this.request.person[i].surname : " + this.request.persons[i].surname);
-      // if(i % 2 == 1){
-      //   personsTD2 += '<span style="display: block;">' + (i+1) + '. ' +
-      //      this.request.requestPersonJson[i].name + ' ' +
-      //      this.request.requestPersonJson[i].surname + '/' +
-      //      this.request.requestPersonJson[i].name + ' ' +
-      //      this.request.requestPersonJson[i].surname + '</span>';
-      //   continue;
-      // }
-      // personsTD1 += '<span style="display: block;">' + (i+1) + '. ' +
-      //     this.request.requestPersonJson[i].nameEn + ' ' +
-      //     this.request.requestPersonJson[i].surnameEn + '/' +
-      //     this.request.requestPersonJson[i].name + ' ' +
-      //     this.request.requestPersonJson[i].surname + '</span>';
     }
     personsTable += '</table>';
-
-    // console.log("personsTD1 : " + personsTD1);
-    // console.log("personsTD2 : " + personsTD2);
-
-    // <td>
-    //   ${personsTD1}
-    // </td>
-    // <td>
-    //   ${personsTD2}
-    // </td>
-
-    // <tr style="padding-bottom: 30px; padding-left: 2%; padding-right: 2%; display: block; text-align: center; margin: auto; width: 100%; border: 5px solid grey;">
-    //   <td colspan="2" style="width:100%; background: #0000ff; border: 2px solid red;">
-    //     ${personsTable}
-    //   </td>
-    // </tr>
-
-      // <div class="content" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
-      // </div>
     let printContents, popupWin;
     popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
     popupWin.document.open();
@@ -761,7 +585,6 @@ export class RequesterComponent implements OnInit, OnDestroy {
   };
 
   printRequest2(): void {
-    // console.log("printRequest2");
     let printContents, popupWin;
     let fromDate = this.datePipe.transform(this.request.fromDate, 'dd/MM/yyyy');
     let toDate = this.datePipe.transform(this.request.toDate, 'dd/MM/yyyy');

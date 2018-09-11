@@ -6,8 +6,6 @@ export class Badge {
   cardSeriesNumber: number;
   cardNumber: number;
   badgeNumber: number;
-  // company: string;
-  // personName: string;
   expireDate: string;
   active: boolean;
   returned: boolean;

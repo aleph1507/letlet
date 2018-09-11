@@ -14,7 +14,6 @@ export class UserService {
   private setRolesUrl = this.authService.baseUrl + '/api/account/user/{id}/roles';
   private changeOwnPasswordUrl = this.authService.baseUrl + '/api/account/user/userchangepassword';
   private changeUserPasswordUrl = this.authService.baseUrl + '/api/account/user/changepassword';
-  // /api/account/changepassword/{userId}
 
   constructor(private authService: AuthService,
               private http: HttpClient) { }
@@ -46,12 +45,6 @@ export class UserService {
   getUsername() {
     return localStorage.getItem('username');
   }
-
-  // /api/account/userchangepassword
-  // oldPassword, newPassword, confirmNewPassword
-
-  // /api/account/user/changepassword/{userId}
-  // newPassword, confirmNewPassword
 
   changeOwnPassword(pass: {oldPassword, newPassword, confirmNewPassword}) {
     return this.http.put(this.changeOwnPasswordUrl, pass);

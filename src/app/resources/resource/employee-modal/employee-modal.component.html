@@ -1,10 +1,4 @@
 <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" novalidate>
-  <!-- <mat-form-field>
-    <input matInput name="empID"
-      id="empID" placeholder="ID"
-      formControlName="id"
-      autocomplete="off" required>
-  </mat-form-field> -->
   <mat-form-field>
     <input matInput name="empName"
       id="empName" placeholder="Name"
@@ -17,14 +11,6 @@
       formControlName="surname"
       autocomplete="off" required>
   </mat-form-field>
-  <!-- <mat-form-field class="requester-employee-field">
-    <input matInput type="text" name='company'
-    id="company" placeholder="Company"
-    formControlName="company"
-    [matAutocomplete]="comp"
-    required>
-  </mat-form-field> -->
-  <!-- <form class="company-form"> -->
     <mat-form-field class="company-field">
       <input type="text" placeholder="Company" [formControl]="companiesAutoCtrl" matInput [matAutocomplete]="comp_auto">
       <mat-autocomplete #comp_auto="matAutocomplete" [displayWith]="displayFn">
@@ -33,22 +19,12 @@
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
-  <!-- </form> -->
   <mat-form-field>
     <input matInput name="empOccupation"
       id="empOccupation" placeholder="Occupation"
       formControlName="occupation"
       autocomplete="off" required>
   </mat-form-field>
-  <!-- <mat-autocomplete #comp="matAutocomplete" [displayWith]="displayFn">
-      <mat-option *ngFor="let c of companies" [value]="c" >
-        {{ c.name }}
-      </mat-option>
-  </mat-autocomplete> -->
-  <!-- <pre>empName: {{employeeForm.get('empName').valid}}</pre>
-  <pre>empSurname: {{employeeForm.get('empSurname').valid}}</pre> -->
-  <!-- <pre></pre>
-  <pre></pre> -->
 
   <mat-divider class="sm-form-divider-margins"></mat-divider>
   <mat-dialog-actions>

@@ -14,10 +14,7 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log('this.authService.getToken(): ', this.authService.getToken());
-    console.log('this.authService.getToken() == null: ', this.authService.getToken() == null);
     if(this.authService.getToken() == null){
-      console.log('vo if: this.authService.getToken(): ', this.authService.getToken());
       this.router.navigate(['/login']);
     }
   }
