@@ -53,10 +53,10 @@ export class EnterVehicleModalComponent implements OnInit {
     this.resourceService.visitorVehicleBadges.getAllVisitorVehicleBadges()
       .subscribe((vvbs : VisitorVehicleBadge[]) => {
           this.visitorVehicleBadges = vvbs;
-          this.resourceService.companies.getCompanies()
-            .subscribe((comps : Company[]) => {
-                this.companies = comps;
-            });
+          // this.resourceService.companies.getCompanies()
+          //   .subscribe((comps : Company[]) => {
+          //       this.companies = comps;
+          //   });
         });
 
     this.EnterVehicleForm.controls['entryEmployee'].valueChanges

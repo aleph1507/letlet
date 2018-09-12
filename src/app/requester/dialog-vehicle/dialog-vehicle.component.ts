@@ -30,22 +30,13 @@ export class DialogVehicleComponent implements OnInit {
   vehicleForm: FormGroup;
   vehicle: Vehicle = {
     id: null,
-    // company: null,
     model: null,
     plate: null,
     image1: null,
     image2: null
   }
 
-  companies: Company[];
-
   ngOnInit() {
-
-      this.resourcesService.companies.getCompanies()
-        .subscribe((data) => {
-          this.companies = data;
-        });
-
       if(this.data != null){
         if(this.data.vehicle != null){
           this.vehicle = this.data.vehicle;
@@ -57,9 +48,6 @@ export class DialogVehicleComponent implements OnInit {
       this.resource = this.data.resource;
 
       this.vehicleForm = new FormGroup({
-        // 'company': new FormControl(this.vehicle.company ? this.vehicle.company : '', {
-        //   validators: Validators.required
-        // }),
         'model': new FormControl(this.vehicle.model, {
           validators: Validators.required
         }),
@@ -86,57 +74,18 @@ export class DialogVehicleComponent implements OnInit {
     }
   }
 
-  displayFn(c?: Company) {
-    return c ? c.name : undefined;
-  }
-
   onSubmit(){
-    // this.vehicle.company = this.vehicleForm.controls['company'].value;
     this.vehicle.model = this.vehicleForm.controls['model'].value;
     this.vehicle.plate = this.vehicleForm.controls['plate'].value;
     this.vehicle.image1 = this.img1src;
     this.vehicle.image2 = this.img2src;
     if(!this.data.resource){
-      // console.log('vo !resource this.data.resource: ', this.data.resource);
-      // console.log('vo !resource this.data: ', this.data);
-      // console.log('pre add (vModal) requester.vehicles: ', this.requesterService.getAllVehicles());
       this.data.i == null ? this.requesterService.addVehicle(this.vehicle) : this.requesterService.editVehicle(this.data.i, this.vehicle);
-      // console.log('post add (vModal) requester.vehicles: ', this.requesterService.getAllVehicles());
-      // if(this.data.i !== null){
-      //   this.requesterService.editVehicle(this.data.i, this.vehicle);
-      // } else {
-      //   this.requesterService.addVehicle(this.vehicle);
-      // }
-    } else {
-      // console.log('vo resource this.data.resource: ', this.data.resource);
-      // console.log('vo resource this.data: ', this.data);
-      // console.log('pre add (vModal) resources.vehicles: ', this.resourcesService.vehicles.getAllVehicles());
-      // this.data.i == null ?
-      //   this.resourcesService.vehicles.addRequestVehicle(this.vehicle)
-      //     .subscribe((data) => {
-      //       console.log('data: ' + data);
-      //       this.resourcesService.vehicles.pushVehicle(data)
-      //     }) : this.resourcesService.vehicles.editVehicle(this.vehicle)
-      //           .subscribe((data : Vehicle) => {
-      //             this.resourcesService.vehicles.switchVehicleById(this.vehicle)
-      //           });
-      // console.log('post add (vModal) resources.vehicles: ', this.resourcesService.vehicles.getAllVehicles());
     }
-
-    // console.log('prev call add vehicles(vehicleModal): ', this.requesterService.getAllVehicles());
-    // this.data === null ? this.requesterService.addVehicle(this.vehicle) : this.requesterService.editVehicle(this.data.i, this.vehicle);
-    // console.log('post call add vehicles(vehicleModal): ', this.requesterService.getAllVehicles());
     this.thisDialogRef.close(this.vehicle);
   }
 
   onCancel(){
     this.thisDialogRef.close("Cancel");
   }
-
-  // okAble(){
-  //   return this.personForm.controls['name'].status === "VALID" &&
-  //     this.personForm.controls['surname'].status === "VALID" && this.img1src != ''
-  //     && this.img2src != '';
-  // }
-
 }
