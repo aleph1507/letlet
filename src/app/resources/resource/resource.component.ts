@@ -118,7 +118,7 @@ export class ResourceComponent implements OnInit {
         case 'companies':
           this.category = 'companies';
           this.categoryTitle = this.category;
-          this.resourcesService.companies.getCompanies()
+          this.resourcesService.companies.getCompaniesPage(1)
             .subscribe((data) => {
               data == null ? this.resourcesService.companies.companies = [] :
                 this.resourcesService.companies.companies = data;
