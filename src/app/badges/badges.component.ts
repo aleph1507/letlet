@@ -41,6 +41,10 @@ export class BadgesComponent implements OnInit {
     this.showSpinner = true;
     this.badgesService.getBadges(this.currentPage).subscribe((data : Badge[]) => {
       this.badges = data;
+      for(let i = 0; i<this.badges.length; i++){
+        console.log('this.badges[i].expireDate: ', this.badges[i].expireDate);
+        console.log('expireDate: ', this.expired(this.badges[i].expireDate));
+      }
       data == null ? this.badges = [] : this.badges = data;
       this.dataSource = new MatTableDataSource<Badge>(this.badges);
       this.length = this.badges.length;
@@ -135,6 +139,9 @@ export class BadgesComponent implements OnInit {
 
       this.dataSource.filter = filterValue;
       this.showSpinner = false;
+  }
 
+  expired(date) {
+    console.log(date);
   }
 }

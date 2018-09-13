@@ -9,6 +9,10 @@
   width:90vw;
 }
 
+.gray-row {
+  background-color: lightgrey;
+}
+
 div#header {
   display: flex;
   justify-content: space-between;

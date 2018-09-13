@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { GatesService } from '../../services/gates.service';
 import { AuthService } from '../../services/auth.service';
 import { ResourcesService } from '../../services/resources.service';
@@ -20,7 +20,7 @@ import { SnackbarService } from '../../services/snackbar.service';
   templateUrl: './gate.component.html',
   styleUrls: ['./gate.component.css']
 })
-export class GateComponent implements OnInit {
+export class GateComponent implements OnInit, OnDestroy {
 
   gid : number = null;
   enteredPersons : EnteredPerson[] = [];
@@ -243,6 +243,10 @@ export class GateComponent implements OnInit {
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
     this.dataSourceEnteredVehicles.filter = filterValue;
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.interval);
   }
 
 }

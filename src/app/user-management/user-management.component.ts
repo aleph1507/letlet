@@ -92,8 +92,8 @@ export class UserManagementComponent implements OnInit {
     }).afterClosed().subscribe(result => this.refresh());
   }
 
-  changeStatus(uid){
-    this.userService.changeStatus(uid)
+  changeStatus(uid, enabled){
+    this.userService.changeStatus(uid, enabled)
       .subscribe(data =>{
         console.log('User status changed, data: ', data);
         this.snackbarService.successSnackBar();
