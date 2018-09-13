@@ -121,7 +121,7 @@ export class VehicleBadgesComponent implements OnInit, AfterViewInit {
   }
 
   expired(b: VehicleBadge) {
-    return new Date().getTime() - new Date(b.expireDate).getTime() < 0 ? true : false;
+    return new Date().getTime() - new Date(b.expireDate).getTime() < 0 ? false : true;
   }
 
 }
