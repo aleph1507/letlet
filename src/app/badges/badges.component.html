@@ -21,17 +21,9 @@
         <mat-header-cell *matHeaderCellDef> Expire Date </mat-header-cell>
         <mat-cell *matCellDef="let b"> {{b.expireDate | date:'short'}} </mat-cell>
       </ng-container>
-      <ng-container matColumnDef="active">
-        <mat-header-cell *matHeaderCellDef> Active </mat-header-cell>
-        <mat-cell *matCellDef="let b"> {{b.active}} </mat-cell>
-      </ng-container>
       <ng-container matColumnDef="returned">
         <mat-header-cell *matHeaderCellDef> Returned </mat-header-cell>
         <mat-cell *matCellDef="let b"> {{b.returned}} </mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="employeeId">
-        <mat-header-cell *matHeaderCellDef> Employee ID </mat-header-cell>
-        <mat-cell *matCellDef="let b"> {{b.employee.id}} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="employeeName">
         <mat-header-cell *matHeaderCellDef> Employee Name </mat-header-cell>
@@ -65,7 +57,7 @@
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
-      [ngClass]="{'gray-row': badges[i].returned == true || badges[i].deactivated == true }"></mat-row>
+      [ngClass]="{'gray-row': badges[i].returned == true || badges[i].deactivated == true || expired(badges[i])}"></mat-row>
     </mat-table>
 
     <button (click)="prevPage()" [disabled]="currentPage <=1" mat-raised-button>< Previous Page</button>

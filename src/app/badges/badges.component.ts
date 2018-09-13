@@ -13,7 +13,7 @@ import { BadgesCreateComponent } from './badges-create/badges-create.component';
 })
 export class BadgesComponent implements OnInit {
 
-  displayedColumns = ['badgeNumber', 'expireDate', 'active', 'returned', 'employeeId', 'employeeName', 'zones', 'dateOfSecurityCheck', 'dateOfTraining', 'dateOfActivation', 'edit'];
+  displayedColumns = ['badgeNumber', 'expireDate', 'returned', 'employeeName', 'zones', 'dateOfSecurityCheck', 'dateOfTraining', 'dateOfActivation', 'edit'];
   dataSource: MatTableDataSource<Badge>;
   length: number;
   pageSize: number;
@@ -43,7 +43,7 @@ export class BadgesComponent implements OnInit {
       this.badges = data;
       for(let i = 0; i<this.badges.length; i++){
         console.log('this.badges[i].expireDate: ', this.badges[i].expireDate);
-        console.log('expireDate: ', this.expired(this.badges[i].expireDate));
+        console.log('this.badges[i]', this.badges[i]);
       }
       data == null ? this.badges = [] : this.badges = data;
       this.dataSource = new MatTableDataSource<Badge>(this.badges);
@@ -52,6 +52,7 @@ export class BadgesComponent implements OnInit {
       this.pageSize = 10;
       this.changeDetectorRefs.detectChanges();
       this.showSpinner = false;
+      this.expired(this.badges[0]);
     });
   }
 
@@ -141,7 +142,7 @@ export class BadgesComponent implements OnInit {
       this.showSpinner = false;
   }
 
-  expired(date) {
-    console.log(date);
+  expired(b: Badge) {
+    return new Date().getTime() - new Date(b.expireDate).getTime() < 0 ? true : false;
   }
 }

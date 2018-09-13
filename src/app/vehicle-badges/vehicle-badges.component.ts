@@ -118,7 +118,10 @@ export class VehicleBadgesComponent implements OnInit, AfterViewInit {
 
       this.dataSource.filter = filterValue;
       this.showSpinner = false;
+  }
 
+  expired(b: VehicleBadge) {
+    return new Date().getTime() - new Date(b.expireDate).getTime() < 0 ? true : false;
   }
 
 }

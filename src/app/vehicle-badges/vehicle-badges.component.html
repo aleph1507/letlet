@@ -53,7 +53,7 @@
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
-        [ngClass]="{'gray-row': vehicleBadges[i].returned == true || vehicleBadges[i].deactivated == true }"></mat-row>
+        [ngClass]="{'gray-row': vehicleBadges[i].returned == true || vehicleBadges[i].deactivated == true || expired(vehicleBadges[i])}"></mat-row>
     </mat-table>
 
     <button (click)="prevPage()" [disabled]="currentPage <=1" mat-raised-button>< Previous Page</button>

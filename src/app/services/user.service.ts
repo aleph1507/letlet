@@ -54,8 +54,8 @@ export class UserService {
     return this.http.put(this.changeUserPasswordUrl + '/' + uid, pass);
   }
 
-  changeStatus(uid, enabled){
-    return enabled ? this.http.put(this.singleUser + '/disable/' + uid, {}) : this.http.put(this.singleUser + '/enable/' + uid, {});
+  changeStatus(uid, active){
+    return active ? this.http.put(this.singleUser + '/disable/' + uid, {}) : this.http.put(this.singleUser + '/enable/' + uid, {});
   }
 
 }

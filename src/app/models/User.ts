@@ -13,5 +13,4 @@ export class User {
   lastName : string;
   password : string;
   confirmPassword : string;
-  enabled: boolean;
 }

@@ -61,7 +61,7 @@
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
-      [ngClass]="{'gray-row': users[i].enabled == true || users[i].enabled == true }"></mat-row>
+      [ngClass]="{'gray-row': users[i].enabled == false }"></mat-row>
     </mat-table>
   </div>
 </div>
