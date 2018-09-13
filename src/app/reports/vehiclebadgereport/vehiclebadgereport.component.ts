@@ -36,6 +36,7 @@ export class VehiclebadgereportComponent implements OnInit {
      'Company Name in English'];
 
    public gridOptions: GridOptions = <GridOptions>{
+     floatingFilter: true,
      rowData: [],
      columnDefs: [
        {headerName: 'Index', field: 'index'},

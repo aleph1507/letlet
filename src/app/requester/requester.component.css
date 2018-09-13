@@ -147,6 +147,10 @@ mat-list {
   overflow: auto;
 }
 
+.wide-input {
+  width:100%;
+}
+
 @media screen and (max-width: 1800px){
   .main-send{
     padding-top:0;

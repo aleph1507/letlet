@@ -54,6 +54,7 @@ export class ApprovalsComponent implements OnInit {
     this.toDate = new Date();
     this.fromDate = new Date();
     this.fromDate.setDate(this.fromDate.getDate() - 30);
+    this.toDate.setDate(this.toDate.getDate() + 60);
     this.showApprovals = this.approvalsService.showApprovals;
 
     this.route.url.subscribe((u) => {

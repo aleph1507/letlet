@@ -5,6 +5,13 @@
     <button mat-fab color="primary" (click)="openDialog()">+</button>
   </div>
   <div class="badges-table mat-elevation-z8">
+    <div class="input-field-header">
+      <div class="filter-panel">
+        <mat-form-field style="width:100%;">
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+      </div>
+    </div>
     <mat-table #badgesTable [dataSource]="dataSource">
       <ng-container matColumnDef="permitNumber">
         <mat-header-cell *matHeaderCellDef> Permit Number </mat-header-cell>

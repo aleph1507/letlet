@@ -113,8 +113,28 @@ export class BadgesComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
+    this.showSpinner = true;
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
-    this.dataSource.filter = filterValue;
+    this.badgesService.filterBadges(filterValue)
+      .subscribe((data: Badge[]) => {
+        if(data){
+          if(filterValue != ''){
+            this.badges = data;
+            this.dataSource = new MatTableDataSource<Badge>(this.badges);
+          } else {
+            this.badgesService.getBadges(1)
+              .subscribe((data: Badge[]) => {
+                this.badges = data;
+                this.dataSource = new MatTableDataSource<Badge>(this.badges);
+              });
+          }
+        }
+        this.showSpinner = false;
+      });
+
+      this.dataSource.filter = filterValue;
+      this.showSpinner = false;
+
   }
 }

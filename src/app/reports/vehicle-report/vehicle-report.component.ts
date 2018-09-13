@@ -38,6 +38,7 @@ export class VehicleReportComponent implements OnInit {
      'Exit Escorted By', 'Days On Air Side', 'Time On Air Side'];
 
   public gridOptions: GridOptions = <GridOptions>{
+    floatingFilter: true,
     rowData: [],
     columnDefs: [
       {headerName: 'Index', field: 'index'},

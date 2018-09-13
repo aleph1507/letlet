@@ -76,4 +76,8 @@ export class BadgesService {
     return this.http.post(this.badgesUrl + '/shredding/' + id, {});
   }
 
+  filterBadges(filter = null) : Observable<Badge[]>{
+    return this.http.get<Badge[]>(this.badgesUrl + '/search/?token=' + filter);
+  }
+
 }

@@ -49,8 +49,12 @@
           autocomplete="off"
         ></textarea>
       </mat-form-field>
-      <mat-form-field class="company-field">
-        <input type="text" placeholder="Company / Компанија *" [formControl]="companiesAutoCtrl" matInput [matAutocomplete]="comp_auto">
+      <mat-form-field class="company-field wide-input">
+        <input type="text"
+          style="display:block;"
+          placeholder="Company / Компанија *"
+          [formControl]="companiesAutoCtrl"
+          matInput [matAutocomplete]="comp_auto">
         <mat-autocomplete #comp_auto="matAutocomplete" [displayWith]="displayFn">
           <mat-option *ngFor="let comp of companies_auto" [value]="comp">
             {{ comp.name }}
@@ -79,8 +83,8 @@
       </mat-form-field>
       <div *ngIf="!editMode" class="upload-pdfs">
         <div class="pdf-upload">
-          You can merge multiple PDFs <a href="https://lightpdf.com/merge-pdf">here</a><br>
-          За спојување на повеќе PDF датотеки, Ве молиме искористете го следниов <a href="https://lightpdf.com/merge-pdf">сервис</a><br>
+          You can merge multiple PDFs <a target="blank" href="https://lightpdf.com/merge-pdf">here</a><br>
+          За спојување на повеќе PDF датотеки, Ве молиме искористете го следниов <a target="blank" href="https://lightpdf.com/merge-pdf">сервис</a><br>
           <button type="button" mat-raised-button (click)="pdfUpload1.click()">
             Attach PDF / Прикачи документ<mat-icon>keyboard_arrow_up</mat-icon>
             <input type="file" hidden #pdfUpload1

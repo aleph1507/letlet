@@ -95,4 +95,30 @@ export class VehicleBadgesComponent implements OnInit, AfterViewInit {
     }
   }
 
+  applyFilter(filterValue: string) {
+    this.showSpinner = true;
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.vehicleBadgesService.filterVehicleBadges(filterValue)
+      .subscribe((data: VehicleBadge[]) => {
+        if(data){
+          if(filterValue != ''){
+            this.vehicleBadges = data;
+            this.dataSource = new MatTableDataSource<VehicleBadge>(this.vehicleBadges);
+          } else {
+            this.vehicleBadgesService.getVehicleBadges(1)
+              .subscribe((data: VehicleBadge[]) => {
+                this.vehicleBadges = data;
+                this.dataSource = new MatTableDataSource<VehicleBadge>(this.vehicleBadges);
+              });
+          }
+        }
+        this.showSpinner = false;
+      });
+
+      this.dataSource.filter = filterValue;
+      this.showSpinner = false;
+
+  }
+
 }

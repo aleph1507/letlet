@@ -19,6 +19,7 @@ export class StopListComponent implements OnInit {
   columns = ['Index', 'Employee Name', 'Company Name', 'Card Series Number', 'Card Number', 'Badge number', 'Expire Date'];
 
   public gridOptions: GridOptions = <GridOptions>{
+    floatingFilter: true,
     rowData: [],
     columnDefs: [
       {headerName: 'Index', field: 'index'},

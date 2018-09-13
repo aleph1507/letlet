@@ -44,6 +44,7 @@ export class ShreddingReportComponent implements OnInit {
 
 
   public gridOptions: GridOptions = <GridOptions>{
+    floatingFilter: true,
     rowData: [],
     columnDefs: [
       {headerName: 'Index', field: 'index'},

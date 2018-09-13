@@ -40,6 +40,8 @@ export class PersonReportComponent implements OnInit {
 
 
   public gridOptions: GridOptions = <GridOptions>{
+    enableFilter: true,
+    floatingFilter: true,
     rowData: [],
     columnDefs: [
       {headerName: 'Index', field: 'index'},
@@ -58,7 +60,6 @@ export class PersonReportComponent implements OnInit {
     ],
     enableCellChangeFlash: true,
     refreshCells: true,
-    enableFilter: true,
     enableSorting: true,
   };
 

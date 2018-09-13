@@ -54,4 +54,8 @@ export class UserService {
     return this.http.put(this.changeUserPasswordUrl + '/' + uid, pass);
   }
 
+  changeStatus(uid){
+    return this.http.patch(this.userUrl + '/' + uid, {});
+  }
+
 }

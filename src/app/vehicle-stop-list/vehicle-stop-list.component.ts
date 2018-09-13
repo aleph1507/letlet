@@ -20,6 +20,7 @@ export class VehicleStopListComponent implements OnInit {
   columns = ['Index', 'Permit Number', 'Vehicle Model', 'Vehicle Plate', 'Vehicle Company', 'Expire Date', 'Reason'];
 
   public gridOptions: GridOptions = <GridOptions>{
+    floatingFilter: true,
     rowData: [],
     columnDefs: [
       {headerName: 'Index', field: 'index'},

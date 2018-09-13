@@ -65,6 +65,9 @@ export class VehicleBadgesService {
       }
       return null;
     }
+  }
 
+  filterVehicleBadges(filter = null) : Observable<VehicleBadge[]>{
+    return this.http.get<VehicleBadge[]>(this.vehicleBadgesUrl + '/search/?token=' + filter);
   }
 }

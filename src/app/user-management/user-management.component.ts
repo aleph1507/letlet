@@ -6,6 +6,7 @@ import { MatTableDataSource, MatDialog } from '@angular/material';
 import { RegisterComponent } from './register/register.component';
 import { RolesComponent } from './roles/roles.component';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
+import { SnackbarService } from '../services/snackbar.service';
 
 @Component({
   selector: 'app-user-management',
@@ -16,13 +17,14 @@ export class UserManagementComponent implements OnInit {
 
   showSpinner : boolean  = true;
   users : User[] = [];
-  displayedColumns = ['fullName', 'userName', 'position', 'edit', 'changeRole', 'changePassword'];
+  displayedColumns = ['fullName', 'userName', 'position', 'edit', 'changeRole', 'changePassword', 'status'];
   dataSource : MatTableDataSource<User>
 
   constructor(private authService: AuthService,
               private userService: UserService,
               private dialog: MatDialog,
-              private changeDetectorRefs: ChangeDetectorRef) { }
+              private changeDetectorRefs: ChangeDetectorRef,
+              private snackbarService: SnackbarService) { }
 
   ngOnInit() {
     this.getUsers();
@@ -88,6 +90,14 @@ export class UserManagementComponent implements OnInit {
       width: '70%',
       data: { uid: id }
     }).afterClosed().subscribe(result => this.refresh());
+  }
+
+  changeStatus(uid){
+    this.userService.changeStatus(uid)
+      .subscribe(data =>{
+        console.log('User status changed, data: ', data);
+        this.snackbarService.successSnackBar();
+      })
   }
 
 }

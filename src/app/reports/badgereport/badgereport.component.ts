@@ -36,6 +36,8 @@ export class BadgereportComponent implements OnInit {
     'Returned', 'Deactivated', 'Reason for Deactivation', 'Shredding Date'];
 
    public gridOptions: GridOptions = <GridOptions>{
+     enableFilter: true,
+     floatingFilter: true,
      rowData: [],
      columnDefs: [
        {headerName: 'Index', field: 'index'},
@@ -59,7 +61,6 @@ export class BadgereportComponent implements OnInit {
      ],
      enableCellChangeFlash: true,
      refreshCells: true,
-     enableFilter: true,
      enableSorting: true,
      onGridReady: () => {
          this.loadRowData();
