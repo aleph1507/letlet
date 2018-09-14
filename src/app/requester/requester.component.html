@@ -113,7 +113,7 @@
         <div *ngIf="editMode" class="download-pdfs">
           <a [href]="sanitizeURL(pdfToBlob(this.request.pdf1))" target="_blank">
             <div class="pdf-upload" style="margin-bottom: 10%;">
-              <button *ngIf="pdf1src.length >= 28" (click)="getPdf(1, request.id)" type="button" mat-raised-button>
+              <button *ngIf="pdf1src != null && pdf1src.length >= 28" (click)="getPdf(1, request.id)" type="button" mat-raised-button>
                 Download PDF<mat-icon>keyboard_arrow_down</mat-icon>
               </button>
             </div>
