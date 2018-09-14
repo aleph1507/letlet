@@ -13,7 +13,7 @@
     autocomplete="off" required>
   </mat-form-field>
 
-  <mat-form-field class="company-field">
+  <mat-form-field class="company-field" style="width:100%;">
     <input type="text" placeholder="Company" [formControl]="companiesAutoCtrl" matInput [matAutocomplete]="comp_auto">
     <mat-autocomplete #comp_auto="matAutocomplete" [displayWith]="displayFn">
       <mat-option *ngFor="let comp of companies_auto" [value]="comp">

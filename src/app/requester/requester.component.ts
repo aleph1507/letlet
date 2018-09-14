@@ -21,6 +21,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { SuccessToastComponent } from '../shared/success-toast/success-toast.component';
 import { SnackbarService } from '../services/snackbar.service';
 import { AsptonormaldatePipe } from '../shared/pipes/asptonormaldate.pipe';
+import { AuthService } from '../services/auth.service';
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-requester',
@@ -83,7 +85,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
               private router: Router,
               private sanitizer: DomSanitizer,
               public snackBar: MatSnackBar,
-              public snackbarService: SnackbarService
+              public snackbarService: SnackbarService,
+              public authService: AuthService
             ) { }
 
   ngOnInit() {
@@ -137,6 +140,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
         updateOn: 'change'
       })
     })
+// pdf > 28
 
     this.paramsSub = this.route.params.subscribe(params => {
       if(params['id']){
@@ -248,6 +252,39 @@ export class RequesterComponent implements OnInit, OnDestroy {
     }
   }
 
+  getPdf(which, rid){
+    this.requesterService.getPdf(which, rid)
+      .subscribe((res) => {
+        // let blob = this.b64toBlob(res);
+        // console.log('blob: ', blob);
+        // let reader = new FileReader();
+        // reader.readAsDataURL(blob);
+        // console.log(data);
+        // window.open(data.toString(), '_blank');
+        // let blob = new Blob([(<any>data)], { type: 'application/json'});
+        // let url = window.URL.createObjectURL(data);
+        // window.open(url);
+        // return data;
+        // var file = new Blob([res], {type: 'application/pdf'});
+        // window.open(URL.createObjectURL(file));
+        // var file = new Blob([res], {type: 'application/pdf'});
+        // console.log('file', file);
+        // let reader = new FileReader();
+        // reader.readAsDataURL(file);
+        // var fileURL = URL.createObjectURL(file);
+        // window.open(fileURL);
+        // console.log('res: ', res);
+        // let reader = new FileReader();
+        // reader.readAsDataURL(res);
+        // var fileURL = window.URL.createObjectURL(res);
+        // fileURL = fileURL.slice(5, fileURL.length);
+        // console.log('fileURL: ', fileURL);
+        // window.open(fileURL);
+        // let filename = 'pdf.pdf';
+        // FileSaver.saveAs(res, filename);
+      });
+  }
+
   displayFn(c?: Company) {
     return c ? c.name : undefined;
   }
@@ -309,7 +346,10 @@ export class RequesterComponent implements OnInit, OnDestroy {
   }
 
   editRequest() {
+    console.log('vo component editRequest');
+    console.log('this.requesterForm: ', this.requesterForm);
     if(this.requesterForm.valid) {
+      console.log('vo prv if');
       if(this.editMode){
         this.resources.companies.getCompanyById(this.request.companyId)
           .subscribe((data : Company) => {
@@ -336,6 +376,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
         if(this.pdf2src != null)
           this.request.pdf2 = null;
         let o_request = this.request;
+        console.log('pred service editRequest.subscribe');
         this.requesterService.editRequest(this.request).subscribe((data: Requester) => {
           this.requesterService.switchRequest(o_request, data);
           this.snackbarService.msg = 'Промените се зачувани';

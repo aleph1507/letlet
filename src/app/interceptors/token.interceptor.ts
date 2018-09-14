@@ -13,15 +13,22 @@ export class TokenInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
 
+    var accept = 'application/json';
+    if(req.url.indexOf('/api/requests/pdf') != -1){
+      accept = 'application/pdf';
+    } else {
+      var accept = 'application/json';
+    }
+    if(req.url == this.authService.baseUrl, '/api/requests/pdf11')
     this.authService.loggedInStatus().subscribe(
       (data: boolean) => {
         this.loggedIn = data;
         if(this.loggedIn){
           req = req.clone({
             setHeaders: {
-              'Content-Type': 'application/json',
+              'Content-Type': accept,
               'Authorization': 'Bearer ' + this.authService.getToken(),
-              'Accept': 'application/json'
+              'Accept': accept
             }
           });
         } else {

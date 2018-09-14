@@ -126,7 +126,7 @@ export class ResourceComponent implements OnInit {
                 MatTableDataSource<Company>(this.resourcesService.companies.companies);
                 this.showSpinner = false;
             })
-          this.displayedColumns = ['name', 'nameEn', 'id', 'delete'];
+          this.displayedColumns = ['name', 'nameEn', 'id'];
           break;
         case 'vehicles':
           this.category = 'vehicles';
@@ -138,7 +138,7 @@ export class ResourceComponent implements OnInit {
               this.dataSource = new MatTableDataSource<Vehicle>(this.vehicles);
               this.showSpinner = false;
             });
-          this.displayedColumns = ['company', 'model', 'plate', 'edit', 'delete'];
+          this.displayedColumns = ['company', 'model', 'plate', 'edit'];
           break;
         case 'employees':
           this.category = 'employees';
@@ -154,7 +154,7 @@ export class ResourceComponent implements OnInit {
               this.pageSize = 10;
               this.showSpinner = false;
             });
-          this.displayedColumns = ['name', 'surname', 'company', 'occupation', 'edit', 'delete'];
+          this.displayedColumns = ['name', 'surname', 'company', 'occupation', 'edit'];
           break;
         case 'gates':
           this.category = 'gates';

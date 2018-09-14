@@ -1,12 +1,12 @@
 <form [formGroup]="companyForm" (ngSubmit)="onSubmit()" novalidate>
-  <mat-form-field>
+  <mat-form-field style="width:100%;">
     <input matInput name="companyName"
       id="companyName" placeholder="Name"
       formControlName="name"
       autocomplete="off" required>
   </mat-form-field>
-
-  <mat-form-field>
+  <br>
+  <mat-form-field style="width:100%;">
     <input matInput name="companyNameEn"
       id="companyNameEn" placeholder="English Name"
       formControlName="nameEn"

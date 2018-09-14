@@ -28,7 +28,7 @@
           name="contactPhone"
           formControlName="contactPhone"
           autocomplete="off"
-          type="number"
+          type="text"
           required>
       </mat-form-field>
       <mat-form-field class="requester-field">
@@ -102,14 +102,29 @@
         </div>
       </div>
 
-      <div *ngIf="editMode" class="download-pdfs">
-        <a [href]="sanitizeURL(pdfToBlob(this.request.pdf1))" target="_blank">
+      <!-- <div *ngIf="editMode" class="download-pdfs">
+        <a [href]="authService.baseUrl + '/api/requests/pdf1/' + request.id" target="_blank">
           <div class="pdf-upload" style="margin-bottom: 10%;">
-            <button type="button" mat-raised-button>
+            <button *ngIf="pdf1src.length >= 28" (click)="getPdf(1, request.id)" type="button" mat-raised-button>
               Download PDF<mat-icon>keyboard_arrow_down</mat-icon>
             </button>
           </div>
-        </a>
+        </a> -->
+        <div *ngIf="editMode" class="download-pdfs">
+          <a [href]="sanitizeURL(pdfToBlob(this.request.pdf1))" target="_blank">
+            <div class="pdf-upload" style="margin-bottom: 10%;">
+              <button *ngIf="pdf1src.length >= 28" (click)="getPdf(1, request.id)" type="button" mat-raised-button>
+                Download PDF<mat-icon>keyboard_arrow_down</mat-icon>
+              </button>
+            </div>
+          </a>
+        <!-- <div *ngIf="this.request.pdf2 != null" class="pdf-upload" style="margin-top:10%;">
+          <a [href]="sanitizeURL(pdfToBlob(this.request.pdf2))" target="_blank">
+            <button *ngIf="pdf2src.length >= 28" (click)="getPdf(2, request.id)" type="button" style="margin-bottom: 5em;" mat-raised-button>
+              Download BSR<mat-icon>keyboard_arrow_down</mat-icon>
+            </button>
+          </a>
+        </div> -->
         <div *ngIf="this.request.pdf2 != null" class="pdf-upload" style="margin-top:10%;">
           <a [href]="sanitizeURL(pdfToBlob(this.request.pdf2))" target="_blank">
             <button type="button" style="margin-bottom: 5em;" mat-raised-button>
@@ -119,12 +134,12 @@
         </div>
         <button mat-raised-button type="button"
           style="margin:1rem; margin-top: 0;" (click)="printRequest()">
-          Print PDF<mat-icon class="icon-control">print</mat-icon>
+          Print Document 1<mat-icon class="icon-control">print</mat-icon>
         </button>
         <br>
         <button mat-raised-button type="button"
           style="margin:1rem;" (click)="printRequest2()">
-          Print BSR<mat-icon class="icon-control">print</mat-icon>
+          Print Document 2<mat-icon class="icon-control">print</mat-icon>
         </button>
         <div style="display:block;">
           <mat-checkbox

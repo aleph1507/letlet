@@ -95,6 +95,7 @@ export class RequesterService {
   }
 
   editRequest(req: Requester) {
+    console.log('vo service editRequest');
     return this.http.patch(this.requestUrl + '/' + req.id, req);
   }
 
@@ -166,6 +167,19 @@ export class RequesterService {
 
   isEmptyPersons(){
     return this.persons.length === 0;
+  }
+
+  getPdf(which, rid){ ///api/requests/pdf1/{requestId} 11-blob
+    // return this.http.get(this.authService.baseUrl + '/api/requests/pdf1' + which + '/' + rid);
+    // return this.http.get(this.authService.baseUrl + '/api/requests/pdf' + which + '/' + rid,
+    //     { responseType: 'blob' }).map((res) => {
+    //       return new Blob([res], { type: 'application/pdf' })
+    //     });
+    return this.http.get(this.authService.baseUrl + '/api/requests/pdf' + which + '/' + rid, {responseType: 'arraybuffer'});
+    //     { responseType: 'blob' }).map((res) => {
+    //       return new Blob([res], { type: 'application/pdf' })
+    //     });
+
   }
 
 }

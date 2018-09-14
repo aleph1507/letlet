@@ -193,17 +193,6 @@
               >border_color</mat-icon>
             </mat-cell>
           </ng-container>
-
-          <ng-container matColumnDef="delete">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Delete </mat-header-cell>
-            <mat-cell *matCellDef="let emp">
-              <mat-icon matListIcon
-                (click)="deleteEmployee(emp.id)"
-                class="icon-control">
-                delete
-              </mat-icon>
-            </mat-cell>
-          </ng-container>
         </div>
         <!-- ./Employees resource -->
 
@@ -233,17 +222,6 @@
               >border_color</mat-icon>
             </mat-cell>
           </ng-container>
-
-          <ng-container matColumnDef="delete">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Delete </mat-header-cell>
-            <mat-cell *matCellDef="let vehicle">
-              <mat-icon matListIcon
-                (click)="deleteVehicle(vehicle.id)"
-                class="icon-control">
-                delete
-              </mat-icon>
-            </mat-cell>
-          </ng-container>
         </div>
         <!-- ./Vehicles resource -->
 
@@ -267,17 +245,6 @@
               (click)="editCompany(comp.id)"
               class="icon-control"
               >border_color</mat-icon>
-            </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="delete">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Delete </mat-header-cell>
-            <mat-cell *matCellDef="let comp">
-              <mat-icon matListIcon
-                (click)="deleteCompany(comp.id)"
-                class="icon-control">
-                delete
-              </mat-icon>
             </mat-cell>
           </ng-container>
         </div>
