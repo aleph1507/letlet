@@ -25,9 +25,8 @@ export class StopListComponent implements OnInit {
       {headerName: 'Index', field: 'index'},
       {headerName: 'Employee Name', field: 'employeeName'},
       {headerName: 'Company Name', field: 'companyName'},
-      {headerName: 'Card Series Number', field: 'cardSeriesNumber'},
-      {headerName: 'Card Number', field: 'cardNumber'},
       {headerName: 'Badge Number', field: 'badgeNumber'},
+      {headerName: 'Card Number', field: 'cardNumber'},
       {headerName: 'Expire Date', field: 'expireDate'},
       {headerName: 'Reason', field: 'deactivateReason'}
     ],
