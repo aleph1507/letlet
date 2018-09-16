@@ -17,7 +17,7 @@ export class UserManagementComponent implements OnInit {
 
   showSpinner : boolean  = true;
   users : User[] = [];
-  displayedColumns = ['fullName', 'userName', 'position', 'edit', 'changeRole', 'changePassword', 'status'];
+  displayedColumns = ['fullName', 'userName', 'position', 'changeRole', 'changePassword', 'status'];
   dataSource : MatTableDataSource<User>
 
   constructor(private authService: AuthService,
