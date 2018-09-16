@@ -51,7 +51,7 @@
       </div>
     </a>
   </mat-card>
-  <mat-card class="dash-card" *ngIf="authService.isPowerUser()">
+  <mat-card class="dash-card" *ngIf="authService.isPowerUser() || authService.isOperator()">
     <a [routerLink]="['vehiclebadgereport']">
       <div class="card-content">
         <div class="card-text">
