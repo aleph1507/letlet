@@ -39,7 +39,8 @@ export class BadgesComponent implements OnInit {
 
   refresh() {
     this.showSpinner = true;
-    this.badgesService.getBadges(this.currentPage).subscribe((data : Badge[]) => {
+    this.badgesService.getBadges(this.currentPage)
+      .subscribe((data : Badge[]) => {
       this.badges = data;
       for(let i = 0; i<this.badges.length; i++){
         console.log('this.badges[i].expireDate: ', this.badges[i].expireDate);
