@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { GatesService } from '../../services/gates.service';
 import { AuthService } from '../../services/auth.service';
 import { ResourcesService } from '../../services/resources.service';
@@ -20,7 +20,7 @@ import { SnackbarService } from '../../services/snackbar.service';
   templateUrl: './gate.component.html',
   styleUrls: ['./gate.component.css']
 })
-export class GateComponent implements OnInit, OnDestroy {
+export class GateComponent implements OnInit, OnDestroy, AfterViewInit {
 
   gid : number = null;
   enteredPersons : EnteredPerson[] = [];
@@ -39,7 +39,15 @@ export class GateComponent implements OnInit, OnDestroy {
 
   loadings: boolean[] = [false, false, false, false];
 
+  // @ViewChild('enteredPersonsFilter') enteredPF: ElementRef;
+  // @ViewChild('enteredVehiclesFilter') enteredVF: ElementRef;
+  // @ViewChild('expectedPersonsFilter') expectedPF: ElementRef;
+  // @ViewChild('expectedVehiclesFilter') expectedVF: ElementRef;
   interval;
+
+  entPFval; entVFval; expPFval; expVFval;
+  enteredPF; enteredVF; expectedPF; expectedVF;
+  first: boolean = true; afterInit = false;
 
   constructor(private gatesService: GatesService,
               private authService: AuthService,
@@ -55,7 +63,19 @@ export class GateComponent implements OnInit, OnDestroy {
     }, 1000 * 60 * 0.5);
   }
 
+  ngAfterViewInit() {
+    this.afterInit = true;
+  }
+
   refreshData() {
+    // this.entPFval = this.enteredPF.nativeElement.value;
+    // this.entVFval = this.enteredVF.nativeElement.value;
+    // this.expPFval = this.expectedPF.nativeElement.value;
+    // this.expVFval = this.expectedVF.nativeElement.value;
+    this.enteredPF = this.entPFval == undefined ? '' : this.entPFval;
+    this.enteredVF = this.entVFval == undefined ? '' : this.entVFval;
+    this.expectedPF = this.expPFval == undefined ? '' : this.expPFval;
+    this.expectedVF = this.expVFval == undefined ? '' : this.expVFval;
     this.getExpectedPersons();
     this.getEnteredPersons();
     this.getEnteredVehicles();
@@ -65,12 +85,32 @@ export class GateComponent implements OnInit, OnDestroy {
     });
   }
 
+  reloadFilters() {
+    // this.enteredPF.nativeElement.value = this.entPFval;
+    // this.enteredVF.nativeElement.value = this.entVFval;
+    // this.expectedPF.nativeElement.value = this.expPFval;
+    // this.expectedVF.nativeElement.value = this.expVFval;
+    if(!this.first && this.afterInit){
+      // this.entPFval=this.enteredPF;
+      // this.entVFval=this.enteredVF;
+      // this.expPFval=this.expectedPF;
+      // this.expVFval=this.expectedVF;
+      // this.applyFilterExpectedVehicles(this.expVFval);
+      // this.applyFilterEnteredVehicles(this.entVFval);
+      // this.applyFilterEnteredPersons(this.entPFval);
+      // this.applyFilterExpectedPersons(this.expPFval);
+    } else {
+      this.first=false;
+    }
+  }
+
   getExpectedPersons() {
     this.gatesService.getAllExpectedPersons()
       .subscribe((data : ExpectedPerson[]) => {
         this.expectedPersons = data;
         this.dataSourceExpectedPersons = new MatTableDataSource<ExpectedPerson>(this.expectedPersons);
         this.loadings[0] = true;
+        this.applyFilterExpectedPersons(this.expectedPF);
       });
   }
 
@@ -80,6 +120,8 @@ export class GateComponent implements OnInit, OnDestroy {
         this.enteredPersons = data;
         this.dataSourceEnteredPersons = new MatTableDataSource<EnteredPerson>(this.enteredPersons);
         this.loadings[1] = true;
+        // this.reloadFilters();
+        this.applyFilterEnteredPersons(this.enteredPF);
       });
   }
 
@@ -89,6 +131,8 @@ export class GateComponent implements OnInit, OnDestroy {
         this.expectedVehicles = data;
         this.dataSourceExpectedVehicles = new MatTableDataSource<ExpectedVehicle>(this.expectedVehicles);
         this.loadings[2] = true;
+        // this.reloadFilters();
+        this.applyFilterExpectedVehicles(this.expectedVF);
       });
   }
 
@@ -98,6 +142,8 @@ export class GateComponent implements OnInit, OnDestroy {
         this.enteredVehicles = data;
         this.dataSourceEnteredVehicles = new MatTableDataSource<EnteredVehicle>(this.enteredVehicles);
         this.loadings[3] = true;
+        // this.reloadFilters();
+        this.applyFilterEnteredVehicles(this.enteredVF);
       });
   }
 

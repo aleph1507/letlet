@@ -5,7 +5,7 @@
       <div class="filter-panel">
         <h3>Entered Persons</h3>
         <mat-form-field>
-          <input matInput (keyup)="applyFilterEnteredPersons($event.target.value)" autocomplete="off" placeholder="Filter">
+          <input matInput #enteredPersonsFilter [(ngModel)]="entPFval" (keyup)="applyFilterEnteredPersons($event.target.value)" autocomplete="off" placeholder="Filter">
         </mat-form-field>
       </div>
 
@@ -55,7 +55,7 @@
       <div class="filter-panel">
         <h3>Entered Vehicles</h3>
         <mat-form-field>
-          <input matInput (keyup)="applyFilterEnteredVehicles($event.target.value)" autocomplete="off" placeholder="Filter">
+          <input matInput #enteredVehiclesFilter [(ngModel)]="entVFval" (keyup)="applyFilterEnteredVehicles($event.target.value)" autocomplete="off" placeholder="Filter">
         </mat-form-field>
       </div>
 
@@ -111,7 +111,7 @@
       <div class="filter-panel">
         <h3>Expected Persons</h3>
         <mat-form-field>
-          <input matInput (keyup)="applyFilterExpectedPersons($event.target.value)" autocomplete="off" placeholder="Filter">
+          <input matInput #expectedPersonsFilter [(ngModel)]="expPFval" (keyup)="applyFilterExpectedPersons($event.target.value)" autocomplete="off" placeholder="Filter">
         </mat-form-field>
       </div>
 
@@ -150,7 +150,7 @@
       <div class="filter-panel">
         <h3>Expected Vehicles</h3>
         <mat-form-field>
-          <input matInput (keyup)="applyFilterExpectedVehicles($event.target.value)" autocomplete="off" placeholder="Filter">
+          <input matInput #expectedVehiclesFilter [(ngModel)]="expVFval" (keyup)="applyFilterExpectedVehicles($event.target.value)" autocomplete="off" placeholder="Filter">
         </mat-form-field>
       </div>
 
