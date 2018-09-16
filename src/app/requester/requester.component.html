@@ -102,36 +102,19 @@
         </div>
       </div>
 
-      <!-- <div *ngIf="editMode" class="download-pdfs">
-        <a [href]="authService.baseUrl + '/api/requests/pdf1/' + request.id" target="_blank">
-          <div class="pdf-upload" style="margin-bottom: 10%;">
-            <button *ngIf="pdf1src.length >= 28" (click)="getPdf(1, request.id)" type="button" mat-raised-button>
-              Download PDF<mat-icon>keyboard_arrow_down</mat-icon>
-            </button>
-          </div>
-        </a> -->
-        <div *ngIf="editMode" class="download-pdfs">
-          <a [href]="sanitizeURL(pdfToBlob(this.request.pdf1))" target="_blank">
-            <div class="pdf-upload" style="margin-bottom: 10%;">
-              <button *ngIf="pdf1src != null && pdf1src.length >= 28" (click)="getPdf(1, request.id)" type="button" mat-raised-button>
-                Download PDF<mat-icon>keyboard_arrow_down</mat-icon>
-              </button>
-            </div>
-          </a>
-        <!-- <div *ngIf="this.request.pdf2 != null" class="pdf-upload" style="margin-top:10%;">
-          <a [href]="sanitizeURL(pdfToBlob(this.request.pdf2))" target="_blank">
-            <button *ngIf="pdf2src.length >= 28" (click)="getPdf(2, request.id)" type="button" style="margin-bottom: 5em;" mat-raised-button>
-              Download BSR<mat-icon>keyboard_arrow_down</mat-icon>
-            </button>
-          </a>
-        </div> -->
+       <div *ngIf="editMode" class="download-pdfs">
+         <div class="pdf-upload" style="margin-bottom: 10%;">
+           <button *ngIf="pdf1src.length > 28" (click)="getPdfV2(1, request.id)" type="button" mat-raised-button>
+             Download PDF<mat-icon>keyboard_arrow_down</mat-icon>
+           </button>
+         </div>
+
         <div *ngIf="this.request.pdf2 != null" class="pdf-upload" style="margin-top:10%;">
-          <a [href]="sanitizeURL(pdfToBlob(this.request.pdf2))" target="_blank">
-            <button type="button" style="margin-bottom: 5em;" mat-raised-button>
+            <button *ngIf="pdf2src.length > 28" type="button" style="margin-bottom: 5em;" (click)="getPdfV2(2, request.id)" mat-raised-button>
               Download BSR<mat-icon>keyboard_arrow_down</mat-icon>
             </button>
-          </a>
         </div>
+
         <button mat-raised-button type="button"
           style="margin:1rem; margin-top: 0;" (click)="printRequest()">
           Print Document 1<mat-icon class="icon-control">print</mat-icon>

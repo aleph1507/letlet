@@ -182,4 +182,8 @@ export class RequesterService {
 
   }
 
+  getPdfV2(which, rid) {
+    return this.http.get(this.authService.baseUrl + '/api/requests/pdf' + which + '/' + rid, {responseType: 'arraybuffer'});
+  }
+
 }

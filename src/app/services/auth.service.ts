@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Observable';
 export class AuthService implements OnInit{
 
   public token: string = null;
-  public baseUrl = 'http://192.168.100.80:84';
+  public baseUrl = 'http://localhost:63602/';
   url = this.baseUrl + '/token';
   loggedIn : boolean = false;
   public loggedStatus : BehaviorSubject<boolean>;

@@ -52,7 +52,7 @@ export class GateComponent implements OnInit, OnDestroy {
     this.refreshData();
     this.interval = setInterval(() => {
         this.refreshData();
-    }, 1000 * 60 * 10);
+    }, 1000 * 60 * 0.5);
   }
 
   refreshData() {

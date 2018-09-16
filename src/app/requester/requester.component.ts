@@ -255,33 +255,20 @@ export class RequesterComponent implements OnInit, OnDestroy {
   getPdf(which, rid){
     this.requesterService.getPdf(which, rid)
       .subscribe((res) => {
-        // let blob = this.b64toBlob(res);
-        // console.log('blob: ', blob);
-        // let reader = new FileReader();
-        // reader.readAsDataURL(blob);
-        // console.log(data);
-        // window.open(data.toString(), '_blank');
-        // let blob = new Blob([(<any>data)], { type: 'application/json'});
-        // let url = window.URL.createObjectURL(data);
-        // window.open(url);
-        // return data;
-        // var file = new Blob([res], {type: 'application/pdf'});
-        // window.open(URL.createObjectURL(file));
-        // var file = new Blob([res], {type: 'application/pdf'});
-        // console.log('file', file);
-        // let reader = new FileReader();
-        // reader.readAsDataURL(file);
-        // var fileURL = URL.createObjectURL(file);
-        // window.open(fileURL);
-        // console.log('res: ', res);
-        // let reader = new FileReader();
-        // reader.readAsDataURL(res);
-        // var fileURL = window.URL.createObjectURL(res);
-        // fileURL = fileURL.slice(5, fileURL.length);
-        // console.log('fileURL: ', fileURL);
-        // window.open(fileURL);
-        // let filename = 'pdf.pdf';
-        // FileSaver.saveAs(res, filename);
+      });
+  }
+
+  getPdfV2(which, rid){
+    var popup = window.open("");
+    popup.document.open();
+    popup.document.write("Loading ...");
+
+    this.requesterService.getPdfV2(which, rid)
+      .subscribe((res) => {
+        var file = new Blob([res], {type: "application/pdf"});
+        var fileURL = window.URL.createObjectURL(file);
+        popup.location.href = fileURL;
+        popup.document.close();
       });
   }
 
