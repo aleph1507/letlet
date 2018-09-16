@@ -55,7 +55,7 @@
       <ng-container matColumnDef="status">
         <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
         <mat-cell *matCellDef="let u">
-          <button mat-stroked-button color="primary" (click)="changeStatus(u.id)">{{ u.enabled ? "Disable" : "Enable"}}</button>
+          <button mat-stroked-button color="primary" (click)="changeStatus(u.id, u.deactivated)">{{ u.deactivated ? "Activate" : "Deactivate"}}</button>
         </mat-cell>
       </ng-container>
 

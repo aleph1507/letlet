@@ -18,7 +18,7 @@ div.requester-container {
   display:flex;
   flex-direction: row;
   position:relative;
-  height:80vh;
+  height:auto;
   width: 80vw;
   margin: auto;
 }
@@ -30,6 +30,20 @@ div.req-form-container {
   bottom:0;
   right: 50%;
   background: #fff;
+}
+
+div.pdf-upload {
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  /* width: 60%; */
+  justify-content: space-between;
+}
+
+.pdf-upload button {
+  display:inline;
+  margin:0;
+  padding: 12px;
 }
 
 div.requester-props-container {

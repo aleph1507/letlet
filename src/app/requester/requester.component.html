@@ -1,4 +1,4 @@
-<div class="requester-container">
+<div class="requester-container mat-elevation-z8">
   <div class="req-form-container">
     <app-spinner class="reqSpinner mat-elevation-z8" *ngIf="showRequestSpinner"></app-spinner>
     <form class="requester-form" id="requester-form" (ngSubmit)="onSubmit()" [formGroup]="requesterForm" novalidate>
@@ -103,19 +103,38 @@
       </div>
 
        <div *ngIf="editMode" class="download-pdfs">
-         <div class="pdf-upload" style="margin-bottom: 10%;">
-           <button *ngIf="pdf1src.length > 28" (click)="getPdfV2(1, request.id)" type="button" mat-raised-button>
+         <div class="pdf-upload" style="margin:0; margin-bottom: 2%; width:100%;">
+           <button *ngIf="pdf1src.length > 28" style="" (click)="getPdfV2(1, request.id)" type="button" mat-raised-button>
              Download PDF<mat-icon>keyboard_arrow_down</mat-icon>
            </button>
+           <button *ngIf="pdf2src.length > 28" type="button" style="" (click)="getPdfV2(2, request.id)" mat-raised-button>
+             Download BSR<mat-icon>keyboard_arrow_down</mat-icon>
+           </button>
+           <button mat-raised-button type="button"
+             style="" (click)="printRequest()">
+             Print Document 1<mat-icon class="icon-control">print</mat-icon>
+           </button>
+           <button mat-raised-button type="button"
+             style="" (click)="printRequest2()">
+             Print Document 2<mat-icon class="icon-control">print</mat-icon>
+           </button>
          </div>
+           <!-- <button mat-raised-button type="button"
+             style="margin:1rem; margin-top: 0; display: inline;" (click)="printRequest()">
+             Print Document 1<mat-icon class="icon-control">print</mat-icon>
+           </button>
+           <button mat-raised-button type="button"
+             style="margin:1rem; display:inline;" (click)="printRequest2()">
+             Print Document 2<mat-icon class="icon-control">print</mat-icon>
+           </button> -->
 
-        <div *ngIf="this.request.pdf2 != null" class="pdf-upload" style="margin-top:10%;">
-            <button *ngIf="pdf2src.length > 28" type="button" style="margin-bottom: 5em;" (click)="getPdfV2(2, request.id)" mat-raised-button>
+        <!-- <div *ngIf="this.request.pdf2 != null" class="pdf-upload" style="margin-top:10%;">
+            <button *ngIf="pdf2src.length > 28" type="button" style="display:inline; margin-bottom: 5em;" (click)="getPdfV2(2, request.id)" mat-raised-button>
               Download BSR<mat-icon>keyboard_arrow_down</mat-icon>
             </button>
-        </div>
+        </div> -->
 
-        <button mat-raised-button type="button"
+        <!-- <button mat-raised-button type="button"
           style="margin:1rem; margin-top: 0;" (click)="printRequest()">
           Print Document 1<mat-icon class="icon-control">print</mat-icon>
         </button>
@@ -123,7 +142,7 @@
         <button mat-raised-button type="button"
           style="margin:1rem;" (click)="printRequest2()">
           Print Document 2<mat-icon class="icon-control">print</mat-icon>
-        </button>
+        </button> -->
         <div style="display:block;">
           <mat-checkbox
             color="primary"

@@ -93,6 +93,8 @@ export class UserManagementComponent implements OnInit {
   }
 
   changeStatus(uid, enabled){
+    console.log('uid: ', uid);
+    console.log('enabled: ', enabled);
     this.userService.changeStatus(uid, enabled)
       .subscribe(data =>{
         console.log('User status changed, data: ', data);
