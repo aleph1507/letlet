@@ -14,6 +14,7 @@ import { EnterVehicleModalComponent } from './enter-vehicle-modal/enter-vehicle-
 import { ExitVehicleModalComponent } from './exit-vehicle-modal/exit-vehicle-modal.component';
 import { VisitPerson } from '../../models/VisitPerson.model';
 import { SnackbarService } from '../../services/snackbar.service';
+import { Gate } from '../../models/Gate';
 
 @Component({
   selector: 'app-gate',
@@ -67,6 +68,8 @@ export class GateComponent implements OnInit, OnDestroy, AfterViewInit {
     this.afterInit = true;
   }
 
+  gateName : string = '';
+
   refreshData() {
     // this.entPFval = this.enteredPF.nativeElement.value;
     // this.entVFval = this.enteredVF.nativeElement.value;
@@ -82,6 +85,10 @@ export class GateComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getExpectedVehicles();
     this.route.params.subscribe((params) => {
       this.gid = params.id;
+      this.resourceService.gates.getGateById(this.gid)
+        .subscribe((gate : Gate) => {
+          this.gateName = '(' + gate.name + ')';
+        });
     });
   }
 
