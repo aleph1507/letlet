@@ -46,6 +46,13 @@ div.pdf-upload {
   padding: 12px;
 }
 
+.btnspan {
+  display:inline;
+  margin:0;
+  padding: 12px;
+  align-self: start;
+}
+
 div.requester-props-container {
   display: flex;
   flex-direction:column;

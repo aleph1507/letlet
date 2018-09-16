@@ -345,8 +345,16 @@ export class RequesterComponent implements OnInit, OnDestroy {
 
         let fd : string = this.requesterForm.controls['requesterFromDate'].value;
         let fromDate = new Date(fd);
+        console.log('fromDate pred setDate: ', fromDate);
+        fromDate.setHours(12,0,0);
+        //fromDate.setDate(fromDate.getDate()+1);
+        console.log('fromDate posle setDate: ', fromDate);
         let td : string = this.requesterForm.controls['requesterToDate'].value;
         let toDate = new Date(td);
+        console.log('toDate pred setDate: ', toDate);
+        toDate.setHours(12,0,0);
+        //toDate.setDate(toDate.getDate()+1);
+        console.log('toDate posle setDate: ', toDate);
         this.request.requesterName = this.requesterForm.controls['requesterName'].value;
         this.request.contactEmail = this.requesterForm.controls['contactEmail'].value;
         this.request.contactPhone = this.requesterForm.controls['contactPhone'].value;

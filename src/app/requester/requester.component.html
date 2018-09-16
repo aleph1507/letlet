@@ -81,24 +81,24 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <div *ngIf="!editMode" class="upload-pdfs">
-        <div class="pdf-upload">
-          You can merge multiple PDFs <a target="blank" href="https://lightpdf.com/merge-pdf">here</a><br>
-          За спојување на повеќе PDF датотеки, Ве молиме искористете го следниов <a target="blank" href="https://lightpdf.com/merge-pdf">сервис</a><br>
+      <div *ngIf="!editMode">
+        You can merge multiple PDFs <a target="blank" href="https://lightpdf.com/merge-pdf">here</a><br>
+        За спојување на повеќе PDF датотеки, Ве молиме искористете го следниов <a target="blank" href="https://lightpdf.com/merge-pdf">сервис</a><br>
+        <div>
           <button type="button" mat-raised-button (click)="pdfUpload1.click()">
             Attach PDF / Прикачи документ<mat-icon>keyboard_arrow_up</mat-icon>
             <input type="file" hidden #pdfUpload1
             accept="application/pdf"
             (change)="savePdf($event)" name="pdf1" id="pdf1" formControlName="pdf1">
-          </button> <span>{{pdf1filename}}</span>
+          </button> <span class="btnspan">{{pdf1filename}}</span>
         </div>
-        <div class="pdf-upload" style="margin-top:3%;">
+        <div style="margin-top:3%;">
           <button type="button" mat-raised-button (click)="pdfUpload2.click()">
             Attach BSR / Прикачи BSR<mat-icon>keyboard_arrow_up</mat-icon>
             <input type="file" hidden #pdfUpload2
             accept="application/pdf"
             (change)="savePdf($event)" name="pdf2" id="pdf2" formControlName="pdf2">
-          </button> <span>{{pdf2filename}}</span>
+          </button> <span class="btnspan">{{pdf2filename}}</span>
         </div>
       </div>
 
@@ -119,30 +119,6 @@
              Print Document 2<mat-icon class="icon-control">print</mat-icon>
            </button>
          </div>
-           <!-- <button mat-raised-button type="button"
-             style="margin:1rem; margin-top: 0; display: inline;" (click)="printRequest()">
-             Print Document 1<mat-icon class="icon-control">print</mat-icon>
-           </button>
-           <button mat-raised-button type="button"
-             style="margin:1rem; display:inline;" (click)="printRequest2()">
-             Print Document 2<mat-icon class="icon-control">print</mat-icon>
-           </button> -->
-
-        <!-- <div *ngIf="this.request.pdf2 != null" class="pdf-upload" style="margin-top:10%;">
-            <button *ngIf="pdf2src.length > 28" type="button" style="display:inline; margin-bottom: 5em;" (click)="getPdfV2(2, request.id)" mat-raised-button>
-              Download BSR<mat-icon>keyboard_arrow_down</mat-icon>
-            </button>
-        </div> -->
-
-        <!-- <button mat-raised-button type="button"
-          style="margin:1rem; margin-top: 0;" (click)="printRequest()">
-          Print Document 1<mat-icon class="icon-control">print</mat-icon>
-        </button>
-        <br>
-        <button mat-raised-button type="button"
-          style="margin:1rem;" (click)="printRequest2()">
-          Print Document 2<mat-icon class="icon-control">print</mat-icon>
-        </button> -->
         <div style="display:block;">
           <mat-checkbox
             color="primary"
