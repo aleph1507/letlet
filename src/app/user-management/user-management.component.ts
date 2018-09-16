@@ -99,6 +99,7 @@ export class UserManagementComponent implements OnInit {
       .subscribe(data =>{
         console.log('User status changed, data: ', data);
         this.snackbarService.successSnackBar();
+        this.refresh();
       })
   }
 
