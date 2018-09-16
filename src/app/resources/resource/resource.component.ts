@@ -185,7 +185,7 @@ export class ResourceComponent implements OnInit {
               MatTableDataSource<AirportZone>(this.resourcesService.airportZones.airportZones);
                 this.showSpinner = false;
               })
-          this.displayedColumns = ['code', 'name', 'edit', 'delete'];
+          this.displayedColumns = ['code', 'name', 'edit'];
           break;
       }
     });
@@ -241,6 +241,9 @@ export class ResourceComponent implements OnInit {
           this.snackbarService.successSnackBar("Visitor Vehicle Badge successfully deleted");
           this.applyFilter('');
           this.changeDetectorRefs.detectChanges();
+          this.resourcesService.visitorVehicleBadges.getAllVisitorVehicleBadges().subscribe(vvb => {
+            this.dataSource = new MatTableDataSource<VisitorVehicleBadge>(vvb);
+          });
         });
     }
     this.applyFilter('');
@@ -266,6 +269,10 @@ export class ResourceComponent implements OnInit {
         .subscribe(data => {
           this.snackbarService.successSnackBar("Visitor Badge successfully deleted");
           this.applyFilter('');
+          this.changeDetectorRefs.detectChanges();
+          this.resourcesService.visitorBadges.getAllVisitorBadges().subscribe(vb => {
+            this.dataSource = new MatTableDataSource<VisitorBadge>(vb);
+          });
         });
     }
   }
@@ -282,7 +289,7 @@ export class ResourceComponent implements OnInit {
     });
   }
 
-  deleteZone(id = null){
+  /*deleteZone(id = null){
     let cDelete = confirm("Are you sure");
     if(cDelete){
       this.resourcesService.airportZones.deleteAirportZone(id)
@@ -291,7 +298,7 @@ export class ResourceComponent implements OnInit {
           this.applyFilter('');
         });
     }
-  }
+  }*/
 
   editGate(id = null) {
     let dialogRef = this.dialog.open(GateModalComponent, {
@@ -311,6 +318,9 @@ export class ResourceComponent implements OnInit {
         .subscribe(data => {
           this.snackbarService.successSnackBar("Gate successfully deleted");
           this.applyFilter('');
+          this.resourcesService.gates.getAllGates().subscribe(g => {
+            this.dataSource = new MatTableDataSource<Gate>(g);
+          });
         });
     }
   }
