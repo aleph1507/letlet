@@ -19,6 +19,7 @@ export class FailInterceptor implements HttpInterceptor {
       .catch((error, caught) => {
         let msg: string = 'An error has occurred';
         msg += error.error ? (error.error.error_description ? ': ' + error.error.error_description : '') : '';
+        msg += '\n' + error.error.exceptionMessage;
         this.snackbarService.failSnackBar(msg);
         return Observable.throw(error);
       });
