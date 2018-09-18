@@ -21,6 +21,9 @@ export class StopListComponent implements OnInit {
   nRowsDisplay: string = '';
 
   public gridOptions: GridOptions = <GridOptions>{
+    context: {
+      componentParent: this
+    },
     floatingFilter: true,
     rowData: [],
     columnDefs: [
@@ -138,7 +141,7 @@ export class StopListComponent implements OnInit {
         // }
 
         this.gridOptions.api.setRowData(data);
-        this.gridOptions.nRowsDisplay = this.gridOptions.api.getDisplayedRowCount().toString();
+        // this.gridOptions.nRowsDisplay = this.gridOptions.api.getDisplayedRowCount().toString();
         console.log('this.nRowsDisplay: ', this.nRowsDisplay);
       });
   }

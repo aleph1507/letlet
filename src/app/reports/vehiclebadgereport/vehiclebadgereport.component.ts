@@ -27,6 +27,7 @@ export class VehiclebadgereportComponent implements OnInit {
 
   rowCount = '';
 
+  that = this;
   vehicleBadgesReportUrl = this.authService.baseUrl + '/api/badges/vehiclebadgereport';
 
   xlsx_report = null;
@@ -36,10 +37,13 @@ export class VehiclebadgereportComponent implements OnInit {
      'Company Name in English'];
 
    public gridOptions: GridOptions = <GridOptions>{
+     context: {
+       componentParent: this
+     },
      floatingFilter: true,
      rowData: [],
      columnDefs: [
-       {headerName: 'Index', field: 'index'},
+       {headerName: 'Index', valueGetter: (args) => args.node.rowIndex + 1},
        {headerName: 'Permit Number', field: 'permitNumber'},
        {headerName: 'Expire Date', field: 'expireDate', filter: 'agDateColumnFilter',
        filterParams:{
@@ -99,11 +103,11 @@ export class VehiclebadgereportComponent implements OnInit {
      nRowsDisplay: 0,
      autoSizeAllColumns: true,
      onFilterChanged: function() {
-       this.nRowsDisplay = this.api.getDisplayedRowCount().toString();
+       this.context.componentParent.rowCount = 'Number of rows: ' + this.api.getDisplayedRowCount().toString();
      },
      onGridReady: () => {
          this.loadRowData();
-     }
+     },
    };
 
   constructor(private reportsService: ReportsService,
@@ -138,6 +142,26 @@ export class VehiclebadgereportComponent implements OnInit {
   loadRowData() {
     this.showSpinner = false;
     this.gridOptions.api.setRowData(this.xlsx_report);
+    // this.gridOptions.api.context = { this: this};
+  }
+
+  export_all_to_xlsx() {
+    let tmpX = this.xlsx_report;
+    for(let i = 0; i<tmpX.length; i++){
+      delete tmpX[i].index;
+    }
+    const workBook = XLSX.utils.book_new();
+    const workSheet = XLSX.utils.json_to_sheet(tmpX);
+
+    let wscols = [];
+
+    for(let i = 0; i<10; i++)
+      wscols.push({wch: 20});
+
+    workSheet['!cols'] = wscols;
+
+    XLSX.utils.book_append_sheet(workBook, workSheet, 'VehiclesBadgesReport');
+    XLSX.writeFile(workBook, 'VehiclesBadgesReport.xlsx');
   }
 
   export_to_xlsx() {
@@ -148,22 +172,6 @@ export class VehiclebadgereportComponent implements OnInit {
     this.gridOptions.api.exportDataAsCsv(params);
     this.gridOptions.enableFilter = true;
     this.gridOptions.columnApi.autoSizeAllColumns();
-    // let tmpX = this.xlsx_report;
-    // for(let i = 0; i<tmpX.length; i++){
-    //   delete tmpX[i].index;
-    // }
-    // const workBook = XLSX.utils.book_new();
-    // const workSheet = XLSX.utils.json_to_sheet(tmpX);
-    //
-    // let wscols = [];
-    //
-    // for(let i = 0; i<10; i++)
-    //   wscols.push({wch: 20});
-    //
-    // workSheet['!cols'] = wscols;
-    //
-    // XLSX.utils.book_append_sheet(workBook, workSheet, 'VehiclesBadgesReport');
-    // XLSX.writeFile(workBook, 'VehiclesBadgesReport.xlsx');
   }
 
   export_to_pdf() {

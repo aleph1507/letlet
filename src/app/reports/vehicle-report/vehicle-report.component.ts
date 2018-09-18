@@ -38,12 +38,57 @@ export class VehicleReportComponent implements OnInit {
      'Exit Escorted By', 'Days On Air Side', 'Time On Air Side'];
 
   public gridOptions: GridOptions = <GridOptions>{
+    context: {
+      componentParent: this
+    },
     floatingFilter: true,
     rowData: [],
     columnDefs: [
       {headerName: 'Index', field: 'index'},
-      {headerName: 'Entry At', field: 'entryDateTime'},
-      {headerName: 'Exit At', field: 'exitDateTime'},
+      {headerName: 'Entry At', field: 'entryDateTime', filter: 'agDateColumnFilter',
+      filterParams:{
+
+          // provide comparator function
+          comparator: function (filterLocalDateAtMidnight, cellValue) {
+
+              // In the example application, dates are stored as dd/mm/yyyy
+              // We create a Date object for comparison against the filter date
+              var t = cellValue.split(' ');
+              var dateParts  = t[0].split("/");
+            var cellDate = new Date(Number(dateParts[2]), Number(dateParts[1]) - 1, Number(dateParts[0]));
+
+              // Now that both parameters are Date objects, we can compare
+              if (cellDate < filterLocalDateAtMidnight) {
+                  return -1;
+              } else if (cellDate > filterLocalDateAtMidnight) {
+                  return 1;
+              } else {
+                  return 0;
+              }
+          }
+      }},
+      {headerName: 'Exit At', field: 'exitDateTime', filter: 'agDateColumnFilter',
+      filterParams:{
+
+          // provide comparator function
+          comparator: function (filterLocalDateAtMidnight, cellValue) {
+
+              // In the example application, dates are stored as dd/mm/yyyy
+              // We create a Date object for comparison against the filter date
+              var t = cellValue.split(' ');
+              var dateParts  = t[0].split("/");
+            var cellDate = new Date(Number(dateParts[2]), Number(dateParts[1]) - 1, Number(dateParts[0]));
+
+              // Now that both parameters are Date objects, we can compare
+              if (cellDate < filterLocalDateAtMidnight) {
+                  return -1;
+              } else if (cellDate > filterLocalDateAtMidnight) {
+                  return 1;
+              } else {
+                  return 0;
+              }
+          }
+      }},
       {headerName: 'Company Name', field: 'companyName'},
       {headerName: 'Vehicle Model', field: 'vehicleModel'},
       {headerName: 'Vehicle Plate', field: 'plateNumber'},
@@ -58,8 +103,14 @@ export class VehicleReportComponent implements OnInit {
     ],
     enableCellChangeFlash: true,
     refreshCells: true,
-    enableFilter: true,
     enableSorting: true,
+    enableColResize: true,
+    nRowsDisplay: 0,
+    autoSizeAllColumns: true,
+    onFilterChanged: function() {
+      console.log('onFilterChanged: this.api.getDisplayedRowCount().toString(): ', this.api.getDisplayedRowCount().toString());
+      this.context.componentParent.rowCount = 'Number of rows: ' + this.api.getDisplayedRowCount().toString();
+    }
   };
 
   constructor(private reportsService: ReportsService,
@@ -72,7 +123,7 @@ export class VehicleReportComponent implements OnInit {
     this.getReps();
   }
 
-  export_to_xlsx() {
+  export_all_to_xlsx() {
     let tmpX = this.xlsx_report;
     for(let i = 0; i<tmpX.length; i++){
       delete tmpX[i].index;
@@ -89,6 +140,17 @@ export class VehicleReportComponent implements OnInit {
 
     XLSX.utils.book_append_sheet(workBook, workSheet, 'VehiclesReport');
     XLSX.writeFile(workBook, 'VehiclesReport.xlsx');
+  }
+
+  export_to_xlsx() {
+    let params = {
+      columnKeys: ["entryDateTime", "exitDateTime", "companyName", "vehicleModel", "plateNumber",
+        "enteredOnGate", "approvedEnterFrom", "entryEscortedBy", "exitedOnGate", "approvedExitFrom", "exitEscortedBy",
+        "approvedExitFrom", "exitEscortedBy", "numberOfDays", "timeOnAirSide"]
+    }
+    this.gridOptions.api.exportDataAsCsv(params);
+    this.gridOptions.enableFilter = true;
+    this.gridOptions.columnApi.autoSizeAllColumns();
   }
 
   export_to_pdf() {

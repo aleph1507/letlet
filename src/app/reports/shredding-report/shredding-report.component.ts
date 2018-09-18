@@ -44,6 +44,9 @@ export class ShreddingReportComponent implements OnInit {
 
 
   public gridOptions: GridOptions = <GridOptions>{
+    context: {
+      componentParent: this
+    },
     floatingFilter: true,
     rowData: [],
     columnDefs: [
@@ -82,7 +85,7 @@ export class ShreddingReportComponent implements OnInit {
     nRowsDisplay: 0,
     autoSizeAllColumns: true,
     onFilterChanged: function() {
-      this.nRowsDisplay = this.api.getDisplayedRowCount().toString();
+      this.context.componentParent.rowCount = 'Number of rows: ' + this.api.getDisplayedRowCount().toString();
     }
   };
 
@@ -105,6 +108,24 @@ export class ShreddingReportComponent implements OnInit {
     this.getReps();
   }
 
+  export_all_to_xlsx() {
+    let tmpX = this.xlsx_report;
+    for(let i = 0; i<tmpX.length; i++){
+      delete tmpX[i].index;
+    }
+    const workBook = XLSX.utils.book_new();
+    const workSheet = XLSX.utils.json_to_sheet(tmpX);
+    let wscols = [];
+
+    for(let i = 0; i<10; i++)
+      wscols.push({wch: 20});
+
+    workSheet['!cols'] = wscols;
+
+    XLSX.utils.book_append_sheet(workBook, workSheet, 'ShreddingsReport');
+    XLSX.writeFile(workBook, 'ShreddingsReport.xlsx');
+  }
+
   export_to_xlsx() {
     let params = {
       columnKeys: ["shreddingDate", "typeOfCard", "details", "cardNumber", "shreddingBy"]
@@ -112,21 +133,6 @@ export class ShreddingReportComponent implements OnInit {
     this.gridOptions.api.exportDataAsCsv(params);
     this.gridOptions.enableFilter = true;
     this.gridOptions.columnApi.autoSizeAllColumns();
-    // let tmpX = this.xlsx_report;
-    // for(let i = 0; i<tmpX.length; i++){
-    //   delete tmpX[i].index;
-    // }
-    // const workBook = XLSX.utils.book_new();
-    // const workSheet = XLSX.utils.json_to_sheet(tmpX);
-    // let wscols = [];
-    //
-    // for(let i = 0; i<10; i++)
-    //   wscols.push({wch: 20});
-    //
-    // workSheet['!cols'] = wscols;
-    //
-    // XLSX.utils.book_append_sheet(workBook, workSheet, 'ShreddingsReport');
-    // XLSX.writeFile(workBook, 'ShreddingsReport.xlsx');
   }
 
   shredingDate: string;
@@ -220,7 +226,7 @@ export class ShreddingReportComponent implements OnInit {
             }
             this.xlsx_report = data;
             this.gridOptions.api.setRowData(data);
-            this.gridOptions.nRowsDisplay = this.gridOptions.api.getDisplayedRowCount().toString();
+            this.rowCount = 'Number of rows: ' + data.length.toString();
             this.showSpinner = false;
         });
     }

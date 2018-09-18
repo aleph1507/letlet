@@ -20,6 +20,9 @@ export class VehicleStopListComponent implements OnInit {
   columns = ['Index', 'Permit Number', 'Vehicle Model', 'Vehicle Plate', 'Vehicle Company', 'Expire Date', 'Reason'];
 
   public gridOptions: GridOptions = <GridOptions>{
+    context: {
+      componentParent: this
+    },
     floatingFilter: true,
     rowData: [],
     columnDefs: [
@@ -80,7 +83,7 @@ export class VehicleStopListComponent implements OnInit {
           this.xlsx_report[i].expireDate = atndPipe.transform(this.xlsx_report[i].expireDate);
         }
         this.gridOptions.api.setRowData(data);
-        this.gridOptions.nRowsDisplay = this.gridOptions.api.getDisplayedRowCount().toString();
+        // this.gridOptions.nRowsDisplay = this.gridOptions.api.getDisplayedRowCount().toString();
       });
   }
 

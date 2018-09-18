@@ -31,12 +31,17 @@ export class BadgereportComponent implements OnInit {
 
   xlsx_report = null;
 
+  nRowsDisplay;
+
   columns = ['Badge Number', 'Employee Name', 'Employee Surname', 'Occupation', 'Company Name',
     'Company Name in English', 'Card Series Number', 'Card Number', 'Date of Activation',
     'Date of Security Check', 'Date of Training', 'Expire Date', 'Payment',
     'Returned', 'Deactivated', 'Reason for Deactivation', 'Shredding Date'];
 
    public gridOptions: GridOptions = <GridOptions>{
+     context: {
+       componentParent: this
+     },
      enableFilter: true,
      floatingFilter: true,
      rowData: [],
@@ -167,7 +172,8 @@ export class BadgereportComponent implements OnInit {
      nRowsDisplay: 0,
      autoSizeAllColumns: true,
      onFilterChanged: function() {
-       this.nRowsDisplay = this.api.getDisplayedRowCount().toString();
+       console.log('onFilterChanged: this.api.getDisplayedRowCount().toString(): ', this.api.getDisplayedRowCount().toString());
+       this.context.componentParent.nRowsDisplay = this.api.getDisplayedRowCount().toString();
      },
      onGridReady: () => {
          this.loadRowData();
@@ -180,7 +186,9 @@ export class BadgereportComponent implements OnInit {
               private atndp: AsptonormaldatePipe) { }
 
   ngOnInit() {
-
+    if (this.gridOptions.api) {
+        this.gridOptions.api.setFilterModel(null);
+    }
     this.getReps();
   }
 
@@ -203,6 +211,25 @@ export class BadgereportComponent implements OnInit {
     this.gridOptions.api.setRowData(this.xlsx_report);
   }
 
+  export_all_to_xlsx() {
+    let tmpX = this.xlsx_report;
+    for(let i = 0; i<tmpX.length; i++){
+      delete tmpX[i].index;
+    }
+    const workBook = XLSX.utils.book_new();
+    const workSheet = XLSX.utils.json_to_sheet(tmpX);
+
+    let wscols = [];
+
+    for(let i = 0; i<10; i++)
+      wscols.push({wch: 20});
+
+    workSheet['!cols'] = wscols;
+
+    XLSX.utils.book_append_sheet(workBook, workSheet, 'BadgesReport');
+    XLSX.writeFile(workBook, 'BadgesReport.xlsx');
+  }
+
   export_to_xlsx() {
     let params = {
       columnKeys: ["badgeNumber", "employeeName", "employeeSurname", "occupation", "companyName",
@@ -213,22 +240,6 @@ export class BadgereportComponent implements OnInit {
     this.gridOptions.api.exportDataAsCsv(params);
     this.gridOptions.enableFilter = true;
     this.gridOptions.columnApi.autoSizeAllColumns();
-    // let tmpX = this.xlsx_report;
-    // for(let i = 0; i<tmpX.length; i++){
-    //   delete tmpX[i].index;
-    // }
-    // const workBook = XLSX.utils.book_new();
-    // const workSheet = XLSX.utils.json_to_sheet(tmpX);
-    //
-    // let wscols = [];
-    //
-    // for(let i = 0; i<10; i++)
-    //   wscols.push({wch: 20});
-    //
-    // workSheet['!cols'] = wscols;
-    //
-    // XLSX.utils.book_append_sheet(workBook, workSheet, 'BadgesReport');
-    // XLSX.writeFile(workBook, 'BadgesReport.xlsx');
   }
 
   export_to_pdf() {
@@ -288,8 +299,9 @@ export class BadgereportComponent implements OnInit {
           if(data[i].dateOfSecurityCheck != null) data[i].dateOfSecurityCheck = this.atndp.transform(data[i].dateOfSecurityCheck.toString());
           if(data[i].dateOfTraining != null) data[i].dateOfTraining = this.atndp.transform(data[i].dateOfTraining.toString());
         }
-        this.gridOptions.api.setRowData(data);
-        this.gridOptions.nRowsDisplay = this.gridOptions.api.getDisplayedRowCount().toString();
+        // this.gridOptions.api.setRowData(data);
+        // this.gridOptions.nRowsDisplay = this.gridOptions.api.getDisplayedRowCount().toString();
+        this.nRowsDisplay = data.length.toString();
         this.xlsx_report = data;
         if(this.gridOptions.api)
           this.loadRowData();

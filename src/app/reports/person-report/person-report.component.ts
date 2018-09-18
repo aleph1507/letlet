@@ -40,6 +40,9 @@ export class PersonReportComponent implements OnInit {
 
 
   public gridOptions: GridOptions = <GridOptions>{
+    context: {
+      componentParent: this
+    },
     enableFilter: true,
     floatingFilter: true,
     rowData: [],
@@ -107,7 +110,7 @@ export class PersonReportComponent implements OnInit {
     nRowsDisplay: 0,
     autoSizeAllColumns: true,
     onFilterChanged: function() {
-      this.nRowsDisplay = this.api.getDisplayedRowCount().toString();
+      this.context.componentParent.rowCount = 'Number of rows: ' + this.api.getDisplayedRowCount().toString();
     }
   };
 
@@ -121,22 +124,33 @@ export class PersonReportComponent implements OnInit {
     this.getReps();
   }
 
+  export_all_to_xlsx() {
+        let tmpX = this.xlsx_report;
+        for(let i = 0; i<tmpX.length; i++){
+          delete tmpX[i].index;
+        }
+        const workBook = XLSX.utils.book_new();
+        const workSheet = XLSX.utils.json_to_sheet(tmpX);
+        let wscols = [];
+
+        for(let i = 0; i<10; i++)
+          wscols.push({wch: 20});
+
+        workSheet['!cols'] = wscols;
+
+        XLSX.utils.book_append_sheet(workBook, workSheet, 'PersonsReport');
+        XLSX.writeFile(workBook, 'PersonsReport.xlsx');
+  }
+
   export_to_xlsx() {
-    let tmpX = this.xlsx_report;
-    for(let i = 0; i<tmpX.length; i++){
-      delete tmpX[i].index;
+    let params = {
+      columnKeys: ["entryDateTime", "exitDateTime", "companyName", "personVisited", "enteredOnGate",
+        "approvedEnterFrom", "entryEscortedBy", "exitedOnGate", "approvedExitFrom", "exitEscortedBy", "numberOfDays",
+        "timeOnAirSide"]
     }
-    const workBook = XLSX.utils.book_new();
-    const workSheet = XLSX.utils.json_to_sheet(tmpX);
-    let wscols = [];
-
-    for(let i = 0; i<10; i++)
-      wscols.push({wch: 20});
-
-    workSheet['!cols'] = wscols;
-
-    XLSX.utils.book_append_sheet(workBook, workSheet, 'PersonsReport');
-    XLSX.writeFile(workBook, 'PersonsReport.xlsx');
+    this.gridOptions.api.exportDataAsCsv(params);
+    this.gridOptions.enableFilter = true;
+    this.gridOptions.columnApi.autoSizeAllColumns();
   }
 
      export_to_pdf() {
@@ -225,7 +239,7 @@ export class PersonReportComponent implements OnInit {
 
             this.xlsx_report = data;
             this.gridOptions.api.setRowData(data);
-
+            this.rowCount = 'Number of rows: ' + data.length.toString();
             this.showSpinner = false;
         });
     }
