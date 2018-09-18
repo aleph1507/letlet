@@ -31,7 +31,7 @@
       <button mat-raised-button color="primary" (click)="export_to_xlsx()">Export to Excel</button>
       <button mat-raised-button color="primary" (click)="export_to_pdf()">Export to PDF</button>
     </div>
-    <p style="width:100%;">{{rowCount}}</p>
+    <p style="width:100%;">Number of rows: {{gridOptions.nRowsDisplay}}</p>
   </div>
 
   <ag-grid-angular

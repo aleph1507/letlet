@@ -17,45 +17,78 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 export class StopListComponent implements OnInit {
   xlsx_report;
   columns = ['Index', 'Employee Name', 'Company Name', 'Card Series Number', 'Card Number', 'Badge number', 'Expire Date'];
+  numRows: Number = 0;
+  nRowsDisplay: string = '';
 
   public gridOptions: GridOptions = <GridOptions>{
     floatingFilter: true,
     rowData: [],
     columnDefs: [
-      {headerName: 'Index', field: 'index'},
+      {headerName: 'Index', valueGetter: (args) => args.node.rowIndex + 1, rowDrag: true},
       {headerName: 'Employee Name', field: 'employeeName'},
       {headerName: 'Company Name', field: 'companyName'},
-      {headerName: 'Badge Number', field: 'badgeNumber'},
-      {headerName: 'Card Number', field: 'cardNumber'},
-      {headerName: 'Expire Date', field: 'expireDate'},
+      {headerName: 'Badge Number', field: 'badgeNumber', filter: 'agNumberColumnFilter'},
+      {headerName: 'Card Number', field: 'cardNumber', filter: 'agNumberColumnFilter'},
+      {headerName: 'Expire Date', field: 'expireDate', filter: 'agDateColumnFilter',
+      filterParams:{
+
+          // provide comparator function
+          comparator: function (filterLocalDateAtMidnight, cellValue) {
+
+              // In the example application, dates are stored as dd/mm/yyyy
+              // We create a Date object for comparison against the filter date
+              var dateParts  = cellValue.split("-");
+            var cellDate = new Date(Number(dateParts[2]), Number(dateParts[1]) - 1, Number(dateParts[0]));
+
+              // Now that both parameters are Date objects, we can compare
+              if (cellDate < filterLocalDateAtMidnight) {
+                  return -1;
+              } else if (cellDate > filterLocalDateAtMidnight) {
+                  return 1;
+              } else {
+                  return 0;
+              }
+          }
+      }},
       {headerName: 'Reason', field: 'deactivateReason'}
     ],
+    enableColResize: true,
     enableCellChangeFlash: true,
     refreshCells: true,
     enableFilter: true,
     enableSorting: true,
+    nRowsDisplay: 0,
+    autoSizeAllColumns: true,
+    onFilterChanged: function() {
+      this.nRowsDisplay = this.api.getDisplayedRowCount().toString();
+    }
   };
 
-  numRows: Number = 0;
-  nRowsDisplay: string = '';
+
 
   export_to_xlsx() {
-    let tmpX = this.xlsx_report;
-    for(let i = 0; i<tmpX.length; i++){
-      delete tmpX[i].index;
+    let params = {
+      columnKeys: ["employeeName", "companyName", "badgeNumber", "cardNumber", "expireDate", "deactivateReason"]
     }
-    const workBook = XLSX.utils.book_new();
-    const workSheet = XLSX.utils.json_to_sheet(tmpX);
-
-    let wscols = [];
-
-    for(let i = 0; i<10; i++)
-      wscols.push({wch: 20});
-
-    workSheet['!cols'] = wscols;
-
-    XLSX.utils.book_append_sheet(workBook, workSheet, 'StopList');
-    XLSX.writeFile(workBook, 'StopList.xlsx');
+    this.gridOptions.api.exportDataAsCsv(params);
+    this.gridOptions.enableFilter = true;
+    this.gridOptions.columnApi.autoSizeAllColumns();
+    // let tmpX = this.xlsx_report;
+    // for(let i = 0; i<tmpX.length; i++){
+    //   delete tmpX[i].index;
+    // }
+    // const workBook = XLSX.utils.book_new();
+    // const workSheet = XLSX.utils.json_to_sheet(tmpX);
+    //
+    // let wscols = [];
+    //
+    // for(let i = 0; i<10; i++)
+    //   wscols.push({wch: 20});
+    //
+    // workSheet['!cols'] = wscols;
+    //
+    // XLSX.utils.book_append_sheet(workBook, workSheet, 'StopList');
+    // XLSX.writeFile(workBook, 'StopList.xlsx');
   }
 
   export_to_pdf() {
@@ -95,7 +128,18 @@ export class StopListComponent implements OnInit {
           this.xlsx_report[i].index = i+1;
           this.xlsx_report[i].expireDate = atndPipe.transform(this.xlsx_report[i].expireDate);
         }
+        // for(let i = 0; i<data.length; i++)
+        //   data[i].expireDate = new Date(data[i].expireDate);
+        // for(let i = 0 ;i<data.length; i++){
+        //   // console.log(`data[i]: `, data[i]);
+        //   Object.keys(data).forEach(function(d){
+        //     console.log(d, ' - ', data[d]);
+        //   });
+        // }
+
         this.gridOptions.api.setRowData(data);
+        this.gridOptions.nRowsDisplay = this.gridOptions.api.getDisplayedRowCount().toString();
+        console.log('this.nRowsDisplay: ', this.nRowsDisplay);
       });
   }
 }

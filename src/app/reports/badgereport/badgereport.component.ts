@@ -22,7 +22,8 @@ export class BadgereportComponent implements OnInit {
   showSpinner : boolean = true;
 
   category: number = 0;
-  categories = ['Active', 'All'];
+  categories = ['Active and Valid', 'Active', 'All', ];
+
 
   rowCount = '';
 
@@ -40,7 +41,7 @@ export class BadgereportComponent implements OnInit {
      floatingFilter: true,
      rowData: [],
      columnDefs: [
-       {headerName: 'Index', field: 'index'},
+       {headerName: 'Index', valueGetter: (args) => args.node.rowIndex + 1},
        {headerName: 'Badge Number', field: 'badgeNumber'},
        {headerName: 'Employee Name', field: 'employeeName'},
        {headerName: 'Employee Surname', field: 'employeeSurname'},
@@ -49,19 +50,125 @@ export class BadgereportComponent implements OnInit {
        {headerName: 'Company Name in English', field: 'companyNameEn'},
        {headerName: 'Card Series Number', field: 'cardSeriesNumber'},
        {headerName: 'Card Number', field: 'cardNumber'},
-       {headerName: 'Date of Activation', field: 'dateOfActivation'},
-       {headerName: 'Date of Security Check', field: 'dateOfSecurityCheck'},
-       {headerName: 'Date of Training', field: 'dateOfTraining'},
-       {headerName: 'Expire Date', field: 'expireDate'},
+       {headerName: 'Date of Activation', field: 'dateOfActivation', filter: 'agDateColumnFilter',
+       filterParams:{
+
+           // provide comparator function
+           comparator: function (filterLocalDateAtMidnight, cellValue) {
+
+               // In the example application, dates are stored as dd/mm/yyyy
+               // We create a Date object for comparison against the filter date
+               var dateParts  = cellValue.split("-");
+             var cellDate = new Date(Number(dateParts[2]), Number(dateParts[1]) - 1, Number(dateParts[0]));
+
+               // Now that both parameters are Date objects, we can compare
+               if (cellDate < filterLocalDateAtMidnight) {
+                   return -1;
+               } else if (cellDate > filterLocalDateAtMidnight) {
+                   return 1;
+               } else {
+                   return 0;
+               }
+           }
+       }},
+       {headerName: 'Date of Security Check', field: 'dateOfSecurityCheck', filter: 'agDateColumnFilter',
+       filterParams:{
+
+           // provide comparator function
+           comparator: function (filterLocalDateAtMidnight, cellValue) {
+
+               // In the example application, dates are stored as dd/mm/yyyy
+               // We create a Date object for comparison against the filter date
+               var dateParts  = cellValue.split("-");
+             var cellDate = new Date(Number(dateParts[2]), Number(dateParts[1]) - 1, Number(dateParts[0]));
+
+               // Now that both parameters are Date objects, we can compare
+               if (cellDate < filterLocalDateAtMidnight) {
+                   return -1;
+               } else if (cellDate > filterLocalDateAtMidnight) {
+                   return 1;
+               } else {
+                   return 0;
+               }
+           }
+       }},
+       {headerName: 'Date of Training', field: 'dateOfTraining', filter: 'agDateColumnFilter',
+       filterParams:{
+
+           // provide comparator function
+           comparator: function (filterLocalDateAtMidnight, cellValue) {
+
+               // In the example application, dates are stored as dd/mm/yyyy
+               // We create a Date object for comparison against the filter date
+               var dateParts  = cellValue.split("-");
+             var cellDate = new Date(Number(dateParts[2]), Number(dateParts[1]) - 1, Number(dateParts[0]));
+
+               // Now that both parameters are Date objects, we can compare
+               if (cellDate < filterLocalDateAtMidnight) {
+                   return -1;
+               } else if (cellDate > filterLocalDateAtMidnight) {
+                   return 1;
+               } else {
+                   return 0;
+               }
+           }
+       }},
+       {headerName: 'Expire Date', field: 'expireDate', filter: 'agDateColumnFilter',
+       filterParams:{
+
+           // provide comparator function
+           comparator: function (filterLocalDateAtMidnight, cellValue) {
+
+               // In the example application, dates are stored as dd/mm/yyyy
+               // We create a Date object for comparison against the filter date
+               var dateParts  = cellValue.split("-");
+             var cellDate = new Date(Number(dateParts[2]), Number(dateParts[1]) - 1, Number(dateParts[0]));
+
+               // Now that both parameters are Date objects, we can compare
+               if (cellDate < filterLocalDateAtMidnight) {
+                   return -1;
+               } else if (cellDate > filterLocalDateAtMidnight) {
+                   return 1;
+               } else {
+                   return 0;
+               }
+           }
+       }},
        {headerName: 'Payment', field: 'payment'},
        {headerName: 'Returned', field: 'returned'},
        {headerName: 'Deactivated', field: 'deactivated'},
        {headerName: 'Reason for Deactivation', field: 'deactivateReason'},
-       {headerName: 'Shredding Date', field: 'shreddingDate'},
+       {headerName: 'Shredding Date', field: 'shreddingDate', filter: 'agDateColumnFilter',
+       filterParams:{
+
+           // provide comparator function
+           comparator: function (filterLocalDateAtMidnight, cellValue) {
+
+               // In the example application, dates are stored as dd/mm/yyyy
+               // We create a Date object for comparison against the filter date
+               var dateParts  = cellValue.split("-");
+             var cellDate = new Date(Number(dateParts[2]), Number(dateParts[1]) - 1, Number(dateParts[0]));
+
+               // Now that both parameters are Date objects, we can compare
+               if (cellDate < filterLocalDateAtMidnight) {
+                   return -1;
+               } else if (cellDate > filterLocalDateAtMidnight) {
+                   return 1;
+               } else {
+                   return 0;
+               }
+           }
+       }},
      ],
      enableCellChangeFlash: true,
      refreshCells: true,
      enableSorting: true,
+     enableColResize: true,
+     nRowsDisplay: 0,
+     autoSizeAllColumns: true,
+     onFilterChanged: function() {
+       this.nRowsDisplay = this.api.getDisplayedRowCount().toString();
+     },
      onGridReady: () => {
          this.loadRowData();
      }
@@ -78,8 +185,17 @@ export class BadgereportComponent implements OnInit {
   }
 
   radioChange($event){
+    // active all valid 0 1 2
+    // valid active all 2 0 1
+    let c;
+    if($event.value == 0)
+      c = 2;
+    else if($event.value == 1)
+      c = 0;
+    else if($event.value == 2)
+      c = 1;
     this.category = $event.value;
-    this.getReps(this.category);
+    this.getReps(c);
   }
 
   loadRowData() {
@@ -88,22 +204,31 @@ export class BadgereportComponent implements OnInit {
   }
 
   export_to_xlsx() {
-    let tmpX = this.xlsx_report;
-    for(let i = 0; i<tmpX.length; i++){
-      delete tmpX[i].index;
+    let params = {
+      columnKeys: ["badgeNumber", "employeeName", "employeeSurname", "occupation", "companyName",
+        "companyNameEn", "cardSeriesNumber", "cardNumber", "payment", "returned", "deactivated",
+        "deactivateReason", "shreddingDate", "dateOfActivation", "dateOfSecurityCheck", "dateOfTraining",
+        "expireDate"]
     }
-    const workBook = XLSX.utils.book_new();
-    const workSheet = XLSX.utils.json_to_sheet(tmpX);
-
-    let wscols = [];
-
-    for(let i = 0; i<10; i++)
-      wscols.push({wch: 20});
-
-    workSheet['!cols'] = wscols;
-
-    XLSX.utils.book_append_sheet(workBook, workSheet, 'BadgesReport');
-    XLSX.writeFile(workBook, 'BadgesReport.xlsx');
+    this.gridOptions.api.exportDataAsCsv(params);
+    this.gridOptions.enableFilter = true;
+    this.gridOptions.columnApi.autoSizeAllColumns();
+    // let tmpX = this.xlsx_report;
+    // for(let i = 0; i<tmpX.length; i++){
+    //   delete tmpX[i].index;
+    // }
+    // const workBook = XLSX.utils.book_new();
+    // const workSheet = XLSX.utils.json_to_sheet(tmpX);
+    //
+    // let wscols = [];
+    //
+    // for(let i = 0; i<10; i++)
+    //   wscols.push({wch: 20});
+    //
+    // workSheet['!cols'] = wscols;
+    //
+    // XLSX.utils.book_append_sheet(workBook, workSheet, 'BadgesReport');
+    // XLSX.writeFile(workBook, 'BadgesReport.xlsx');
   }
 
   export_to_pdf() {
@@ -145,7 +270,7 @@ export class BadgereportComponent implements OnInit {
    pdfMake.createPdf(docDefinition).download('BadgesReport.pdf');
   }
 
-  getReps(c = 0) {
+  getReps(c = 2) {
     this.showSpinner = true;
     var month : string = '';
     var day : string = '';
@@ -163,6 +288,8 @@ export class BadgereportComponent implements OnInit {
           if(data[i].dateOfSecurityCheck != null) data[i].dateOfSecurityCheck = this.atndp.transform(data[i].dateOfSecurityCheck.toString());
           if(data[i].dateOfTraining != null) data[i].dateOfTraining = this.atndp.transform(data[i].dateOfTraining.toString());
         }
+        this.gridOptions.api.setRowData(data);
+        this.gridOptions.nRowsDisplay = this.gridOptions.api.getDisplayedRowCount().toString();
         this.xlsx_report = data;
         if(this.gridOptions.api)
           this.loadRowData();

@@ -55,7 +55,8 @@
       <div class="filter-panel">
         <h3>Entered Vehicles</h3>
         <mat-form-field>
-          <input matInput #enteredVehiclesFilter [(ngModel)]="entVFval" (keyup)="applyFilterEnteredVehicles($event.target.value)" autocomplete="off" placeholder="Filter">
+          <input matInput #enteredVehiclesFilter [(ngModel)]="entVFval"
+          (keyup)="applyFilterEnteredVehicles($event.target.value)" autocomplete="off" placeholder="Filter">
         </mat-form-field>
       </div>
 
@@ -120,11 +121,6 @@
         <ng-container matColumnDef="nameEn">
           <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
           <mat-cell *matCellDef="let ep"> {{ep.name}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="surnameEn">
-          <mat-header-cell *matHeaderCellDef> Surname </mat-header-cell>
-          <mat-cell *matCellDef="let ep"> {{ep.surname}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="companyName">

@@ -32,7 +32,7 @@ export class GateComponent implements OnInit, OnDestroy, AfterViewInit {
   dataSourceExpectedVehicles;
   dataSourceEnteredVehicles;
 
-  displayedColumnsExpectedPerson = ['nameEn', 'surnameEn', 'companyName', 'enter'];
+  displayedColumnsExpectedPerson = ['nameEn', 'companyName', 'enter'];
   displayedColumnsEnteredPerson = ['name', 'company', 'enteredGate', 'escortEmployee', 'approvedBy', 'exit'];
   displayedColumnsExpectedVehicle = ['model', 'plate', 'companyName', 'enter'];
   displayedColumnsEnteredVehicle = ['model', 'plate', 'company', 'enteredGate', 'escortEmployee', 'approvedBy', 'exit'];
@@ -86,19 +86,7 @@ export class GateComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   reloadFilters() {
-    // this.enteredPF.nativeElement.value = this.entPFval;
-    // this.enteredVF.nativeElement.value = this.entVFval;
-    // this.expectedPF.nativeElement.value = this.expPFval;
-    // this.expectedVF.nativeElement.value = this.expVFval;
     if(!this.first && this.afterInit){
-      // this.entPFval=this.enteredPF;
-      // this.entVFval=this.enteredVF;
-      // this.expPFval=this.expectedPF;
-      // this.expVFval=this.expectedVF;
-      // this.applyFilterExpectedVehicles(this.expVFval);
-      // this.applyFilterEnteredVehicles(this.entVFval);
-      // this.applyFilterEnteredPersons(this.entPFval);
-      // this.applyFilterExpectedPersons(this.expPFval);
     } else {
       this.first=false;
     }
@@ -139,6 +127,7 @@ export class GateComponent implements OnInit, OnDestroy, AfterViewInit {
   getEnteredVehicles() {
     this.gatesService.getAllEnteredVehicles()
       .subscribe((data : EnteredVehicle[]) => {
+        console.log('entered vehicles data: ', data);
         this.enteredVehicles = data;
         this.dataSourceEnteredVehicles = new MatTableDataSource<EnteredVehicle>(this.enteredVehicles);
         this.loadings[3] = true;

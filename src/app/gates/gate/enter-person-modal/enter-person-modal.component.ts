@@ -38,6 +38,7 @@ export class EnterPersonModalComponent implements OnInit {
   @ViewChild('VBInput') VBInput: ElementRef;
   @ViewChild('sBtn') sBtn: ElementRef;
 
+
   filteredVBs: VisitorBadge[];
 
   constructor(private dialogRef: MatDialogRef<EnterPersonModalComponent>,
@@ -52,10 +53,17 @@ export class EnterPersonModalComponent implements OnInit {
       });
 
     this.EnterPersonForm.controls['entryEmployee'].valueChanges
+      .subscribe(d => {
+        if(d === ''){
+          this.employees = [];
+        }
+      });
+
+    this.EnterPersonForm.controls['entryEmployee'].valueChanges
       .debounceTime(400)
       .distinctUntilChanged()
       .subscribe(d => {
-        if(typeof d == 'string' && d != ''){
+         if(typeof d == 'string' && d != ''){
           this.resourceService.employees.filterEntryEmployees(d)
           .subscribe((data: Employee[]) => {
             this.employees = data;

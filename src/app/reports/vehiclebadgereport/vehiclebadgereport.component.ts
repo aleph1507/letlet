@@ -23,7 +23,7 @@ export class VehiclebadgereportComponent implements OnInit {
   showSpinner : boolean = true;
 
   category: number = 0;
-  categories = ['Active', 'All'];
+  categories = ['Active and Valid', 'Active', 'All', ];
 
   rowCount = '';
 
@@ -41,12 +41,52 @@ export class VehiclebadgereportComponent implements OnInit {
      columnDefs: [
        {headerName: 'Index', field: 'index'},
        {headerName: 'Permit Number', field: 'permitNumber'},
-       {headerName: 'Expire Date', field: 'expireDate'},
+       {headerName: 'Expire Date', field: 'expireDate', filter: 'agDateColumnFilter',
+       filterParams:{
+
+           // provide comparator function
+           comparator: function (filterLocalDateAtMidnight, cellValue) {
+
+               // In the example application, dates are stored as dd/mm/yyyy
+               // We create a Date object for comparison against the filter date
+               var dateParts  = cellValue.split("-");
+             var cellDate = new Date(Number(dateParts[2]), Number(dateParts[1]) - 1, Number(dateParts[0]));
+
+               // Now that both parameters are Date objects, we can compare
+               if (cellDate < filterLocalDateAtMidnight) {
+                   return -1;
+               } else if (cellDate > filterLocalDateAtMidnight) {
+                   return 1;
+               } else {
+                   return 0;
+               }
+           }
+       }},
        {headerName: 'Payment', field: 'payment'},
        {headerName: 'Returned', field: 'returned'},
        {headerName: 'Deactivated', field: 'deactivated'},
        {headerName: 'Reason for Deactivation', field: 'deactivateReason'},
-       {headerName: 'Shredding Date', field: 'shreddingDate'},
+       {headerName: 'Shredding Date', field: 'shreddingDate', filter: 'agDateColumnFilter',
+       filterParams:{
+
+           // provide comparator function
+           comparator: function (filterLocalDateAtMidnight, cellValue) {
+
+               // In the example application, dates are stored as dd/mm/yyyy
+               // We create a Date object for comparison against the filter date
+               var dateParts  = cellValue.split("-");
+             var cellDate = new Date(Number(dateParts[2]), Number(dateParts[1]) - 1, Number(dateParts[0]));
+
+               // Now that both parameters are Date objects, we can compare
+               if (cellDate < filterLocalDateAtMidnight) {
+                   return -1;
+               } else if (cellDate > filterLocalDateAtMidnight) {
+                   return 1;
+               } else {
+                   return 0;
+               }
+           }
+       }},
        {headerName: 'Vehicle Model', field: 'vehicleModel'},
        {headerName: 'Vehicle Plate', field: 'vehiclePlate'},
        {headerName: 'Company Name', field: 'companyName'},
@@ -54,8 +94,13 @@ export class VehiclebadgereportComponent implements OnInit {
      ],
      enableCellChangeFlash: true,
      refreshCells: true,
-     enableFilter: true,
      enableSorting: true,
+     enableColResize: true,
+     nRowsDisplay: 0,
+     autoSizeAllColumns: true,
+     onFilterChanged: function() {
+       this.nRowsDisplay = this.api.getDisplayedRowCount().toString();
+     },
      onGridReady: () => {
          this.loadRowData();
      }
@@ -75,8 +120,19 @@ export class VehiclebadgereportComponent implements OnInit {
   }
 
   radioChange($event){
+    // active all valid 0 1 2
+    // valid active all 2 0 1
+    let c;
+    if($event.value == 0)
+      c = 2;
+    else if($event.value == 1)
+      c = 0;
+    else if($event.value == 2)
+      c = 1;
+
+
     this.category = $event.value;
-    this.getReps(this.category);
+    this.getReps(c);
   }
 
   loadRowData() {
@@ -85,22 +141,29 @@ export class VehiclebadgereportComponent implements OnInit {
   }
 
   export_to_xlsx() {
-    let tmpX = this.xlsx_report;
-    for(let i = 0; i<tmpX.length; i++){
-      delete tmpX[i].index;
+    let params = {
+      columnKeys: ["permitNumber", "expireDate", "payment", "returned", "deactivated",
+        "deactivateReason", "shreddingDate", "vehicleModel", "vehiclePlate", "companyName", "companyNameEn"]
     }
-    const workBook = XLSX.utils.book_new();
-    const workSheet = XLSX.utils.json_to_sheet(tmpX);
-
-    let wscols = [];
-
-    for(let i = 0; i<10; i++)
-      wscols.push({wch: 20});
-
-    workSheet['!cols'] = wscols;
-
-    XLSX.utils.book_append_sheet(workBook, workSheet, 'VehiclesBadgesReport');
-    XLSX.writeFile(workBook, 'VehiclesBadgesReport.xlsx');
+    this.gridOptions.api.exportDataAsCsv(params);
+    this.gridOptions.enableFilter = true;
+    this.gridOptions.columnApi.autoSizeAllColumns();
+    // let tmpX = this.xlsx_report;
+    // for(let i = 0; i<tmpX.length; i++){
+    //   delete tmpX[i].index;
+    // }
+    // const workBook = XLSX.utils.book_new();
+    // const workSheet = XLSX.utils.json_to_sheet(tmpX);
+    //
+    // let wscols = [];
+    //
+    // for(let i = 0; i<10; i++)
+    //   wscols.push({wch: 20});
+    //
+    // workSheet['!cols'] = wscols;
+    //
+    // XLSX.utils.book_append_sheet(workBook, workSheet, 'VehiclesBadgesReport');
+    // XLSX.writeFile(workBook, 'VehiclesBadgesReport.xlsx');
   }
 
   export_to_pdf() {
@@ -137,7 +200,7 @@ export class VehiclebadgereportComponent implements OnInit {
    pdfMake.createPdf(docDefinition).download('VehiclesBadgesReport.pdf');
   }
 
-  getReps(c = 0) {
+  getReps(c = 2) {
     this.showSpinner = true;
     var month : string = '';
     var day : string = '';

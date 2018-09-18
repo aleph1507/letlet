@@ -44,9 +44,51 @@ export class PersonReportComponent implements OnInit {
     floatingFilter: true,
     rowData: [],
     columnDefs: [
-      {headerName: 'Index', field: 'index'},
-      {headerName: 'Entry At', field: 'entryDateTime'},
-      {headerName: 'Exit At', field: 'exitDateTime'},
+      {headerName: 'Index', valueGetter: (args) => args.node.rowIndex + 1},
+      {headerName: 'Entry At', field: 'entryDateTime', filter: 'agDateColumnFilter',
+      filterParams:{
+
+          // provide comparator function
+          comparator: function (filterLocalDateAtMidnight, cellValue) {
+
+              // In the example application, dates are stored as dd/mm/yyyy
+              // We create a Date object for comparison against the filter date
+              var tmp = cellValue.split(' ');
+              var dateParts  = tmp[0].split("/");
+            var cellDate = new Date(Number(dateParts[2]), Number(dateParts[1]) - 1, Number(dateParts[0]));
+
+              // Now that both parameters are Date objects, we can compare
+              if (cellDate < filterLocalDateAtMidnight) {
+                  return -1;
+              } else if (cellDate > filterLocalDateAtMidnight) {
+                  return 1;
+              } else {
+                  return 0;
+              }
+          }
+      }},
+      {headerName: 'Exit At', field: 'exitDateTime', filter: 'agDateColumnFilter',
+      filterParams:{
+
+          // provide comparator function
+          comparator: function (filterLocalDateAtMidnight, cellValue) {
+
+              // In the example application, dates are stored as dd/mm/yyyy
+              // We create a Date object for comparison against the filter date
+              var tmp = cellValue.split(' ');
+              var dateParts  = tmp[0].split("/");
+            var cellDate = new Date(Number(dateParts[2]), Number(dateParts[1]) - 1, Number(dateParts[0]));
+
+              // Now that both parameters are Date objects, we can compare
+              if (cellDate < filterLocalDateAtMidnight) {
+                  return -1;
+              } else if (cellDate > filterLocalDateAtMidnight) {
+                  return 1;
+              } else {
+                  return 0;
+              }
+          }
+      }},
       {headerName: 'Company Name', field: 'companyName'},
       {headerName: 'Person', field: 'personVisited'},
       {headerName: 'Entered Through Gate', field: 'enteredOnGate'},
@@ -61,6 +103,12 @@ export class PersonReportComponent implements OnInit {
     enableCellChangeFlash: true,
     refreshCells: true,
     enableSorting: true,
+    enableColResize: true,
+    nRowsDisplay: 0,
+    autoSizeAllColumns: true,
+    onFilterChanged: function() {
+      this.nRowsDisplay = this.api.getDisplayedRowCount().toString();
+    }
   };
 
   constructor(private reportsService: ReportsService,
@@ -174,6 +222,7 @@ export class PersonReportComponent implements OnInit {
               data[i].index = i+1;
               data[i].timeOnAirSide = data[i].timeOnAirSide.split('.')[0];
             }
+
             this.xlsx_report = data;
             this.gridOptions.api.setRowData(data);
 

@@ -2,9 +2,9 @@ export interface StopListEntry {
   "index": Number;
   "employeeName": string;
   "companyName": string;
-  "cardSeriesNumber": string;
-  "cardNumber": string;
-  "badgeNumber": string;
-  "expireDate": string;
+  "cardSeriesNumber": Number;
+  "cardNumber": Number;
+  "badgeNumber": Number;
+  "expireDate": Date;
   "deactivateReason": string;
 }

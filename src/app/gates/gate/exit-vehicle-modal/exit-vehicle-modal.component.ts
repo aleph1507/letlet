@@ -48,6 +48,13 @@ export class ExitVehicleModalComponent implements OnInit {
 
     this.ExitVehicleForm.controls['exitEmployee'].valueChanges
       .subscribe(d => {
+        if(d === ''){
+          this.employees = [];
+        }
+      });
+
+    this.ExitVehicleForm.controls['exitEmployee'].valueChanges
+      .subscribe(d => {
         if(typeof d === 'string' && d != '') {
           this.resourcesService.employees.filterEntryEmployees(d)
             .debounceTime(300)

@@ -47,17 +47,43 @@ export class ShreddingReportComponent implements OnInit {
     floatingFilter: true,
     rowData: [],
     columnDefs: [
-      {headerName: 'Index', field: 'index'},
-      {headerName: 'Shredding Date', field: 'shreddingDate'},
+      {headerName: 'Index', valueGetter: (args) => args.node.rowIndex + 1},
+      {headerName: 'Shredding Date', field: 'shreddingDate', filter: 'agDateColumnFilter',
+      filterParams:{
+
+          // provide comparator function
+          comparator: function (filterLocalDateAtMidnight, cellValue) {
+
+              // In the example application, dates are stored as dd/mm/yyyy
+              // We create a Date object for comparison against the filter date
+              var dateParts  = cellValue.split("-");
+            var cellDate = new Date(Number(dateParts[2]), Number(dateParts[1]) - 1, Number(dateParts[0]));
+
+              // Now that both parameters are Date objects, we can compare
+              if (cellDate < filterLocalDateAtMidnight) {
+                  return -1;
+              } else if (cellDate > filterLocalDateAtMidnight) {
+                  return 1;
+              } else {
+                  return 0;
+              }
+          }
+      }},
       {headerName: 'Type Of Card', field: 'typeOfCard'},
       {headerName: 'Details', field: 'details'},
       {headerName: 'Card Number', field: 'cardNumber'},
       {headerName: 'Shredding By', field: 'shreddingBy'}
     ],
+    enableColResize: true,
     enableCellChangeFlash: true,
     refreshCells: true,
     enableFilter: true,
     enableSorting: true,
+    nRowsDisplay: 0,
+    autoSizeAllColumns: true,
+    onFilterChanged: function() {
+      this.nRowsDisplay = this.api.getDisplayedRowCount().toString();
+    }
   };
 
   // rowData = [];
@@ -80,21 +106,27 @@ export class ShreddingReportComponent implements OnInit {
   }
 
   export_to_xlsx() {
-    let tmpX = this.xlsx_report;
-    for(let i = 0; i<tmpX.length; i++){
-      delete tmpX[i].index;
+    let params = {
+      columnKeys: ["shreddingDate", "typeOfCard", "details", "cardNumber", "shreddingBy"]
     }
-    const workBook = XLSX.utils.book_new();
-    const workSheet = XLSX.utils.json_to_sheet(tmpX);
-    let wscols = [];
-
-    for(let i = 0; i<10; i++)
-      wscols.push({wch: 20});
-
-    workSheet['!cols'] = wscols;
-
-    XLSX.utils.book_append_sheet(workBook, workSheet, 'ShreddingsReport');
-    XLSX.writeFile(workBook, 'ShreddingsReport.xlsx');
+    this.gridOptions.api.exportDataAsCsv(params);
+    this.gridOptions.enableFilter = true;
+    this.gridOptions.columnApi.autoSizeAllColumns();
+    // let tmpX = this.xlsx_report;
+    // for(let i = 0; i<tmpX.length; i++){
+    //   delete tmpX[i].index;
+    // }
+    // const workBook = XLSX.utils.book_new();
+    // const workSheet = XLSX.utils.json_to_sheet(tmpX);
+    // let wscols = [];
+    //
+    // for(let i = 0; i<10; i++)
+    //   wscols.push({wch: 20});
+    //
+    // workSheet['!cols'] = wscols;
+    //
+    // XLSX.utils.book_append_sheet(workBook, workSheet, 'ShreddingsReport');
+    // XLSX.writeFile(workBook, 'ShreddingsReport.xlsx');
   }
 
   shredingDate: string;
@@ -188,6 +220,7 @@ export class ShreddingReportComponent implements OnInit {
             }
             this.xlsx_report = data;
             this.gridOptions.api.setRowData(data);
+            this.gridOptions.nRowsDisplay = this.gridOptions.api.getDisplayedRowCount().toString();
             this.showSpinner = false;
         });
     }

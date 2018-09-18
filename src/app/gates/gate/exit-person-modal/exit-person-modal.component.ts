@@ -47,6 +47,13 @@ export class ExitPersonModalComponent implements OnInit {
       })
     });
 
+  this.ExitPersonForm.controls['exitEmployee'].valueChanges
+    .subscribe(d => {
+      if(d === ''){
+        this.employees = [];
+      }
+    });
+
     this.ExitPersonForm.controls['exitEmployee'].valueChanges
       .debounceTime(300)
       .distinctUntilChanged()

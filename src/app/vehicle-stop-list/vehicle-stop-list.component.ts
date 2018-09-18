@@ -23,18 +23,44 @@ export class VehicleStopListComponent implements OnInit {
     floatingFilter: true,
     rowData: [],
     columnDefs: [
-      {headerName: 'Index', field: 'index'},
+      {headerName: 'Index', valueGetter: (args) => args.node.rowIndex + 1, rowDrag: true},
       {headerName: 'Permit Number', field: 'permitNumber'},
       {headerName: 'Vehicle Model', field: 'model'},
       {headerName: 'Vehicle Plate', field: 'plate'},
       {headerName: 'Vehicle Company', field: 'companyName'},
-      {headerName: 'Expire Date', field: 'expireDate'},
+      {headerName: 'Expire Date', field: 'expireDate', filter: 'agDateColumnFilter',
+      filterParams:{
+
+          // provide comparator function
+          comparator: function (filterLocalDateAtMidnight, cellValue) {
+
+              // In the example application, dates are stored as dd/mm/yyyy
+              // We create a Date object for comparison against the filter date
+              var dateParts  = cellValue.split("-");
+            var cellDate = new Date(Number(dateParts[2]), Number(dateParts[1]) - 1, Number(dateParts[0]));
+
+              // Now that both parameters are Date objects, we can compare
+              if (cellDate < filterLocalDateAtMidnight) {
+                  return -1;
+              } else if (cellDate > filterLocalDateAtMidnight) {
+                  return 1;
+              } else {
+                  return 0;
+              }
+          }
+      }},
       {headerName: 'Reason', field: 'deactivateReason'}
     ],
+    enableColResize: true,
     enableCellChangeFlash: true,
     refreshCells: true,
     enableFilter: true,
     enableSorting: true,
+    nRowsDisplay: 0,
+    autoSizeAllColumns: true,
+    onFilterChanged: function() {
+      this.nRowsDisplay = this.api.getDisplayedRowCount().toString();
+    }
   };
 
   numRows: Number = 0;
@@ -54,26 +80,33 @@ export class VehicleStopListComponent implements OnInit {
           this.xlsx_report[i].expireDate = atndPipe.transform(this.xlsx_report[i].expireDate);
         }
         this.gridOptions.api.setRowData(data);
+        this.gridOptions.nRowsDisplay = this.gridOptions.api.getDisplayedRowCount().toString();
       });
   }
 
   export_to_xlsx() {
-    let tmpX = this.xlsx_report;
-    for(let i = 0; i<tmpX.length; i++){
-      delete tmpX[i].index;
+    let params = {
+      columnKeys: ["permitNumber", "model", "plate", "companyName", "expireDate", "deactivateReason", "deactivateReason"]
     }
-    const workBook = XLSX.utils.book_new();
-    const workSheet = XLSX.utils.json_to_sheet(tmpX);
-
-    let wscols = [];
-
-    for(let i = 0; i<10; i++)
-      wscols.push({wch: 20});
-
-    workSheet['!cols'] = wscols;
-
-    XLSX.utils.book_append_sheet(workBook, workSheet, 'VehiclesStopList');
-    XLSX.writeFile(workBook, 'VehiclesStopList.xlsx');
+    this.gridOptions.api.exportDataAsCsv(params);
+    this.gridOptions.enableFilter = true;
+    this.gridOptions.columnApi.autoSizeAllColumns();
+    // let tmpX = this.xlsx_report;
+    // for(let i = 0; i<tmpX.length; i++){
+    //   delete tmpX[i].index;
+    // }
+    // const workBook = XLSX.utils.book_new();
+    // const workSheet = XLSX.utils.json_to_sheet(tmpX);
+    //
+    // let wscols = [];
+    //
+    // for(let i = 0; i<10; i++)
+    //   wscols.push({wch: 20});
+    //
+    // workSheet['!cols'] = wscols;
+    //
+    // XLSX.utils.book_append_sheet(workBook, workSheet, 'VehiclesStopList');
+    // XLSX.writeFile(workBook, 'VehiclesStopList.xlsx');
   }
 
   export_to_pdf() {
