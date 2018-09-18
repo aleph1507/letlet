@@ -256,8 +256,8 @@
       </div>
 
       <div *ngIf="category=='employees'" class="employees-pagination">
-        <button (click)="prevPageEmp()" [disabled]="currentPageComp <= 1" class="prev-btn" mat-raised-button>< Previous Page</button>
-        <button (click)="nextPageEmp()" [disabled]="nextDisabledComp" class="next-btn" mat-raised-button>Next Page ></button>
+        <button (click)="prevPageEmp()" [disabled]="currentPage <= 1" class="prev-btn" mat-raised-button>< Previous Page</button>
+        <button (click)="nextPageEmp()" [disabled]="nextDisabled" class="next-btn" mat-raised-button>Next Page ></button>
       </div>
     </div>
 
