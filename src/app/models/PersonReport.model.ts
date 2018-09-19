@@ -10,6 +10,8 @@ export interface PersonReport {
   approvedExitFrom: string;
   exitEscortedBy: string;
   exitDateTime: string;
+  billNumber: string,
+  reason: string,
   timeOnAirSide: string;
   numberOfDays: number;
 }

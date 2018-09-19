@@ -9,6 +9,8 @@ export interface VehicleReport {
   approvedEnterFrom: string;
   entryEscortedBy: string;
   exitedOnGate: string;
+  billNumber: string;
+  reason: string;
   approvedExitFrom: string;
   timeOnAirSide: string;
 }

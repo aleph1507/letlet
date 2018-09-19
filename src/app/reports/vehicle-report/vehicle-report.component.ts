@@ -35,7 +35,7 @@ export class VehicleReportComponent implements OnInit {
 
   columns = ['Entry Date and Time', 'Exit Date and Time', 'Company Name', 'Vehicle Model', 'Vehicle Plate', 'Entered Through Gate',
      'Entry Approved By', 'Entry Escorted By', 'Exited Through Gate', 'Exit Approved By',
-     'Exit Escorted By', 'Days On Air Side', 'Time On Air Side'];
+     'Exit Escorted By', 'Bill Number', 'Reason', 'Days On Air Side', 'Time On Air Side'];
 
   public gridOptions: GridOptions = <GridOptions>{
     context: {
@@ -98,6 +98,8 @@ export class VehicleReportComponent implements OnInit {
       {headerName: 'Exited Through Gate', field: 'exitedOnGate'},
       {headerName: 'Exit Approved By', field: 'approvedExitFrom'},
       {headerName: 'Exit Escorted By', field: 'exitEscortedBy'},
+      {headerName: 'Bill Number', field: 'billNumber'},
+      {headerName: 'Reason', field: 'reason'},
       {headerName: 'Days On Air Side', field: 'numberOfDays'},
       {headerName: 'Time On Air Side', field: 'timeOnAirSide'}
     ],
@@ -123,8 +125,8 @@ export class VehicleReportComponent implements OnInit {
     this.getReps();
   }
 
-  export_all_to_xlsx(tmpX = this.xlsx_report) {
-    // let tmpX = this.xlsx_report;
+  export_all_to_xlsx() {
+    let tmpX = this.xlsx_report.map(x => Object.assign({}, x));
     for(let i = 0; i<tmpX.length; i++){
       delete tmpX[i].index;
     }
@@ -148,7 +150,18 @@ export class VehicleReportComponent implements OnInit {
       tmpX.push(Object.assign({}, rowNode.data));
     });
 
-    this.export_all_to_xlsx(tmpX);
+    const workBook = XLSX.utils.book_new();
+    const workSheet = XLSX.utils.json_to_sheet(tmpX);
+
+    let wscols = [];
+
+    for(let i = 0; i<10; i++)
+      wscols.push({wch: 20});
+
+    workSheet['!cols'] = wscols;
+
+    XLSX.utils.book_append_sheet(workBook, workSheet, 'VehiclesReport');
+    XLSX.writeFile(workBook, 'VehiclesReport.xlsx');
     // let params = {
     //   columnKeys: ["entryDateTime", "exitDateTime", "companyName", "vehicleModel", "plateNumber",
     //     "enteredOnGate", "approvedEnterFrom", "entryEscortedBy", "exitedOnGate", "approvedExitFrom", "exitEscortedBy",
@@ -168,6 +181,7 @@ export class VehicleReportComponent implements OnInit {
                this.xlsx_report[i].enteredOnGate, this.xlsx_report[i].approvedEnterFrom,
                this.xlsx_report[i].entryEscortedBy, this.xlsx_report[i].exitedOnGate,
                this.xlsx_report[i].approvedExitFrom, this.xlsx_report[i].exitEscortedBy,
+               this.xlsx_report[i].billNumber, this.xlsx_report[i].reason,
                this.xlsx_report[i].numberOfDays, this.xlsx_report[i].timeOnAirSide);
       body.push(tmp);
       tmp = [];

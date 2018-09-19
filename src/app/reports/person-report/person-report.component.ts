@@ -35,7 +35,7 @@ export class PersonReportComponent implements OnInit {
   xlsx_report;
 
   columns = ['Entry Date and Time', 'Exit Date and Time', 'Company Name', 'Person', 'Entered Through Gate', 'Entry Approved By',
-     'Entry Escorted By', 'Exited Through Gate', 'Exit Approved By', 'Exit Escorted By',
+     'Entry Escorted By', 'Exited Through Gate', 'Exit Approved By', 'Exit Escorted By', 'Bill Number', 'Reason',
      'Days On Air Side', 'Time On Air Side'];
 
 
@@ -100,6 +100,8 @@ export class PersonReportComponent implements OnInit {
       {headerName: 'Exited Through Gate', field: 'exitedOnGate'},
       {headerName: 'Exit Approved By', field: 'approvedExitFrom'},
       {headerName: 'Exit Escorted By', field: 'exitEscortedBy'},
+      {headerName: 'Bill Number', field: 'billNumber'},
+      {headerName: 'Reason', field: 'reason'},
       {headerName: 'Days On Air Side', field: 'numberOfDays'},
       {headerName: 'Time On Air Side', field: 'timeOnAirSide'}
     ],
@@ -181,6 +183,7 @@ export class PersonReportComponent implements OnInit {
                   this.xlsx_report[i].enteredOnGate, this.xlsx_report[i].approvedEnterFrom,
                   this.xlsx_report[i].entryEscortedBy, this.xlsx_report[i].exitedOnGate,
                   this.xlsx_report[i].approvedExitFrom, this.xlsx_report[i].exitEscortedBy,
+                  this.xlsx_report[i].billNumber, this.xlsx_report[i].reason,
                   this.xlsx_report[i].numberOfDays, this.xlsx_report[i].timeOnAirSide);
          body.push(tmp);
          tmp = [];
@@ -195,7 +198,7 @@ export class PersonReportComponent implements OnInit {
            {
              table: {
                headerRows: 1,
-               widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+               widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
                body: body
              }
            }
