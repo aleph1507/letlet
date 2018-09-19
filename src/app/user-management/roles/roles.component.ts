@@ -48,7 +48,7 @@ export class RolesComponent implements OnInit {
   }
 
   onCancel() {
-    this.dialogRef.close();
+    this.dialogRef.close('cancel');
   }
 
 }

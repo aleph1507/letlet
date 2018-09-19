@@ -52,7 +52,6 @@ export class UserManagementComponent implements OnInit {
         this.users = users;
         this.showSpinner = false;
         this.dataSource = new MatTableDataSource<User>(this.users);
-        console.log('this.users: ', this.users);
       });
   }
 
@@ -64,13 +63,20 @@ export class UserManagementComponent implements OnInit {
           dialogRef = this.dialog.open(RegisterComponent, {
             width: '70%',
             data: res
-          }).afterClosed().subscribe(result => {this.refresh()});
+          }).afterClosed().subscribe(
+            result => {
+              if(result != 'close')
+                this.refresh();
+            });
         })
     } else {
         dialogRef = this.dialog.open(RegisterComponent, {
         width: '70%',
         data: null
-      }).afterClosed().subscribe(result => {this.refresh()});
+      }).afterClosed().subscribe(result => {
+        if(result != 'close')
+          this.refresh();
+      });
     }
   }
 
@@ -81,7 +87,11 @@ export class UserManagementComponent implements OnInit {
         dialogRef = this.dialog.open(RolesComponent, {
           width: '70%',
           data: user
-        }).afterClosed().subscribe(result => this.refresh());
+        }).afterClosed().subscribe(
+          result => {
+            if(result != 'cancel')
+              this.refresh()
+          });
       });
   }
 
@@ -89,15 +99,12 @@ export class UserManagementComponent implements OnInit {
     let dialogRef = this.dialog.open(ChangePasswordComponent,{
       width: '70%',
       data: { uid: id }
-    }).afterClosed().subscribe(result => this.refresh());
+    }).afterClosed().subscribe(result => {});
   }
 
   changeStatus(uid, enabled){
-    console.log('uid: ', uid);
-    console.log('enabled: ', enabled);
     this.userService.changeStatus(uid, enabled)
       .subscribe(data =>{
-        console.log('User status changed, data: ', data);
         this.snackbarService.successSnackBar();
         this.refresh();
       })

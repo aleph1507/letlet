@@ -145,10 +145,17 @@ export class VehiclebadgereportComponent implements OnInit {
     // this.gridOptions.api.context = { this: this};
   }
 
+  usDateStringToISODateString(dateString) {
+    var resultChunks = dateString.split("-");
+    return resultChunks[2] + "-" + resultChunks[1] + "-" + resultChunks[0];
+  }
+
   export_all_to_xlsx() {
-    let tmpX = this.xlsx_report;
+    let tmpX = this.xlsx_report.map(x => Object.assign({}, x));
     for(let i = 0; i<tmpX.length; i++){
       delete tmpX[i].index;
+      tmpX[i].expireDate = tmpX[i].expireDate && tmpX[i].expireDate !== "" ? new Date(this.usDateStringToISODateString(tmpX[i].expireDate)) : null;
+      tmpX[i].shreddingDate = tmpX[i].shreddingDate && tmpX[i].shreddingDate !== "" ? new Date(this.usDateStringToISODateString(tmpX[i].shreddingDate)) : null;
     }
     const workBook = XLSX.utils.book_new();
     const workSheet = XLSX.utils.json_to_sheet(tmpX);
@@ -165,13 +172,35 @@ export class VehiclebadgereportComponent implements OnInit {
   }
 
   export_to_xlsx() {
-    let params = {
-      columnKeys: ["permitNumber", "expireDate", "payment", "returned", "deactivated",
-        "deactivateReason", "shreddingDate", "vehicleModel", "vehiclePlate", "companyName", "companyNameEn"]
+    let tmpX = [];
+    this.gridOptions.api.forEachNodeAfterFilterAndSort(function (rowNode) {
+      tmpX.push(Object.assign({}, rowNode.data));
+    });
+
+    for(let i = 0; i<tmpX.length; i++){
+      delete tmpX[i].index;
+      tmpX[i].expireDate = tmpX[i].expireDate && tmpX[i].expireDate !== "" ? new Date(this.usDateStringToISODateString(tmpX[i].expireDate)) : null;
+      tmpX[i].shreddingDate = tmpX[i].shreddingDate && tmpX[i].shreddingDate !== "" ? new Date(this.usDateStringToISODateString(tmpX[i].shreddingDate)) : null;
     }
-    this.gridOptions.api.exportDataAsCsv(params);
-    this.gridOptions.enableFilter = true;
-    this.gridOptions.columnApi.autoSizeAllColumns();
+    const workBook = XLSX.utils.book_new();
+    const workSheet = XLSX.utils.json_to_sheet(tmpX);
+
+    let wscols = [];
+
+    for(let i = 0; i<10; i++)
+      wscols.push({wch: 20});
+
+    workSheet['!cols'] = wscols;
+
+    XLSX.utils.book_append_sheet(workBook, workSheet, 'VehiclesBadgesReport');
+    XLSX.writeFile(workBook, 'VehiclesBadgesReport.xlsx');
+    // let params = {
+    //   columnKeys: ["permitNumber", "expireDate", "payment", "returned", "deactivated",
+    //     "deactivateReason", "shreddingDate", "vehicleModel", "vehiclePlate", "companyName", "companyNameEn"]
+    // }
+    // this.gridOptions.api.exportDataAsCsv(params);
+    // this.gridOptions.enableFilter = true;
+    // this.gridOptions.columnApi.autoSizeAllColumns();
   }
 
   export_to_pdf() {

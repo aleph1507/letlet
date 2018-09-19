@@ -223,6 +223,8 @@ export class BadgereportComponent implements OnInit {
       tmpX[i].dateOfActivation = tmpX[i].dateOfActivation && tmpX[i].dateOfActivation !== "" ? new Date(this.usDateStringToISODateString(tmpX[i].dateOfActivation)) : null;
       tmpX[i].dateOfSecurityCheck = tmpX[i].dateOfSecurityCheck && tmpX[i].dateOfSecurityCheck !== "" ? new Date(this.usDateStringToISODateString(tmpX[i].dateOfSecurityCheck)) : null;
       tmpX[i].dateOfTraining = tmpX[i].dateOfTraining && tmpX[i].dateOfTraining !== "" ? new Date(this.usDateStringToISODateString(tmpX[i].dateOfTraining)) : null;
+      tmpX[i].expireDate = tmpX[i].expireDate && tmpX[i].expireDate !== "" ? new Date(this.usDateStringToISODateString(tmpX[i].expireDate)) : null;
+      tmpX[i].shreddingDate = tmpX[i].shreddingDate && tmpX[i].shreddingDate !== "" ? new Date(this.usDateStringToISODateString(tmpX[i].shreddingDate)) : null;
     }
     const workBook = XLSX.utils.book_new();
     const workSheet = XLSX.utils.json_to_sheet(tmpX);
@@ -239,12 +241,12 @@ export class BadgereportComponent implements OnInit {
   }
 
   export_to_xlsx() {
-    let params = {
-      columnKeys: ["badgeNumber", "employeeName", "employeeSurname", "occupation", "companyName",
-        "companyNameEn", "cardSeriesNumber", "cardNumber", "payment", "returned", "deactivated",
-        "deactivateReason", "shreddingDate", "dateOfActivation", "dateOfSecurityCheck", "dateOfTraining",
-        "expireDate"]
-    };
+    // let params = {
+    //   columnKeys: ["badgeNumber", "employeeName", "employeeSurname", "occupation", "companyName",
+    //     "companyNameEn", "cardSeriesNumber", "cardNumber", "payment", "returned", "deactivated",
+    //     "deactivateReason", "shreddingDate", "dateOfActivation", "dateOfSecurityCheck", "dateOfTraining",
+    //     "expireDate"]
+    // };
     //this.gridOptions.api.exportDataAsCsv(params);
    /* this.gridOptions.enableFilter = true;
     this.gridOptions.columnApi.autoSizeAllColumns();*/

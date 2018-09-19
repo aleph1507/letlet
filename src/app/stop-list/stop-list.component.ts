@@ -18,7 +18,7 @@ export class StopListComponent implements OnInit {
   xlsx_report;
   columns = ['Index', 'Employee Name', 'Company Name', 'Card Series Number', 'Card Number', 'Badge number', 'Expire Date'];
   numRows: Number = 0;
-  nRowsDisplay: string = '';
+  rowCount: string = '';
 
   public gridOptions: GridOptions = <GridOptions>{
     context: {
@@ -30,8 +30,8 @@ export class StopListComponent implements OnInit {
       {headerName: 'Index', valueGetter: (args) => args.node.rowIndex + 1, rowDrag: true},
       {headerName: 'Employee Name', field: 'employeeName'},
       {headerName: 'Company Name', field: 'companyName'},
-      {headerName: 'Badge Number', field: 'badgeNumber', filter: 'agNumberColumnFilter'},
-      {headerName: 'Card Number', field: 'cardNumber', filter: 'agNumberColumnFilter'},
+      {headerName: 'Badge Number', field: 'badgeNumber'},
+      {headerName: 'Card Number', field: 'cardNumber'},
       {headerName: 'Expire Date', field: 'expireDate', filter: 'agDateColumnFilter',
       filterParams:{
 
@@ -60,38 +60,68 @@ export class StopListComponent implements OnInit {
     refreshCells: true,
     enableFilter: true,
     enableSorting: true,
-    nRowsDisplay: 0,
     autoSizeAllColumns: true,
     onFilterChanged: function() {
-      this.nRowsDisplay = this.api.getDisplayedRowCount().toString();
+      this.context.componentParent.rowCount = 'Number of rows: ' + this.api.getDisplayedRowCount().toString();
     }
   };
 
 
 
-  export_to_xlsx() {
-    let params = {
-      columnKeys: ["employeeName", "companyName", "badgeNumber", "cardNumber", "expireDate", "deactivateReason"]
+  usDateStringToISODateString(dateString) {
+    var resultChunks = dateString.split("-");
+    return resultChunks[2] + "-" + resultChunks[1] + "-" + resultChunks[0];
+  }
+
+  export_all_to_xlsx() {
+    let tmpX = this.xlsx_report.map(x => Object.assign({}, x));
+    for(let i = 0; i<tmpX.length; i++){
+      delete tmpX[i].index;
+      tmpX[i].expireDate = tmpX[i].expireDate && tmpX[i].expireDate !== "" ? new Date(this.usDateStringToISODateString(tmpX[i].expireDate)) : null;
     }
-    this.gridOptions.api.exportDataAsCsv(params);
-    this.gridOptions.enableFilter = true;
-    this.gridOptions.columnApi.autoSizeAllColumns();
-    // let tmpX = this.xlsx_report;
-    // for(let i = 0; i<tmpX.length; i++){
-    //   delete tmpX[i].index;
+    const workBook = XLSX.utils.book_new();
+    const workSheet = XLSX.utils.json_to_sheet(tmpX);
+
+    let wscols = [];
+
+    for(let i = 0; i<10; i++)
+      wscols.push({wch: 20});
+
+    workSheet['!cols'] = wscols;
+
+    XLSX.utils.book_append_sheet(workBook, workSheet, 'StopListReport');
+    XLSX.writeFile(workBook, 'StopListReport.xlsx');
+  }
+
+  export_to_xlsx() {
+    let tmpX = [];
+    this.gridOptions.api.forEachNodeAfterFilterAndSort(function (rowNode) {
+      tmpX.push(Object.assign({}, rowNode.data));
+    });
+
+    for(let i = 0; i<tmpX.length; i++){
+      delete tmpX[i].index;
+      tmpX[i].expireDate = tmpX[i].expireDate && tmpX[i].expireDate !== "" ? new Date(this.usDateStringToISODateString(tmpX[i].expireDate)) : null;
+    }
+    const workBook = XLSX.utils.book_new();
+    const workSheet = XLSX.utils.json_to_sheet(tmpX);
+
+    let wscols = [];
+
+    for(let i = 0; i<10; i++)
+      wscols.push({wch: 20});
+
+    workSheet['!cols'] = wscols;
+
+    XLSX.utils.book_append_sheet(workBook, workSheet, 'StopListReport');
+    XLSX.writeFile(workBook, 'StopListReport.xlsx');
+    // let params = {
+    //   columnKeys: ["permitNumber", "expireDate", "payment", "returned", "deactivated",
+    //     "deactivateReason", "shreddingDate", "vehicleModel", "vehiclePlate", "companyName", "companyNameEn"]
     // }
-    // const workBook = XLSX.utils.book_new();
-    // const workSheet = XLSX.utils.json_to_sheet(tmpX);
-    //
-    // let wscols = [];
-    //
-    // for(let i = 0; i<10; i++)
-    //   wscols.push({wch: 20});
-    //
-    // workSheet['!cols'] = wscols;
-    //
-    // XLSX.utils.book_append_sheet(workBook, workSheet, 'StopList');
-    // XLSX.writeFile(workBook, 'StopList.xlsx');
+    // this.gridOptions.api.exportDataAsCsv(params);
+    // this.gridOptions.enableFilter = true;
+    // this.gridOptions.columnApi.autoSizeAllColumns();
   }
 
   export_to_pdf() {
@@ -124,7 +154,7 @@ export class StopListComponent implements OnInit {
     this.slService.getStopListEntries()
       .subscribe((data : StopListEntry[]) => {
         this.numRows = data.length;
-        this.nRowsDisplay = 'Number of rows: ' + this.numRows;
+        this.rowCount = 'Number of rows: ' + this.numRows;
         this.xlsx_report = data;
         let atndPipe = new AsptonormaldatePipe();
         for(let i = 0; i<this.xlsx_report.length; i++){
@@ -141,8 +171,8 @@ export class StopListComponent implements OnInit {
         // }
 
         this.gridOptions.api.setRowData(data);
-        // this.gridOptions.nRowsDisplay = this.gridOptions.api.getDisplayedRowCount().toString();
-        console.log('this.nRowsDisplay: ', this.nRowsDisplay);
+        this.rowCount = 'Number of rows: ' + this.gridOptions.api.getDisplayedRowCount().toString();
+        // console.log('this.nRowsDisplay: ', this.nRowsDisplay);
       });
   }
 }

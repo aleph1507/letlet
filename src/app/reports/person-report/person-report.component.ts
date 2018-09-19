@@ -142,14 +142,34 @@ export class PersonReportComponent implements OnInit {
   }
 
   export_to_xlsx() {
-    let params = {
-      columnKeys: ["entryDateTime", "exitDateTime", "companyName", "personVisited", "enteredOnGate",
-        "approvedEnterFrom", "entryEscortedBy", "exitedOnGate", "approvedExitFrom", "exitEscortedBy", "numberOfDays",
-        "timeOnAirSide"]
+    let tmpX = [];
+    this.gridOptions.api.forEachNodeAfterFilterAndSort(function (rowNode) {
+      tmpX.push(Object.assign({}, rowNode.data));
+    });
+
+    for(let i = 0; i<tmpX.length; i++){
+      delete tmpX[i].index;
     }
-    this.gridOptions.api.exportDataAsCsv(params);
-    this.gridOptions.enableFilter = true;
-    this.gridOptions.columnApi.autoSizeAllColumns();
+    const workBook = XLSX.utils.book_new();
+    const workSheet = XLSX.utils.json_to_sheet(tmpX);
+
+    let wscols = [];
+
+    for(let i = 0; i<10; i++)
+      wscols.push({wch: 20});
+
+    workSheet['!cols'] = wscols;
+
+    XLSX.utils.book_append_sheet(workBook, workSheet, 'PersonsReport');
+    XLSX.writeFile(workBook, 'PersonssReport.xlsx');
+    // let params = {
+    //   columnKeys: ["entryDateTime", "exitDateTime", "companyName", "personVisited", "enteredOnGate",
+    //     "approvedEnterFrom", "entryEscortedBy", "exitedOnGate", "approvedExitFrom", "exitEscortedBy", "numberOfDays",
+    //     "timeOnAirSide"]
+    // }
+    // this.gridOptions.api.exportDataAsCsv(params);
+    // this.gridOptions.enableFilter = true;
+    // this.gridOptions.columnApi.autoSizeAllColumns();
   }
 
      export_to_pdf() {

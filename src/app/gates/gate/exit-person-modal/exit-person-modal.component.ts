@@ -96,7 +96,7 @@ export class ExitPersonModalComponent implements OnInit {
 
   onSubmit() {
     var ee = this.ExitPersonForm.controls['exitEmployee'].value;
-    this.billNumber = this.o_paid ? null : this.ExitPersonForm.controls['billNumber'].value;
+    this.billNumber = this.ExitPersonForm.controls['billNumber'].value;
     let exitPerson = {
       'id': this.data.ep.id,
       'exitGate': {

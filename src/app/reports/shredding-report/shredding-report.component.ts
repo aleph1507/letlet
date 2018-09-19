@@ -108,10 +108,16 @@ export class ShreddingReportComponent implements OnInit {
     this.getReps();
   }
 
-  export_all_to_xlsx() {
-    let tmpX = this.xlsx_report;
+  usDateStringToISODateString(dateString) {
+    var resultChunks = dateString.split("-");
+    return resultChunks[2] + "-" + resultChunks[1] + "-" + resultChunks[0];
+  }
+
+  export_all_to_xlsx(tmpX = this.xlsx_report) {
+    // let tmpX = this.xlsx_report;
     for(let i = 0; i<tmpX.length; i++){
       delete tmpX[i].index;
+      tmpX[i].shreddingDate = tmpX[i].shreddingDate && tmpX[i].shreddingDate !== "" ? new Date(this.usDateStringToISODateString(tmpX[i].shreddingDate)) : null;
     }
     const workBook = XLSX.utils.book_new();
     const workSheet = XLSX.utils.json_to_sheet(tmpX);
@@ -127,12 +133,18 @@ export class ShreddingReportComponent implements OnInit {
   }
 
   export_to_xlsx() {
-    let params = {
-      columnKeys: ["shreddingDate", "typeOfCard", "details", "cardNumber", "shreddingBy"]
-    }
-    this.gridOptions.api.exportDataAsCsv(params);
-    this.gridOptions.enableFilter = true;
-    this.gridOptions.columnApi.autoSizeAllColumns();
+    let tmpX = [];
+    this.gridOptions.api.forEachNodeAfterFilterAndSort(function (rowNode) {
+      tmpX.push(Object.assign({}, rowNode.data));
+    });
+
+    this.export_all_to_xlsx(tmpX);
+    // let params = {
+    //   columnKeys: ["shreddingDate", "typeOfCard", "details", "cardNumber", "shreddingBy"]
+    // }
+    // this.gridOptions.api.exportDataAsCsv(params);
+    // this.gridOptions.enableFilter = true;
+    // this.gridOptions.columnApi.autoSizeAllColumns();
   }
 
   shredingDate: string;

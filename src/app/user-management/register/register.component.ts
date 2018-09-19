@@ -98,7 +98,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onCancel(): void {
-    this.dialogRef.close();
+    this.dialogRef.close('close');
   }
 
 }

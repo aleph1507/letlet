@@ -123,8 +123,8 @@ export class VehicleReportComponent implements OnInit {
     this.getReps();
   }
 
-  export_all_to_xlsx() {
-    let tmpX = this.xlsx_report;
+  export_all_to_xlsx(tmpX = this.xlsx_report) {
+    // let tmpX = this.xlsx_report;
     for(let i = 0; i<tmpX.length; i++){
       delete tmpX[i].index;
     }
@@ -143,14 +143,20 @@ export class VehicleReportComponent implements OnInit {
   }
 
   export_to_xlsx() {
-    let params = {
-      columnKeys: ["entryDateTime", "exitDateTime", "companyName", "vehicleModel", "plateNumber",
-        "enteredOnGate", "approvedEnterFrom", "entryEscortedBy", "exitedOnGate", "approvedExitFrom", "exitEscortedBy",
-        "approvedExitFrom", "exitEscortedBy", "numberOfDays", "timeOnAirSide"]
-    }
-    this.gridOptions.api.exportDataAsCsv(params);
-    this.gridOptions.enableFilter = true;
-    this.gridOptions.columnApi.autoSizeAllColumns();
+    let tmpX = [];
+    this.gridOptions.api.forEachNodeAfterFilterAndSort(function (rowNode) {
+      tmpX.push(Object.assign({}, rowNode.data));
+    });
+
+    this.export_all_to_xlsx(tmpX);
+    // let params = {
+    //   columnKeys: ["entryDateTime", "exitDateTime", "companyName", "vehicleModel", "plateNumber",
+    //     "enteredOnGate", "approvedEnterFrom", "entryEscortedBy", "exitedOnGate", "approvedExitFrom", "exitEscortedBy",
+    //     "approvedExitFrom", "exitEscortedBy", "numberOfDays", "timeOnAirSide"]
+    // }
+    // this.gridOptions.api.exportDataAsCsv(params);
+    // this.gridOptions.enableFilter = true;
+    // this.gridOptions.columnApi.autoSizeAllColumns();
   }
 
   export_to_pdf() {
