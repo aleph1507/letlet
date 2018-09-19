@@ -211,10 +211,18 @@ export class BadgereportComponent implements OnInit {
     this.gridOptions.api.setRowData(this.xlsx_report);
   }
 
+  usDateStringToISODateString(dateString) {
+    var resultChunks = dateString.split("-");
+    return resultChunks[2] + "-" + resultChunks[1] + "-" + resultChunks[0];
+  }
+
   export_all_to_xlsx() {
-    let tmpX = this.xlsx_report;
+    let tmpX = this.xlsx_report.map(x => Object.assign({}, x));
     for(let i = 0; i<tmpX.length; i++){
       delete tmpX[i].index;
+      tmpX[i].dateOfActivation = tmpX[i].dateOfActivation && tmpX[i].dateOfActivation !== "" ? new Date(this.usDateStringToISODateString(tmpX[i].dateOfActivation)) : null;
+      tmpX[i].dateOfSecurityCheck = tmpX[i].dateOfSecurityCheck && tmpX[i].dateOfSecurityCheck !== "" ? new Date(this.usDateStringToISODateString(tmpX[i].dateOfSecurityCheck)) : null;
+      tmpX[i].dateOfTraining = tmpX[i].dateOfTraining && tmpX[i].dateOfTraining !== "" ? new Date(this.usDateStringToISODateString(tmpX[i].dateOfTraining)) : null;
     }
     const workBook = XLSX.utils.book_new();
     const workSheet = XLSX.utils.json_to_sheet(tmpX);
@@ -236,10 +244,33 @@ export class BadgereportComponent implements OnInit {
         "companyNameEn", "cardSeriesNumber", "cardNumber", "payment", "returned", "deactivated",
         "deactivateReason", "shreddingDate", "dateOfActivation", "dateOfSecurityCheck", "dateOfTraining",
         "expireDate"]
+    };
+    //this.gridOptions.api.exportDataAsCsv(params);
+   /* this.gridOptions.enableFilter = true;
+    this.gridOptions.columnApi.autoSizeAllColumns();*/
+    let tmpX = [];
+    this.gridOptions.api.forEachNodeAfterFilterAndSort(function (rowNode) {
+      tmpX.push(Object.assign({}, rowNode.data));
+    });
+
+    for(let i = 0; i<tmpX.length; i++){
+      delete tmpX[i].index;
+      tmpX[i].dateOfActivation = tmpX[i].dateOfActivation && tmpX[i].dateOfActivation !== "" ? new Date(this.usDateStringToISODateString(tmpX[i].dateOfActivation)) : null;
+      tmpX[i].dateOfSecurityCheck = tmpX[i].dateOfSecurityCheck && tmpX[i].dateOfSecurityCheck !== "" ? new Date(this.usDateStringToISODateString(tmpX[i].dateOfSecurityCheck)) : null;
+      tmpX[i].dateOfTraining = tmpX[i].dateOfTraining && tmpX[i].dateOfTraining !== "" ? new Date(this.usDateStringToISODateString(tmpX[i].dateOfTraining)) : null;
     }
-    this.gridOptions.api.exportDataAsCsv(params);
-    this.gridOptions.enableFilter = true;
-    this.gridOptions.columnApi.autoSizeAllColumns();
+    const workBook = XLSX.utils.book_new();
+    const workSheet = XLSX.utils.json_to_sheet(tmpX);
+
+    let wscols = [];
+
+    for(let i = 0; i<10; i++)
+      wscols.push({wch: 20});
+
+    workSheet['!cols'] = wscols;
+
+    XLSX.utils.book_append_sheet(workBook, workSheet, 'BadgesReport');
+    XLSX.writeFile(workBook, 'BadgesReport.xlsx');
   }
 
   export_to_pdf() {

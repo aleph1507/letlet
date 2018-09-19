@@ -133,8 +133,7 @@ export class PersonReportComponent implements OnInit {
         const workSheet = XLSX.utils.json_to_sheet(tmpX);
         let wscols = [];
 
-        for(let i = 0; i<10; i++)
-          wscols.push({wch: 20});
+        for(let i = 0; i<10; i++) wscols.push({wch: 20});
 
         workSheet['!cols'] = wscols;
 
