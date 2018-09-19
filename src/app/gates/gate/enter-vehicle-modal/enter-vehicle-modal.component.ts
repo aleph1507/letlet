@@ -84,7 +84,7 @@ export class EnterVehicleModalComponent implements OnInit {
       });
 
       this.EnterVehicleForm.controls['visitorVehicleBadge'].valueChanges
-        .debounceTime(300)
+        // .debounceTime(300)
         .distinctUntilChanged()
         .pipe(
         startWith<string | VisitorVehicleBadge>(),

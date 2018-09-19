@@ -76,7 +76,7 @@ export class EnterPersonModalComponent implements OnInit {
       });
 
       this.EnterPersonForm.controls['visitorBadge'].valueChanges
-        .debounceTime(400)
+        // .debounceTime(400)
         .distinctUntilChanged()
         .pipe(
         startWith<string | VisitorBadge>(),
