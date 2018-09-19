@@ -257,6 +257,7 @@ export class BadgereportComponent implements OnInit {
 
     for(let i = 0; i<tmpX.length; i++){
       delete tmpX[i].index;
+      tmpX[i].expireDate = tmpX[i].expireDate && tmpX[i].expireDate !== "" ? new Date(this.usDateStringToISODateString(tmpX[i].expireDate)) : null;
       tmpX[i].dateOfActivation = tmpX[i].dateOfActivation && tmpX[i].dateOfActivation !== "" ? new Date(this.usDateStringToISODateString(tmpX[i].dateOfActivation)) : null;
       tmpX[i].dateOfSecurityCheck = tmpX[i].dateOfSecurityCheck && tmpX[i].dateOfSecurityCheck !== "" ? new Date(this.usDateStringToISODateString(tmpX[i].dateOfSecurityCheck)) : null;
       tmpX[i].dateOfTraining = tmpX[i].dateOfTraining && tmpX[i].dateOfTraining !== "" ? new Date(this.usDateStringToISODateString(tmpX[i].dateOfTraining)) : null;
