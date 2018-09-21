@@ -538,7 +538,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
               </td>
               <td>
                 <div style="margin-left:30%; display:block; border:2px solid black; height:2em; width:50%;"></div>
-                <span style="margin-left:30%; display:block; width: 100%;">Датум/Date: ${new Date().getDate()}/${new Date().getMonth()}/${new Date().getFullYear()}</span>
+                <span style="margin-left:30%; display:block; width: 100%;">Датум/Date: ${this.todayDate}</span>
               </td>
             </tr>
             <tr style="padding-bottom: 30px; display: block;">
