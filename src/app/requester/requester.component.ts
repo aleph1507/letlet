@@ -491,6 +491,10 @@ export class RequesterComponent implements OnInit, OnDestroy {
     let vozilaHeader = this.request.requestVehicleJson.length > 0 ? 'Возила / Vehicles' : '';
     let vehiclesTable = '<table style="text-align:center; width: 80%; margin: auto; border: 1px solid black; border-collapse: collapse; margin-top: 5%; margin-bottom: 5%;">';
     let personsTable = '<table style="text-align:center; width: 80%; margin: auto; border: 1px solid black; border-collapse: collapse; margin-top: 5%; margin-bottom: 5%;">';
+    // ${new AsptonormaldatePipe().transform(this.request.fromDate.toString()).replace(/-/g, '.')}-
+    // ${new AsptonormaldatePipe().transform(this.request.toDate.toString()).replace(/-/g, '.')}
+    let fromDate = this.datePipe.transform(this.request.fromDate, 'dd/MM/yyyy');
+    let toDate = this.datePipe.transform(this.request.toDate, 'dd/MM/yyyy');
     for(let i = 0; i<this.request.requestVehicleJson.length; i++){
       vehiclesTable += '<tr><td style="width:5%;">' + (i+1).toString() + '</td><td style="border: 1px solid black; width: 50%;">' + this.request.requestVehicleJson[i].model + '</td>';
       vehiclesTable += '<td style="border: 1px solid black; width: 50%;">' + this.request.requestVehicleJson[i].plate + '</td></tr>';
@@ -537,7 +541,7 @@ export class RequesterComponent implements OnInit, OnDestroy {
                 <span style="display:block;">Командир/Commander</span>
               </td>
               <td>
-                <div style="margin-left:30%; display:block; border:2px solid black; height:2em; width:50%;"></div>
+                <div style="margin-left:30%; display:block; border:2px solid black; height:2em; width:50%; padding-left:10%; padding-top:10%;">${this.request.id}</div>
                 <span style="margin-left:30%; display:block; width: 100%;">Датум/Date: ${this.todayDate}</span>
               </td>
             </tr>
@@ -558,8 +562,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
                 <p>
                   Ве молиме да одобрите дозвола за влез на долунаведените лица од  ${this.request.company.name}
                   кои ќе извршат ${this.request.description} од
-                  ${new AsptonormaldatePipe().transform(this.request.fromDate.toString()).replace(/-/g, '.')}-
-                  ${new AsptonormaldatePipe().transform(this.request.toDate.toString()).replace(/-/g, '.')}
+                  ${fromDate}-
+                  ${toDate}
                 </p>
               </td>
             </tr>
@@ -569,9 +573,9 @@ export class RequesterComponent implements OnInit, OnDestroy {
                   We kindly ask you to approve entrance permission for the following persons working at
                   ${this.request.company.nameEn} in order to perform ${this.request.descriptionEn}
                   starting from
-                  ${new AsptonormaldatePipe().transform(this.request.fromDate.toString()).replace(/-/g, '.')}
+                  ${fromDate}
                   to
-                  ${new AsptonormaldatePipe().transform(this.request.toDate.toString()).replace(/-/g, '.')}
+                  ${toDate}
                 </p>
               </td>
             </tr>

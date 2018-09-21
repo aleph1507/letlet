@@ -213,7 +213,7 @@ export class PersonReportComponent implements OnInit {
     var day : string = '';
 
     if(event == null) {
-      this.fromDate.getMonth() >= 10 ?
+      this.fromDate.getMonth() >= 9 ?
         month = '-' + (this.fromDate.getMonth() + 1).toString() : month = '-0' + (this.fromDate.getMonth()+1).toString();
 
       this.fromDate.getDate() >= 10 ?
@@ -221,7 +221,7 @@ export class PersonReportComponent implements OnInit {
 
       this.fromString = this.fromDate.getFullYear() + month + day;
 
-      this.toDate.getMonth() >= 10 ?
+      this.toDate.getMonth() >= 9 ?
         month = '-' + (this.toDate.getMonth() + 1).toString() : month = '-0' + (this.toDate.getMonth()+1).toString();
 
       this.toDate.getDate() >= 10 ?
@@ -236,10 +236,10 @@ export class PersonReportComponent implements OnInit {
       } else {
         date = this.toDate;
       }
-      date.getMonth() >= 10 ?
+      date.getMonth() >= 9 ?
         month = '-' + (date.getMonth() + 1).toString() : month = '-0' + (date.getMonth() + 1).toString();
 
-      date.getDate() >= 10 ?
+      date.getDate() >= 9 ?
         day = '-' + (date.getDate()).toString() : day = '-0' + (date.getDate()).toString();
 
       picker == 'from' ? this.fromString = date.getFullYear() + month + day :

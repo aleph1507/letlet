@@ -117,7 +117,7 @@ export class VehicleBadgesCreateComponent implements OnInit {
 
   parseDate(dE: Date){
     let parsedDE = dE.getFullYear() + '-';
-    dE.getMonth() < 10 ? parsedDE += '0' + (+dE.getMonth()+1).toString() : parsedDE += (+dE.getMonth()+1).toString();
+    dE.getMonth() < 9 ? parsedDE += '0' + (+dE.getMonth()+1).toString() : parsedDE += (+dE.getMonth()+1).toString();
     dE.getDate() < 10 ? parsedDE += '-0' + dE.getDate() : parsedDE += '-' + dE.getDate();
     return parsedDE;
   }
