@@ -151,6 +151,8 @@
   <div class="requester-props-container">
     <div class="requester-prop mat-elevation-z8">
       <app-spinner *ngIf="showRequestSpinner" class="reqSpinner mat-elevation-z8"></app-spinner>
+      <button mat-raised-button  color="primary" (click)="openPersonDialog()" id="plusPerson">+ Add Person
+      </button>
       <mat-list dense role="list">
         <mat-list-item *ngFor="let person of requesterService.getAllPersons(); let i = index">
           <div class="list-row">
@@ -171,10 +173,10 @@
           <mat-divider></mat-divider>
         </mat-list-item>
       </mat-list>
-      <button mat-mini-fab  color="primary" (click)="openPersonDialog()" id="plusPerson">+
-      </button>
     </div>
     <div class="requester-prop mat-elevation-z8">
+      <button mat-raised-button color="primary" (click)="openVehicleDialog()" id="plusVehicle">+ Add Vehicle
+      </button>
       <mat-list dense role="list">
         <mat-list-item *ngFor="let vehicle of requesterService.getAllVehicles(); let i = index">
           <div class="list-row">
@@ -194,8 +196,6 @@
           <mat-divider></mat-divider>
         </mat-list-item>
       </mat-list>
-      <button mat-mini-fab color="primary" (click)="openVehicleDialog()" id="plusVehicle">+
-      </button>
     </div>
   </div>
 </div>

@@ -97,12 +97,20 @@ hoveredIconControl {
 
 }
 
+
+
 div.requester-prop {
   display:flex;
   flex-direction: column;
   width: 40vw;
-  height: 46%;
+  height: 36vh;
   padding:2%;
+}
+
+.requester-prop button {
+  position:relative;
+  top:0;
+  margin-bottom: 2%;
 }
 
 
@@ -166,6 +174,7 @@ img.p-preview {
 
 mat-list {
   overflow: auto;
+  max-height:90%;
 }
 
 .wide-input {
