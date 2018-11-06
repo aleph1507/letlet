@@ -145,7 +145,7 @@
       <span>companyOK: {{companyOk}}</span>
       <button *ngIf="!editMode"
         mat-raised-button type="submit" color="primary"
-        [disabled]="imagesCheck() || !requesterForm.valid || !companyOk"
+        [disabled]="imagesCheck() || requesterForm.valid || companyOk"
         class="main-send">Send</button>
       <button type="button" *ngIf="showApproveBtn"
         (click)="approve(request.id)" mat-raised-button color="primary"

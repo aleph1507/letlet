@@ -15,9 +15,13 @@ export class TokenInterceptor implements HttpInterceptor {
 
     var accept = 'application/json';
     if(req.url.indexOf('/api/requests/pdf') != -1){
-      accept = 'application/pdf';
+      // accept = 'application/pdf';
+      accept = 'multipart/form-data';
     } else {
       var accept = 'application/json';
+    }
+    if(req.url.indexOf('/api/requests') != -1){
+      accept = 'multipart/form-data';
     }
     if(req.url == this.authService.baseUrl, '/api/requests/pdf11')
     this.authService.loggedInStatus().subscribe(
