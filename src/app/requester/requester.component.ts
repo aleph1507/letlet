@@ -432,15 +432,18 @@ export class RequesterComponent implements OnInit, OnDestroy {
         'fromDate' : fromDate,
         'toDate' : toDate,
         'personPay' : this.personPay.toString(),
-        'vehiclePay' : this.vehiclePay.toString()
+        'vehiclePay' : this.vehiclePay.toString(),
+        'persons' : JSON.stringify(this.requesterService.persons),
+        'vehicles' : JSON.stringify(this.requesterService.vehicles)
       }
+      formData.append('reqForm', JSON.stringify(reqForm));
       formData.append('pdf1', pdf1.files[0], 'pdf1.pdf');
       formData.append('pdf2', pdf2.files[0], 'pdf2.pdf');
-      let persons = JSON.stringify(this.requesterService.persons);
-      let vehicles = JSON.stringify(this.requesterService.vehicles);
-      formData.append('reqForm', JSON.stringify(reqForm));
-      formData.append('persons', persons);
-      formData.append('vehicles', vehicles);
+      // let persons = JSON.stringify(this.requesterService.persons);
+      // let vehicles = JSON.stringify(this.requesterService.vehicles);
+      // formData.append('reqForm', JSON.stringify(reqForm));
+      // formData.append('persons', persons);
+      // formData.append('vehicles', vehicles);
 
       if(this.editMode){
         this.resources.companies.getCompanyById(this.request.companyId)
