@@ -413,143 +413,49 @@ export class RequesterComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     if(this.requesterForm.valid) {
+
+      let fromDate = this.requesterForm.controls['requesterFromDate'].value;
+      let toDate = this.requesterForm.controls['requesterToDate'].value;
+      fromDate.setDate(fromDate.getDate() + 1);
+      toDate.setDate(toDate.getDate() + 1);
+      let pdf1 = <HTMLInputElement>document.getElementById('pdf1');
+      let pdf2 = <HTMLInputElement>document.getElementById('pdf2');
+
+      let formData = new FormData();
+      let reqForm = {
+        'requesterName' : this.requesterForm.controls['requesterName'].value,
+        'contactEmail' : this.requesterForm.controls['contactEmail'].value,
+        'contactPhone' : this.requesterForm.controls['contactPhone'].value,
+        'requesterDescription' : this.requesterForm.controls['requesterDescription'].value,
+        'requesterDescriptionEn' : this.requesterForm.controls['requesterDescriptionEn'].value,
+        'companyId' : this.companiesAutoCtrl.value.id,
+        'fromDate' : fromDate,
+        'toDate' : toDate,
+        'personPay' : this.personPay.toString(),
+        'vehiclePay' : this.vehiclePay.toString()
+      }
+      formData.append('pdf1', pdf1.files[0], 'pdf1.pdf');
+      formData.append('pdf2', pdf2.files[0], 'pdf2.pdf');
+      let persons = JSON.stringify(this.requesterService.persons);
+      let vehicles = JSON.stringify(this.requesterService.vehicles);
+      formData.append('reqForm', JSON.stringify(reqForm));
+      formData.append('persons', persons);
+      formData.append('vehicles', vehicles);
+
       if(this.editMode){
         this.resources.companies.getCompanyById(this.request.companyId)
           .subscribe((data : Company) => {
             this.reqCompany = data;
           });
-
-        let fromDate = this.requesterForm.controls['requesterFromDate'].value;
-        let toDate = this.requesterForm.controls['requesterToDate'].value;
-        fromDate.setDate(fromDate.getDate() + 1);
-        toDate.setDate(toDate.getDate() + 1);
-        let pdf1 = <HTMLInputElement>document.getElementById('pdf1');
-        let pdf2 = <HTMLInputElement>document.getElementById('pdf2');
-
-        let formData = new FormData();
-        formData.append('requesterName', this.requesterForm.controls['requesterName'].value);
-        formData.append('contactEmail', this.requesterForm.controls['requesterName'].value);
-        formData.append('contactPhone', this.requesterForm.controls['contactPhone'].value);
-        formData.append('requesterDescription', this.requesterForm.controls['requesterDescription'].value);
-        formData.append('requesterDescriptionEn', this.requesterForm.controls['requesterDescriptionEn'].value);
-        formData.append('companyId', this.companiesAutoCtrl.value.id);
-        formData.append('fromDate', fromDate);
-        formData.append('toDate', toDate);
-        formData.append('pdf1', pdf1.files[0], 'pdf1.pdf');
-        formData.append('pdf2', pdf2.files[0], 'pdf2.pdf');
-        formData.append('personPay', this.personPay.toString());
-        formData.append('vehiclePay', this.vehiclePay.toString());
-        for(let i = 0; i<this.requesterService.persons.length; i++){
-          formData.append('person' + i + 'name', this.requesterService.persons[i].name);
-          formData.append('person' + i + 'nameEn', this.requesterService.persons[i].nameEn);
-          formData.append('person' + i + 'surname', this.requesterService.persons[i].surname);
-          formData.append('person' + i + 'surnameEn', this.requesterService.persons[i].surnameEn);
-        }
-        for(let i = 0; i<this.requesterService.vehicles.length; i++){
-          formData.append('vehicle' + i + 'model', this.requesterService.vehicles[i].model);
-          formData.append('vehicle' + i + 'plate', this.requesterService.vehicles[i].plate);
-        }
         let id = this.request.id;
-
-        // this.request.requesterName = this.requesterForm.controls['requesterName'].value;
-        // this.request.contactEmail = this.requesterForm.controls['contactEmail'].value;
-        // this.request.contactPhone = this.requesterForm.controls['contactPhone'].value;
-        // this.request.description = this.requesterForm.controls['requesterDescription'].value;
-        // this.request.descriptionEn = this.requesterForm.controls['requesterDescriptionEn'].value;
-        // this.request.companyId = this.companiesAutoCtrl.value.id;
-        // this.request.fromDate = this.requesterForm.controls['requesterFromDate'].value;
-        // this.request.fromDate.setDate(this.request.fromDate.getDate() + 1);
-        // this.request.toDate = this.requesterForm.controls['requesterToDate'].value;
-        // this.request.toDate.setDate(this.request.toDate.getDate() + 1);
-        // this.request.numberOfEntries = this.requesterForm.controls['requesterNumOfEntries'].value;
-        // this.request.pdf1 = this.pdf1src;
-        // this.request.pdf2 = this.pdf2src;
-        // this.request.personPay = this.personPay;
-        // this.request.vehiclePay = this.vehiclePay;
         this.requesterService.editRequest(formData, id);
         this.router.navigate(['/approvals', 1]);
       } else {
-        let fromDate = this.requesterForm.controls['requesterFromDate'].value;
-        let toDate = this.requesterForm.controls['requesterToDate'].value;
-        fromDate.setDate(fromDate.getDate() + 1);
-        toDate.setDate(toDate.getDate() + 1);
-        let pdf1 = <HTMLInputElement>document.getElementById('pdf1');
-        let pdf2 = <HTMLInputElement>document.getElementById('pdf2');
-
-        let formData = new FormData();
-        let reqForm = {
-          'requesterName' : this.requesterForm.controls['requesterName'].value,
-          'contactEmail' : this.requesterForm.controls['contactEmail'].value,
-          'contactPhone' : this.requesterForm.controls['contactPhone'].value,
-          'requesterDescription' : this.requesterForm.controls['requesterDescription'].value,
-          'requesterDescriptionEn' : this.requesterForm.controls['requesterDescriptionEn'].value,
-          'companyId' : this.companiesAutoCtrl.value.id,
-          'fromDate' : fromDate,
-          'toDate' : toDate,
-          'personPay' : this.personPay.toString(),
-          'vehiclePay' : this.vehiclePay.toString()
-        }
-        // formData.append('requesterName', this.requesterForm.controls['requesterName'].value);
-        // formData.append('contactEmail', this.requesterForm.controls['contactEmail'].value);
-        // formData.append('contactPhone', this.requesterForm.controls['contactPhone'].value);
-        // formData.append('requesterDescription', this.requesterForm.controls['requesterDescription'].value);
-        // formData.append('requesterDescriptionEn', this.requesterForm.controls['requesterDescriptionEn'].value);
-        // formData.append('companyId', this.companiesAutoCtrl.value.id);
-        // formData.append('fromDate', fromDate);
-        // formData.append('toDate', toDate);
-        formData.append('pdf1', pdf1.files[0], 'pdf1.pdf');
-        formData.append('pdf2', pdf2.files[0], 'pdf2.pdf');
-        // formData.append('personPay', this.personPay.toString());
-        // formData.append('vehiclePay', this.vehiclePay.toString());
-
-        let persons = JSON.stringify(this.requesterService.persons);
-        let vehicles = JSON.stringify(this.requesterService.vehicles);
-
-        formData.append('reqForm', JSON.stringify(reqForm));
-        formData.append('persons', persons);
-        formData.append('vehicles', vehicles);
-
-        // for(let i = 0; i<this.requesterService.persons.length; i++){
-        //   formData.append('person' + i + 'name', this.requesterService.persons[i].name);
-        //   formData.append('person' + i + 'nameEn', this.requesterService.persons[i].nameEn);
-        //   formData.append('person' + i + 'surname', this.requesterService.persons[i].surname);
-        //   formData.append('person' + i + 'surnameEn', this.requesterService.persons[i].surnameEn);
-        // }
-        // for(let i = 0; i<this.requesterService.vehicles.length; i++){
-        //   formData.append('vehicle' + i + 'model', this.requesterService.vehicles[i].model);
-        //   formData.append('vehicle' + i + 'plate', this.requesterService.vehicles[i].plate);
-        // }
-
         this.requesterService.pushRequest(null, formData)
         .subscribe((data: Requester) => {
           this.requesterService.requests.push(data);
           this.router.navigate(['/approvals', 1], { queryParams: {'sb': 's'} });
         });
-
-        // this.reqCompany = this.companiesAutoCtrl.value;
-        // let fromDate : Date = this.requesterForm.controls['requesterFromDate'].value;
-        // fromDate.setDate(fromDate.getDate() + 1);
-        // let toDate : Date = this.requesterForm.controls['requesterToDate'].value;
-        // toDate.setDate(toDate.getDate() + 1);
-        // this.requesterService.pushRequest(
-        //   null,
-        //   this.requesterForm.controls['requesterName'].value,
-        //   this.requesterForm.controls['contactEmail'].value,
-        //   this.requesterForm.controls['contactPhone'].value,
-        //   this.requesterForm.controls['requesterDescription'].value,
-        //   this.requesterForm.controls['requesterDescriptionEn'].value,
-        //   this.companiesAutoCtrl.value,
-        //   fromDate,
-        //   toDate,
-        //   this.requesterForm.controls['requesterNumOfEntries'].value,
-        //   this.pdf1src,
-        //   this.pdf2src,
-        //   this.personPay,
-        //   this.vehiclePay
-        // ).subscribe((data: Requester) => {
-        //   this.requesterService.requests.push(data);
-        //   this.router.navigate(['/approvals', 1], { queryParams: {'sb': 's'} });
-        // });
       }
     }
   }
