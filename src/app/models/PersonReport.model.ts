@@ -2,6 +2,7 @@ export interface PersonReport {
   index: Number;
   companyName: string;
   personVisited: string;
+  visitorBadge: string;
   enteredOnGate: string;
   approvedEnterFrom: string;
   entryDateTime: string;

@@ -66,6 +66,19 @@ export class VehicleReportComponent implements OnInit {
                   return 0;
               }
           }
+      },
+      valueFormatter: function(data) {
+        if(data.value == '')
+          return data.value;
+        let second = data.value.split(' ')[1];
+        let saat = second.split(':')[0];
+        let minuti = second.split(':')[1];
+        if(parseInt(saat) < 10)
+          saat = '0' + saat.toString();
+        if(parseInt(minuti) < 10)
+          minuti = '0' + minuti.toString();
+
+        return data.value.split(' ')[0] + ' ' + saat + ':' + minuti;
       }},
       {headerName: 'Exit At', field: 'exitDateTime', filter: 'agDateColumnFilter',
       filterParams:{
@@ -88,10 +101,24 @@ export class VehicleReportComponent implements OnInit {
                   return 0;
               }
           }
+      },
+      valueFormatter: function(data) {
+        if(data.value == '')
+          return data.value;
+        let second = data.value.split(' ')[1];
+        let saat = second.split(':')[0];
+        let minuti = second.split(':')[1];
+        if(parseInt(saat) < 10)
+          saat = '0' + saat.toString();
+        if(parseInt(minuti) < 10)
+          minuti = '0' + minuti.toString();
+
+        return data.value.split(' ')[0] + ' ' + saat + ':' + minuti;
       }},
       {headerName: 'Company Name', field: 'companyName'},
       {headerName: 'Vehicle Model', field: 'vehicleModel'},
       {headerName: 'Vehicle Plate', field: 'plateNumber'},
+      {headerName: 'Visitor Vehicle Badge', field: 'visitorVehicleBadge'},
       {headerName: 'Entered Through Gate', field: 'enteredOnGate'},
       {headerName: 'Entry Approved By', field: 'approvedEnterFrom'},
       {headerName: 'Entry Escorted By', field: 'entryEscortedBy'},
