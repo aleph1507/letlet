@@ -13,12 +13,14 @@ export class TokenInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
 
+    // req.headers.delete("Content-Type");
     var accept = 'application/json';
-    var contentType = 'multipart/form-data';
+    // var contentType = 'multipart/form-data';
     if(req.url.indexOf('/api/requests/pdf') != -1){
       // accept = 'application/pdf';
       // accept = 'multipart/form-data';
-      contentType = 'multipart/form-data';
+      // contentType = 'multipart/form-data';
+      req.headers.delete("Content-Type");
     } else {
       var accept = 'application/json';
     }
@@ -31,6 +33,8 @@ export class TokenInterceptor implements HttpInterceptor {
             'Authorization': 'Bearer ' + this.authService.getToken()
           }
         });
+        req.headers.set('Content-Type', undefined);
+        // req.headers.delete("Content-Type");
       } else {
         return next.handle(req);
       }
@@ -42,17 +46,21 @@ export class TokenInterceptor implements HttpInterceptor {
         if(this.loggedIn){
           req = req.clone({
             setHeaders: {
-              'Content-Type': contentType,
+              // 'Content-Type': contentType,
               'Authorization': 'Bearer ' + this.authService.getToken(),
-              'Accept': accept
+              // 'Accept': accept
             }
           });
+          req.headers.delete("Content-Type");
+
         } else {
+          req.headers.delete("Content-Type");
+
           return next.handle(req);
         }
       }
     );
-
+    req.headers.delete("Content-Type");
     return next.handle(req)
       .catch(error => {
         if(error instanceof HttpErrorResponse){
