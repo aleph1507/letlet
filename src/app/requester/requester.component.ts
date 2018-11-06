@@ -239,11 +239,12 @@ export class RequesterComponent implements OnInit, OnDestroy {
       let reader = new FileReader();
       reader.onload = (event:any) => {
         if(elem.attributes.formcontrolname.value == "pdf1"){
-          this.pdf1src = event.target.result;
+          // this.pdf1src = event.target.result;
           this.pdf1filename = name;
         }
         else{
-          this.pdf2src = event.target.result;
+          // this.pdf2src = event.target.result;
+          // console.log('pdf2src: ', this.pdf2src);
           this.pdf2filename = name;
         }
       }
@@ -343,36 +344,58 @@ export class RequesterComponent implements OnInit, OnDestroy {
             this.reqCompany = data;
           });
 
-        let fd : string = this.requesterForm.controls['requesterFromDate'].value;
-        let fromDate = new Date(fd);
-        console.log('fromDate pred setDate: ', fromDate);
-        fromDate.setHours(12,0,0);
-        //fromDate.setDate(fromDate.getDate()+1);
-        console.log('fromDate posle setDate: ', fromDate);
-        let td : string = this.requesterForm.controls['requesterToDate'].value;
-        let toDate = new Date(td);
-        console.log('toDate pred setDate: ', toDate);
-        toDate.setHours(12,0,0);
-        //toDate.setDate(toDate.getDate()+1);
-        console.log('toDate posle setDate: ', toDate);
-        this.request.requesterName = this.requesterForm.controls['requesterName'].value;
-        this.request.contactEmail = this.requesterForm.controls['contactEmail'].value;
-        this.request.contactPhone = this.requesterForm.controls['contactPhone'].value;
-        this.request.description = this.requesterForm.controls['requesterDescription'].value;
-        this.request.descriptionEn = this.requesterForm.controls['requesterDescriptionEn'].value;
-        this.request.companyId = this.companiesAutoCtrl.value.id;
-        this.request.fromDate = fromDate;
-        this.request.toDate = toDate;
-        this.request.numberOfEntries = this.requesterForm.controls['requesterNumOfEntries'].value;
-        this.request.personPay = this.personPay;
-        this.request.vehiclePay = this.vehiclePay;
-        if(this.pdf1src != null)
-          this.request.pdf1 = this.pdf1src;
-        if(this.pdf2src != null)
-          this.request.pdf2 = null;
+      let fromDate = this.requesterForm.controls['requesterFromDate'].value;
+      let toDate = this.requesterForm.controls['requesterToDate'].value;
+      fromDate.setDate(fromDate.getDate() + 1);
+      toDate.setDate(toDate.getDate() + 1);
+      let pdf1 = <HTMLInputElement>document.getElementById('pdf1');
+      let pdf2 = <HTMLInputElement>document.getElementById('pdf2');
+
+      let formData = new FormData();
+      formData.append('requesterName', this.requesterForm.controls['requesterName'].value);
+      formData.append('contactEmail', this.requesterForm.controls['requesterName'].value);
+      formData.append('contactPhone', this.requesterForm.controls['contactPhone'].value);
+      formData.append('requesterDescription', this.requesterForm.controls['requesterDescription'].value);
+      formData.append('requesterDescriptionEn', this.requesterForm.controls['requesterDescriptionEn'].value);
+      formData.append('companyId', this.companiesAutoCtrl.value.id);
+      formData.append('fromDate', fromDate);
+      formData.append('toDate', toDate);
+      formData.append('pdf1', pdf1.files[0], 'pdf1.pdf');
+      formData.append('pdf2', pdf2.files[0], 'pdf2.pdf');
+      formData.append('personPay', this.personPay.toString());
+      formData.append('vehiclePay', this.vehiclePay.toString());
+      let id = this.request.id;
+
+        // let fd : string = this.requesterForm.controls['requesterFromDate'].value;
+        // let fromDate = new Date(fd);
+        // console.log('fromDate pred setDate: ', fromDate);
+        // fromDate.setHours(12,0,0);
+        // //fromDate.setDate(fromDate.getDate()+1);
+        // console.log('fromDate posle setDate: ', fromDate);
+        // let td : string = this.requesterForm.controls['requesterToDate'].value;
+        // let toDate = new Date(td);
+        // console.log('toDate pred setDate: ', toDate);
+        // toDate.setHours(12,0,0);
+        // //toDate.setDate(toDate.getDate()+1);
+        // console.log('toDate posle setDate: ', toDate);
+        // this.request.requesterName = this.requesterForm.controls['requesterName'].value;
+        // this.request.contactEmail = this.requesterForm.controls['contactEmail'].value;
+        // this.request.contactPhone = this.requesterForm.controls['contactPhone'].value;
+        // this.request.description = this.requesterForm.controls['requesterDescription'].value;
+        // this.request.descriptionEn = this.requesterForm.controls['requesterDescriptionEn'].value;
+        // this.request.companyId = this.companiesAutoCtrl.value.id;
+        // this.request.fromDate = fromDate;
+        // this.request.toDate = toDate;
+        // this.request.numberOfEntries = this.requesterForm.controls['requesterNumOfEntries'].value;
+        // this.request.personPay = this.personPay;
+        // this.request.vehiclePay = this.vehiclePay;
+        // if(this.pdf1src != null)
+        //   this.request.pdf1 = this.pdf1src;
+        // if(this.pdf2src != null)
+        //   this.request.pdf2 = null;
         let o_request = this.request;
-        console.log('pred service editRequest.subscribe');
-        this.requesterService.editRequest(this.request).subscribe((data: Requester) => {
+        // console.log('pred service editRequest.subscribe');
+        this.requesterService.editRequest(formData, id).subscribe((data: Requester) => {
           this.requesterService.switchRequest(o_request, data);
           this.snackbarService.msg = 'Промените се зачувани';
           this.snackbarService.successSnackBar();
@@ -395,48 +418,98 @@ export class RequesterComponent implements OnInit, OnDestroy {
           .subscribe((data : Company) => {
             this.reqCompany = data;
           });
-        this.request.requesterName = this.requesterForm.controls['requesterName'].value;
-        this.request.contactEmail = this.requesterForm.controls['contactEmail'].value;
-        this.request.contactPhone = this.requesterForm.controls['contactPhone'].value;
-        this.request.description = this.requesterForm.controls['requesterDescription'].value;
-        this.request.descriptionEn = this.requesterForm.controls['requesterDescriptionEn'].value;
-        this.request.companyId = this.companiesAutoCtrl.value.id;
-        this.request.fromDate = this.requesterForm.controls['requesterFromDate'].value;
-        this.request.fromDate.setDate(this.request.fromDate.getDate() + 1);
-        this.request.toDate = this.requesterForm.controls['requesterToDate'].value;
-        this.request.toDate.setDate(this.request.toDate.getDate() + 1);
-        this.request.numberOfEntries = this.requesterForm.controls['requesterNumOfEntries'].value;
-        this.request.pdf1 = this.pdf1src;
-        this.request.pdf2 = this.pdf2src;
-        this.request.personPay = this.personPay;
-        this.request.vehiclePay = this.vehiclePay;
-        this.requesterService.editRequest(this.request);
+
+        let fromDate = this.requesterForm.controls['requesterFromDate'].value;
+        let toDate = this.requesterForm.controls['requesterToDate'].value;
+        fromDate.setDate(fromDate.getDate() + 1);
+        toDate.setDate(toDate.getDate() + 1);
+        let pdf1 = <HTMLInputElement>document.getElementById('pdf1');
+        let pdf2 = <HTMLInputElement>document.getElementById('pdf2');
+
+        let formData = new FormData();
+        formData.append('requesterName', this.requesterForm.controls['requesterName'].value);
+        formData.append('contactEmail', this.requesterForm.controls['requesterName'].value);
+        formData.append('contactPhone', this.requesterForm.controls['contactPhone'].value);
+        formData.append('requesterDescription', this.requesterForm.controls['requesterDescription'].value);
+        formData.append('requesterDescriptionEn', this.requesterForm.controls['requesterDescriptionEn'].value);
+        formData.append('companyId', this.companiesAutoCtrl.value.id);
+        formData.append('fromDate', fromDate);
+        formData.append('toDate', toDate);
+        formData.append('pdf1', pdf1.files[0], 'pdf1.pdf');
+        formData.append('pdf2', pdf2.files[0], 'pdf2.pdf');
+        formData.append('personPay', this.personPay.toString());
+        formData.append('vehiclePay', this.vehiclePay.toString());
+        let id = this.request.id;
+
+        // this.request.requesterName = this.requesterForm.controls['requesterName'].value;
+        // this.request.contactEmail = this.requesterForm.controls['contactEmail'].value;
+        // this.request.contactPhone = this.requesterForm.controls['contactPhone'].value;
+        // this.request.description = this.requesterForm.controls['requesterDescription'].value;
+        // this.request.descriptionEn = this.requesterForm.controls['requesterDescriptionEn'].value;
+        // this.request.companyId = this.companiesAutoCtrl.value.id;
+        // this.request.fromDate = this.requesterForm.controls['requesterFromDate'].value;
+        // this.request.fromDate.setDate(this.request.fromDate.getDate() + 1);
+        // this.request.toDate = this.requesterForm.controls['requesterToDate'].value;
+        // this.request.toDate.setDate(this.request.toDate.getDate() + 1);
+        // this.request.numberOfEntries = this.requesterForm.controls['requesterNumOfEntries'].value;
+        // this.request.pdf1 = this.pdf1src;
+        // this.request.pdf2 = this.pdf2src;
+        // this.request.personPay = this.personPay;
+        // this.request.vehiclePay = this.vehiclePay;
+        this.requesterService.editRequest(formData, id);
         this.router.navigate(['/approvals', 1]);
       } else {
-        this.reqCompany = this.companiesAutoCtrl.value;
-        let fromDate : Date = this.requesterForm.controls['requesterFromDate'].value;
+        let fromDate = this.requesterForm.controls['requesterFromDate'].value;
+        let toDate = this.requesterForm.controls['requesterToDate'].value;
         fromDate.setDate(fromDate.getDate() + 1);
-        let toDate : Date = this.requesterForm.controls['requesterToDate'].value;
         toDate.setDate(toDate.getDate() + 1);
-        this.requesterService.pushRequest(
-          null,
-          this.requesterForm.controls['requesterName'].value,
-          this.requesterForm.controls['contactEmail'].value,
-          this.requesterForm.controls['contactPhone'].value,
-          this.requesterForm.controls['requesterDescription'].value,
-          this.requesterForm.controls['requesterDescriptionEn'].value,
-          this.companiesAutoCtrl.value,
-          fromDate,
-          toDate,
-          this.requesterForm.controls['requesterNumOfEntries'].value,
-          this.pdf1src,
-          this.pdf2src,
-          this.personPay,
-          this.vehiclePay
-        ).subscribe((data: Requester) => {
+        let pdf1 = <HTMLInputElement>document.getElementById('pdf1');
+        let pdf2 = <HTMLInputElement>document.getElementById('pdf2');
+
+        let formData = new FormData();
+        formData.append('requesterName', this.requesterForm.controls['requesterName'].value);
+        formData.append('contactEmail', this.requesterForm.controls['requesterName'].value);
+        formData.append('contactPhone', this.requesterForm.controls['contactPhone'].value);
+        formData.append('requesterDescription', this.requesterForm.controls['requesterDescription'].value);
+        formData.append('requesterDescriptionEn', this.requesterForm.controls['requesterDescriptionEn'].value);
+        formData.append('companyId', this.companiesAutoCtrl.value.id);
+        formData.append('fromDate', fromDate);
+        formData.append('toDate', toDate);
+        formData.append('pdf1', pdf1.files[0], 'pdf1.pdf');
+        formData.append('pdf2', pdf2.files[0], 'pdf2.pdf');
+        formData.append('personPay', this.personPay.toString());
+        formData.append('vehiclePay', this.vehiclePay.toString());
+
+        this.requesterService.pushRequest(null, formData)
+        .subscribe((data: Requester) => {
           this.requesterService.requests.push(data);
           this.router.navigate(['/approvals', 1], { queryParams: {'sb': 's'} });
         });
+
+        // this.reqCompany = this.companiesAutoCtrl.value;
+        // let fromDate : Date = this.requesterForm.controls['requesterFromDate'].value;
+        // fromDate.setDate(fromDate.getDate() + 1);
+        // let toDate : Date = this.requesterForm.controls['requesterToDate'].value;
+        // toDate.setDate(toDate.getDate() + 1);
+        // this.requesterService.pushRequest(
+        //   null,
+        //   this.requesterForm.controls['requesterName'].value,
+        //   this.requesterForm.controls['contactEmail'].value,
+        //   this.requesterForm.controls['contactPhone'].value,
+        //   this.requesterForm.controls['requesterDescription'].value,
+        //   this.requesterForm.controls['requesterDescriptionEn'].value,
+        //   this.companiesAutoCtrl.value,
+        //   fromDate,
+        //   toDate,
+        //   this.requesterForm.controls['requesterNumOfEntries'].value,
+        //   this.pdf1src,
+        //   this.pdf2src,
+        //   this.personPay,
+        //   this.vehiclePay
+        // ).subscribe((data: Requester) => {
+        //   this.requesterService.requests.push(data);
+        //   this.router.navigate(['/approvals', 1], { queryParams: {'sb': 's'} });
+        // });
       }
     }
   }

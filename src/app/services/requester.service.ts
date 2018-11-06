@@ -54,27 +54,31 @@ export class RequesterService {
     return this.http.get<Requester>(this.requestUrl + '/' + id, this.httpOptions);
   }
 
-  pushRequest(id = null, requesterName, contactEmail, contactPhone, description, descriptionEn, company : Company, fromDate, toDate, numberOfEntries, pdf1 = null, pdf2 = null, personPay, vehiclePay){
-    let request = new Requester();
-    request.id = id;
-    request.requesterName = requesterName;
-    request.contactEmail = contactEmail,
-    request.contactPhone = contactPhone,
-    request.description = description;
-    request.descriptionEn = descriptionEn,
-    request.companyId = company.id;
-    request.fromDate = fromDate;
-    request.toDate = toDate;
-    request.numberOfEntries = numberOfEntries;
-    request.requestPersonJson = this.persons;
-    request.requestVehicleJson = this.vehicles;
-    request.pdf1 = pdf1;
-    request.pdf2 = pdf2;
-    request.personPay = personPay;
-    request.vehiclePay = vehiclePay;
-    this.persons = [];
-    this.vehicles = [];
+  // pushRequest(id = null, requesterName, contactEmail, contactPhone, description, descriptionEn, company : Company, fromDate, toDate, numberOfEntries, pdf1 = null, pdf2 = null, personPay, vehiclePay){
+  //   let request = new Requester();
+  //   request.id = id;
+  //   request.requesterName = requesterName;
+  //   request.contactEmail = contactEmail,
+  //   request.contactPhone = contactPhone,
+  //   request.description = description;
+  //   request.descriptionEn = descriptionEn,
+  //   request.companyId = company.id;
+  //   request.fromDate = fromDate;
+  //   request.toDate = toDate;
+  //   request.numberOfEntries = numberOfEntries;
+  //   request.requestPersonJson = this.persons;
+  //   request.requestVehicleJson = this.vehicles;
+  //   request.pdf1 = pdf1;
+  //   request.pdf2 = pdf2;
+  //   request.personPay = personPay;
+  //   request.vehiclePay = vehiclePay;
+  //   this.persons = [];
+  //   this.vehicles = [];
+  //
+  //   return this.http.post(this.requestUrl, request, this.httpOptions);
+  // }
 
+  pushRequest(id = null, request: FormData) {
     return this.http.post(this.requestUrl, request, this.httpOptions);
   }
 
@@ -94,9 +98,9 @@ export class RequesterService {
     }
   }
 
-  editRequest(req: Requester) {
+  editRequest(req: FormData, id) {
     console.log('vo service editRequest');
-    return this.http.patch(this.requestUrl + '/' + req.id, req);
+    return this.http.patch(this.requestUrl + '/' + id, req);
   }
 
   addPerson(person: Person){

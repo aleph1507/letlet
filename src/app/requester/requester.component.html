@@ -1,7 +1,9 @@
 <div class="requester-container mat-elevation-z8">
   <div class="req-form-container">
     <app-spinner class="reqSpinner mat-elevation-z8" *ngIf="showRequestSpinner"></app-spinner>
-    <form class="requester-form" id="requester-form" (ngSubmit)="onSubmit()" [formGroup]="requesterForm" novalidate>
+    <form class="requester-form" id="requester-form" (ngSubmit)="onSubmit()"
+      method="post" enctype="multipart/form-data" [formGroup]="requesterForm" novalidate>
+
       <mat-form-field class="requester-field">
         <input matInput
           placeholder="Requester Name / Барател"
@@ -54,6 +56,7 @@
           style="display:block;"
           placeholder="Company / Компанија *"
           [formControl]="companiesAutoCtrl"
+          name="company"
           matInput [matAutocomplete]="comp_auto">
         <mat-autocomplete #comp_auto="matAutocomplete" [displayWith]="displayFn">
           <mat-option *ngFor="let comp of companies_auto" [value]="comp">
@@ -63,13 +66,13 @@
       </mat-form-field>
       <mat-form-field>
         <input matInput readonly [matDatepicker]="fromPicker" placeholder="From date / Од датум"
-        formControlName="requesterFromDate" >
+        formControlName="requesterFromDate" name="requesterFromDate">
         <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
         <mat-datepicker #fromPicker disabled="false"></mat-datepicker>
       </mat-form-field>
       <mat-form-field>
         <input matInput readonly [matDatepicker]="toPicker" placeholder="To date / До датум"
-        formControlName="requesterToDate">
+        formControlName="requesterToDate" name="requesterToDate">
         <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
         <mat-datepicker #toPicker disabled="false"></mat-datepicker>
       </mat-form-field>
@@ -85,19 +88,23 @@
         You can merge multiple PDFs <a target="blank" href="https://lightpdf.com/merge-pdf">here</a><br>
         За спојување на повеќе PDF датотеки, Ве молиме искористете го следниов <a target="blank" href="https://lightpdf.com/merge-pdf">сервис</a><br>
         <div>
+          <!-- (change)="savePdf($event)" -->
           <button type="button" mat-raised-button (click)="pdfUpload1.click()">
             Attach PDF / Прикачи документ<mat-icon>keyboard_arrow_up</mat-icon>
             <input type="file" hidden #pdfUpload1
             accept="application/pdf"
-            (change)="savePdf($event)" name="pdf1" id="pdf1" formControlName="pdf1">
+            (change)="savePdf($event)"
+            name="pdf1" id="pdf1" formControlName="pdf1">
           </button> <span class="btnspan">{{pdf1filename}}</span>
         </div>
         <div style="margin-top:3%;">
+          <!-- (change)="savePdf($event)" -->
           <button type="button" mat-raised-button (click)="pdfUpload2.click()">
             Attach BSR / Прикачи BSR<mat-icon>keyboard_arrow_up</mat-icon>
             <input type="file" hidden #pdfUpload2
             accept="application/pdf"
-            (change)="savePdf($event)" name="pdf2" id="pdf2" formControlName="pdf2">
+            (change)="savePdf($event)"
+            name="pdf2" id="pdf2" formControlName="pdf2">
           </button> <span class="btnspan">{{pdf2filename}}</span>
         </div>
       </div>
@@ -133,6 +140,9 @@
           </mat-checkbox>
         </div>
       </div>
+      <span>images Check: {{imagesCheck()}}</span><br>
+      <span>requesterForm.valid: {{requesterForm.valid}}</span><br>
+      <span>companyOK: {{companyOk}}</span>
       <button *ngIf="!editMode"
         mat-raised-button type="submit" color="primary"
         [disabled]="imagesCheck() || !requesterForm.valid || !companyOk"
@@ -198,4 +208,5 @@
       </mat-list>
     </div>
   </div>
+  <!-- </form> -->
 </div>
