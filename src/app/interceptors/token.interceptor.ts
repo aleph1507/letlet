@@ -20,7 +20,7 @@ export class TokenInterceptor implements HttpInterceptor {
       // accept = 'application/pdf';
       // accept = 'multipart/form-data';
       // contentType = 'multipart/form-data';
-      req.headers.delete("Content-Type");
+      //req.headers.delete("Content-Type");
     } else {
       var accept = 'application/json';
     }
@@ -33,7 +33,7 @@ export class TokenInterceptor implements HttpInterceptor {
             'Authorization': 'Bearer ' + this.authService.getToken()
           }
         });
-        req.headers.set('Content-Type', undefined);
+         req.headers.set('Content-Type', undefined);
         // req.headers.delete("Content-Type");
       } else {
         return next.handle(req);
@@ -51,16 +51,16 @@ export class TokenInterceptor implements HttpInterceptor {
               // 'Accept': accept
             }
           });
-          req.headers.delete("Content-Type");
+          //req.headers.delete("Content-Type");
 
         } else {
-          req.headers.delete("Content-Type");
+          //req.headers.delete("Content-Type");
 
           return next.handle(req);
         }
       }
     );
-    req.headers.delete("Content-Type");
+    //req.headers.delete("Content-Type");
     return next.handle(req)
       .catch(error => {
         if(error instanceof HttpErrorResponse){

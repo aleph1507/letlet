@@ -79,15 +79,16 @@ export class RequesterService {
   // }
 
   pushRequest(id = null, request: FormData) {
-    return this.http.post(this.requestUrl, request, this.httpOptions);
+    console.log('pushRequest');
+    return this.http.post(this.requestUrl, request);
   }
 
   approveRequest(id: number) : Observable<boolean>{
-    return this.http.post<boolean>(this.requestUrl + '/approve/' + id, {}, this.httpOptions);
+    return this.http.post<boolean>(this.requestUrl + '/approve/' + id, {});
   }
 
   declineRequest(id: number) : Observable<boolean>{
-    return this.http.post<boolean>(this.requestUrl + '/decline/' + id, {}, this.httpOptions);
+    return this.http.post<boolean>(this.requestUrl + '/decline/' + id, {});
   }
 
   switchRequest(req0: Requester, req1: Requester) {
