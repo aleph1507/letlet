@@ -14,14 +14,17 @@ export class TokenInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
 
     var accept = 'application/json';
+    var contentType = 'application/json';
     if(req.url.indexOf('/api/requests/pdf') != -1){
       // accept = 'application/pdf';
-      accept = 'multipart/form-data';
+      // accept = 'multipart/form-data';
+      contentType = 'multipart/form-data';
     } else {
       var accept = 'application/json';
     }
     if(req.url.indexOf('/api/requests') != -1){
-      accept = 'multipart/form-data';
+      // accept = 'multipart/form-data';
+      contentType = 'multipart/form-data';
     }
     if(req.url == this.authService.baseUrl, '/api/requests/pdf11')
     this.authService.loggedInStatus().subscribe(
@@ -30,7 +33,7 @@ export class TokenInterceptor implements HttpInterceptor {
         if(this.loggedIn){
           req = req.clone({
             setHeaders: {
-              'Content-Type': accept,
+              'Content-Type': contentType,
               'Authorization': 'Bearer ' + this.authService.getToken(),
               'Accept': accept
             }

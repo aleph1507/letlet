@@ -439,6 +439,16 @@ export class RequesterComponent implements OnInit, OnDestroy {
         formData.append('pdf2', pdf2.files[0], 'pdf2.pdf');
         formData.append('personPay', this.personPay.toString());
         formData.append('vehiclePay', this.vehiclePay.toString());
+        for(let i = 0; i<this.requesterService.persons.length; i++){
+          formData.append('person' + i + 'name', this.requesterService.persons[i].name);
+          formData.append('person' + i + 'nameEn', this.requesterService.persons[i].nameEn);
+          formData.append('person' + i + 'surname', this.requesterService.persons[i].surname);
+          formData.append('person' + i + 'surnameEn', this.requesterService.persons[i].surnameEn);
+        }
+        for(let i = 0; i<this.requesterService.vehicles.length; i++){
+          formData.append('vehicle' + i + 'model', this.requesterService.vehicles[i].model);
+          formData.append('vehicle' + i + 'plate', this.requesterService.vehicles[i].plate);
+        }
         let id = this.request.id;
 
         // this.request.requesterName = this.requesterForm.controls['requesterName'].value;
