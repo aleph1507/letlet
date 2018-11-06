@@ -294,13 +294,22 @@ export class RequesterComponent implements OnInit, OnDestroy {
   }
 
   imagesCheck() {
-    if(!this.pdf1src){
-      return this.checkPersons() || this.checkVehicles() ? true : false;
-    } else if(this.pdf1src.size < 1 || this.pdf1src == null || this.pdf1src == undefined) {
-      return this.checkPersons() || this.checkVehicles() ? true : false;
-    } else {
-      return this.requesterService.isEmptyPersons();
-    }
+    // return !this.requesterService.isEmptyPersons();
+    if(this.requesterService.isEmptyPersons())
+      return false;
+
+    let pdf1 = <HTMLInputElement>document.getElementById('pdf1');
+    if(pdf1.files[0] == null || pdf1.files[0] == undefined)
+      return false;
+
+    return true;
+    // if(!this.pdf1src){
+    //   return this.checkPersons() || this.checkVehicles() ? true : false;
+    // } else if(this.pdf1src.size < 1 || this.pdf1src == null || this.pdf1src == undefined) {
+    //   return this.checkPersons() || this.checkVehicles() ? true : false;
+    // } else {
+    //   return this.requesterService.isEmptyPersons();
+    // }
   }
 
   checkPersons() {
