@@ -457,7 +457,8 @@ export class RequesterComponent implements OnInit, OnDestroy {
         'personPay' : this.personPay.toString(),
         'vehiclePay' : this.vehiclePay.toString(),
         'persons' : JSON.stringify(this.requesterService.persons),
-        'vehicles' : JSON.stringify(this.requesterService.vehicles)
+        'vehicles' : JSON.stringify(this.requesterService.vehicles),
+        'requesterNumOfEntries' : this.requesterForm.controls['requesterNumOfEntries'].value
       }
       formData.append('reqForm', JSON.stringify(reqForm));
       formData.append('pdf1', pdf1.files[0], 'pdf1.pdf');

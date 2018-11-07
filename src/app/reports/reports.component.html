@@ -64,4 +64,17 @@
       </div>
     </a>
   </mat-card>
+  <mat-card class="dash-card" *ngIf="authService.isPowerUser() || authService.isOperator()">
+    <a [routerLink]="['requestsreport']">
+      <div class="card-content">
+        <div class="card-text">
+          <mat-card-title>Requests Reports</mat-card-title>
+          <mat-card-subtitle>see requests reports</mat-card-subtitle>
+        </div>
+        <div class="card-icon">
+          <mat-icon>assignment</mat-icon>
+        </div>
+      </div>
+    </a>
+  </mat-card>
 </div>

@@ -74,6 +74,7 @@ import { RolesComponent } from './user-management/roles/roles.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { BadgereportComponent } from './reports/badgereport/badgereport.component';
 import { VehiclebadgereportComponent } from './reports/vehiclebadgereport/vehiclebadgereport.component';
+import { RequestsReportComponent } from './reports/requests-report/requests-report.component';
 
 
 @NgModule({
@@ -123,7 +124,8 @@ import { VehiclebadgereportComponent } from './reports/vehiclebadgereport/vehicl
     RolesComponent,
     ChangePasswordComponent,
     BadgereportComponent,
-    VehiclebadgereportComponent
+    VehiclebadgereportComponent,
+    RequestsReportComponent
   ],
   imports: [
     BrowserModule,

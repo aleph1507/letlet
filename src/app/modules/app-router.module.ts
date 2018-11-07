@@ -19,6 +19,7 @@ import { ShreddingReportComponent } from '../reports/shredding-report/shredding-
 import { UserManagementComponent } from '../user-management/user-management.component';
 import { BadgereportComponent } from '../reports/badgereport/badgereport.component';
 import { VehiclebadgereportComponent } from '../reports/vehiclebadgereport/vehiclebadgereport.component';
+import { RequestsReportComponent } from '../reports/requests-report/requests-report.component';
 
 const appRoutes: Routes = [
    { path: '', component: DashboardComponent, pathMatch: 'full' },
@@ -44,6 +45,7 @@ const appRoutes: Routes = [
    { path: 'user-management', component: UserManagementComponent, pathMatch: 'full'},
    { path: 'reports/badgereport', component: BadgereportComponent, pathMatch: 'full' },
    { path: 'reports/vehiclebadgereport', component: VehiclebadgereportComponent, pathMatch: 'full' },
+   { path: 'reports/requestsreport', component: RequestsReportComponent, pathMatch: 'full'}
 ];
 
 @NgModule({
