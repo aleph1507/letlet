@@ -714,7 +714,9 @@ export class RequesterComponent implements OnInit, OnDestroy {
             img.logo {
               max-width:100%;
               border: 3px solid grey;
-              padding: 4%;
+              padding: 0;
+              padding-left: 4%;
+              padding-right: 4%;
             }
 
             div.wide {
