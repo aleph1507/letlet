@@ -37,6 +37,11 @@
     </div>
   </div>
   <mat-table #reqTable [dataSource]="dataSource">
+    <ng-container matColumnDef="requestId">
+      <mat-header-cell *matHeaderCellDef>Request Id</mat-header-cell>
+      <mat-cell *matCellDef="let req">{{ req.requestId }}</mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="date">
       <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
       <mat-cell *matCellDef="let req">{{ req.date | date:'dd-MM-yyyy' }}</mat-cell>

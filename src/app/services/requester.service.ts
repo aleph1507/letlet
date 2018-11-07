@@ -91,6 +91,10 @@ export class RequesterService {
     return this.http.post<boolean>(this.requestUrl + '/decline/' + id, {});
   }
 
+  deleteRequest(id: number) : Observable<boolean>{
+    return this.http.post<boolean>(this.requestUrl + '/decline/' + id, {});
+  }
+
   switchRequest(req0: Requester, req1: Requester) {
     for(let i = 0; i<this.requests.length; i++){
       if(this.requests[i].id == req0.id){

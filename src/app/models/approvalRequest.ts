@@ -1,4 +1,5 @@
 export class ApprovalRequest {
+  requestId: number;
   requesterName : string;
   requesterCompany: string;
   nPersons: number;

@@ -23,7 +23,7 @@ export class ApprovalsComponent implements OnInit {
 
   approvalRequests : ApprovalRequest[] = [];
   dataSource;
-  displayedColumns = ['date', 'requesterName', 'requesterCompany', 'nPersons',
+  displayedColumns = ['requestId', 'date', 'requesterName', 'requesterCompany', 'nPersons',
              'nVehicles', 'status', 'approvedDate', 'approvedFrom', 'reqID'];
   showApprovals = [];
   selectedApprovals = 'Not Approved';
