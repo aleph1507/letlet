@@ -19,6 +19,8 @@ export class RequestsReportComponent implements OnInit {
 
   showSpinner : boolean  = true;
 
+  displayTable : boolean;
+
   reqReports : RequestReport[];
 
   requestsReportUrl = this.authService.baseUrl + '/api/Requests/requestsReport/';

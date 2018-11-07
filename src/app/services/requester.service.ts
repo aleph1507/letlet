@@ -92,7 +92,7 @@ export class RequesterService {
   }
 
   deleteRequest(id: number) : Observable<boolean>{
-    return this.http.post<boolean>(this.requestUrl + '/decline/' + id, {});
+    return this.http.post<boolean>(this.requestUrl + '/delete/' + id, {});
   }
 
   switchRequest(req0: Requester, req1: Requester) {

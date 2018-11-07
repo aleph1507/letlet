@@ -111,10 +111,10 @@
 
        <div *ngIf="editMode" class="download-pdfs">
          <div class="pdf-upload" style="margin:0; margin-bottom: 2%; width:100%;">
-           <button *ngIf="pdf1src.length > 28" style="" (click)="getPdfV2(1, request.id)" type="button" mat-raised-button>
+           <button style="" (click)="getPdfV2(1, request.id)" type="button" mat-raised-button>
              Download PDF<mat-icon>keyboard_arrow_down</mat-icon>
            </button>
-           <button *ngIf="pdf2src.length > 28" type="button" style="" (click)="getPdfV2(2, request.id)" mat-raised-button>
+           <button type="button" style="" (click)="getPdfV2(2, request.id)" mat-raised-button>
              Download BSR<mat-icon>keyboard_arrow_down</mat-icon>
            </button>
            <button mat-raised-button type="button"

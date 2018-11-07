@@ -1,0 +1,13 @@
+.rReportTable {
+  background: white;
+  /* border:1px solid black; */
+  border-collapse: collapse;
+  /* overflow-x:auto; */
+  /* width: 100%; */
+}
+
+.rReportTable td{
+  padding:1%;
+  border:1px solid black;
+  /* text-align:center; */
+}
