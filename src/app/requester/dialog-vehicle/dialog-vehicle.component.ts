@@ -29,7 +29,6 @@ export class DialogVehicleComponent implements OnInit {
 
   vehicleForm: FormGroup;
   vehicle: Vehicle = {
-    id: null,
     model: null,
     plate: null,
     // image1: null,
