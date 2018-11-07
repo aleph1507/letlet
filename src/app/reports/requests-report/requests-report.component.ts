@@ -19,6 +19,8 @@ export class RequestsReportComponent implements OnInit {
 
   showSpinner : boolean  = true;
 
+  reqReports : RequestReport[];
+
   requestsReportUrl = this.authService.baseUrl + '/api/Requests/requestsReport/';
 
   constructor(private authService: AuthService,
@@ -78,6 +80,7 @@ export class RequestsReportComponent implements OnInit {
       this.reportsService.getRequestsReports(rUrl)
         .subscribe((data: RequestReport[]) => {
           console.log(data);
+          this.reqReports = data;
           this.showSpinner = false;
         });
     }

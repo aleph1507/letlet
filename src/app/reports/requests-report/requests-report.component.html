@@ -32,12 +32,20 @@
       <button mat-raised-button color="primary" (click)="export_to_pdf()">Export to PDF</button>
       <button mat-raised-button color="primary" (click)="export_all_to_xlsx()">Export all to Excel</button>
     </div> -->
-    <p style="width:100%;">{{rowCount}}</p>
+    <!-- <p style="width:100%;">{{rowCount}}</p> -->
   </div>
 
-  <!-- <div *ngIf="">
-
-  </div> -->
+  <div *ngIf="!showSpinner">
+    <table>
+      <thead>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of reqReports">
+          {{r}}
+        </tr>
+      </tbody>
+    </table>
+  </div>
 <!-- /api/Requests/requestsReport/2000-01-01/2020-01-01 -->
 
 
