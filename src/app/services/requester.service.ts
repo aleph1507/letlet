@@ -103,9 +103,9 @@ export class RequesterService {
     }
   }
 
-  editRequest(req: FormData, id) {
+  editRequest(req: Requester, id) {
     console.log('vo service editRequest');
-    return this.http.patch(this.requestUrl + '/' + id, req);
+    return this.http.patch(this.requestUrl + '/' + id, req, this.httpOptions);
   }
 
   addPerson(person: Person){
