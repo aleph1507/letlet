@@ -20,8 +20,8 @@ export class DialogPersonComponent implements OnInit {
     name: '',
     surnameEn: '',
     surname: '',
-    image1: '',
-    image2: ''
+    // image1: '',
+    // image2: ''
   };
 
   constructor(public thisDialogRef: MatDialogRef<DialogPersonComponent>,

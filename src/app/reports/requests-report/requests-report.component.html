@@ -19,21 +19,25 @@
       <mat-datepicker #toPicker disabled="false"></mat-datepicker>
       </mat-form-field>
     </div>
-    <div class="radio-div" style="position:relative; left:-5%;">
+    <!-- <div class="radio-div" style="position:relative; left:-5%;">
       <mat-radio-group [(ngModel)]="selectedReports">
         <mat-radio-button *ngFor="let sr of showReports"
           color="primary" [value]="sr" (change)="radioChange($event)">
           {{sr}}
         </mat-radio-button>
       </mat-radio-group>
-    </div>
-    <div>
+    </div> -->
+    <!-- <div>
       <button mat-raised-button color="primary" (click)="export_to_xlsx()">Export to Excel</button>
       <button mat-raised-button color="primary" (click)="export_to_pdf()">Export to PDF</button>
       <button mat-raised-button color="primary" (click)="export_all_to_xlsx()">Export all to Excel</button>
-    </div>
+    </div> -->
     <p style="width:100%;">{{rowCount}}</p>
   </div>
+
+  <!-- <div *ngIf="">
+
+  </div> -->
 <!-- /api/Requests/requestsReport/2000-01-01/2020-01-01 -->
 
 

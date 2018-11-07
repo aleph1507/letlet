@@ -7,6 +7,7 @@ import { VehicleReport } from '../models/VehicleReport.model';
 import { ShreddingReport } from '../models/ShreddingReport';
 import { VehicleBadgeReport } from '../models/VehicleBadgeReport';
 import { BadgeReport } from '../models/BadgeReport';
+import { RequestReport } from '../models/RequestReport';
 
 
 @Injectable()
@@ -42,6 +43,10 @@ export class ReportsService {
 
   getBadgesReports(rUrl: string): Observable<BadgeReport[]> {
     return this.http.get<BadgeReport[]>(rUrl);
+  }
+
+  getRequestsReports(rUrl: string):Observable<RequestReport[]> {
+    return this.http.get<RequestReport[]>(rUrl);
   }
 
 }

@@ -32,8 +32,8 @@ export class DialogVehicleComponent implements OnInit {
     id: null,
     model: null,
     plate: null,
-    image1: null,
-    image2: null
+    // image1: null,
+    // image2: null
   }
 
   ngOnInit() {
@@ -77,8 +77,8 @@ export class DialogVehicleComponent implements OnInit {
   onSubmit(){
     this.vehicle.model = this.vehicleForm.controls['model'].value;
     this.vehicle.plate = this.vehicleForm.controls['plate'].value;
-    this.vehicle.image1 = this.img1src;
-    this.vehicle.image2 = this.img2src;
+    // this.vehicle.image1 = this.img1src;
+    // this.vehicle.image2 = this.img2src;
     if(!this.data.resource){
       this.data.i == null ? this.requesterService.addVehicle(this.vehicle) : this.requesterService.editVehicle(this.data.i, this.vehicle);
     }

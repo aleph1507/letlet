@@ -328,27 +328,27 @@ export class RequesterComponent implements OnInit, OnDestroy {
 
     let persons: Person[] = this.requesterService.getAllPersons();
 
-    for(let i = 0; i<persons.length; i++){
-      if(persons[i].image1 == '' || persons[i].image1 == null || persons[i].image1 == undefined ||
-        persons[i].image2 == '' || persons[i].image2 == null || persons[i].image2 == undefined){
-          this.errorString += `\nPerson ${persons[i].name} ${persons[i].surname} is missing images.`;
-          this.missingImages = true;
-          return true;
-        }
-    }
+    // for(let i = 0; i<persons.length; i++){
+    //   if(persons[i].image1 == '' || persons[i].image1 == null || persons[i].image1 == undefined ||
+    //     persons[i].image2 == '' || persons[i].image2 == null || persons[i].image2 == undefined){
+    //       this.errorString += `\nPerson ${persons[i].name} ${persons[i].surname} is missing images.`;
+    //       this.missingImages = true;
+    //       return true;
+    //     }
+    // }
     return false;
   }
 
   checkVehicles() {
     let vehicles:Vehicle[] = this.requesterService.getAllVehicles();
-    for(let i = 0; i<vehicles.length; i++){
-      if(vehicles[i].image1 == '' || vehicles[i].image1 == null || vehicles[i].image1 == undefined ||
-        vehicles[i].image2 == '' || vehicles[i].image2 == null || vehicles[i].image2 == undefined){
-          this.errorString += `\nVehicle ${vehicles[i].plate} of model ${vehicles[i].model} is missing images.`;
-          this.missingImages = true;
-          return true;
-        }
-    }
+    // for(let i = 0; i<vehicles.length; i++){
+    //   if(vehicles[i].image1 == '' || vehicles[i].image1 == null || vehicles[i].image1 == undefined ||
+    //     vehicles[i].image2 == '' || vehicles[i].image2 == null || vehicles[i].image2 == undefined){
+    //       this.errorString += `\nVehicle ${vehicles[i].plate} of model ${vehicles[i].model} is missing images.`;
+    //       this.missingImages = true;
+    //       return true;
+    //     }
+    // }
     return false;
   }
 

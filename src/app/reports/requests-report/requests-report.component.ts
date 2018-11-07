@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { ReportsService } from '../../services/reports.service';
 import { MatDatepickerInputEvent } from '@angular/material';
+import { RequestReport } from '../../models/RequestReport';
 
 @Component({
   selector: 'app-requests-report',
@@ -74,8 +75,8 @@ export class RequestsReportComponent implements OnInit {
     var rUrl = this.requestsReportUrl + '/' + this.fromString + '/' + this.toString;
 
     if(this.fromString != null && this.toString != null){
-      this.reportsService.getShreddingsReports(rUrl)
-        .subscribe((data) => {
+      this.reportsService.getRequestsReports(rUrl)
+        .subscribe((data: RequestReport[]) => {
           console.log(data);
           this.showSpinner = false;
         });
