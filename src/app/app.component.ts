@@ -58,7 +58,7 @@ export class AppComponent implements OnInit {
       .subscribe(pcd => {
         let passChDate = new Date(pcd), currentDate = new Date();
         let passDateDiff = Math.ceil((currentDate.getTime() - passChDate.getTime()) / (1000 * 60 * 60 * 24));
-        if((passwordLifeSpan - passDateDiff) <= warnLastDays){
+        if((passwordLifeSpan - passDateDiff) <= warnLastDays && passDateDiff < passwordLifeSpan){
           let msg = 'You have ' + (warnLastDays - (passDateDiff % warnLastDays)) + ' days to change your password before it expires';
           this.changePassword(msg);
         }
