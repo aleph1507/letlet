@@ -10,11 +10,11 @@ export interface RequestReport {
   contactPhone: string,
   description: string,
   descriptionEn: string,
-  fromDate: Date,
+  fromDate: string,
   id: number,
   numberOfEntries: number,
   requestPersonJson: Person[],
   requestVehicleJson: Vehicle[],
   requesterName: string,
-  toDate: Date
+  toDate: string
 }

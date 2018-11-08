@@ -35,26 +35,58 @@
     <!-- <p style="width:100%;">{{rowCount}}</p> -->
   </div>
 
-  <div *ngIf="!showSpinner && displayTable" style="overflow-x:auto;">
+  <div *ngIf="!showSpinner" style="overflow-x:auto;">
     <table class="rReportTable">
       <thead>
       </thead>
       <tbody>
-        <!-- <div *ngFor="let r of reqReports"> -->
-          <tr *ngFor="let r of reqReports">
+        <div class="reportDiv" *ngFor="let r of reqReports">
+          <tr>
+            <th>Request ID</th>
+            <th>Requester Name</th>
+            <th>Contact</th>
+            <th>Company</th>
+            <!-- <th>Company Name eng.</th> -->
+            <th>Request Description</th>
+            <!-- <th>Request Description eng.</th> -->
+            <!-- <th>From Date</th>
+            <th>To Date</th> -->
+            <th>Valid Thru</th>
+            <th>Number of Entries</th>
+            <th>Approved</th>
+          </tr>
+          <tr>
             <td>{{r.id}}</td>
             <td>{{r.requesterName}}</td>
             <td>{{r.contactEmail}} / {{r.contactPhone}}</td>
             <td>{{r.company.name}}</td>
-            <td>{{r.company.nameEn}}</td>
+            <!-- <td>{{r.company.nameEn}}</td> -->
             <td>{{r.description}}</td>
-            <td>{{r.descriptionEn}}</td>
-            <td>{{r.fromDate}}</td>
-            <td>{{r.toDate}}</td>
-            <td>{{r.numberOfEntries}}</td>
+            <!-- <td>{{r.descriptionEn}}</td> -->
+            <td>{{r.fromDate}} - {{r.toDate}}</td>
+            <!-- <td>{{r.toDate}}</td> -->
+            <td>{{r.numberOfEntries == -1 ? 'Unlimited' : r.numberOfEntries}}</td>
             <td>{{r.approved}}</td>
           </tr>
-        <!-- </div> -->
+          <tr>
+            <td></td>
+            <td colspan="4" class="list">
+              <ul>
+                <li *ngFor="let p of r.requestPersonJson">
+                  {{p.name}} {{p.surname}} / {{p.nameEn}} {{p.surnameEn}}
+                </li>
+              </ul>
+            </td>
+            <td></td>
+            <td colspan="2" class="list">
+              <ul>
+                <li *ngFor="let v of r.requestVehicleJson">
+                  {{v.model}} {{v.plate}}
+                </li>
+              </ul>
+            </td>
+          </tr>
+        </div>
       </tbody>
     </table>
   </div>

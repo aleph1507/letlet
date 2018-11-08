@@ -3,11 +3,13 @@ import { AuthService } from '../../services/auth.service';
 import { ReportsService } from '../../services/reports.service';
 import { MatDatepickerInputEvent } from '@angular/material';
 import { RequestReport } from '../../models/RequestReport';
+import {ViewEncapsulation} from '@angular/core';
 
 @Component({
   selector: 'app-requests-report',
   templateUrl: './requests-report.component.html',
-  styleUrls: ['./requests-report.component.css']
+  styleUrls: ['./requests-report.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class RequestsReportComponent implements OnInit {
 
@@ -82,6 +84,10 @@ export class RequestsReportComponent implements OnInit {
       this.reportsService.getRequestsReports(rUrl)
         .subscribe((data: RequestReport[]) => {
           console.log(data);
+          for(let i = 0; i<data.length; i++){
+            data[i].fromDate = data[i].fromDate.toString().split('T')[0].replace(/-/gi, '/');
+            data[i].toDate = data[i].toDate.toString().split('T')[0].replace(/-/gi, '/');
+          }
           this.reqReports = data;
           this.showSpinner = false;
         });
