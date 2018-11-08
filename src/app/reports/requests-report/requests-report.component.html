@@ -18,6 +18,7 @@
       <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
       <mat-datepicker #toPicker disabled="false"></mat-datepicker>
       </mat-form-field>
+      <button type="button" (click)='printRequestReport()' mat-raised-button color="primary">Print</button>
     </div>
     <!-- <div class="radio-div" style="position:relative; left:-5%;">
       <mat-radio-group [(ngModel)]="selectedReports">
@@ -35,7 +36,7 @@
     <!-- <p style="width:100%;">{{rowCount}}</p> -->
   </div>
 
-  <div *ngIf="!showSpinner" style="overflow-x:auto;">
+  <div *ngIf="!showSpinner" style="overflow-x:auto;" id="tableDiv">
     <table class="rReportTable">
       <thead>
       </thead>
@@ -70,7 +71,7 @@
           </tr>
           <tr>
             <td></td>
-            <td colspan="4" class="list">
+            <td colspan="3" class="list">
               <ul>
                 <li *ngFor="let p of r.requestPersonJson">
                   {{p.name}} {{p.surname}} / {{p.nameEn}} {{p.surnameEn}}
@@ -78,7 +79,7 @@
               </ul>
             </td>
             <td></td>
-            <td colspan="2" class="list">
+            <td colspan="3" class="list">
               <ul>
                 <li *ngFor="let v of r.requestVehicleJson">
                   {{v.model}} {{v.plate}}
