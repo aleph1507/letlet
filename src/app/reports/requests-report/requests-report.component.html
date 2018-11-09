@@ -39,27 +39,27 @@
   <div *ngIf="!showSpinner" style="overflow-x:auto;" id="tableDiv">
     <table class="rReportTable">
       <thead>
-      </thead>
-      <tbody>
-        <div class="reportDiv" *ngFor="let r of reqReports">
-          <tr>
-            <th>Request ID</th>
-            <th>Requester Name</th>
-            <th>Contact</th>
+        <div class="reportDiv">
+            <th>ID</th>
+            <th>Requester</th>
+            <!-- <th>Contact</th> -->
             <th>Company</th>
             <!-- <th>Company Name eng.</th> -->
-            <th>Request Description</th>
+            <th>Description</th>
             <!-- <th>Request Description eng.</th> -->
             <!-- <th>From Date</th>
             <th>To Date</th> -->
-            <th>Valid Thru</th>
-            <th>Number of Entries</th>
+            <th>Period</th>
+            <th>Entries</th>
             <th>Approved</th>
-          </tr>
-          <tr>
+        </div>
+      </thead>
+      <tbody>
+        <div class="reportDiv" *ngFor="let r of reqReports">
+          <tr class="reqHead">
             <td>{{r.id}}</td>
             <td>{{r.requesterName}}</td>
-            <td>{{r.contactEmail}} / {{r.contactPhone}}</td>
+            <!-- <td>{{r.contactEmail}} / {{r.contactPhone}}</td> -->
             <td>{{r.company.name}}</td>
             <!-- <td>{{r.company.nameEn}}</td> -->
             <td>{{r.description}}</td>
@@ -69,16 +69,14 @@
             <td>{{r.numberOfEntries == -1 ? 'Unlimited' : r.numberOfEntries}}</td>
             <td>{{r.approved}}</td>
           </tr>
-          <tr>
-            <td></td>
-            <td colspan="3" class="list">
+          <tr class="listTr">
+            <td colspan="4" class="list">
               <ul>
                 <li *ngFor="let p of r.requestPersonJson">
                   {{p.name}} {{p.surname}} / {{p.nameEn}} {{p.surnameEn}}
                 </li>
               </ul>
             </td>
-            <td></td>
             <td colspan="3" class="list">
               <ul>
                 <li *ngFor="let v of r.requestVehicleJson">

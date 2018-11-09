@@ -102,6 +102,7 @@ export class RequestsReportComponent implements OnInit {
   printRequestReport() {
     let printContents, popupWin;
     let tableDiv = document.getElementById('tableDiv').innerHTML;
+    console.log('tableDiv: ', tableDiv);
     popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
     popupWin.document.open();
     popupWin.document.write(`
@@ -114,9 +115,7 @@ export class RequestsReportComponent implements OnInit {
 
             .rReportTable {
               background: white;
-              /* border:1px solid black; */
               border-collapse: collapse;
-              /* overflow-x:auto; */
                width: 100%;
             }
 
@@ -125,10 +124,15 @@ export class RequestsReportComponent implements OnInit {
               border-bottom:1px solid black;
               width: 6%;
               text-align:center;
+              vertical-align: top;
             }
 
             .rReportTable td.list{
               text-align:justify;
+            }
+
+            .reqHead {
+            background-color: #c4c7ce;
             }
 
             th {
@@ -145,9 +149,26 @@ export class RequestsReportComponent implements OnInit {
               justify-content:space-between;
             }
 
+            li {
+              list-style: decimal;
+              list-style-position: inside;
+            }
+
             @media print {
               tr {
-                page-break-inside: avoid;
+                page-break-inside: auto;
+              }
+
+              td.list, tr.listTr, ul {
+                page-break-inside: auto;
+                page-break-after: always;
+                page-break-before: auto;
+              }
+
+              ul li {
+                page-break-inside: auto;
+                page-break-after: auto;
+                page-break-before: auto;
               }
             }
             </style>
@@ -163,7 +184,9 @@ export class RequestsReportComponent implements OnInit {
                 ${this.logo}
               </div>
             </div>
-            ${tableDiv}
+            <div id="tableDiv">
+              ${tableDiv}
+            </div>
           </body>
         </html>
       `);

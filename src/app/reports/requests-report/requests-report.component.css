@@ -7,24 +7,61 @@
   /* border:1px solid black; */
   border-collapse: collapse;
   /* overflow-x:auto; */
-   width: 100%;
+  width: 100%;
+}
+
+.rReportTable th, .reqHead td {
+  padding-left: 1vw;
 }
 
 .rReportTable td{
-  padding:6px;
+  padding-right:1px;
+  padding-top:1px;
+  padding-bottom:1px;
   border-bottom:1px solid black;
-  width: 6%;
-  text-align:center;
+  width: 12vw;
+  text-align:left;
+  vertical-align: top;
+  /* border: 1px solid black; */
+
 }
 
+li {
+  list-style: decimal;
+}
 .rReportTable td.list{
-  text-align:justify;
+  text-align:left;
+}
+
+.reqHead {
+  background-color: #c4c7ce;
 }
 
 th {
   border-bottom: 1px solid grey;
   margin-top: 1vh;
-  margin-bottom: 0.5vh;
-  padding-bottom: 0.5vh;
-  text-align:center;
+  width: 12vw;
+  margin-bottom: 0.25vh;
+  padding-bottom: 0.25vh;
+  padding: 1px;
+  text-align:left;
+  /* border: 1px solid black; */
+}
+
+@media print {
+  tr {
+    page-break-inside: auto;
+  }
+
+  td.list, tr.listTr, ul {
+    page-break-inside: auto;
+    page-break-after: auto;
+    page-break-before: auto;
+  }
+
+  ul li {
+    page-break-inside: auto;
+    page-break-after: auto;
+    page-break-before: auto;
+  }
 }
