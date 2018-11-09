@@ -109,6 +109,11 @@ export class RequestsReportComponent implements OnInit {
         <html>
           <head>
             <style>
+            td {
+              font-size: 12px;
+              line-height:12px;
+            }
+
             .reportDiv {
               width: 100%;
             }
@@ -123,7 +128,7 @@ export class RequestsReportComponent implements OnInit {
               padding:6px;
               border-bottom:1px solid black;
               width: 6%;
-              text-align:center;
+              text-align:left;
               vertical-align: top;
             }
 
@@ -177,8 +182,8 @@ export class RequestsReportComponent implements OnInit {
             <div class="header">
               <div class="lh">
                 <h2 style='color:lightblue;'>SKOPJE Airport</h2>
-                <h2 style='color:blue;'>Expected persons report:</h2>
-                <h4>Period: ${this.fromDate.getDate()}/${this.fromDate.getMonth()}/${this.fromDate.getFullYear()} - ${this.toDate.getDate()}/${this.toDate.getMonth()}/${this.toDate.getFullYear()}</h4>
+                <h2 style='color:#303f9f;'>Expected persons report:</h2>
+                <h4>Period: ${this.fromDate.getDate()}/${this.fromDate.getMonth()+1}/${this.fromDate.getFullYear()} - ${this.toDate.getDate()}/${this.toDate.getMonth()+1}/${this.toDate.getFullYear()}</h4>
               </div>
               <div class="rh">
                 ${this.logo}
